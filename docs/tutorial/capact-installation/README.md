@@ -1,9 +1,9 @@
-# Voltron installation
+# Capact installation
 
-> **NOTE:** This tutorial guides you through the Voltron installation on managed, production-ready Kubernetes cluster.
-> You can also install Voltron locally. To learn how to do that, see the [Development cluster](../../development.md#development-cluster) section in `development.md` document.
+> **NOTE:** This tutorial guides you through the Capact installation on managed, production-ready Kubernetes cluster.
+> You can also install Capact locally. To learn how to do that, see the [Development cluster](../../development.md#development-cluster) section in `development.md` document.
 
-This tutorial shows how to set up a private Google Kubernetes Engine (GKE) cluster with full Voltron installation. All core Voltron components are located in [`deploy/kubernetes/charts`](../../../deploy/kubernetes/charts). Additionally, Voltron uses [Cert Manager](https://github.com/jetstack/cert-manager/) to generate the certificate for the Voltron Gateway domain.
+This tutorial shows how to set up a private Google Kubernetes Engine (GKE) cluster with full Capact installation. All core Capact components are located in [`deploy/kubernetes/charts`](../../../deploy/kubernetes/charts). Additionally, Capact uses [Cert Manager](https://github.com/jetstack/cert-manager/) to generate the certificate for the Capact Gateway domain.
 
 ![overview](assets/overview.svg)
 
@@ -14,7 +14,7 @@ This tutorial shows how to set up a private Google Kubernetes Engine (GKE) clust
 - [Prerequisites](#prerequisites)
 - [Instructions](#instructions)
   * [Create GKE private cluster](#create-gke-private-cluster)
-  * [Install Voltron](#install-voltron)
+  * [Install Capact](#install-capact)
   * [Clean-up](#clean-up)
   * [Change the source of OCH manifests](#change-the-source-of-och-manifests)
 
@@ -60,7 +60,7 @@ This tutorial shows how to set up a private Google Kubernetes Engine (GKE) clust
     > **NOTE:** To reduce latency when working with a cluster, select the region based on your location.
     
     ```bash
-    export CLUSTER_NAME="voltron-demo-v1"
+    export CLUSTER_NAME="capact-demo-v1"
     export REGION="europe-west2"
     ```
        
@@ -116,9 +116,9 @@ This tutorial shows how to set up a private Google Kubernetes Engine (GKE) clust
      - The secondary range used for Pods
      - Address ranges that you have authorized, for example `203.0.113.0/32`
 
-### Install Voltron
+### Install Capact
 
-This guide explains how to deploy Voltron on a cluster using your own domain.
+This guide explains how to deploy Capact on a cluster using your own domain.
 
 >**TIP:** Get a free domain for your cluster using services like [freenom.com](https://www.freenom.com) or similar.
 
@@ -168,14 +168,14 @@ This guide explains how to deploy Voltron on a cluster using your own domain.
 1. Export Gateway password and domain name
 
    ```bash
-   export DOMAIN="$CLUSTER_NAME.$(echo $DNS_NAME | sed 's/\.$//')" # eg. `export DOMAIN="demo.cluster.projectvoltron.dev"`
+   export DOMAIN="$CLUSTER_NAME.$(echo $DNS_NAME | sed 's/\.$//')" # e.g. `export DOMAIN="demo.cluster.capact.dev"`
    export GATEWAY_PASSWORD=$(openssl rand -base64 32)
    ```
 
-1. Install all Voltron components (Voltron core, Grafana, Prometheus, Neo4J, NGINX, Argo, Cert Manager)
+1. Install all Capact components (Capact core, Grafana, Prometheus, Neo4J, NGINX, Argo, Cert Manager)
    
    ```bash
-   CUSTOM_VOLTRON_SET_FLAGS="--set global.domainName=$DOMAIN --set global.gateway.auth.password=$GATEWAY_PASSWORD" \
+   CUSTOM_CAPACT_SET_FLAGS="--set global.domainName=$DOMAIN --set global.gateway.auth.password=$GATEWAY_PASSWORD" \
    DOCKER_REPOSITORY="gcr.io/projectvoltron" \
    OVERRIDE_DOCKER_TAG="ce38bb3" \
    ./hack/ci/cluster-components-install-upgrade.sh
@@ -184,7 +184,7 @@ This guide explains how to deploy Voltron on a cluster using your own domain.
    >**NOTE:** This command installs ingress which automatically creates a LoadBalancer. If you have your own LoadBalancer, you can use it by adding 
    > `CUSTOM_NGINX_SET_FLAGS="--set ingress-nginx.controller.service.loadBalancerIP={YOUR_LOAD_BALANCER_IP}"` to the above install command. If your domain points to your LoadBalance IP, skip the next step.
 
-   >**NOTE:** To install different Voltron version, change `OVERRIDE_DOCKER_TAG` to different Docker image tag. 
+   >**NOTE:** To install different Capact version, change `OVERRIDE_DOCKER_TAG` to different Docker image tag. 
 
 1. Update the DNS record
    
@@ -203,20 +203,20 @@ This guide explains how to deploy Voltron on a cluster using your own domain.
    nslookup gateway.$DOMAIN
    ```
    
-1. Get information about Voltron Gateway.
+1. Get information about Capact Gateway.
 
    To obtain Gateway URL and authorization information, run:
    
    ```bash
-   helm get notes -n voltron-system voltron    
+   helm get notes -n capact-system capact    
    ```
    
    Example output:
    ```bash
-   Thank you for installing Voltron components.
+   Thank you for installing Capact components.
    
    Here is the list of exposed services:
-   - Gateway GraphQL Playground: https://gateway.demo.cluster.projectvoltron.dev
+   - Gateway GraphQL Playground: https://gateway.demo.cluster.capact.dev
    
    Use the following header configuration in the Gateway GraphQL Playground:
    
@@ -225,7 +225,7 @@ This guide explains how to deploy Voltron on a cluster using your own domain.
     }
    ```
 
-   **✨ Now you are ready to start a journey with the Voltron project. Check out our [Jira installation tutorial](../jira-installation/README.md)!**
+   **✨ Now you are ready to start a journey with the Capact project. Check out our [Jira installation tutorial](../jira-installation/README.md)!**
 
 ### Clean-up
 
@@ -243,12 +243,12 @@ Additionally, you can remove the Google DNS Zone if not needed. In the **Network
 
 By default, the OCH manifests are synchronized with the `och-content` directory from the `go-voltron` repository. You can change that by overriding **MANIFEST_PATH** environment variable for **och-public** Deployment.
      
-For example, to use manifests Voltron `release-0.2` branch, run:
+For example, to use manifests Capact `release-0.2` branch, run:
    
 ```bash
 export SSH_KEY="LS0tLS1CRUdJTiBPUEVOU1NIIFBSSVZBVEUgS0VZLS0tLS0KYjNCbGJuTnphQzFyWlhrdGRqRUFBQUFBQkc1dmJtVUFBQUFFYm05dVpRQUFBQUFBQUFBQkFBQUFNd0FBQUF0emMyZ3RaVwpReU5UVXhPUUFBQUNDSTNEQmpXQjhTT1cvS3pjTWwyWm1ZTmtKRXZQcW5QRDY1RGVhQ0lrMDZjZ0FBQUpBVHIyOHJFNjl2Ckt3QUFBQXR6YzJndFpXUXlOVFV4T1FBQUFDQ0kzREJqV0I4U09XL0t6Y01sMlptWU5rSkV2UHFuUEQ2NURlYUNJazA2Y2cKQUFBRURJTk51VHg3dG1oUVY1dFFxRFVpbDVxOTZwWFE2ak5TdnR2bEVBRmowWUNJamNNR05ZSHhJNWI4ck53eVhabVpnMgpRa1M4K3FjOFBya041b0lpVFRweUFBQUFESE5zYlVCemJHMHRaR1ZzYkFFPQotLS0tLUVORCBPUEVOU1NIIFBSSVZBVEUgS0VZLS0tLS0K"
 export BRANCH_NAME=release-0.2
-kubectl set env deployment/voltron-och-public -n voltron-system --containers="och-public-populator" MANIFESTS_PATH="git@github.com:Project-Voltron/go-voltron.git?sshkey=${SSH_KEY}&ref=${BRANCH_NAME}"
+kubectl set env deployment/capact-och-public -n capact-system --containers="och-public-populator" MANIFESTS_PATH="git@github.com:Project-Voltron/go-voltron.git?sshkey=${SSH_KEY}&ref=${BRANCH_NAME}"
 ```
 
 > **NOTE:** The `sshkey` parameter is a Base64 encoded private key used by populator to download manifests. It has read only access.
