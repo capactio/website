@@ -89,10 +89,10 @@ module.exports = {
           title: "GitHub",
           items: [
             {
-              html: `<iframe src="https://ghbtns.com/github-btn.html?user=capactio&repo=capact&type=star&count=true" frameborder="0" scrolling="0" width="150" height="20" title="GitHub"></iframe>`,
+              html: `<iframe src="https://ghbtns.com/github-btn.html?user=capactio&repo=capact&type=star" frameborder="0" scrolling="0" width="150" height="20" title="GitHub"></iframe>`,
             },
             {
-              html: `<iframe src="https://ghbtns.com/github-btn.html?user=capactio&repo=capact&type=fork&count=true" frameborder="0" scrolling="0" width="150" height="20" title="GitHub"></iframe>`,
+              html: `<iframe src="https://ghbtns.com/github-btn.html?user=capactio&repo=capact&type=fork" frameborder="0" scrolling="0" width="150" height="20" title="GitHub"></iframe>`,
             },
           ],
         },
