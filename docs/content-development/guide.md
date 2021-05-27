@@ -22,7 +22,6 @@
     - [View the Action Custom Resource](#view-the-action-custom-resource)
   - [Update TypeInstance](#update-typeinstance)
   - [Summary](#summary)
-  - [Appendix](#appendix)
 
 <!-- tocstop -->
 
@@ -44,7 +43,7 @@ To develop and test the created content, you will need to have a Capact environm
 * [kind](https://kind.sigs.k8s.io/docs/user/quick-start/#installation)
 * [kubectl](https://kubernetes.io/docs/tasks/tools/install-kubectl/)
 * [Capact CLI](https://github.com/Project-Voltron/go-voltron/releases)
-* [populator](../../../cmd/populator/docs/populator_register-ocf-manifests.md) - For now, you need to compile it from source
+* [populator](https://github.com/capactio/capact/tree/main/cmd/populator/docs/populator_register-ocf-manifests.md) - For now, you need to compile it from source
 
 Also, clone the Capact repository with the current OCF content.
 ```bash
@@ -52,10 +51,10 @@ git clone https://github.com/Project-Voltron/go-voltron.git
 ```
 
 Some other materials worth reading before are:
-- [JIRA installation tutorial](../jira-installation/README.md) - Learn how to execute actions in Capact.
+- [JIRA installation tutorial](../example/jira-installation.md) - Learn how to execute actions in Capact.
 - [Argo Workflows documentation](https://argoproj.github.io/argo-workflows/) - Capact action syntax is based on Argo workflows, so it's highly recommended you understand what is Argo and how to create Argo workflows.
-- [Capact runners](../../runner.md) - Understand, what are Capact runners.
-- [Capact CLI](../../../cmd/cli/docs/capact.md) - Learn how to validate your manifests syntax.
+- [Capact runners](../architecture/runner.md) - Understand, what are Capact runners.
+- [Capact CLI](../cli/capact.md) - Learn how to validate your manifests syntax.
 
 ## Types, Interfaces and Implementations
 
@@ -295,14 +294,14 @@ The **Type** values are described using [JSON Schema](https://json-schema.org/).
 ## Runners
 
 The Action execution is handled by runners. For now we provide the following runners:
-- [Argo Workflow Runner](../../../cmd/argo-runner/README.md)
-- [Helm Runner](../../../cmd/helm-runner/README.md)
-- [CloudSQL Runner](../../../cmd/cloudsql-runner/README.md)
-- [Terraform Runner](../../../cmd/terraform-runner/README.md)
+- [Argo Workflow Runner](https://github.com/capactio/capact/tree/main/cmd/argo-runner/README.md)
+- [Helm Runner](https://github.com/capactio/capact/tree/main/cmd/helm-runner/README.md)
+- [CloudSQL Runner](https://github.com/capactio/capact/tree/main/cmd/cloudsql-runner/README.md)
+- [Terraform Runner](https://github.com/capactio/capact/tree/main/cmd/terraform-runner/README.md)
 
-To check the schema of the runner input, you have to look in the [`och-content/type/runner`](../../../och-content/type/runner) directory. You can find there the JSON schema and an example input for the runner.
+To check the schema of the runner input, you have to look in the [`och-content/type/runner`](https://github.com/capactio/capact/tree/main/och-content/type/runner) directory. You can find there the JSON schema and an example input for the runner.
 
-You can read more about runners in [this document](../../runner.md).
+You can read more about runners in [this document](../architecture/runner.md).
 
 ## Write the Implementation for the Interface
 
@@ -584,7 +583,7 @@ Let's take a look on the **Implementation** YAML. **Implementation** has the fol
 | `additionalOutput`            | This section defines any additional **TypeInstances**, which are created in this **Implementation**, compared to the **Interface**. In our **Implementation**, we create a database in the database instance with the `postgresql.create-db` **Interface**, which outputs an `postgresql.database` **TypeInstance**. We have to write this down in `additionalOutput`, so Capact will resolve this **TypeInstance** metadata for uploading it to OCH.                                                                                                                                                                                      |
 | `outputTypeInstanceRelations` | Specifies all output TypeInstances to upload to OCH with theirs relationships between them. Only the TypeInstances created in this Implementation have to be mentioned here. If a TypeInstances in created in another action and brought into the context with `capact-outputTypeInstances`, then it should not be defined here.                                                                                                                                                                                                                                                                                                                                                                                               |
 | `implements`                  | Defines which **Interfaces** are implemented by this **Implementation**.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    |
-| `requires`                    | List of system prerequisites that need to be present in the environment managed by Capact to use this **Implementation**. In our example, we will deploy Confluence as a Helm chart on Kubernetes, which means we need a Kubernetes cluster. Requirement items can specify `alias` and be used inside workflow under `{{workflow.outputs.artifacts.{alias}}}`, where `{alias-name}` is the alias. A TypeInstance with alias is injected into the workflow based on Policy configuration. To learn more, see the [TypeInstance Injection](../../policy-configuration.md#typeinstance-injection) paragraph in Policy Configuration document. |
+| `requires`                    | List of system prerequisites that need to be present in the environment managed by Capact to use this **Implementation**. In our example, we will deploy Confluence as a Helm chart on Kubernetes, which means we need a Kubernetes cluster. Requirement items can specify `alias` and be used inside workflow under `{{workflow.outputs.artifacts.{alias}}}`, where `{alias-name}` is the alias. A TypeInstance with alias is injected into the workflow based on Policy configuration. To learn more, see the [TypeInstance Injection](../feature/policy-configuration.md#typeinstance-injection) paragraph in Policy Configuration document. |
 | `imports`                     | Here we define all other **Interfaces**, we use in our **Implementation**. We can then refer to them as `'<alias>.<method-name>'`.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          |
 | `action`                      | Holds information about the actions that is executed. In the case of the Argo workflow Runner, in this section we define the Argo workflow, which is executed in this **Implementation**.                                                                                                                                                                                                                                                                                                                                                                                                                                                   |
 
@@ -606,7 +605,7 @@ Let's go through the **Implementation** and try to understand, what is happening
 In the next step we are creating a database for the Confluence server. If you look at the **Interface** definition of [`cap.interface.database.postgresql.create-db`](och-content/interface/database/postgresql/create-db.yaml), you will see, that it requires a `postgresql` **TypeInstance** of **Type** [`cap.type.database.postgresql.config`](och-content/type/database/postgresql/config.yaml) and input parameters [`cap.type.database.postgresql.database-input`](och-content/type/database/postgresql/database-input.yaml), and outputs a `database` **TypeInstance** of **Type** [`cap.type.database.postgresql.database`](och-content/type/database/postgresql/database.yaml). In the step, we are providing the inputs to the **Interface** via the `.arguments.artifacts` field. We also have to map the output of this step to our output definitions in `additionalOutput` and the implemented **Interface** in the `capact-outputTypeInstances` field.
 
 The `render-helm-args`, `fill-db-params-in-helm-args` and `fill-user-params-in-helm-args` steps are used to prepare the input parameters for the `helm.install` **Interface**. Jinja template engine is used here to render the Helm runner arguments with the required data from the `postgresql` and `database` **TypeInstances**. Those steps don't create any **TypeInstances** and serve only the purpose of creating the input parameters for the Helm runner.
-You can check the schema of the Helm runner args in the [Type manifest](../../../och-content/type/runner/helm/run-input.yaml).
+You can check the schema of the Helm runner args in the [Type manifest](https://github.com/capactio/capact/tree/main/och-content/type/runner/helm/run-input.yaml).
 
 > To create the input parameters for `helm.install` we have to use data from two artifacts. As the current `jinja.run` **Interface** consumes only a template and a single variables input, we have to perform this operation twice. To separate the variables substituted in the first, second and third operation, we add prefixes to the variables.
 >
@@ -621,7 +620,7 @@ arguments:
     - name: runner-context
       from: "{{workflow.outputs.artifacts.runner-context}
 ```
-To verify, if a runner needs the context, check the **Interface** of the runner (eg. [Interface for Helm runner](../../../och-content/interface/runner/helm/run.yaml)).
+To verify, if a runner needs the context, check the **Interface** of the runner (eg. [Interface for Helm runner](https://github.com/capactio/capact/tree/main/och-content/interface/runner/helm/run.yaml)).
 
 ## Validate the manifests using Capact CLI
 
@@ -634,7 +633,7 @@ To verify all your manifests in `och-content` directory, execute:
 capact validate och-content/**/*.yaml
 ```
 
-You can read more about the Capact CLI [here](../../../cmd/cli/README.md).
+You can read more about the Capact CLI [here](https://github.com/capactio/capact/tree/main/cmd/cli/README.md).
 
 ## Populate the manifests into OCH
 
@@ -645,7 +644,7 @@ ENABLE_POPULATOR=false make dev-cluster
 
 This can take a few minutes. We disabled the populator sidecar in OCH public, as we will populate the data from our local repository using the populator.
 
-> You can read more about the populator, how to compile and use it, in this [README](../../../cmd/populator/docs/populator_register-ocf-manifests.md).
+> You can read more about the populator, how to compile and use it, in this [README](https://github.com/capactio/capact/tree/main/cmd/populator/docs/populator_register-ocf-manifests.md).
 
 To populate the data, you will need to first set up port-forwarding to the Neo4j database service:
 ```
@@ -1083,6 +1082,3 @@ queries as before. Just change Query Variables:
 
 In this guide we went through different OCF manifests and their syntax. We created manifests which added a capability to install Confluence server instances. We also showed, how you can test the manifests you are creating and where to check for useful information, when debugging your action.
 
-## Appendix
-
-To learn how to prepare content which uses Terraform Runner, read the [`terraform-manifests.md`](./terraform-manifests.md) document.

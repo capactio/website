@@ -63,4 +63,4 @@ To deploy Rocket.chat on Kubernetes, follow the steps:
    capact --namespace rocketchat action status rocketchat
    ```
     
-**Next steps:** Navigate back to the [main README](./README.md) and follow next steps.
+🎉 Hooray! You successfully completed the tutorial. Be productive!

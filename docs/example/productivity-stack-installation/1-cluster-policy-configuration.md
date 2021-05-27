@@ -7,7 +7,7 @@ Configure preference for AWS solutions for Atlassian stack dependencies. Follow 
    - Add the **AdministratorAccess** permissions. 
    - Note the access key and secret key.
 
-1. Follow the tutorial ["Connect to Capact Gateway from local machine"](../eks-installation/README.md#connect-to-capact-gateway-from-local-machine) to be able to connect to Gateway.
+1. Follow the tutorial ["Connect to Capact Gateway from local machine"](../../installation/aws-eks.md#connect-to-capact-gateway-from-local-machine) to be able to connect to Gateway.
 1. Execute `helm get notes capact -n capact-system` on Bastion host and copy required headers.
 1. Navigate to the `https://gateway.${CAPACT_DOMAIN_NAME}:8081` address in your web browser.
 1. Create AWS Credentials TypeInstance:
@@ -96,4 +96,4 @@ Configure preference for AWS solutions for Atlassian stack dependencies. Follow 
    capact policy apply -f /tmp/policy.yaml
    ```
 
-**Next steps:** Navigate back to the [main README](./README.md) and follow next steps.
+**Next steps:** Navigate back to the [Introduction](./0-intro.md) and follow next steps.

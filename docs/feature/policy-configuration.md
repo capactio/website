@@ -4,16 +4,19 @@
 
 <!-- toc -->
 
-- [Introduction](#introduction)
-- [Syntax](#syntax)
-  * [Definition of rules for Interface](#definition-of-rules-for-interface)
-  * [Selecting Implementations](#selecting-implementations)
-  * [TypeInstance injection](#typeinstance-injection)
-  * [Example](#example)
-- [Configuration](#configuration)
-  * [View current Policy](#view-current-policy)
-  * [Modify Policy](#modify-policy)
-  * [Reloading policy by Engine](#reloading-policy-by-engine)
+- [Policy configuration](#policy-configuration)
+  - [Table of Contents](#table-of-contents)
+  - [Introduction](#introduction)
+  - [Syntax](#syntax)
+    - [Definition of rules for Interface](#definition-of-rules-for-interface)
+    - [Selecting Implementations](#selecting-implementations)
+    - [TypeInstance injection](#typeinstance-injection)
+    - [Example](#example)
+  - [Configuration](#configuration)
+    - [View current Policy](#view-current-policy)
+    - [Modify Policy using CLI](#modify-policy-using-cli)
+    - [Modify Policy with Capact installation/upgrade overrides](#modify-policy-with-capact-installationupgrade-overrides)
+    - [Reloading policy by Engine](#reloading-policy-by-engine)
 
 <!-- tocstop -->
 
@@ -268,7 +271,7 @@ To get familiar with an example content of the file, see the [Example](#example)
 
    1. During Capact installation:
     
-   Follow the [Kubernetes installation guide](../deploy/kubernetes/README.md). While installing Capact Helm chart, provide additional overrides:
+   Follow the [Kubernetes installation guide](https://github.com/capactio/capact/tree/main/deploy/kubernetes/README.md). While installing Capact Helm chart, provide additional overrides:
    
    ```bash
    helm install capact ./charts/capact -n capact-system -f /path/to/cluster-policy.overrides.yaml
@@ -280,7 +283,7 @@ To get familiar with an example content of the file, see the [Example](#example)
    helm upgrade capact ./charts/capact -n capact-system --reuse-values -f /path/to/cluster-policy.overrides.yaml
    ```
 
-To read more about Capact installation and upgrade, see the [`README.md`](../deploy/kubernetes/charts/argo/charts/argo/README.md) document of the Capact deployment.
+To read more about Capact installation and upgrade, see the [`README.md`](https://github.com/capactio/capact/tree/main/deploy/kubernetes/charts/argo/charts/argo/README.md) document of the Capact deployment.
 
 ### Reloading policy by Engine
 

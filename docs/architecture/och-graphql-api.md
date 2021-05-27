@@ -1,8 +1,8 @@
 # OCH GraphQL API
 
 Open Capability Hub can be run in two modes: public and local. In a result, GraphQL API for Open Capability Hub consists of two separate GraphQL schemas:
-- [Public OCH](../och-js/graphql/public/schema.graphql)
-- [Local OCH](../och-js/graphql/local/schema.graphql)
+- [Public OCH](https://github.com/capactio/capact/tree/main/och-js/graphql/public/schema.graphql)
+- [Local OCH](https://github.com/capactio/capact/tree/main/och-js/graphql/local/schema.graphql)
 
 ## Public API
 
@@ -16,13 +16,13 @@ Public OCH API contains GraphQL operations for the following entities:
 
 Currently, there are no GraphQL mutations or subscriptions available. Once populated with DB populator, all resources are read-only.
 
-To see full GraphQL schema, open the [`schema.graphql`](../och-js/graphql/public/schema.graphql) file.
+To see full GraphQL schema, open the [`schema.graphql`](https://github.com/capactio/capact/tree/main/och-js/graphql/public/schema.graphql) file.
  
 ## Local API
 
 Local OCH API contains GraphQL operations for managing TypeInstances.
 
-To see full GraphQL schema, open the [`schema.graphql`](../och-js/graphql/local/schema.graphql) file.
+To see full GraphQL schema, open the [`schema.graphql`](https://github.com/capactio/capact/tree/main/och-js/graphql/local/schema.graphql) file.
 
 ## Examples
 
@@ -30,17 +30,17 @@ To run sample GraphQL queries and mutations for Public or Local OCH, follow the 
 
 1. Open the Capact Gateway GraphQL Playground.
 
-   To see how to access the Gateway on development cluster, read the [Access Gateway GraphQL Playground](./development.md#access-gateway-graphql-playground) section in development guide.
+   To see how to access the Gateway on development cluster, read the [Access Gateway GraphQL Playground](../development/development-guide.md#access-gateway-graphql-playground) section in development guide.
 
 1. Navigate to a proper directory with GraphQL schema and examples.
    
-   For Public OCH examples, navigate to [`och-js/graphql/public`](../och-js/graphql/public) directory.
-   For Local OCH examples, navigate to [`och-js/graphql/local`](../och-js/graphql/local) directory.
+   For Public OCH examples, navigate to [`och-js/graphql/public`](https://github.com/capactio/capact/tree/main/och-js/graphql/public) directory.
+   For Local OCH examples, navigate to [`och-js/graphql/local`](https://github.com/capactio/capact/tree/main/och-js/graphql/local) directory.
 
-1. Copy and paste the `examples.graphql` file content to the GraphQL Playground IDE.
-1. Click on the "Query Variables" tab.
-1. Copy and paste the `examples.variables.json` file content to the Query Variables section of the GraphQL Playground IDE.
-1. Run any query or mutation from the list.
+2. Copy and paste the `examples.graphql` file content to the GraphQL Playground IDE.
+3. Click on the "Query Variables" tab.
+4. Copy and paste the `examples.variables.json` file content to the Query Variables section of the GraphQL Playground IDE.
+5. Run any query or mutation from the list.
 
 ## Common flows
 
@@ -100,7 +100,7 @@ The same unified API is available for all entities.
 
 To list all InterfaceGroups with nested Interfaces and Implementations for a given system that satisfy the Interfaces, you may use a single GraphQL query.
 
-See the [`InterfaceGroupsWithInterfacesAndImplementations` sample query](../och-js/graphql/public/examples.graphql).
+See the [`InterfaceGroupsWithInterfacesAndImplementations` sample query](https://github.com/capactio/capact/tree/main/och-js/graphql/public/examples.graphql).
 
 ### Get Type details along the corresponding TypeInstances
 
@@ -109,11 +109,11 @@ To achieve that, the following queries have to be executed:
 
 1. Get Type details with `type` query to public OCH
 
-   See the [`Type` sample query](../och-js/graphql/public/examples.graphql).
+   See the [`Type` sample query](https://github.com/capactio/capact/tree/main/och-js/graphql/public/examples.graphql).
    
 1. Get TypeInstances for a given Type with `typeInstances`
 
-   See the [`ListTypeInstancesWithTypeRefFilter` sample query](../och-js/graphql/local/examples.graphql).
+   See the [`ListTypeInstancesWithTypeRefFilter` sample query](https://github.com/capactio/capact/tree/main/och-js/graphql/local/examples.graphql).
 
 ## Limitations
 

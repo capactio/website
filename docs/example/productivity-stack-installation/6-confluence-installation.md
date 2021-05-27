@@ -108,4 +108,4 @@ To deploy Atlassian Confluence Data Center on Kubernetes, follow the steps:
    capact --namespace confluence action status confluence
    ```
     
-**Next steps:** Navigate back to the [main README](./README.md) and follow next steps.
+**Next steps:** Navigate back to the [Introduction](./0-intro.md) and follow next steps.

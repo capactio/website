@@ -1,6 +1,6 @@
 # Google Cloud Platform Installation
 
-This tutorial shows how to set up a private Google Kubernetes Engine (GKE) cluster with full Capact installation. All core Capact components are located in [`deploy/kubernetes/charts`](../../../deploy/kubernetes/charts). Additionally, Capact uses [Cert Manager](https://github.com/jetstack/cert-manager/) to generate the certificate for the Capact Gateway domain.
+This tutorial shows how to set up a private Google Kubernetes Engine (GKE) cluster with full Capact installation. All core Capact components are located in [`deploy/kubernetes/charts`](https://github.com/capactio/capact/tree/main/deploy/kubernetes/charts). Additionally, Capact uses [Cert Manager](https://github.com/jetstack/cert-manager/) to generate the certificate for the Capact Gateway domain.
 
 ![overview](assets/overview.svg)
 
@@ -228,7 +228,7 @@ This guide explains how to deploy Capact on a cluster using your own domain.
     }
    ```
 
-   **✨ Now you are ready to start a journey with the Capact project. Check out our [Jira installation tutorial](../jira-installation/README.md)!**
+   **✨ Now you are ready to start a journey with the Capact project. Check out our [Jira installation example](../example/jira-installation.md)!**
 
 ### Clean-up
 

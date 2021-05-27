@@ -6,12 +6,16 @@ This tutorial shows the basic concepts of Capact on the RocketChat installation 
 
 <!-- toc -->
 
-- [Goal](#goal)
-- [Prerequisites](#prerequisites)
-- [Install all RocketChat components in a Kubernetes cluster](#install-all-rocketchat-components-in-a-kubernetes-cluster)
-- [Validate RocketChat high availability setup](#validate-rocketchat-high-availability-setup)
-- [Clean-up](#clean-up)
-- [Additional resources](#additional-resources)
+- [RocketChat installation](#rocketchat-installation)
+    - [Table of Contents](#table-of-contents)
+    - [Goal](#goal)
+    - [Prerequisites](#prerequisites)
+    - [Install all RocketChat components in a Kubernetes cluster](#install-all-rocketchat-components-in-a-kubernetes-cluster)
+    - [Validate RocketChat high availability setup](#validate-rocketchat-high-availability-setup)
+      - [Non disruptive tests](#non-disruptive-tests)
+      - [Disruptive tests](#disruptive-tests)
+    - [Clean-up](#clean-up)
+    - [Additional resources](#additional-resources)
 
 <!-- tocstop -->
 
@@ -27,7 +31,7 @@ The diagram below shows the scenario:
 
 ###  Prerequisites
 
-* Capact cluster installed, for example on [AWS EKS](../eks-installation/README.md).See also [GCP cluster installation guide](../capact-installation/README.md).
+* Capact cluster installed, for example on [AWS EKS](../installation/aws-eks.md).See also [GCP cluster installation guide](../installation/gcp-gke.md).
 
 > **NOTE:** For AWS EKS Capact installation, all operation need to be run from the bastion host.
 
@@ -221,9 +225,7 @@ helm delete $(helm list -f="rocketchat-*|mongodb-*" -q
 
 ###  Additional resources
 
+See the (Content Development guide](../content-development/guide.md), to understand how to develop OCF content for Capact.
+
 If you want to learn more about the project, check the [`go-voltron`](https://github.com/Project-Voltron/go-voltron) repository.
 
-Here are some useful links:
-
-- [Tutorial which shows the first steps on how to develop OCF content for Capact.](../content-creation/README.md)
-- [Documentation](../../../docs), which contains various investigations, enhancement proposals, tutorials, Capact architecture and development guideline.

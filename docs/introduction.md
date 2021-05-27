@@ -34,27 +34,18 @@ From User perspective, the flow is easy.
 3. Once the database is configured, Capact Engine runs the action that deploys Jira on the cluster.
 4. After deploying Jira, the Capact Engine may run additional actions that install and configure other components, such as the identity provider and load balancer.
 
-## Get started
-
-The section contains useful links for getting started with Capact.
-
-- **Tutorials:** To learn how to install, use Capact and develop content for it, follow the [tutorials](./tutorial).
-- **Development:** To run Capact on your local machine and start contributing to Capact, read the [`development.md`](./development.md) document.
-
-To read full Capact documentation, see the [`README.md`](./README.md) file in the `docs` directory.
-
 ## Components
 
 The following Capact components reside in this repository:
 
-- [Argo runner](./cmd/argo-runner) - Runner, which executes Argo workflows.
-- [CloudSQL runner](./cmd/cloudsql-runner) - Runner, which manages Google CloudSQL instances.
-- [Gateway](./cmd/gateway) - GraphQL Gateway, which consolidates Capact GraphQL APIs in one endpoint.
-- [Helm runner](./cmd/helm-runner) - Runner, which manages Helm releases.
-- [Engine](./cmd/k8s-engine) - Kubernetes Capact Engine, which handles Action execution.
-- [CLI](./cmd/cli) - A CLI tool for interacting with Capact.
-- [Open Capability Hub](./och-js) - Component, which stores OCF Manifests and exposes API to manage them.
-- [Populator](./cmd/populator) - A CLI tool, which populates resources such as OCF manifests into database.
-- [Open Capability Format specification](./ocf-spec) - Specification, which defines the shape of Capact entities.
+- [Argo runner](https://github.com/capactio/capact/tree/main/cmd/argo-runner) - Runner, which executes Argo workflows.
+- [CloudSQL runner](https://github.com/capactio/capact/tree/main/cmd/cloudsql-runner) - Runner, which manages Google CloudSQL instances.
+- [Gateway](https://github.com/capactio/capact/tree/main/cmd/gateway) - GraphQL Gateway, which consolidates Capact GraphQL APIs in one endpoint.
+- [Helm runner](https://github.com/capactio/capact/tree/main/cmd/helm-runner) - Runner, which manages Helm releases.
+- [Engine](https://github.com/capactio/capact/tree/main/cmd/k8s-engine) - Kubernetes Capact Engine, which handles Action execution.
+- [CLI](https://github.com/capactio/capact/tree/main/cmd/cli) - A CLI tool for interacting with Capact.
+- [Open Capability Hub](https://github.com/capactio/capact/tree/main/och-js) - Component, which stores OCF Manifests and exposes API to manage them.
+- [Populator](https://github.com/capactio/capact/tree/main/cmd/populator) - A CLI tool, which populates resources such as OCF manifests into database.
+- [Open Capability Format specification](https://github.com/capactio/capact/tree/main/ocf-spec) - Specification, which defines the shape of Capact entities.
 
 Check the README files in the component directories, for more details about how to use and develop them.

@@ -1,7 +1,7 @@
 # Engine GraphQL API
 
 The following document describes interaction between client and Engine using GraphQL API. 
-The Engine GraphQL API schema is located in [pkg/engine/api/graphql/schema.graphql](../pkg/engine/api/graphql/schema.graphql) file.
+The Engine GraphQL API schema is located in [pkg/engine/api/graphql/schema.graphql](https://github.com/capactio/capact/tree/main/pkg/engine/api/graphql/schema.graphql) file.
 
 ## Examples
 
@@ -9,11 +9,11 @@ To run sample GraphQL queries and mutations against Engine GraphQL API, follow t
 
 1. Open the Capact Gateway GraphQL Playground. 
    
-   To see how to access the Gateway on development cluster, read the [Access Gateway GraphQL Playground](./development.md#access-gateway-graphql-playground) section in development guide. 
+   To see how to access the Gateway on development cluster, read the [Access Gateway GraphQL Playground](../development/development-guide.md#access-gateway-graphql-playground) section in development guide. 
 
-1. Copy and paste the [pkg/engine/api/graphql/examples.graphql](../pkg/engine/api/graphql/examples.graphql) file content to the GraphQL Playground IDE.
+1. Copy and paste the [pkg/engine/api/graphql/examples.graphql](https://github.com/capactio/capact/tree/main/pkg/engine/api/graphql/examples.graphql) file content to the GraphQL Playground IDE.
 1. Click on the "Query Variables" tab.
-1. Copy and paste the [pkg/engine/api/graphql/examples.variables.json](../pkg/engine/api/graphql/examples.variables.json) file content to the Query Variables section of the GraphQL Playground IDE.
+1. Copy and paste the [pkg/engine/api/graphql/examples.variables.json](https://github.com/capactio/capact/tree/main/pkg/engine/api/graphql/examples.variables.json) file content to the Query Variables section of the GraphQL Playground IDE.
 1. Run any query or mutation from the list.
 
 ## Common flows

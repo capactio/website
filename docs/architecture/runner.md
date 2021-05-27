@@ -6,7 +6,7 @@ Runner handles the execution of the Action according to the `action` property, w
 
 Each Engine implementation needs to have at least one built-in runner. The built-in runner has only the Interface and no Implementation definition. To ensure that, you need to add the `spec.abstract: true` property in the Interface that describes the runner.
 
-The [Kubernetes Engine](../cmd/k8s-engine) uses Argo Workflow as the built-in runner. The [cap.interface.runner.argo](../och-content/interface/runner/argo/run.yaml) Interface defines the schema for the runner arguments. The Argo Workflow was selected, as it is a Kubernetes-native implementation, and it supports passing data between steps.
+The [Kubernetes Engine](https://github.com/capactio/capact/tree/main/cmd/k8s-engine) uses Argo Workflow as the built-in runner. The [cap.interface.runner.argo](https://github.com/capactio/capact/tree/main/och-content/interface/runner/argo/run.yaml) Interface defines the schema for the runner arguments. The Argo Workflow was selected, as it is a Kubernetes-native implementation, and it supports passing data between steps.
 
 In the future, we will abstract all the built-in runners under a common Interface by using the [OCI Image](https://github.com/opencontainers/image-spec) and [OCI Runtime](https://github.com/opencontainers/runtime-spec) specifications. Each Engine implementation will have to fulfill this OCI runner Interface.
 
@@ -136,11 +136,11 @@ To simplify the development process, we provide Manager, which handles reading t
 
 Read this section to learn how to develop a new runner in Go language.
 
-The [`runner`](./../pkg/runner) package provides Manager, which holds the general logic and allows execution of all runners in the same fashion. This way, each runner implementation holds only business-specific logic.
+The [`runner`](https://github.com/capactio/capact/tree/main/pkg/runner) package provides Manager, which holds the general logic and allows execution of all runners in the same fashion. This way, each runner implementation holds only business-specific logic.
 
 ### Add a runner implementation
 
-Add a new runner under the `pkg/runner/{name}` directory, and implement the [Runner](./../pkg/runner/api.go) interface:
+Add a new runner under the `pkg/runner/{name}` directory, and implement the [Runner](https://github.com/capactio/capact/tree/main/pkg/runner/api.go) interface:
 
 ```go
 type Runner interface {
@@ -163,7 +163,7 @@ type LoggerInjector interface {
 
 ### Create binary
 
-A new runner can be added under the [cmd](../cmd) package.
+A new runner can be added under the [cmd](https://github.com/capactio/capact/tree/main/cmd) package.
 
 ```go
 func main() {
@@ -195,7 +195,7 @@ Use the following environment variables to configure the Manager:
 
 ### Argo Workflow Runner
 
-The Argo Workflow Runner implementation is defined in the [pkg/runner/argo](../pkg/runner/argo) package. It creates the Argo Workflow CR and waits for completion using the Kubernetes *watch* functionality. It exits with error when the Argo Workflow with the `context.name` name already exists. Argo Workflow ServiceAccount is always overridden with the one provided via the `context.platform.serviceAccountName` property in the input file.
+The Argo Workflow Runner implementation is defined in the [pkg/runner/argo](https://github.com/capactio/capact/tree/main/pkg/runner/argo) package. It creates the Argo Workflow CR and waits for completion using the Kubernetes *watch* functionality. It exits with error when the Argo Workflow with the `context.name` name already exists. Argo Workflow ServiceAccount is always overridden with the one provided via the `context.platform.serviceAccountName` property in the input file.
 
 The implemented dry run functionality only executes the Argo Workflow manifest static validation, and sends a request to the server with the `dry-run` flag, which renders the manifest with the server's representation without creating it.
 

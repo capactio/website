@@ -58,4 +58,4 @@ To create Amazon Relational Database Service for PostgreSQL, follow the steps:
    export POSTGRESQL_TI_ID={postgresql_typeinstance_id}
    ```
 
-**Next steps:** Navigate back to the [main README](./README.md) and follow next steps.
+**Next steps:** Navigate back to the [Introduction](./0-intro.md) and follow next steps.

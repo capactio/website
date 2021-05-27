@@ -120,4 +120,4 @@ Follow these steps to install Atlassian Crowd using the existing PostgreSQL inst
 1. Provide other parameters and finish Crowd configuration.
 1. Crowd is ready to use.
 
-**Next steps:** Navigate back to the [main README](./README.md) and follow next steps.
+**Next steps:** Navigate back to the [Introduction](./0-intro.md) and follow next steps.

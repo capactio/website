@@ -88,4 +88,4 @@ Follow these steps to install Atlassian Jira using existing PostgreSQL installat
 
     ![jira-clustering-dashboard](./assets/jira-clustering-dashboard.png)
   
-**Next steps:** Navigate back to the [main README](./README.md) and follow next steps.
+**Next steps:** Navigate back to the [Introduction](./0-intro.md) and follow next steps.

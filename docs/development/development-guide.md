@@ -202,9 +202,9 @@ make dev-cluster-delete
 There are a Make targets dedicated to build and push Capact Docker images.
 
 We have images for:
-- application defined under [cmd](../cmd) directory
-- tests defined under [test](../test) directory
-- infra tools defined under [/hack/images](../hack/images) directory 
+- application defined under [cmd](https://github.com/capactio/capact/tree/main/cmd) directory
+- tests defined under [test](https://github.com/capactio/capact/tree/main/test) directory
+- infra tools defined under [/hack/images](https://github.com/capactio/capact/tree/main/hack/images) directory 
 
 The default build and push configuration can be change via environment variables. For example:
 
@@ -235,24 +235,24 @@ If you want to build and push Docker image for a single component, follow these 
 
 1. Build a specific Docker image:
     
-    For application defined under [cmd](../cmd) package use it names, e.g. for `och`:
+    For application defined under [cmd](https://github.com/capactio/capact/tree/main/cmd) package use it names, e.g. for `och`:
     ```bash
     make build-app-image-och
     ```
 
-    For tests defined under [test](../test) package use it names, e.g. for `e2e`:
+    For tests defined under [test](https://github.com/capactio/capact/tree/main/test) package use it names, e.g. for `e2e`:
     ```bash
     make build-test-image-e2e
     ```
 
 2. Push the built Docker image to a registry:
 
-    For application defined under [cmd](../cmd) package use it names, e.g. for `och`:
+    For application defined under [cmd](https://github.com/capactio/capact/tree/main/cmd) package use it names, e.g. for `och`:
     ```bash
     make push-app-image-och
     ```
 
-    For tests defined under [test](../test) package use it names, e.g. for `e2e`:
+    For tests defined under [test](https://github.com/capactio/capact/tree/main/test) package use it names, e.g. for `e2e`:
     ```bash
     make push-test-image-e2e
     ```
@@ -296,7 +296,7 @@ Read below sections to execute only a specific generator.
 ### Generate Go code from the OCF JSON Schemas 
 
 This project uses the [quicktype](https://github.com/quicktype/quicktype) library, which improves development by 
-generating Go code from the [JSON Schemas](../ocf-spec/0.0.1/schema).
+generating Go code from the [JSON Schemas](https://github.com/capactio/capact/tree/main/ocf-spec/0.0.1/schema).
 
 Each time the specification is changed you can regenerate the Go struct. To do this, execute:
 ```bash
@@ -327,9 +327,9 @@ make gen-k8s-resources
 This project uses the [GQLGen](https://github.com/99designs/gqlgen) library, which generates the Go struct and server from GraphQL schema definition.
 
 In Capact project we have three GraphQL schemas, from which the Go code is generated:
-- [Engine](../pkg/engine/api/graphql/schema.graphql)
-- [Local OCH](../och-js/graphql/local/schema.graphql)
-- [Public OCH](../och-js/graphql/public/schema.graphql)
+- [Engine](https://github.com/capactio/capact/tree/main/pkg/engine/api/graphql/schema.graphql)
+- [Local OCH](https://github.com/capactio/capact/tree/main/och-js/graphql/local/schema.graphql)
+- [Public OCH](https://github.com/capactio/capact/tree/main/och-js/graphql/public/schema.graphql)
 
 Each time the GraphQL schema changes, you need to update generated resources. To do this, execute:
 
@@ -353,7 +353,7 @@ This section describes the approach for Capact components instrumentation.
 ### Enable metrics scrape 
 
 We use Prometheus Operator for monitoring. To enable metrics scraping, you need to create a ServiceMonitor with `capact.io/scrape-metrics: "true"` label. ServiceMonitor can be created in any Namespace.
-Check [Engine metrics.yaml](../deploy/kubernetes/charts/capact/charts/engine/templates/metrics.yaml) file for a reference on how to create a proper Service and ServiceMonitor.
+Check [Engine metrics.yaml](https://github.com/capactio/capact/tree/main/deploy/kubernetes/charts/capact/charts/engine/templates/metrics.yaml) file for a reference on how to create a proper Service and ServiceMonitor.
 
 ### Add Grafana Dashboard
 
@@ -365,7 +365,7 @@ A recommendation is to use one ConfigMap per dashboard as Grafana doesn't handle
 * No escaping is needed for double curly brackets. 
 * IDE can still support JSON formatting/validation.
 
-Check the [Engine Helm chart](../deploy/kubernetes/charts/capact/charts/engine) for a reference on how to store and load the dashboards from JSON to ConfigMap.
+Check the [Engine Helm chart](https://github.com/capactio/capact/tree/main/deploy/kubernetes/charts/capact/charts/engine) for a reference on how to store and load the dashboards from JSON to ConfigMap.
 
 > **CAUTION:** The size of a ConfigMap is limited to 1MB.
 

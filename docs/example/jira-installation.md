@@ -49,12 +49,12 @@ The diagrams below show possible scenarios:
 
 * [Capact CLI](https://github.com/Project-Voltron/go-voltron/releases) installed.
 * [`kubectl`](https://kubernetes.io/docs/tasks/tools/install-kubectl/) installed.
-* GKE cluster with a fresh Capact installation. See the [installation tutorial](../capact-installation/README.md). 
+* GKE cluster with a fresh Capact installation. See the [installation tutorial](../installation/gcp-gke.md). 
 * For the scenario with Cloud SQL, Access to Google Cloud Platform.  
 
 ### Install all Jira components in a Kubernetes cluster
 
-By default, the Capact Engine [cluster policy](../../../deploy/kubernetes/charts/capact/charts/engine/values.yaml) prefers Kubernetes solutions. 
+By default, the Capact Engine [cluster policy](https://github.com/capactio/capact/tree/main/deploy/kubernetes/charts/capact/charts/engine/values.yaml) prefers Kubernetes solutions. 
 
 ```yaml
 apiVersion: 0.1.0 # Defines syntax version for policy
@@ -318,7 +318,7 @@ helm delete -n $NAMESPACE $(helm list -f="jira-software-*|postgresql-*" -q -n $N
 
 ### Install Jira with an external CloudSQL database
 
-To change the Jira installation, we need to adjust our cluster policy to prefer GCP solutions. Read more about policy configuration [here](../../policy-configuration.md).
+To change the Jira installation, we need to adjust our cluster policy to prefer GCP solutions. Read more about policy configuration [here](../feature/policy-configuration.md).
 
 #### Instructions
 
@@ -405,7 +405,7 @@ To change the Jira installation, we need to adjust our cluster policy to prefer 
    ENDOFFILE
    ```
    
-   >**NOTE**: If you are not familiar with the syntax above, check the [policy configuration document](../../policy-configuration.md).  
+   >**NOTE**: If you are not familiar with the syntax above, check the [policy configuration document](../feature/policy-configuration.md).  
 
 1. Update the cluster policy ConfigMap:
 
@@ -507,7 +507,7 @@ If you want to learn more about the project, check the [`go-voltron`](https://gi
 
 Here are some useful links:
 
-- [Tutorial which shows the first steps on how to develop OCF content for Capact.](../content-creation/README.md)
+- [Tutorial which shows the first steps on how to develop OCF content for Capact.](../content-development/guide.md)
 - The [OCF Draft v0.0.1](https://docs.google.com/document/d/1ud7xL3bXxEXtVPE8daA_DHYacKHMkn_jx6s7eaVT-NA/edit?usp=drive_web&ouid=115672498843496061020) document. 
 - [Documentation](../../../docs), which contains various investigations, enhancement proposals, tutorials, Capact architecture and development guideline.
 - Google Drive folder with the [initial draft concepts](https://drive.google.com/drive/u/1/folders/1SBpIR0QUn9Rp68w6N3G-hqXdi1HfZQsn).

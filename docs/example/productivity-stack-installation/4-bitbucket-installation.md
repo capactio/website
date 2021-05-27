@@ -120,4 +120,4 @@ Follow these steps to install [Atlassian Bitbucket Data Center](../../../och-con
    
    >**NOTE:** To log in, use the credentials specified for the **sysadminCredentials** property in the input installation parameters. 
 
-**Next steps:** Navigate back to the [main README](./README.md) and follow next steps.
+**Next steps:** Navigate back to the [Introduction](./0-intro.md) and follow next steps.

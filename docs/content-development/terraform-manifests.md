@@ -5,7 +5,7 @@ This document describes how to prepare content which uses Terraform Runner.
 ## Prerequisites
 
 - [MinIO client](https://min.io/download)
-- [Capact development cluster](../../development.md#development-cluster)
+- [Capact development cluster](../development/development-guide.md#development-cluster)
     
     > **NOTE:** Use `ENABLE_POPULATOR=false` environmental variable, as you will manually upload your OCF manifests into OCH.
 
@@ -65,24 +65,24 @@ As you port-forwarded in-cluster MinIO installation, you can check that by using
 To use the module, you need to prepare Capact manifests - InterfaceGroup, Interface, Implementation and Types.
 
 In this example, we have them all already defined for PostgreSQL installation. To create your own manifests, you can base on them:
-- [InterfaceGroup](../../och-content/interface/database/postgresql.yaml)
-- [Interface](../../och-content/interface/database/postgresql/install.yaml)
-- [Implementation](../../och-content/implementation/terraform/gcp/cloudsql/postgresql/install.yaml). The manifest uses Terraform Runner.
+- [InterfaceGroup](https://github.com/capactio/capact/tree/main/och-content/interface/database/postgresql.yaml)
+- [Interface](https://github.com/capactio/capact/tree/main/och-content/interface/database/postgresql/install.yaml)
+- [Implementation](https://github.com/capactio/capact/tree/main/och-content/implementation/terraform/gcp/cloudsql/postgresql/install.yaml). The manifest uses Terraform Runner.
   
   Instead of using GCS as module source, you can use internal MinIO URL, such as `http://argo-minio.argo:9000/terraform/cloudsql/cloudsql.tgz`.
 
-- [Input Type](../../och-content/type/database/postgresql/install-input.yaml)
-- [Output Type](../../och-content/type/database/postgresql/config.yaml)
+- [Input Type](https://github.com/capactio/capact/tree/main/och-content/type/database/postgresql/install-input.yaml)
+- [Output Type](https://github.com/capactio/capact/tree/main/och-content/type/database/postgresql/config.yaml)
 
 ## Populating content
 
-To read more how to populate content, see the [Populate the manifests into OCH](./README.md#populate-the-manifests-into-och) section in `README.md` document.
+To read more how to populate content, see the [Populate the manifests into OCH](./guide.md#populate-the-manifests-into-och) section in the "Content Development Guide" document.
 
 ## Running Action
 
 If the MinIO is populated with Terraform content and all manifests are ready, trigger the Jira installation, which will use CloudSQL provisioned with Terraform Runner.
 
-To read how to do it, see the [Install Jira with an external CloudSQL database](../jira-installation/README.md#install-jira-with-an-external-cloudsql-database) section in Jira installation tutorial.
+To read how to do it, see the [Install Jira with an external CloudSQL database](../example/jira-installation.md#install-jira-with-an-external-cloudsql-database) section in Jira installation tutorial.
 To make sure the Terraform-based Implementation is selected, you may use additional, Attribute-based `implementationConstraint` in Cluster Policy:
 
 ```yaml

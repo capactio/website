@@ -6,22 +6,24 @@ This document describes jobs created to automate the process of testing, buildin
 
 <!-- toc -->
 
-- [Overview](#overview)
-- [Repository secrets](#repository-secrets)
-- [Pipelines](#pipelines)
-  * [Pull request](#pull-request)
-  * [Master branch](#master-branch)
-  * [Recreate a long-running cluster](#recreate-a-long-running-cluster)
-    + [Let's encrypt certificates](#lets-encrypt-certificates)
-  * [Execute integration tests on a long-running cluster](#execute-integration-tests-on-a-long-running-cluster)
-- [Accessing encrypted files on CI](#accessing-encrypted-files-on-ci)
-- [Add a new pipeline](#add-a-new-pipeline)
+- [Capact CI and CD](#capact-ci-and-cd)
+  - [Table of Contents](#table-of-contents)
+  - [Overview](#overview)
+  - [Repository secrets](#repository-secrets)
+  - [Pipelines](#pipelines)
+    - [Pull request](#pull-request)
+    - [Master branch](#master-branch)
+    - [Recreate a long-running cluster](#recreate-a-long-running-cluster)
+      - [Let's encrypt certificates](#lets-encrypt-certificates)
+    - [Execute integration tests on a long-running cluster](#execute-integration-tests-on-a-long-running-cluster)
+  - [Accessing encrypted files on CI](#accessing-encrypted-files-on-ci)
+  - [Add a new pipeline](#add-a-new-pipeline)
 
 <!-- tocstop -->
 
 ##  Overview
 
-For all our CI/CD jobs, we use [GitHub Actions](https://docs.github.com/en/free-pro-team@latest/actions). Our workflows are defined in the [`.github/workflows`](../.github/workflows) directory. All scripts used for the CI/CD purpose are defined in the [`/hack/ci/`](../hack/ci) directory. For example, the [`/hack/ci/setup-env.sh`](../hack/ci/setup-env.sh) file has defined all environment variables used for every pipeline job.
+For all our CI/CD jobs, we use [GitHub Actions](https://docs.github.com/en/free-pro-team@latest/actions). Our workflows are defined in the [`.github/workflows`](../.github/workflows) directory. All scripts used for the CI/CD purpose are defined in the [`/hack/ci/`](https://github.com/capactio/capact/tree/main/hack/ci) directory. For example, the [`/hack/ci/setup-env.sh`](https://github.com/capactio/capact/tree/main/hack/ci/setup-env.sh) file has defined all environment variables used for every pipeline job.
 
 ##  Repository secrets
 
@@ -43,7 +45,7 @@ The following secrets are defined:
 
 <p align="center"><img alt="ci-pr-build" src="./assets/ci-pr-build.svg" /></p>
 
-The job is defined in the [`pr-build.yaml`](../.github/workflows/pr-build.yaml) file. It runs on pull requests created to the `master` branch.
+The job is defined in the [`pr-build.yaml`](https://github.com/capactio/capact/tree/main/.github/workflows/pr-build.yaml) file. It runs on pull requests created to the `master` branch.
 
 Steps:
 
@@ -58,24 +60,24 @@ Steps:
 
 <p align="center"><img alt="ci-default-branch-build" src="./assets/ci-default-branch-build.svg" /></p>
 
-The job is defined in the [`.github/workflows/branch-build.yaml`](../.github/workflows/branch-build.yaml) file. It runs on every new commit pushed to the `master` branch but skips execution for files which do not affect the building process, e.g. documentation, OCH content, etc.
+The job is defined in the [`.github/workflows/branch-build.yaml`](https://github.com/capactio/capact/tree/main/.github/workflows/branch-build.yaml) file. It runs on every new commit pushed to the `master` branch but skips execution for files which do not affect the building process, e.g. documentation, OCH content, etc.
 
 Steps:
 
 1. Lint and test code.
 1. Build Docker images for applications, tests and infra tools, and push them to [gcr.io/projectvoltron](https://gcr.io/projectvoltron) using this pattern: `gcr.io/projectvoltron/{service_name}:{first_7_chars_of_commit_sha}`.
-1. If [Capact Helm Charts](../deploy/kubernetes/charts) were changed:
+1. If [Capact Helm Charts](https://github.com/capactio/capact/tree/main/deploy/kubernetes/charts) were changed:
    1. Change **version** in all `Chart.yaml` to `{current_version}-{first_7_chars_of_commit_sha}`.
    1. Package and push charts to the [`capactio-master-charts`](https://storage.googleapis.com/capactio-master-charts) GCS.   
-1. Update the existing long-running cluster via [CLI](../cmd/capact/docs/capact_upgrade.md).
-1. Delete all Actions which are in the `SUCCEEDED` phase and whose names have the `capact-upgrade-` prefix. 
-1. If any step failed, send a Slack notification.
+2. Update the existing long-running cluster via [CLI](../cli/capact_upgrade.md).
+3. Delete all Actions which are in the `SUCCEEDED` phase and whose names have the `capact-upgrade-` prefix. 
+4. If any step failed, send a Slack notification.
 
 ###  Recreate a long-running cluster
 
 <p align="center"><img alt="ci-recreate-cluster" src="./assets/ci-recreate-cluster.svg" /></p>
 
-The job is defined in the [`.github/workflows/recreate_cluster.yaml`](../.github/workflows/recreate_cluster.yaml) file. It is executed on a manual trigger using the [`workflow_dispatch`](https://github.blog/changelog/2020-07-06-github-actions-manual-triggers-with-workflow_dispatch/) event. It uses already existing images available in the [gcr.io/projectvoltron](https://gcr.io/projectvoltron) registry. As a result, you need to provide a git SHA from which the cluster should be recreated. Optionally, you can override the Docker image version used via the **DOCKER_TAG** parameter.
+The job is defined in the [`.github/workflows/recreate_cluster.yaml`](https://github.com/capactio/capact/tree/main/.github/workflows/recreate_cluster.yaml) file. It is executed on a manual trigger using the [`workflow_dispatch`](https://github.blog/changelog/2020-07-06-github-actions-manual-triggers-with-workflow_dispatch/) event. It uses already existing images available in the [gcr.io/projectvoltron](https://gcr.io/projectvoltron) registry. As a result, you need to provide a git SHA from which the cluster should be recreated. Optionally, you can override the Docker image version used via the **DOCKER_TAG** parameter.
 
 > **CAUTION:** This job removes the old GKE cluster.
 
@@ -104,11 +106,11 @@ It means that every `*.txt` file in the `hack/ci/sensitive-data` directory is en
 
 To decrypt the data locally, you must either use a symmetric key or add the GPG key. The procedure of decrypting files and working with it in a team is described [here](https://buddy.works/guides/git-crypt#working-in-team-with-git-crypt).
 
-Currently, [`decrypt.yaml`](../.github/workflows/decrypt.yaml) shows how to decrypt a file on CI.
+Currently, [`decrypt.yaml`](https://github.com/capactio/capact/tree/main/.github/workflows/decrypt.yaml) shows how to decrypt a file on CI.
 
 ##  Add a new pipeline
 
-To create a new pipeline you must follow the rules of the syntax used by GitHub Actions. The new workflow must be defined in the [`.github/workflows`](../.github/workflows) directory. All scripts for CI/CD purposes must be defined in the [`/hack/ci/`](../hack/ci) directory.
+To create a new pipeline you must follow the rules of the syntax used by GitHub Actions. The new workflow must be defined in the [`.github/workflows`](https://github.com/capactio/capact/tree/main/.github/workflows) directory. All scripts for CI/CD purposes must be defined in the [`/hack/ci/`](https://github.com/capactio/capact/tree/main/hack/ci) directory.
 
 The following steps show how to checkout the code, set up the Go environment, and authorize to GCR and GKE in case they are necessary.
 
