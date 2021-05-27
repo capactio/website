@@ -40,16 +40,26 @@ module.exports = {
           position: "left",
           label: "Documentation",
         },
-        { to: "/blog", label: "Blog", position: "left" }, // TODO: Link to external blog or use built-in
+        {
+          to: "/blog",
+          label: "Blog",
+          position: "left"
+        }, // TODO: Link to external blog or use built-in
         {
           type: "docsVersionDropdown",
           position: "right",
         },
         {
+          to: "/slack",
+          position: "right",
+          className: 'slack-icon-link',
+          'aria-label': 'Slack',
+        },
+        {
           href: "https://github.com/capactio",
           position: "right",
           className: 'github-icon-link',
-          'aria-label': 'GitHub repository',
+          'aria-label': 'GitHub',
         },
         {
           html: `<iframe src="https://ghbtns.com/github-btn.html?user=twbs&repo=bootstrap&type=star&count=true" frameborder="0" scrolling="0" width="150" height="20" title="GitHub"></iframe>`,
@@ -60,18 +70,29 @@ module.exports = {
       style: "light",
       links: [
         {
-          title: "Docs",
+          title: "Learn",
           items: [
             {
-              label: "Tutorials",
-              to: "/docs/tutorials",
+              label: "Introduction",
+              to: "/docs/introduction",
             },
-            // TODO:
+            {
+              label: "Installation",
+              to: "/docs/installation",
+            },
+            {
+              label: "Examples",
+              to: "/docs/example",
+            },
           ],
         },
         {
-          title: "Follow us",
+          title: "Community",
           items: [
+            {
+              label: "Slack",
+              to: "/slack",
+            },
             {
               label: "Twitter",
               href: "https://twitter.com/CapactIO",

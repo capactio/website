@@ -4,32 +4,29 @@ import styles from "./HomepageFeatures.module.css";
 
 const FeatureList: SingleFeature[] = [
   {
-    title: "Easy to Use",
-    SVG: require("../../static/img/undraw_docusaurus_mountain.svg").default,
+    title: "Unify your workflow",
+    SVG: require("../../static/img/undraw_docusaurus_mountain.svg").default, // TODO:
     description: (
       <>
-        Docusaurus was designed from the ground up to be easily installed and
-        used to get your website up and running quickly.
+        Capact unifies the way how to manage applications, run day-two operations and execute arbitrary workflows. Learn once, use everywhere. 
       </>
     ),
   },
   {
-    title: "Focus on What Matters",
-    SVG: require("../../static/img/undraw_docusaurus_tree.svg").default,
+    title: "Dependencies interchangeability",
+    SVG: require("../../static/img/undraw_docusaurus_tree.svg").default,  // TODO:
     description: (
       <>
-        Docusaurus lets you focus on your docs, and we&apos;ll do the chores. Go
-        ahead and move your docs into the <code>docs</code> directory.
+        You don't need to worry about the dependencies. With generic concepts in mind, Capact will resolve the dependencies automatically, according to your preferences.
       </>
     ),
   },
   {
-    title: "Powered by React",
-    SVG: require("../../static/img/undraw_docusaurus_react.svg").default,
+    title: "Collaborate ",
+    SVG: require("../../static/img/undraw_docusaurus_react.svg").default, // TODO:
     description: (
       <>
-        Extend or customize your website layout by reusing React. Docusaurus can
-        be extended while reusing the same header and footer.
+        Capact is open source and its power is the community. Join forces and automate your tasks faster.
       </>
     ),
   },
