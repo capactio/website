@@ -21,6 +21,7 @@ const HomepageHeader = () => {
   const { siteConfig }: DocusaurusContext = useDocusaurusContext();
 
   const ghDetails = siteConfig.customFields.github;
+  const gettingStartedUrl = "/docs/introduction";
 
   return (
     <header className={clsx("hero hero--primary", styles.heroBanner)}>
@@ -30,7 +31,7 @@ const HomepageHeader = () => {
         <div className={styles.buttons}>
           <Link
             className="button button--secondary button--lg"
-            to="/docs/intro"
+            to={gettingStartedUrl}
           >
             Get started
           </Link>

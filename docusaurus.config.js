@@ -36,19 +36,20 @@ module.exports = {
       items: [
         {
           type: "doc",
-          docId: "intro",
+          docId: "introduction",
           position: "left",
-          label: "Docs",
+          label: "Documentation",
         },
-        { to: "/blog", label: "Blog", position: "left" },
+        { to: "/blog", label: "Blog", position: "left" }, // TODO: Link to external blog or use built-in
         {
           type: "docsVersionDropdown",
           position: "right",
         },
         {
           href: "https://github.com/capactio",
-          label: "GitHub",
           position: "right",
+          className: 'github-icon-link',
+          'aria-label': 'GitHub repository',
         },
         {
           html: `<iframe src="https://ghbtns.com/github-btn.html?user=twbs&repo=bootstrap&type=star&count=true" frameborder="0" scrolling="0" width="150" height="20" title="GitHub"></iframe>`,
