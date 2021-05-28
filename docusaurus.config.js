@@ -78,11 +78,11 @@ module.exports = {
             },
             {
               label: "Installation",
-              to: "/docs/installation",
+              to: "/docs/installation/local",
             },
             {
               label: "Examples",
-              to: "/docs/example",
+              to: "/docs/example/jira-installation",
             },
           ],
         },

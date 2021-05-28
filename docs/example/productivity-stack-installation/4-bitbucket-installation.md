@@ -1,6 +1,6 @@
 # 4. Install Bitbucket
 
-Follow these steps to install [Atlassian Bitbucket Data Center](../../../och-content/interface/productivity/bitbucket/install.yaml) on Kubernetes with the existing PostgreSQL instance.
+Follow these steps to install [Atlassian Bitbucket Data Center](https://github.com/capactio/capact/tree/main/och-content/interface/productivity/bitbucket/install.yaml) on Kubernetes with the existing PostgreSQL instance.
 
 1. Save your Bitbucket license in the `license.txt` file.
 

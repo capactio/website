@@ -446,11 +446,11 @@ The following section extends the tutorial with additional topics, to let you di
 
 A user consumes content stored in Open Capability Hub (OCH). The content is defined using Open Capability Format (OCF) manifests. The OCF specification defines the shape of manifests that Capact understands, such as Interface or Implementation.
 
-To see all the manifest that OCH stores, navigate to the [OCH content structure](../../../och-content).
+To see all the manifest that OCH stores, navigate to the [OCH content structure](https://github.com/capactio/capact/tree/main/och-content).
 
 To see the Jira installation manifests, click on the following links:
- - [Jira installation Interface](../../../och-content/interface/productivity/jira/install.yaml) - a generic description of Jira installation (action name, input, and output - a concept similar to interfaces in programming languages),
- - [Jira installation Implementation](../../../och-content/implementation/atlassian/jira/install.yaml) - represents the dynamic workflow for Jira Installation.
+ - [Jira installation Interface](https://github.com/capactio/capact/tree/main/och-content/interface/productivity/jira/install.yaml) - a generic description of Jira installation (action name, input, and output - a concept similar to interfaces in programming languages),
+ - [Jira installation Implementation](https://github.com/capactio/capact/tree/main/och-content/implementation/atlassian/jira/install.yaml) - represents the dynamic workflow for Jira Installation.
 
 #### Content development
 
@@ -505,9 +505,4 @@ When shared storage is available then set StorageClass for `sharedHome` variable
 
 If you want to learn more about the project, check the [`go-voltron`](https://github.com/Project-Voltron/go-voltron) repository.
 
-Here are some useful links:
-
-- [Tutorial which shows the first steps on how to develop OCF content for Capact.](../content-development/guide.md)
-- The [OCF Draft v0.0.1](https://docs.google.com/document/d/1ud7xL3bXxEXtVPE8daA_DHYacKHMkn_jx6s7eaVT-NA/edit?usp=drive_web&ouid=115672498843496061020) document. 
-- [Documentation](../../../docs), which contains various investigations, enhancement proposals, tutorials, Capact architecture and development guideline.
-- Google Drive folder with the [initial draft concepts](https://drive.google.com/drive/u/1/folders/1SBpIR0QUn9Rp68w6N3G-hqXdi1HfZQsn).
+To learn how to develop content, get familiar with the [content development guide.](../content-development/guide.md)

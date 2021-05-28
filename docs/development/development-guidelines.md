@@ -9,7 +9,7 @@ There should be strong separation between generic Capact business logic and plat
 
 ## Development tools
 
-We are using Make targets to execute commonly used development tasks. All development tools should be placed in [hack](../hack) folder.
+We are using Make targets to execute commonly used development tasks. All development tools should be placed in [hack](https://github.com/capactio/capact/tree/main/hack) folder.
 
 We assume that the Go and Docker is installed both on CI and on a local machine in a proper version. Currently, all scripts don't validate it.
  
@@ -17,7 +17,7 @@ If tool is written in a different language, then we use Docker to run that tool,
 
 All tools should:
  - consume `SKIP_DEPS_INSTALLATION` environment variable that can be set to `true` or `false`. If set to `false` dependencies should be installed to a tempdir and cleaned up after execution. 
- - define its stable versions in [./lib/const.sh](../hack/lib/const.sh) file.
+ - define its stable versions in [./lib/const.sh](https://github.com/capactio/capact/tree/main/hack/lib/const.sh) file.
  - works both on a local machine and on CI.
 
 > **NOTE:** We are not using dedicated GitHub Actions on CI as we want to have a control and deterministic executions of our tools both on CI and local machines.

@@ -104,7 +104,7 @@ make fix-lint-issues
 
 ### Integration tests
 
-We support the cross-functional integration tests that are defined in [test](../test) package and 
+We support the cross-functional integration tests that are defined in [test](https://github.com/capactio/capact/tree/main/test) package and 
 Kubernetes controller integration tests which are using fake K8s API Server and `etcd`. 
 
 #### Cross-functional
@@ -309,7 +309,7 @@ To generate the Go structs for a specific OCF version, execute:
 OCF_VERSION={VERSION} make gen-go-api-from-ocf-spec
 ```
 
-> **NOTE:** Go structs are generated in [`pkg/sdk/apis`](../pkg/sdk/apis) package.
+> **NOTE:** Go structs are generated in [`pkg/sdk/apis`](https://github.com/capactio/capact/tree/main/pkg/sdk/apis) package.
 
 ### Generate K8s resources
 

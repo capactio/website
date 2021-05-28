@@ -33,7 +33,7 @@ Follow these steps to install Atlassian Crowd using the existing PostgreSQL inst
    ENDOFFILE
    ```
 
-   You can tweak the parameters based on the [input parameters JSON schema](../../../och-content/type/productivity/crowd/install-input.yaml).
+   You can tweak the parameters based on the [input parameters JSON schema](https://github.com/capactio/capact/tree/main/och-content/type/productivity/crowd/install-input.yaml).
 
    > **NOTE:** It is recommended to start with a single Crowd replica before finishing the configuration process. Mind that the AWS EFS StorageClass is not compatible.
 

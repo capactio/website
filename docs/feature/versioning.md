@@ -107,7 +107,7 @@ This is the version of TypeInstance **metadata** and **spec** fields. Unlike Kub
 
 ## Core manifests
 
-We version core manifests (manifests, which are located under [`core` subdirectory](../och-content/core)) in the same way as the OCF itself. Core entities are strictly tied into the OCH release, and they are read-only.
+We version core manifests (manifests, which are located under [`core` subdirectory](https://github.com/capactio/capact/tree/main/och-content/core)) in the same way as the OCF itself. Core entities are strictly tied into the OCH release, and they are read-only.
 
 ## Application version
 

@@ -80,7 +80,7 @@ If you use AWS SSO on your account, then you can also configure SSO for AWS CLI 
      
    This operation can take around to 20 minutes to finish.
    
-1. Configure the name servers for the Capact Route53 Hosted Zone in your DNS provider. To get the name server for the hosted zone check the [`config/route53_zone_name_servers`](./config/route53_zone_name_servers) file.
+1. Configure the name servers for the Capact Route53 Hosted Zone in your DNS provider. To get the name server for the hosted zone check the [`config/route53_zone_name_servers`](https://github.com/capactio/capact/tree/main/config/route53_zone_name_servers) file.
   ```bash
   cat hack/eks/config/route53_zone_name_servers
   ```
