@@ -6,16 +6,14 @@ This tutorial shows the basic concepts of Capact on the RocketChat installation 
 
 <!-- toc -->
 
-- [RocketChat installation](#rocketchat-installation)
-    - [Table of Contents](#table-of-contents)
-    - [Goal](#goal)
-    - [Prerequisites](#prerequisites)
-    - [Install all RocketChat components in a Kubernetes cluster](#install-all-rocketchat-components-in-a-kubernetes-cluster)
-    - [Validate RocketChat high availability setup](#validate-rocketchat-high-availability-setup)
-      - [Non disruptive tests](#non-disruptive-tests)
-      - [Disruptive tests](#disruptive-tests)
-    - [Clean-up](#clean-up)
-    - [Additional resources](#additional-resources)
+- [Goal](#goal)
+- [Prerequisites](#prerequisites)
+- [Install all RocketChat components in a Kubernetes cluster](#install-all-rocketchat-components-in-a-kubernetes-cluster)
+- [Validate RocketChat high availability setup](#validate-rocketchat-high-availability-setup)
+  * [Non-disruptive tests](#non-disruptive-tests)
+  * [Disruptive tests](#disruptive-tests)
+- [Clean-up](#clean-up)
+- [Additional resources](#additional-resources)
 
 <!-- tocstop -->
 
@@ -147,7 +145,7 @@ The following tools are required:
 
 Now, let's validate the high-availability setup for the RocketChat.
 
-#### Non disruptive tests
+#### Non-disruptive tests
 
 Here we are simulating maintenance actions which should not disrupt RocketChat. Non disruptive actions for example are:
 
