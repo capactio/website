@@ -39,3 +39,13 @@ npm run build
 ```
 
 It can be served using any static contents hosting service. You can use `npm run serve` command to set up a development static server.
+
+### Synchronize documentation
+
+Files in the `docs` directory are synchronized from `capact` repository. To synchronize them, run:
+
+```bash
+npm run sync-docs
+```
+
+> **NOTE:** The script assumes that the `capact` repository is located on the `../capact` path relative to the root of the directory.
