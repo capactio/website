@@ -47,7 +47,7 @@ The diagrams below show possible scenarios:
 
 ###  Prerequisites
 
-* [Capact CLI](https://github.com/Project-Voltron/go-voltron/releases) installed.
+* [Capact CLI](https://github.com/capactio/capact/releases) installed.
 * [`kubectl`](https://kubernetes.io/docs/tasks/tools/install-kubectl/) installed.
 * GKE cluster with a fresh Capact installation. See the [installation tutorial](../installation/gcp-gke.md). 
 * For the scenario with Cloud SQL, Access to Google Cloud Platform.  
@@ -503,6 +503,6 @@ When shared storage is available then set StorageClass for `sharedHome` variable
 
 ###  Additional resources
 
-If you want to learn more about the project, check the [`go-voltron`](https://github.com/Project-Voltron/go-voltron) repository.
+If you want to learn more about the project, check the [`capact`](https://github.com/capactio/capact) repository.
 
 To learn how to develop content, get familiar with the [content development guide.](../content-development/guide.md)

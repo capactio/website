@@ -197,7 +197,7 @@ To check the logs since a given time, use the `--since-time` flag, for example:
   helm upgrade capact capactio/capact -n capact-system --reuse-values --set och-public.populator.enabled=true
   ```
 
-- Check if manifests can be fetched from the Public OCH. Install the latest [stable Capact CLI](https://github.com/Project-Voltron/go-voltron/releases), and run:
+- Check if manifests can be fetched from the Public OCH. Install the latest [stable Capact CLI](https://github.com/capactio/capact/releases), and run:
 
   ```bash
   capact login # If not logged yet.
@@ -258,7 +258,7 @@ To check the logs since a given time, use the `--since-time` flag, for example:
 
 ### Checking if TypeInstance exists
 
-To check if TypeInstance exists. Install the latest [stable Capact CLI](https://github.com/Project-Voltron/go-voltron/releases), and run:
+To check if TypeInstance exists. Install the latest [stable Capact CLI](https://github.com/capactio/capact/releases), and run:
                                
 ```bash
 capact login # If not logged yet.

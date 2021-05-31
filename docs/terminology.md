@@ -1,7 +1,6 @@
 ---
 sidebar_position: 2
 ---
-
 # Terminology
 
 This document lists and explains all terms used through the Capact documentation.
@@ -14,14 +13,12 @@ This document lists and explains all terms used through the Capact documentation
 
 <!-- toc -->
 
-- [Terminology](#terminology)
-  - [Table of contents](#table-of-contents)
-  - [Common terms](#common-terms)
-    - [Capability](#capability)
-    - [Action](#action)
-    - [Runner](#runner)
-  - [Components](#components)
-  - [Entities](#entities)
+- [Common terms](#common-terms)
+  * [Capability](#capability)
+  * [Action](#action)
+  * [Runner](#runner)
+- [Components](#components)
+- [Entities](#entities)
 
 <!-- tocstop -->
 
@@ -65,3 +62,4 @@ There are the following entities in the system:
 - [RepoMetadata](https://github.com/capactio/capact/tree/main/ocf-spec/0.0.1/README.md#repo-metadata)
 - [Type](https://github.com/capactio/capact/tree/main/ocf-spec/0.0.1/README.md#type)
 - [Vendor](https://github.com/capactio/capact/tree/main/ocf-spec/0.0.1/README.md#vendor)
+
