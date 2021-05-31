@@ -4,6 +4,12 @@ sidebar_position: 1
 
 # Tutorial Intro
 
+:::danger Caution
+
+The 0.3.0 release will be removed in future. It is just to showcase the versioned docs capability.
+
+:::
+
 Let's discover **Docusaurus in less than 5 minutes**.
 
 ## Getting Started
