@@ -7,24 +7,24 @@ module.exports = {
   onBrokenLinks: "throw",
   onBrokenMarkdownLinks: "warn",
   favicon: "img/favicon.ico",
-  organizationName: "capactio", // Usually your GitHub org/user name.
-  projectName: "website", // Usually your repo name.
+  organizationName: "capactio",
+  projectName: "website",
   themeConfig: {
     announcementBar: {
-      id: "support_us", // Any value that will identify this message.
+      id: "work_in_progress",
       content:
-        "⚠️ Capact website is under heavy development. Come back visit us soon!",
-      backgroundColor: "#fafbfc", // Defaults to `#fff`.
-      textColor: "#091E42", // Defaults to `#000`.
-      isCloseable: true, // Defaults to `true`.
+        "⚠️ Capact website is under heavy development. Come back and visit us soon!",
+      backgroundColor: "#fafbfc",
+      textColor: "#091E42",
+      isCloseable: true,
     },
     colorMode: {
       defaultMode: "light",
       respectPrefersColorScheme: true,
     },
-    algolia: {
-      apiKey: "YOUR_API_KEY", // TODO:
-      indexName: "YOUR_INDEX_NAME", // TODO:
+    algolia: { // TODO: Once we publish capact.io website, request API key from Algolia
+      apiKey: "YOUR_API_KEY",
+      indexName: "YOUR_INDEX_NAME",
       contextualSearch: true,
     },
     navbar: {
@@ -40,11 +40,6 @@ module.exports = {
           position: "left",
           label: "Documentation",
         },
-        {
-          to: "/blog",
-          label: "Blog",
-          position: "left"
-        }, // TODO: Link to external blog or use built-in
         {
           type: "docsVersionDropdown",
           position: "right",
@@ -62,7 +57,7 @@ module.exports = {
           'aria-label': 'GitHub',
         },
         {
-          html: `<iframe src="https://ghbtns.com/github-btn.html?user=twbs&repo=bootstrap&type=star&count=true" frameborder="0" scrolling="0" width="150" height="20" title="GitHub"></iframe>`,
+          html: `<iframe src="https://ghbtns.com/github-btn.html?user=capactio&repo=capact&type=star&count=true" frameborder="0" scrolling="0" width="150" height="20" title="GitHub"></iframe>`,
         },
       ],
     },
@@ -82,7 +77,7 @@ module.exports = {
             },
             {
               label: "Examples",
-              to: "/docs/example/jira-installation",
+              to: "/docs/example/mattermost-installation",
             },
           ],
         },
@@ -99,7 +94,7 @@ module.exports = {
             },
             {
               label: "YouTube",
-              href: "https://www.youtube.com/c/capactio", // TODO:
+              href: "https://www.youtube.com/channel/UCajXtDttqVuZ_Bl7M3_qA8w",
             },
             {
               label: "LinkedIn",
@@ -128,8 +123,7 @@ module.exports = {
       {
         docs: {
           sidebarPath: require.resolve("./sidebars.js"),
-          // Please change this to your repo.
-          editUrl: "https://github.com/capactio/capact/edit/main/docs/",
+          editUrl: "https://github.com/capactio/capact/edit/main/",
           showLastUpdateAuthor: true,
           showLastUpdateTime: true,
           versions: {
@@ -138,11 +132,7 @@ module.exports = {
             },
           },
         },
-        blog: {
-          showReadingTime: true,
-          // Please change this to your repo.
-          editUrl: "https://github.com/capactio/website/edit/main/blog/",
-        },
+        blog: false,
         theme: {
           customCss: require.resolve("./src/css/custom.css"),
         },
@@ -152,9 +142,8 @@ module.exports = {
   ],
   customFields: {
     github: {
-      // TODO: Change this
-      user: "twbs",
-      repository: "bootstrap",
+      user: "capactio",
+      repository: "capact",
     },
   },
 };
