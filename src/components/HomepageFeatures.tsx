@@ -8,12 +8,12 @@ const FeatureList: SingleFeature[] = [
     SVG: require("../../static/img/undraw_docusaurus_mountain.svg").default, // TODO:
     description: (
       <>
-        Capact unifies the way how to manage applications, run day-two operations and execute arbitrary workflows. Learn once, use everywhere. 
+        Capact unifies the way how to manage applications (or middleware, or infrastructure, or anything in between), run day-two operations and execute arbitrary workflows. Learn once, use everywhere! 
       </>
     ),
   },
   {
-    title: "Dependencies interchangeability",
+    title: "Interchangeable Dependencies",
     SVG: require("../../static/img/undraw_docusaurus_tree.svg").default,  // TODO:
     description: (
       <>
@@ -22,11 +22,11 @@ const FeatureList: SingleFeature[] = [
     ),
   },
   {
-    title: "Collaborate ",
+    title: "Collaborate",
     SVG: require("../../static/img/undraw_docusaurus_react.svg").default, // TODO:
     description: (
       <>
-        Capact is open source and its power is the community. Join forces and automate your tasks faster.
+        Capact is open source and powered by the community. Let's work together to enable DRY at a global scale!
       </>
     ),
   },
