@@ -123,7 +123,7 @@ module.exports = {
       {
         docs: {
           sidebarPath: require.resolve("./sidebars.js"),
-          editUrl: "https://github.com/capactio/capact/edit/main/docs/",
+          editUrl: "https://github.com/capactio/capact/edit/main/",
           showLastUpdateAuthor: true,
           showLastUpdateTime: true,
           versions: {
