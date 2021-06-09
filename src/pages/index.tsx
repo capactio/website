@@ -6,6 +6,26 @@ import useDocusaurusContext from "@docusaurus/useDocusaurusContext";
 import styles from "./index.module.css";
 import { HomepageFeatures } from "../components/HomepageFeatures";
 
+interface GitHubFeaturedRepoDetails {
+  user: string;
+  repository: string;
+}
+
+const GithubStarButton: FunctionComponent<GitHubFeaturedRepoDetails> = ({
+  user,
+  repository,
+}) => (
+  <span className={styles.githubButtonWrapper}>
+    <iframe
+      className={styles.githubButton}
+      src={`https://ghbtns.com/github-btn.html?user=${user}&repo=${repository}&type=star&count=true&size=large`}
+      width={160}
+      height={30}
+      title="GitHub Stars"
+    />
+  </span>
+);
+
 interface DocusaurusContext {
   siteConfig: {
     title: string;
@@ -42,27 +62,8 @@ const HomepageHeader = () => {
   );
 };
 
-interface GitHubFeaturedRepoDetails {
-  user: string;
-  repository: string;
-}
 
-const GithubStarButton: FunctionComponent<GitHubFeaturedRepoDetails> = ({
-  user,
-  repository,
-}) => (
-  <span className={styles.githubButtonWrapper}>
-    <iframe
-      className={styles.githubButton}
-      src={`https://ghbtns.com/github-btn.html?user=${user}&repo=${repository}&type=star&count=true&size=large`}
-      width={160}
-      height={30}
-      title="GitHub Stars"
-    />
-  </span>
-);
-
-export default function Home() {
+const Home: FunctionComponent = () => {
   const { siteConfig }: DocusaurusContext = useDocusaurusContext();
   return (
     <Layout
@@ -76,3 +77,5 @@ export default function Home() {
     </Layout>
   );
 };
+
+export default Home;
