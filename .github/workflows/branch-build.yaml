@@ -11,7 +11,7 @@ on:
 
 jobs:
   build:
-    name: Build website
+    name: Lint and build website
     runs-on: ubuntu-latest
     steps:
 
