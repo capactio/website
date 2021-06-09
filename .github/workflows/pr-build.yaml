@@ -3,9 +3,9 @@ name: PR build
 on:
   pull_request:
     types: [ opened, synchronize, reopened ]
-    paths:
-      - "!LICENSE"
-      - "!CODEOWNERS"
+    paths-ignore:
+      - "LICENSE"
+      - "CODEOWNERS"
     branches:
       - "main"
 

@@ -2,10 +2,10 @@ name: Default branch build
 
 on:
   push:
-    paths:
-      - "!README.md"
-      - "!LICENSE"
-      - "!CODEOWNERS"
+    paths-ignore:
+      - "LICENSE"
+      - "CODEOWNERS"
+      - "README.md"
     branches:
       - main
 
