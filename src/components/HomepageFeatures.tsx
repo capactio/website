@@ -52,7 +52,7 @@ export const Feature: FC<SingleFeature> = ({ SVG, title, description }) => {
   );
 };
 
-export const HomepageFeatures = () => {
+export const HomepageFeatures: FC = () => {
   return (
     <section className={styles.features}>
       <div className="container">
