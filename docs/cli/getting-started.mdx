@@ -1,0 +1,227 @@
+# Getting Started
+
+In addition to a Capact GraphQL API, Capact features a command-line interface that wraps common functionality and formats output. The Capact CLI is a single static binary. It is a wrapper around the Capact GraphQL API and Kubernetes API.
+
+## Install
+
+Capact has two types of release channels, **Stable**, and **Latest**:
+
+- The **Stable** channel has binaries for the releases.
+- The **Latest** channel has binaries build from the latest commit on the `main` branch.
+
+### Stable - from the latest release
+
+Install Capact CLI binary with `curl`:
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+<Tabs
+	groupId="operating-systems"
+	defaultValue="macos"
+	values={[
+		{label: 'MacOS', value: 'macos'},
+		{label: 'Linux', value: 'linux'},
+		{label: 'Windows', value: 'windows'},
+		{label: 'Other', value: 'other'},
+	]}>
+<TabItem value="macos">
+
+```shell
+curl -Lo capact https://storage.googleapis.com/capactio-binaries/v0.3.0/capact-darwin-amd64
+```
+
+Copy to binary directory:
+
+```shell
+chmod +x capact && mv capact /usr/local/bin/capact
+```
+
+</TabItem>
+<TabItem value="linux">
+
+```shell
+curl -Lo capact https://storage.googleapis.com/capactio-binaries/v0.3.0/capact-linux-amd64
+```
+
+Copy to binary directory:
+
+```shell
+chmod +x capact && mv capact /usr/local/bin/capact
+```
+
+</TabItem>
+<TabItem value="windows">
+
+```shell
+curl -Lo capact https://storage.googleapis.com/capactio-binaries/v0.3.0/capact-windows-amd64.exe
+```
+
+</TabItem>
+<TabItem value="other">
+
+To install a different release version, change the path to point to the desired version and architecture:
+
+```shell
+curl -Lo capact https://storage.googleapis.com/capactio-binaries/v0.3.0/capact-$OS-$ARCH
+```
+
+</TabItem>
+</Tabs>
+
+Run `capact -h` or `capact <command> -h` to see the help output which corresponds to a given command.
+
+### Latest - from the latest `main` commit
+
+Install Capact CLI binary with `curl`:
+
+<Tabs
+	groupId="operating-systems"
+	defaultValue="macos"
+	values={[
+		{label: 'MacOS', value: 'macos'},
+		{label: 'Linux', value: 'linux'},
+		{label: 'Windows', value: 'windows'},
+		{label: 'Docker', value: 'docker'},
+		{label: 'Other', value: 'other'},
+	]}>
+<TabItem value="macos">
+
+```shell
+curl -Lo capact https://storage.googleapis.com/capactio-binaries/latest/capact-darwin-amd64
+```
+
+Copy to binary directory:
+
+```shell
+chmod +x capact && mv capact /usr/local/bin/capact
+```
+
+</TabItem>
+<TabItem value="linux">
+
+```shell
+curl -Lo capact https://storage.googleapis.com/capactio-binaries/latest/capact-linux-amd64
+```
+
+
+Copy to binary directory:
+
+```shell
+chmod +x capact && mv capact /usr/local/bin/capact
+```
+
+</TabItem>
+<TabItem value="windows">
+
+```shell
+curl -Lo capact https://storage.googleapis.com/capactio-binaries/latest/capact-windows-amd64.exe
+```
+
+</TabItem>
+<TabItem value="docker">
+
+Export credential store configuration:
+
+```shell
+export CAPACT_CREDENTIALS_STORE_BACKEND=file
+export CAPACT_CREDENTIALS_STORE_FILE_PASSPHRASE=pass
+```
+
+Run
+```shell
+docker run --rm \
+  -e CAPACT_CREDENTIALS_STORE_BACKEND \
+	-e CAPACT_CREDENTIALS_STORE_FILE_PASSPHRASE \
+	-v $HOME/.config/capact:/.config/capact/ \
+	ghcr.io/capactio/tools/capact-cli:latest login $GATEWAY_URL -u $USERNAME -p $PASSWORD
+```
+
+</TabItem>
+<TabItem value="other">
+To install a different release version, change the path to point to the desired version and architecture:
+
+```shell
+curl -Lo capact https://storage.googleapis.com/capactio-binaries/latest/capact-$OS-$ARCH
+```
+
+</TabItem>
+</Tabs>
+
+Run `capact -h` or `capact <command> -h` to see the help output which corresponds to a given command.
+
+## First use
+
+> **NOTE:** The `capact action watch` command calls the Kubernetes API directly. If you want to use this command, kubeconfig has to be configured with the same cluster as the one which the Gateway points to.
+
+To begin working with Capact using the `capact` CLI, start with log in into a given cluster:
+
+```shell
+capact login
+```
+
+If URL and credentials are valid, the output is:
+
+```shell
+Login Succeeded
+```
+
+Now you are ready to interact with the cluster via CLI. For example, fetch all available Interfaces:
+
+```shell
+capact hub interfaces get
+```
+
+You can log into multiple clusters. To check in which cluster you already logged in, run:
+
+```shell
+capact config get-contexts
+```
+
+Example output:
+
+```shell
+                      SERVER                       AUTH TYPE    DEFAULT
++------------------------------------------------+------------+---------+
+  https://gateway.capact.local                     Basic Auth   YES
+  https://gateway.capact.io                        Basic Auth   NO
+```
+
+To change the default context, run:
+
+```shell
+# Selects which Hub server to use of via a prompt
+capact config set-context
+```
+
+If you want to log out, run:
+
+```shell
+# Select what server to log out of via a prompt
+capact logout
+```
+
+## Autocompletion
+
+To learn how to enable `capact` autocompletion, run:
+
+```shell
+capact completion -h
+```
+
+> **NOTE:** Be sure to **restart your shell** after installing autocompletion.
+
+When you start typing a `capact` command, press the `<tab>` character to show a list of available completions. Type `-<tab>` to show available flag completions.
+
+## Credential store options
+
+The `capact login` uses [keyring](https://github.com/99designs/keyring) library to store credentials securely. The supported store backends are:
+
+* [macOS Keychain](https://support.apple.com/en-au/guide/keychain-access/welcome/mac)
+* [Windows Credential Manager](https://support.microsoft.com/en-au/help/4026814/windows-accessing-credential-manager)
+* Secret Service ([Gnome Keyring](https://wiki.gnome.org/Projects/GnomeKeyring), [KWallet](https://kde.org/applications/system/org.kde.kwalletmanager5))
+* [KWallet](https://kde.org/applications/system/org.kde.kwalletmanager5)
+* [Pass](https://www.passwordstore.org/)
+* Encrypted file
+
+Use the `CAPACT_CREDENTIALS_STORE_BACKEND` environment variable to change the default backend.
