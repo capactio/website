@@ -2,20 +2,6 @@
 
 This document describes Capact release process. Currently, it consists of a set of manual steps, however in future it will be automated.
 
-## Table of contents
-
-<!-- toc -->
-
-- [Steps](#steps)
-  * [Export environmental variables](#export-environmental-variables)
-  * [Create a pre-release pull request](#create-a-pre-release-pull-request)
-  * [Create release branch](#create-release-branch)
-    + [Release Helm charts and binaries](#release-helm-charts-and-binaries)
-  * [Create new git tag and GitHub release](#create-new-git-tag-and-github-release)
-- [Create GitHub release](#create-github-release)
-
-<!-- tocstop -->
-
 ## Steps
 
 ### Export environmental variables
@@ -25,15 +11,21 @@ Export environmental variable with the new Capact version:
 Use [Semantic Versioning 2.0.0](https://semver.org/spec/v2.0.0.html) to specify the next Capact release.
 
 ```bash
-export RELEASE_VERSION={major}.{minor}.{patch} 
-export RELEASE_BRANCH=release-{major}.{minor} 
+export RELEASE_VERSION={major}.{minor}.{patch}
+export RELEASE_MAJOR_MINOR_VERSION={major}.{minor}
+
+# do not change the following line:
+export RELEASE_BRANCH=release-${RELEASE_MAJOR_MINOR_VERSION}
 ```
 
 For example, in case of the `0.3.0` release, it would be:
 
 ```bash
 export RELEASE_VERSION=0.3.0 
-export RELEASE_BRANCH=release-0.3
+export RELEASE_MAJOR_MINOR=0.3
+
+# do not change the following line:
+export RELEASE_BRANCH=release-${RELEASE_MAJOR_MINOR_VERSION}
 ```
 
 ### Create a pre-release pull request
@@ -175,3 +167,34 @@ If you release major or minor version, create a dedicated release branch.
 1. Navigate to the [New GitHub release](https://github.com/capactio/capact/releases/new) page.
 1. Copy the release notes from the pull request created in the [Create a pre-release pull request](#create-a-pre-release-pull-request) section.
 1. Create the new GitHub release with the copied notes.
+
+## Release documentation
+
+If you release a new major or minor Capact version, follow these steps:
+
+1. Clone the [`website`](https://github.com/capactio/website) repository locally.
+1. Follow instructions from the [`README.md`](https://github.com/capactio/website/blob/main/README.md) document to fullfil all prerequisites.
+1. Create and checkout new branch:
+    
+   ```bash
+   git checkout -b prepare-${RELEASE_MAJOR_MINOR_VERSION}
+   ```   
+1. Synchronize Capact CLI documentation according to the [Synchronize CLI documentation](https://github.com/capactio/website/blob/main/README.md#synchronize-cli-documentation) section.
+1. Run the following command:
+    
+    ```bash
+    npm run docusaurus docs:version ${RELEASE_MAJOR_MINOR_VERSION}
+    ```
+
+1. Commit and push the changes
+
+    ```bash
+    git add .
+    git commit -m "Release ${RELEASE_MAJOR_MINOR_VERSION} documentation"
+    git push -u origin prepare-${RELEASE_MAJOR_MINOR_VERSION}
+    ```
+
+1. Create a new pull request for the `website` repository.
+1. Merge the pull request.
+
+To read more about documentation versioning, see the [Versioning](https://docusaurus.io/docs/versioning) page on the Docusaurus website.
