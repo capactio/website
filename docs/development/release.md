@@ -164,7 +164,7 @@ If you release major or minor version, create a dedicated release branch.
 
 1. Release tools binaries:
    
-   > **NOTE**: GoReleaser uses the git tag as binaries version. 
+   > **NOTE**: GoReleaser uses the git tag as binaries version. Make sure [the UPX tool is installed](https://github.com/upx/upx/releases) before running the command.
    
    ```bash
    make release-binaries

@@ -271,14 +271,6 @@ To build all the CLI tools binaries (Capact CLI and Populator), execute the foll
 make build-all-tools
 ```
 
-In order to minimize the binary sizes, you can opt to enable [UPX](https://github.com/upx/upx) compression after building the binaries:
-
-> **NOTE:** Make sure [the UPX tool is installed](https://github.com/upx/upx/releases) before running the command. 
-
-```bash
-make build-all-tools-prod
-```
-
 The binaries will be placed under the `bin/` subdirectory in the root of the source tree.
 
 ## Generators
