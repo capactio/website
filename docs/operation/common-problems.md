@@ -48,7 +48,7 @@ Debugging steps:
 
 - [Check if Engine is up and running](diagnostics.md#engine-health).
 
-- [Check the Engine logs](diagnostics.md#engine-logs). You can grep logs using Action name. This will narrow-down number of log entries. During the render process, manifests are downloaded from the Public OCH. The common problem can be that the Public OCH is unreachable for Engine. Check [Unreachable Gateway](#unreachable-gateway) section to resolve this issue.
+- [Check the Engine logs](diagnostics.md#engine-logs). You can grep logs using Action name. This will narrow-down number of log entries. During the render process, manifests are downloaded from the Public Hub. The common problem can be that the Public Hub is unreachable for Engine. Check [Unreachable Gateway](#unreachable-gateway) section to resolve this issue.
 
 ### Action in the `Failed` phase
 
@@ -58,7 +58,7 @@ Debugging steps:
 
 - [Check the Action status message](diagnostics.md#checking-action-status-message). If status message contains: `while fetching latest Interface revision string: cannot find the latest revision for Interface "cap.interfac.db.install" (giving up - exceeded 15 retries)`:
 
-    - [Ensure that Public OCH is populated and manifests can be fetched](diagnostics.md#checking-if-public-och-is-populated).
+    - [Ensure that Public Hub is populated and manifests can be fetched](diagnostics.md#checking-if-public-hub-is-populated).
 	- Ensure that **ActionRef** is not misspelled.
 
 - [Check the Engine logs](diagnostics.md#engine-logs). You can grep logs using Action name. This will narrow-down the number of log entries. The common problem can be that the Engine doesn't have proper permission to schedule Action execution, e.g. cannot create ServiceAccount, Secret, Argo Workflow. Ensure that the `k8s-engine-role` ClusterRole in the `capact-system` Namespace has all necessary permissions.
@@ -119,7 +119,7 @@ Debugging steps:
 
 ## Unreachable Gateway
 
-Gateway aggregates GraphQL APIs from the Capact Engine, Public OCH, and Local OCH. If one of the aggregated component is not working properly, Gateway is not working either.
+Gateway aggregates GraphQL APIs from the Capact Engine, Public Hub, and Local Hub. If one of the aggregated component is not working properly, Gateway is not working either.
 
 Symptoms:
 
@@ -133,13 +133,13 @@ Debugging steps:
 
 - [Restart Gateway](diagnostics.md#pod-restart). For component name use `gateway`.
 
-- [Check if OCH Public is up and running](diagnostics.md#public-och-health).
+- [Check if Hub Public is up and running](diagnostics.md#public-hub-health).
 
-- [Check if OCH Public has in logs](diagnostics.md#public-och-logs) information that it was started. It should contain a message similar to: `INFO   GraphQL API is listening   {"endpoint":"http://:8080/graphql"}`.
+- [Check if Hub Public has in logs](diagnostics.md#public-hub-logs) information that it was started. It should contain a message similar to: `INFO   GraphQL API is listening   {"endpoint":"http://:8080/graphql"}`.
 
-- [Check if OCH Local is up and running](diagnostics.md#local-och-health).
+- [Check if Hub Local is up and running](diagnostics.md#local-hub-health).
 
-- [Check if OCH Local has in logs](diagnostics.md#local-och-logs) information that it was started. It should contain a message similar to: `INFO   GraphQL API is listening   {"endpoint":"http://:8080/graphql"}`.
+- [Check if Hub Local has in logs](diagnostics.md#local-hub-logs) information that it was started. It should contain a message similar to: `INFO   GraphQL API is listening   {"endpoint":"http://:8080/graphql"}`.
 
 - [Check if Engine is up and running](diagnostics.md#engine-health).
 

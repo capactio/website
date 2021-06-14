@@ -49,7 +49,7 @@ There are the following components in the system:
 - [CLI](./architecture/e2e-architecture.md#cli)
 - [Gateway](./architecture/e2e-architecture.md#gateway)
 - [Engine](./architecture/e2e-architecture.md#engine)
-- [OCH](./architecture/e2e-architecture.md#och)
+- [Hub](./architecture/e2e-architecture.md#hub)
 - [SDK](./architecture/e2e-architecture.md#sdk)
 
 ## Entities

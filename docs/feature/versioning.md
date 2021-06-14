@@ -9,7 +9,7 @@ This document describes Capact versioning strategy.
 - [Overview](#overview)
 - [Diagram](#diagram)
 - [OCF Version](#ocf-version)
-  * [Supporting multiple OCF versions in OCH](#supporting-multiple-ocf-versions-in-och)
+  * [Supporting multiple OCF versions in Hub](#supporting-multiple-ocf-versions-in-hub)
   * [Deprecation policy of OCF versions](#deprecation-policy-of-ocf-versions)
 - [Manifests revision](#manifests-revision)
 - [TypeInstance **resourceVersion**](#typeinstance-resourceversion)
@@ -24,11 +24,11 @@ This document describes Capact versioning strategy.
 
 ## Overview
 
-The versioning for OCF and OCH are similar in concept to how Kubernetes implements versioning. Below is a table comparing Capact versioning to Kubernetes versioning.
+The versioning for OCF and Hub are similar in concept to how Kubernetes implements versioning. Below is a table comparing Capact versioning to Kubernetes versioning.
 
 | Capact                          | Kubernetes                |
 | -------------------------------- | ------------------------- |
-| OCH Version                      | Kubernetes Version        |
+| Hub Version                      | Kubernetes Version        |
 | OCF Version                      | Resource **apiVersion**   |
 | Manifests **revision**           | **resourceVersion**       |
 | TypeInstance **resourceVersion** | **resourceVersion**       |
@@ -48,23 +48,23 @@ The following diagram shows the versioning concept:
 
 This is the version of the Open Capability Format itself. The version changes every time there is a change in any of OCF entity manifest, such as adding or removing properties in a manifest or introducing a brand-new entity.
 
-### Supporting multiple OCF versions in OCH
+### Supporting multiple OCF versions in Hub
 
 > **NOTE** This section describes our long-term goal. Currently, the feature is not implemented.
 
-OCH supports multiple versions of OCF. To achieve that, we reuse the API versioning concept from Kubernetes. A single OCF version is used to store resources in the database. However, OCH does the conversion between the stored resource and one of the supported OCF versions by OCH on-the-fly.
+Hub supports multiple versions of OCF. To achieve that, we reuse the API versioning concept from Kubernetes. A single OCF version is used to store resources in the database. However, Hub does the conversion between the stored resource and one of the supported OCF versions by Hub on-the-fly.
 
-The cluster administrator migrates the storage version of the resource manually during OCH upgrade/downgrade. In the future, we will introduce automatic migration between storage versions or external tools that facilitates the process.
+The cluster administrator migrates the storage version of the resource manually during Hub upgrade/downgrade. In the future, we will introduce automatic migration between storage versions or external tools that facilitates the process.
 
 **Example:**
 
-OCH 0.3.0 can support OCF versions 0.2.0 and 0.1.0. The RepoMetadata entity is defined as follows:
+Hub 0.3.0 can support OCF versions 0.2.0 and 0.1.0. The RepoMetadata entity is defined as follows:
 
 ```yaml
 kind: RepoMetadata
 # (...)
 spec:
-   ochVersion: 0.1.0
+   hubVersion: 0.1.0
    ocfVersion:
        default: 0.2.0
        supported:
@@ -73,7 +73,7 @@ spec:
 # (...)
 ```
 
-The manifest version stored in OCH is 0.2.0. However, using a different API endpoint, the user can fetch manifests in version 0.1.0. OCH supports on-the-fly conversion between the default (stored) OCF manifests to the OCF manifests in supported versions.
+The manifest version stored in Hub is 0.2.0. However, using a different API endpoint, the user can fetch manifests in version 0.1.0. Hub supports on-the-fly conversion between the default (stored) OCF manifests to the OCF manifests in supported versions.
 
 ### Deprecation policy of OCF versions
 
@@ -83,17 +83,17 @@ The deprecation policy is very similar to the [Kubernetes deprecation policy](ht
 - Clear way to represent new features without breaking changes. You can easily see that there is a new OCF feature that you can use. In Kubernetes API versioning, a new non-breaking feature doesn’t change the version, e.g. `v1`.
 - Unification with other projects in the open source community, such as OAM, CNAB, CloudEvents, AsyncAPI.
 
-Once we deprecate an OCF version, we will include deprecation notices in OCH release notes. We will warn users every time they access deprecated OCF:
+Once we deprecate an OCF version, we will include deprecation notices in Hub release notes. We will warn users every time they access deprecated OCF:
 
 - in CLI,
 - on UI,
 - through the GraphQL API (using [Warning header](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Warning)).
 
-A deprecated OCF version will have a transition period (see [Kubernetes deprecation policy](https://kubernetes.io/docs/reference/using-api/deprecation-policy/) for details) where it’s still supported by OCH. After that period, we remove support for the deprecated OCF version from the OCH release.
+A deprecated OCF version will have a transition period (see [Kubernetes deprecation policy](https://kubernetes.io/docs/reference/using-api/deprecation-policy/) for details) where it’s still supported by Hub. After that period, we remove support for the deprecated OCF version from the Hub release.
 
-OCH rejects any submission of OCF manifests in unsupported versions.
+Hub rejects any submission of OCF manifests in unsupported versions.
 
-The OCF storage version in OCH is never the deprecated one. This way, there won’t be a case when existing manifests are removed during OCH upgrade due to an unsupported version.
+The OCF storage version in Hub is never the deprecated one. This way, there won’t be a case when existing manifests are removed during Hub upgrade due to an unsupported version.
 
 ## Manifests revision
 
@@ -107,7 +107,7 @@ This is the version of TypeInstance **metadata** and **spec** fields. Unlike Kub
 
 ## Core manifests
 
-We version core manifests (manifests, which are located under [`core` subdirectory](https://github.com/capactio/capact/tree/main/och-content/core)) in the same way as the OCF itself. Core entities are strictly tied into the OCH release, and they are read-only.
+We version core manifests (manifests, which are located under [`core` subdirectory](https://github.com/capactio/hub-manifests/tree/main/manifests/core)) in the same way as the OCF itself. Core entities are strictly tied into the Hub release, and they are read-only.
 
 ## Application version
 
@@ -125,9 +125,9 @@ It is inspired by the [CNAB dependency version object](https://github.com/cnabio
 
 ### Default application versions in SemVer format
 
-During the submission of the Implementation manifest, if the **appVersion** field is defined in the SemVer format, OCH updates the following versions:
+During the submission of the Implementation manifest, if the **appVersion** field is defined in the SemVer format, Hub updates the following versions:
 
-- `latest` — depending on the OCH configuration, it points to stable or edge version
+- `latest` — depending on the Hub configuration, it points to stable or edge version
 - `stable` — points to the Implementation with highest semVer version in range without
   suffix [starting from the hyphen](https://semver.org/#spec-item-9)
   
@@ -159,11 +159,11 @@ spec:
 
 ### Conflict prevention
 
-An application version can be defined as a range. During Implementation manifest submission, the OCH validates whether the application version range doesn't overlap with the same revision of the Implementation manifest. As noted earlier, the manifest **revision** property is independent from the **appVersion**.
+An application version can be defined as a range. During Implementation manifest submission, the Hub validates whether the application version range doesn't overlap with the same revision of the Implementation manifest. As noted earlier, the manifest **revision** property is independent from the **appVersion**.
 
 **Example:**
 
-1. The following implementation manifest already exists in the OCH:
+1. The following implementation manifest already exists in the Hub:
 
 ```yaml
 ocfVersion: 0.0.1
@@ -176,7 +176,7 @@ spec:
   appVersion: "8.0.0-8.0.20"
 ```
 
-2. When you try to submit the following manifest to the OCH...
+2. When you try to submit the following manifest to the Hub...
 
 ```yaml
 ocfVersion: 0.0.1
@@ -192,5 +192,5 @@ spec:
 
 ## Engine and CLI versions
 
-Engine and CLI versions need to be compatible with OCH, as they consume content from OCH. This is similar case as the `kubectl` is compatible with the Kubernetes APIServer.
+Engine and CLI versions need to be compatible with Hub, as they consume content from Hub. This is similar case as the `kubectl` is compatible with the Kubernetes APIServer.
 

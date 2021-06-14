@@ -44,7 +44,7 @@ The following Capact components reside in this repository:
 - [Helm runner](https://github.com/capactio/capact/tree/main/cmd/helm-runner) - Runner, which manages Helm releases.
 - [Engine](https://github.com/capactio/capact/tree/main/cmd/k8s-engine) - Kubernetes Capact Engine, which handles Action execution.
 - [CLI](https://github.com/capactio/capact/tree/main/cmd/cli) - A CLI tool for interacting with Capact.
-- [Open Capability Hub](https://github.com/capactio/capact/tree/main/och-js) - Component, which stores OCF Manifests and exposes API to manage them.
+- [Capact Hub](https://github.com/capactio/capact/tree/main/hub-js) - Component, which stores OCF Manifests and exposes API to manage them.
 - [Populator](https://github.com/capactio/capact/tree/main/cmd/populator) - A CLI tool, which populates resources such as OCF manifests into database.
 - [Open Capability Format specification](https://github.com/capactio/capact/tree/main/ocf-spec) - Specification, which defines the shape of Capact entities.
 

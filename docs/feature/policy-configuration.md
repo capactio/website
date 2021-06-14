@@ -68,9 +68,9 @@ You can specify which Implementations should be selected for a given Interface u
             # (...)
     ```
 
-Engine will search for rules for a given Interface in the same order as specified in the list above. If an entry for a given Interface is found, then Engine uses it to fetch Implementations from OCH.
+Engine will search for rules for a given Interface in the same order as specified in the list above. If an entry for a given Interface is found, then Engine uses it to fetch Implementations from Hub.
 
-For every Interface, Cluster Admin can set the order of selected Implementations, based on theirs constraints. The order of the list is important, as it is taken into account by Engine during queries to OCH. Engine iterates over list of `oneOf` items until it finds at least one Implementation satisfying the Implementation constraints.
+For every Interface, Cluster Admin can set the order of selected Implementations, based on theirs constraints. The order of the list is important, as it is taken into account by Engine during queries to Hub. Engine iterates over list of `oneOf` items until it finds at least one Implementation satisfying the Implementation constraints.
 
 ### Selecting Implementations
 

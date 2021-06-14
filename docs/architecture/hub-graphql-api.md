@@ -1,12 +1,12 @@
-# OCH GraphQL API
+# Hub GraphQL API
 
-Open Capability Hub can be run in two modes: public and local. In a result, GraphQL API for Open Capability Hub consists of two separate GraphQL schemas:
-- [Public OCH](https://github.com/capactio/capact/tree/main/och-js/graphql/public/schema.graphql)
-- [Local OCH](https://github.com/capactio/capact/tree/main/och-js/graphql/local/schema.graphql)
+Capact Hub can be run in two modes: public and local. In a result, GraphQL API for Hub consists of two separate GraphQL schemas:
+- [Public Hub](https://github.com/capactio/capact/tree/main/hub-js/graphql/public/schema.graphql)
+- [Local Hub](https://github.com/capactio/capact/tree/main/hub-js/graphql/local/schema.graphql)
 
 ## Public API
 
-Public OCH API contains GraphQL operations for the following entities:
+Public Hub API contains GraphQL operations for the following entities:
 - RepoMetadata
 - InterfaceGroup
 - Interface
@@ -16,17 +16,17 @@ Public OCH API contains GraphQL operations for the following entities:
 
 Currently, there are no GraphQL mutations or subscriptions available. Once populated with DB populator, all resources are read-only.
 
-To see full GraphQL schema, open the [`schema.graphql`](https://github.com/capactio/capact/tree/main/och-js/graphql/public/schema.graphql) file.
+To see full GraphQL schema, open the [`schema.graphql`](https://github.com/capactio/capact/tree/main/hub-js/graphql/public/schema.graphql) file.
  
 ## Local API
 
-Local OCH API contains GraphQL operations for managing TypeInstances.
+Local Hub API contains GraphQL operations for managing TypeInstances.
 
-To see full GraphQL schema, open the [`schema.graphql`](https://github.com/capactio/capact/tree/main/och-js/graphql/local/schema.graphql) file.
+To see full GraphQL schema, open the [`schema.graphql`](https://github.com/capactio/capact/tree/main/hub-js/graphql/local/schema.graphql) file.
 
 ## Examples
 
-To run sample GraphQL queries and mutations for Public or Local OCH, follow the steps:
+To run sample GraphQL queries and mutations for Public or Local Hub, follow the steps:
 
 1. Open the Capact Gateway GraphQL Playground.
 
@@ -34,8 +34,8 @@ To run sample GraphQL queries and mutations for Public or Local OCH, follow the 
 
 1. Navigate to a proper directory with GraphQL schema and examples.
    
-   For Public OCH examples, navigate to [`och-js/graphql/public`](https://github.com/capactio/capact/tree/main/och-js/graphql/public) directory.
-   For Local OCH examples, navigate to [`och-js/graphql/local`](https://github.com/capactio/capact/tree/main/och-js/graphql/local) directory.
+   For Public Hub examples, navigate to [`hub-js/graphql/public`](https://github.com/capactio/capact/tree/main/hub-js/graphql/public) directory.
+   For Local Hub examples, navigate to [`hub-js/graphql/local`](https://github.com/capactio/capact/tree/main/hub-js/graphql/local) directory.
 
 2. Copy and paste the `examples.graphql` file content to the GraphQL Playground IDE.
 3. Click on the "Query Variables" tab.
@@ -44,7 +44,7 @@ To run sample GraphQL queries and mutations for Public or Local OCH, follow the 
 
 ## Common flows
 
-The following section showcases a few common usage flows for OCH GraphQL API.
+The following section showcases a few common usage flows for Hub GraphQL API.
 
 ### Querying different revisions
 
@@ -100,20 +100,20 @@ The same unified API is available for all entities.
 
 To list all InterfaceGroups with nested Interfaces and Implementations for a given system that satisfy the Interfaces, you may use a single GraphQL query.
 
-See the [`InterfaceGroupsWithInterfacesAndImplementations` sample query](https://github.com/capactio/capact/tree/main/och-js/graphql/public/examples.graphql).
+See the [`InterfaceGroupsWithInterfacesAndImplementations` sample query](https://github.com/capactio/capact/tree/main/hub-js/graphql/public/examples.graphql).
 
 ### Get Type details along the corresponding TypeInstances
 
-Because of the OCH local and public API separation, currently a single GraphQL query for Types and corresponding TypeInstances is not possible.
+Because of the Hub local and public API separation, currently a single GraphQL query for Types and corresponding TypeInstances is not possible.
 To achieve that, the following queries have to be executed: 
 
-1. Get Type details with `type` query to public OCH
+1. Get Type details with `type` query to public Hub
 
-   See the [`Type` sample query](https://github.com/capactio/capact/tree/main/och-js/graphql/public/examples.graphql).
+   See the [`Type` sample query](https://github.com/capactio/capact/tree/main/hub-js/graphql/public/examples.graphql).
    
 1. Get TypeInstances for a given Type with `typeInstances`
 
-   See the [`ListTypeInstancesWithTypeRefFilter` sample query](https://github.com/capactio/capact/tree/main/och-js/graphql/local/examples.graphql).
+   See the [`ListTypeInstancesWithTypeRefFilter` sample query](https://github.com/capactio/capact/tree/main/hub-js/graphql/local/examples.graphql).
 
 ## Limitations
 

@@ -6,7 +6,7 @@ Runner handles the execution of the Action according to the `action` property, w
 
 Each Engine implementation needs to have at least one built-in runner. The built-in runner has only the Interface and no Implementation definition. To ensure that, you need to add the `spec.abstract: true` property in the Interface that describes the runner.
 
-The [Kubernetes Engine](https://github.com/capactio/capact/tree/main/cmd/k8s-engine) uses Argo Workflow as the built-in runner. The [cap.interface.runner.argo](https://github.com/capactio/capact/tree/main/och-content/interface/runner/argo/run.yaml) Interface defines the schema for the runner arguments. The Argo Workflow was selected, as it is a Kubernetes-native implementation, and it supports passing data between steps.
+The [Kubernetes Engine](https://github.com/capactio/capact/tree/main/cmd/k8s-engine) uses Argo Workflow as the built-in runner. The [cap.interface.runner.argo](https://github.com/capactio/hub-manifests/tree/main/manifests/interface/runner/argo/run.yaml) Interface defines the schema for the runner arguments. The Argo Workflow was selected, as it is a Kubernetes-native implementation, and it supports passing data between steps.
 
 In the future, we will abstract all the built-in runners under a common Interface by using the [OCI Image](https://github.com/opencontainers/image-spec) and [OCI Runtime](https://github.com/opencontainers/runtime-spec) specifications. Each Engine implementation will have to fulfill this OCI runner Interface.
 

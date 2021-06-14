@@ -17,14 +17,14 @@ Here you can find the list of basic diagnostic actions that may help you look fo
 - [Gateway](#gateway)
   * [Gateway health](#gateway-health)
   * [Gateway logs](#gateway-logs)
-- [Public OCH](#public-och)
-  * [Public OCH health](#public-och-health)
-  * [Public OCH logs](#public-och-logs)
-  * [OCH Populator logs](#och-populator-logs)
-  * [Checking if Public OCH is populated](#checking-if-public-och-is-populated)
-- [Local OCH](#local-och)
-  * [Local OCH health](#local-och-health)
-  * [Local OCH logs](#local-och-logs)
+- [Public Hub](#public-hub)
+  * [Public Hub health](#public-hub-health)
+  * [Public Hub logs](#public-hub-logs)
+  * [Hub Populator logs](#hub-populator-logs)
+  * [Checking if Public Hub is populated](#checking-if-public-hub-is-populated)
+- [Local Hub](#local-hub)
+  * [Local Hub health](#local-hub-health)
+  * [Local Hub logs](#local-hub-logs)
   * [Checking if TypeInstance exists](#checking-if-typeinstance-exists)
 - [Pod restart](#pod-restart)
 
@@ -144,26 +144,26 @@ To check the logs since a given time, use the `--since-time` flag, for example:
 --since-time=2020-03-30T10:02:08Z
 ```
 
-## Public OCH
+## Public Hub
 
-This section describes Public [OCH](../architecture/e2e-architecture.md#och) related diagnostic.
+This section describes Public [Hub](../architecture/e2e-architecture.md#hub) related diagnostic.
 
-### Public OCH health
+### Public Hub health
 
-To check if the Public OCH Pods are in the `Running` state, run:
+To check if the Public Hub Pods are in the `Running` state, run:
 
 ```bash
-kubectl get po -n capact-system -l app.kubernetes.io/name=och-public
+kubectl get po -n capact-system -l app.kubernetes.io/name=hub-public
 ```
 
 All the containers from Pods should be in the `Running` status. Restarts number higher than 1 may also indicate problems, e.g. not enough resource, lack of permissions, network timeouts etc.
 
-### Public OCH logs
+### Public Hub logs
 
-If the Public OCH is [healthy](#public-och-health), you should be able to track any bug by checking the logs. To check the logs, run:
+If the Public Hub is [healthy](#public-hub-health), you should be able to track any bug by checking the logs. To check the logs, run:
 
 ```bash
-kubectl logs -n capact-system -l app.kubernetes.io/name=och-public -c och-public
+kubectl logs -n capact-system -l app.kubernetes.io/name=hub-public -c hub-public
 ```
 
 To check the logs since a given time, use the `--since-time` flag, for example:
@@ -172,12 +172,12 @@ To check the logs since a given time, use the `--since-time` flag, for example:
 --since-time=2020-03-30T10:02:08Z
 ```
 
-### OCH Populator logs
+### Hub Populator logs
 
-If the Public OCH is [healthy](#public-och-health), you should be able to track any bug by checking the logs. To check the logs, run:
+If the Public Hub is [healthy](#public-hub-health), you should be able to track any bug by checking the logs. To check the logs, run:
 
 ```bash
-kubectl logs -n capact-system -l app.kubernetes.io/name=och-public -c och-public-populator
+kubectl logs -n capact-system -l app.kubernetes.io/name=hub-public -c hub-public-populator
 ```
 
 To check the logs since a given time, use the `--since-time` flag, for example:
@@ -186,16 +186,16 @@ To check the logs since a given time, use the `--since-time` flag, for example:
 --since-time=2020-03-30T10:02:08Z
 ```
 
-### Checking if Public OCH is populated 
+### Checking if Public Hub is populated 
 
-- Check if [OCH Populator logs](#och-populator-logs) contain a message similar to: `{"level":"info","ts":1620895282.3582015,"caller":"register/ocf_manifests.go:107","msg":"Populated new data","duration (seconds)":235.525841306}`. It means that manifests were populated successfully. If you get an error similar to: `error: container och-public-populator is not valid for pod capact-och-public-84cc74bc66-pmkhp` it means that the Public OCH Populator is disabled. To enable it, run:
+- Check if [Hub Populator logs](#hub-populator-logs) contain a message similar to: `{"level":"info","ts":1620895282.3582015,"caller":"register/ocf_manifests.go:107","msg":"Populated new data","duration (seconds)":235.525841306}`. It means that manifests were populated successfully. If you get an error similar to: `error: container hub-public-populator is not valid for pod capact-hub-public-84cc74bc66-pmkhp` it means that the Public Hub Populator is disabled. To enable it, run:
 
   ```bash
   helm repo add capactio https://storage.googleapis.com/capactio-stable-charts
-  helm upgrade capact capactio/capact -n capact-system --reuse-values --set och-public.populator.enabled=true
+  helm upgrade capact capactio/capact -n capact-system --reuse-values --set hub-public.populator.enabled=true
   ```
 
-- Check if manifests can be fetched from the Public OCH. Install the latest [stable Capact CLI](https://github.com/capactio/capact/releases), and run:
+- Check if manifests can be fetched from the Public Hub. Install the latest [stable Capact CLI](https://github.com/capactio/capact/releases), and run:
 
   ```bash
   capact login # If not logged yet.
@@ -218,31 +218,31 @@ To check the logs since a given time, use the `--since-time` flag, for example:
 - Check if manifest source is correct, run:
 
   ```bash
-  kubectl -n capact-system get deploy capact-och-public -o=jsonpath='{$.spec.template.spec.containers[?(@.name=="och-public-populator")].env[?(@.name=="MANIFESTS_PATH")].value}'
+  kubectl -n capact-system get deploy capact-hub-public -o=jsonpath='{$.spec.template.spec.containers[?(@.name=="hub-public-populator")].env[?(@.name=="MANIFESTS_PATH")].value}'
   ```
   
   Check the [go-getter](https://github.com/hashicorp/go-getter#url-format) project to understand URL format.   
 
-## Local OCH
+## Local Hub
 
-This section describes Local [OCH](../architecture/e2e-architecture.md#och) related diagnostic.
+This section describes Local [Hub](../architecture/e2e-architecture.md#hub) related diagnostic.
 
-### Local OCH health
+### Local Hub health
 
-To check if the Local OCH Pods are in the `Running` state, run:
+To check if the Local Hub Pods are in the `Running` state, run:
 
 ```bash
-kubectl get po -n capact-system -l app.kubernetes.io/name=och-local
+kubectl get po -n capact-system -l app.kubernetes.io/name=hub-local
 ```
 
 All the containers from Pods should be in the `Running` status. Restarts number higher than 1 may also indicate problems, e.g. not enough resource, lack of permissions, network timeouts etc.
 
-### Local OCH logs
+### Local Hub logs
 
-If the Local OCH is [healthy](#local-och-health), you should be able to track any bug by checking the logs. To check the logs, run:
+If the Local Hub is [healthy](#local-hub-health), you should be able to track any bug by checking the logs. To check the logs, run:
 
 ```bash
-kubectl logs -n capact-system -l app.kubernetes.io/name=och-local -c och-local
+kubectl logs -n capact-system -l app.kubernetes.io/name=hub-local -c hub-local
 ```
 
 To check the logs since a given time, use the `--since-time` flag, for example:
