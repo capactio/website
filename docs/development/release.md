@@ -185,6 +185,20 @@ If you release a new major or minor Capact version, follow these steps:
     ```bash
     npm run docusaurus docs:version ${RELEASE_MAJOR_MINOR_VERSION}
     ```
+1. Update redirects in the [`redirects.js`](https://github.com/capactio/website/blob/main/redirects.js) file to make sure we point to proper documents for all documentation versions:
+
+    For example, for `0.3` release, change the line:
+
+    ```javascript
+    ...generateDocsRedirectsForVersion("0.2", ""), // redirect from 0.2 to latest
+    ```
+
+    to:
+
+    ```javascript
+    ...generateDocsRedirectsForVersion("0.2"),
+    ...generateDocsRedirectsForVersion("0.3", ""), // redirect from 0.3 to latest
+    ```
 
 1. Commit and push the changes
 
