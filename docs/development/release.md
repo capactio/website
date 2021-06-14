@@ -185,8 +185,22 @@ If you release a new major or minor Capact version, follow these steps:
     ```bash
     npm run docusaurus docs:version ${RELEASE_MAJOR_MINOR_VERSION}
     ```
+2. Update redirects in the [`redirects.js`](https://github.com/capactio/website/blob/main/redirects.js) file to make sure we point to proper documents for all documentation versions:
 
-1. Commit and push the changes
+    For example, for `0.3` release, change the line:
+
+    ```javascript
+    ...generateDocsRedirectsForVersion("0.2", ""), // redirect from 0.2 to latest
+    ```
+
+    to:
+
+    ```javascript
+    ...generateDocsRedirectsForVersion("0.2"),
+    ...generateDocsRedirectsForVersion("0.3", ""), // redirect from 0.3 to latest
+    ```
+
+3. Commit and push the changes
 
     ```bash
     git add .
@@ -194,7 +208,7 @@ If you release a new major or minor Capact version, follow these steps:
     git push -u origin prepare-${RELEASE_MAJOR_MINOR_VERSION}
     ```
 
-1. Create a new pull request for the `website` repository.
-1. Merge the pull request.
+4. Create a new pull request for the `website` repository.
+5. Merge the pull request.
 
 To read more about documentation versioning, see the [Versioning](https://docusaurus.io/docs/versioning) page on the Docusaurus website.

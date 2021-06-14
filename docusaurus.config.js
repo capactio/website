@@ -1,3 +1,6 @@
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const customRedirects = require("./redirects.js");
+
 /** @type {import('@docusaurus/types').DocusaurusConfig} */
 module.exports = {
   title: "Capact",
@@ -22,7 +25,8 @@ module.exports = {
       defaultMode: "light",
       respectPrefersColorScheme: true,
     },
-    algolia: { // TODO: Once we publish capact.io website, request API key from Algolia
+    algolia: {
+      // TODO: Once we publish capact.io website, request API key from Algolia
       apiKey: "YOUR_API_KEY",
       indexName: "YOUR_INDEX_NAME",
       contextualSearch: true,
@@ -47,14 +51,14 @@ module.exports = {
         {
           to: "/slack",
           position: "right",
-          className: 'slack-icon-link',
-          'aria-label': 'Slack',
+          className: "slack-icon-link",
+          "aria-label": "Slack",
         },
         {
           href: "https://github.com/capactio",
           position: "right",
-          className: 'github-icon-link',
-          'aria-label': 'GitHub',
+          className: "github-icon-link",
+          "aria-label": "GitHub",
         },
         {
           html: `<iframe src="https://ghbtns.com/github-btn.html?user=capactio&repo=capact&type=star&count=true" frameborder="0" scrolling="0" width="150" height="20" title="GitHub"></iframe>`,
@@ -137,6 +141,16 @@ module.exports = {
           customCss: require.resolve("./src/css/custom.css"),
         },
         sitemap: {},
+      },
+    ],
+  ],
+  plugins: [
+    [
+      "@docusaurus/plugin-client-redirects",
+      {
+        redirects: [
+          ...customRedirects(),
+        ],
       },
     ],
   ],

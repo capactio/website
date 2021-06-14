@@ -1,0 +1,59 @@
+// Remove the custom redirects until the issue is resolved: https://github.com/facebook/docusaurus/issues/3407
+// NOTE: Redirects doesn't work in development mode.
+//
+// https://docusaurus.io/docs/api/plugins/@docusaurus/plugin-client-redirects
+
+module.exports = () => {
+  const redirects = [
+    ...generateDocsRedirectsForVersion(""),
+    ...generateDocsRedirectsForVersion("next"),
+    ...generateDocsRedirectsForVersion("0.3"),
+    ...generateDocsRedirectsForVersion("0.4", ""), // redirect from 0.4 to latest
+  ];
+  
+  return redirects;
+};
+
+const generateDocsRedirectsForVersion = (version, targetVersionOverride) => {
+  const versionSubstring = version != "" ? `/${version}` : "";
+  const fromPrefix = `/docs${versionSubstring}`;
+  const toPrefix =
+    typeof targetVersionOverride !== "undefined"
+      ? `/docs${targetVersionOverride}`
+      : fromPrefix;
+
+  return [
+    {
+      from: `${fromPrefix}`,
+      to: `${toPrefix}/introduction`,
+    },
+    {
+      from: `${fromPrefix}/installation`,
+      to: `${toPrefix}/installation/local`,
+    },
+    {
+      from: `${fromPrefix}/example`,
+      to: `${toPrefix}/example/mattermost-installation`,
+    },
+    {
+      from: `${fromPrefix}/content-development`,
+      to: `${toPrefix}/content-development/guide`,
+    },
+    {
+      from: `${fromPrefix}/feature`,
+      to: `${toPrefix}/feature/policy-configuration`,
+    },
+    {
+      from: `${fromPrefix}/architecture`,
+      to: `${toPrefix}/architecture/e2e-architecture`,
+    },
+    {
+      from: `${fromPrefix}/operation`,
+      to: `${toPrefix}/operation/common-problems`,
+    },
+    {
+      from: `${fromPrefix}/development`,
+      to: `${toPrefix}/development/development-guide`,
+    },
+  ];
+};
