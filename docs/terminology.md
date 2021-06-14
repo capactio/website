@@ -9,19 +9,6 @@ This document lists and explains all terms used through the Capact documentation
 > 
 > -- Phil Karlton
 
-## Table of contents
-
-<!-- toc -->
-
-- [Common terms](#common-terms)
-  * [Capability](#capability)
-  * [Action](#action)
-  * [Runner](#runner)
-- [Components](#components)
-- [Entities](#entities)
-
-<!-- tocstop -->
-
 ## Common terms
 
 ### Capability

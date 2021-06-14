@@ -2,7 +2,7 @@
 
 The document describes high-level Capact architecture, all components in the system and interactions between them.
 
-> **NOTE**: This document showcases architecture for Alpha phase. After Alpha stage the document will be updated to describe the target GA architecture. 
+> **NOTE**: This document showcases the Capact architecture for initial phase of the development. The target GA architecture may differ, and it will be documented later. 
 
 ## Components
 

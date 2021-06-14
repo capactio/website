@@ -2,19 +2,6 @@
 
 This document describes the best practices when working with Capact repositories.
 
-## Table of contents
-
-<!-- toc -->
-
-- [General rules](#general-rules)
-- [Prepare the fork](#prepare-the-fork)
-- [Configure the fork](#configure-the-fork)
-- [Contribute](#contribute)
-  * [Basic flow](#basic-flow)
-  * [Keep branch up to date](#keep-branch-up-to-date)
-
-<!-- tocstop -->
-
 ## General rules
 
 Each contributor and maintainer must follow this workflow:

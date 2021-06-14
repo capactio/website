@@ -4,19 +4,6 @@ This tutorial shows how to set up a private Google Kubernetes Engine (GKE) clust
 
 ![overview](assets/overview.svg)
 
-## Table of Contents
-
-<!-- toc -->
-
-- [Prerequisites](#prerequisites)
-- [Instructions](#instructions)
-  * [Create GKE private cluster](#create-gke-private-cluster)
-  * [Install Capact](#install-capact)
-  * [Clean-up](#clean-up)
-  * [Change the source of Hub manifests](#change-the-source-of-hub-manifests)
-
-<!-- tocstop -->
-
 ##  Prerequisites
 
 * [Helm v3](https://helm.sh/docs/intro/install/) installed

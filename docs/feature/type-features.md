@@ -2,17 +2,6 @@
 
 The following document describes Type entity features.
 
-## Table of contents
-
-<!-- toc -->
-
-- [Additional references to parent nodes](#additional-references-to-parent-nodes)
-  * [Find Types based on prefix of parent nodes](#find-types-based-on-prefix-of-parent-nodes)
-  * [Requirements section in Implementation manifest](#requirements-section-in-implementation-manifest)
-- [Type composition](#type-composition)
-
-<!-- tocstop -->
-
 ## Additional references to parent nodes
 
 > **NOTE** This feature is currently not implemented.

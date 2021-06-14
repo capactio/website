@@ -64,7 +64,7 @@ query {
         path # equal to metadata.path, e.g. cap.core.attribute.workload.stateless
         prefix # equal to metadata.prefix, e.g. cap.core.attribute.workload
 
-        # latest revision
+        # the latest revision
         latestRevision {
             metadata {
                 name
@@ -73,7 +73,7 @@ query {
             revision
         }
 
-        # given revision
+        # a given revision
         revision(revision: "1.0.0") {
             metadata {
                 name

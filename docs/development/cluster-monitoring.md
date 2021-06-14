@@ -1,13 +1,5 @@
 # Monitoring of long-running GCP cluster
 
-## Table of contents
-<!-- toc -->
-- [Prerequisites](#prerequisites)
-- [Setup access to GKE cluster](#setup-access-to-gke-cluster)
-- [Check cluster health](#check-cluster-health)
-- [Remove your IP from the authorized list](#remove-your-ip-from-the-authorized-list)
-<!-- tocstop -->
-
 ## Prerequisites
 
 You need to have the following tools installed on your operating system:

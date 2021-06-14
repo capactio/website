@@ -4,7 +4,7 @@ The following document lists all decisions regarding Engine Kubernetes API.
 
 ## CRDs
 
-The following sections lists all agreements regarding Custom Resource Definitions.
+The following sections list all agreements regarding Custom Resource Definitions.
 
 ### Installation
 
@@ -32,7 +32,7 @@ On the other hand, [`cluster-api`](https://github.com/kubernetes-sigs/cluster-ap
 
 To sum it up, it looks like there are different opinions how to represent the state. For more details, read the article ["What the heck are Conditions in Kubernetes controllers?"](https://dev.to/maelvls/what-the-heck-are-kubernetes-conditions-for-4je7).
 
-Analysing our case, we found out that:
+Analyzing our case, we found out that:
 - we need to show on UI a simple high level status for a given Action. Calculating it from conditions array would be complex.
 - Currently, UI and `kubectl` are the only consumers of the Action status. Conditions array wouldn't bring many benefits to us at a current state of the project.
 

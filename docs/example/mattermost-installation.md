@@ -2,25 +2,6 @@
 
 This tutorial shows the basic concepts of Capact on the Mattermost installation example.
 
-###  Table of Contents
-
-<!-- toc -->
-
-- [Goal](#goal)
-- [Prerequisites](#prerequisites)
-- [Install all Mattermost components in a Kubernetes cluster](#install-all-mattermost-components-in-a-kubernetes-cluster)
-  * [Instructions](#instructions)
-  * [Clean-up](#clean-up)
-- [Install Mattermost with an external CloudSQL database](#install-mattermost-with-an-external-cloudsql-database)
-  * [Instructions](#instructions-1)
-  * [Clean-up](#clean-up-1)
-- [Behind the scenes](#behind-the-scenes)
-  * [OCF manifests](#ocf-manifests)
-  * [Content development](#content-development)
-- [Additional resources](#additional-resources)
-
-<!-- tocstop -->
-
 ### Goal
 
 This instruction will guide you through the installation of Mattermost on a Kubernetes cluster using Capact. 
