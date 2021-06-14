@@ -27,6 +27,7 @@ import TabItem from '@theme/TabItem';
 		{label: 'MacOS', value: 'macos'},
 		{label: 'Linux', value: 'linux'},
 		{label: 'Windows', value: 'windows'},
+		{label: 'Docker', value: 'docker'},
 		{label: 'Other', value: 'other'},
 	]}>
 <TabItem value="macos">
@@ -59,6 +60,21 @@ chmod +x capact && mv capact /usr/local/bin/capact
 
 ```shell
 curl -Lo capact https://storage.googleapis.com/capactio-binaries/v0.3.0/capact-windows-amd64.exe
+```
+
+</TabItem>
+<TabItem value="docker">
+
+```shell
+#	Export credential store configuration:
+export CAPACT_CREDENTIALS_STORE_BACKEND=file
+export CAPACT_CREDENTIALS_STORE_FILE_PASSPHRASE=pass
+
+docker run --rm \
+-e CAPACT_CREDENTIALS_STORE_BACKEND \
+-e CAPACT_CREDENTIALS_STORE_FILE_PASSPHRASE \
+-v $HOME/.config/capact:/.config/capact/ \
+ghcr.io/capactio/tools/capact-cli:v0.3 login $GATEWAY_URL -u $USERNAME -p $PASSWORD
 ```
 
 </TabItem>
