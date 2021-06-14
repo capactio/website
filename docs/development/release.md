@@ -96,13 +96,13 @@ If you release major or minor version, create a dedicated release branch.
     git pull
     ```
 
-1. Create new branch:
+1. Create a new branch:
    
     ```bash
     git checkout -b ${RELEASE_BRANCH}
     ```
 
-#### Release Helm charts and binaries
+#### Release Helm charts
 
 1. Get the latest commit short hash on the destination branch:
     
@@ -137,15 +137,7 @@ If you release major or minor version, create a dedicated release branch.
     make release-charts
     ```
 
-1. Release tools binaries:
-   
-    ```bash
-    make build-all-tools-prod
-    export CAPACT_BINARIES_BUCKET=capactio_binaries
-    gsutil -m cp ./bin/* gs://${CAPACT_BINARIES_BUCKET}/v0.0.0/
-    ```
-
-### Create new git tag and GitHub release
+### Create new git tag and publish binaries
 
 1. Create new tag and push it and release branch to origin:
 
@@ -160,6 +152,22 @@ If you release major or minor version, create a dedicated release branch.
    ```bash
    git push -u origin ${RELEASE_BRANCH}
    git push origin v${RELEASE_VERSION}
+   ```
+
+1. Install [GoReleaser](https://goreleaser.com/install/):
+   
+   > **NOTE**: Use the commit SHA, as we use the `no_unique_dist_dir` feature, which was not yet released.
+ 
+   ```bash
+   go install github.com/goreleaser/goreleaser@b53dbb89d02aa3673782f3d063d7d5039446baac
+   ```
+
+1. Release tools binaries:
+   
+   > **NOTE**: GoReleaser uses the git tag as binaries version. 
+   
+   ```bash
+   make release-binaries
    ```
 
 ## Create GitHub release
