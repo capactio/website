@@ -20,16 +20,7 @@ The diagram below shows the scenario:
 
 The following tools are required:
 
-* Capact CLI installed
-
-  To build it, install Go and run:
-
-  ```bash
-  CLI_OS=linux make build-tool-cli
-  chmod +x ./bin/capact-linux-amd64
-  mv ./bin/capact-linux-amd64 /usr/local/bin/capact
-  ```
-
+* [Capact CLI](../cli/getting-started.mdx) installed.
 * [`kubectl`](https://kubernetes.io/docs/tasks/tools/install-kubectl/) installed.
 * [`helm`](https://helm.sh/docs/intro/install/) installed.
 * [`jq`](https://stedolan.github.io/jq/) installed.

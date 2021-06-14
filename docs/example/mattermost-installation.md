@@ -20,7 +20,7 @@ The diagrams below show possible scenarios:
 
 ###  Prerequisites
 
-* [Capact CLI](https://github.com/capactio/capact/releases) installed.
+* [Capact CLI](../cli/getting-started.mdx) installed.
 * [`kubectl`](https://kubernetes.io/docs/tasks/tools/install-kubectl/) installed.
 * Cluster with Capact installation. See the [installation tutorial](../installation/local.md). 
 * For the scenario with Cloud SQL, access to Google Cloud Platform.  
