@@ -241,7 +241,7 @@ Additionally, you can remove the Google DNS Zone if not needed. In the **Network
 
 ### Change the source of Hub manifests
 
-By default, the Hub manifests are synchronized with the `hub-content` directory from the `capact` repository on a specific release branch. You can change that by overriding **MANIFEST_PATH** environment variable for **hub-public** Deployment.
+By default, the Hub manifests are synchronized with the `manifests` directory from the `capact` repository on a specific release branch. You can change that by overriding **MANIFEST_PATH** environment variable for **hub-public** Deployment.
      
 For example, to use the `main` branch as a source of Hub manifests, run:
    

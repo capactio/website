@@ -311,11 +311,11 @@ The following section extends the tutorial with additional topics, to let you di
 
 A user consumes content stored in Capact Hub. The content is defined using Open Capability Format (OCF) manifests. The OCF specification defines the shape of manifests that Capact understands, such as Interface or Implementation.
 
-To see all the manifest that Hub stores, navigate to the [Hub content structure](https://github.com/capactio/capact/tree/main/hub-content).
+To see all the manifest that Hub stores, navigate to the [Hub content structure](https://github.com/capactio/hub-manifests/tree/main/manifests).
 
 To see the Mattermost installation manifests, click on the following links:
- - [Mattermost installation Interface](https://github.com/capactio/capact/tree/main/hub-content/interface/productivity/mattermost/install.yaml) — a generic description of Mattermost installation (action name, input, and output — a concept similar to interfaces in programming languages),
- - [Mattermost installation Implementation](https://github.com/capactio/capact/tree/main/hub-content/implementation/mattermost/mattermost-team-edition/install.yaml) — represents the dynamic workflow for Mattermost Installation.
+ - [Mattermost installation Interface](https://github.com/capactio/hub-manifests/tree/main/manifests/interface/productivity/mattermost/install.yaml) — a generic description of Mattermost installation (action name, input, and output — a concept similar to interfaces in programming languages),
+ - [Mattermost installation Implementation](https://github.com/capactio/hub-manifests/tree/main/manifests/implementation/mattermost/mattermost-team-edition/install.yaml) — represents the dynamic workflow for Mattermost Installation.
 
 #### Content development
 
@@ -324,7 +324,7 @@ To make it easier to develop new Hub content, we implemented a dedicated CLI. Cu
 To validate all Hub manifests, navigate to the repository root directory and run the following command:
 
 ```bash
-capact validate ./hub-content/**/*.yaml
+capact validate ./manifests/**/*.yaml
 ```
 
 In the future, we plan to extend the Capact CLI with additional features, such as:

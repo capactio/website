@@ -83,10 +83,10 @@ Let's try to create manifests required to define a capability to install [Matter
 First, we need to create an **InterfaceGroup** manifest, which groups **Interfaces** corresponding to some application.
 Let's create a InterfaceGroup called `cap.interface.productivity.mattermost`, which will group **Interfaces** operating on Mattermost instances.
 
-In `hub-content/interface/productivity/`, create a file called `mattermost.yaml`, with the following content:
+In `manifests/interface/productivity/`, create a file called `mattermost.yaml`, with the following content:
 
 <details>
-  <summary>hub-content/interface/productivity/mattermost.yaml</summary>
+  <summary>manifests/interface/productivity/mattermost.yaml</summary>
 
 ```yaml
 ocfVersion: 0.0.1
@@ -115,12 +115,12 @@ signature:
 ### Create the Interface manifest
 
 After we have the **InterfaceGroup**, let's create the **Interface** for installing Mattermost.
-Create the directory `hub-content/interface/productivity/mattermost`.
+Create the directory `manifests/interface/productivity/mattermost`.
 
 Inside this directory, create a file `install.yaml` with the following content:
 
 <details>
-  <summary>hub-content/interface/productivity/mattermost/install.yaml</summary>
+  <summary>manifests/interface/productivity/mattermost/install.yaml</summary>
 
 ```yaml
 ocfVersion: 0.0.1
@@ -180,7 +180,7 @@ Although Mattermost needs a database, we don't specify it as an input argument h
 Now we need to define the two **Types**, which we use in our **Interface**: `cap.type.productivity.mattermost.install-input` and `cap.type.productivity.mattermost.config`.
 
 <details>
-  <summary>hub-content/type/productivity/mattermost/install-input.yaml</summary>
+  <summary>manifests/type/productivity/mattermost/install-input.yaml</summary>
 
 ```yaml
 ocfVersion: 0.0.1
@@ -228,7 +228,7 @@ signature:
 </details>
 
 <details>
-  <summary>hub-content/type/productivity/mattermost/config.yaml</summary>
+  <summary>manifests/type/productivity/mattermost/config.yaml</summary>
 
 ```yaml
 ocfVersion: 0.0.1
@@ -296,7 +296,7 @@ The Action execution is handled by runners. Currently, we provide the following 
 - [Terraform Runner](https://github.com/capactio/capact/tree/main/cmd/terraform-runner/README.md)
 - [CloudSQL Runner](https://github.com/capactio/capact/tree/main/cmd/cloudsql-runner/README.md) (deprecated in favor of Terraform Runner)
 
-To check the schema of the runner input, you have to look in the [`hub-content/type/runner`](https://github.com/capactio/capact/tree/main/hub-content/type/runner) directory. You can find there the JSON schema and an example input for the runner.
+To check the schema of the runner input, you have to look in the [`manifests/type/runner`](https://github.com/capactio/hub-manifests/tree/main/manifests/type/runner) directory. You can find there the JSON schema and an example input for the runner.
 
 You can read more about runners in [this document](../architecture/runner.md).
 
@@ -307,10 +307,10 @@ You can read more about runners in [this document](../architecture/runner.md).
 
 After we defined the **Interfaces**, and the **Types**, we can write an **Implementation** of `mattermost.install`. Our **Implementation** will use a PostgreSQL database, which will be provided by another **Interface**, which is already available in Capact. We also allow users to provide his own PostgreSQL instance **TypeInstance**.
 
-Create a file `hub-content/implementation/mattermost/mattermost-team-edition/install.yaml` with the following content:
+Create a file `manifests/implementation/mattermost/mattermost-team-edition/install.yaml` with the following content:
 
 <details>
-  <summary>hub-content/implementation/mattermost/mattermost-team-edition/install.yaml</summary>
+  <summary>manifests/implementation/mattermost/mattermost-team-edition/install.yaml</summary>
 
 ```yaml
 ocfVersion: 0.0.1
@@ -581,10 +581,10 @@ Let's go through the **Implementation** and try to understand, what is happening
 
 > The `input-parameters` for `postgresql.install` are hardcoded in this example. In a real workflow, they should be generated or taken from the `input-parameters` for this **Implementation**.
 
-In the next step we are creating a database for the Mattermost server. If you look at the **Interface** definition of [`cap.interface.database.postgresql.create-db`](https://github.com/capactio/capact/tree/main/hub-content/interface/database/postgresql/create-db.yaml), you will see, that it requires a `postgresql` **TypeInstance** of **Type** [`cap.type.database.postgresql.config`](https://github.com/capactio/capact/tree/main/hub-content/type/database/postgresql/config.yaml) and input parameters [`cap.type.database.postgresql.database-input`](https://github.com/capactio/capact/tree/main/hub-content/type/database/postgresql/database-input.yaml), and outputs a `database` **TypeInstance** of **Type** [`cap.type.database.postgresql.database`](https://github.com/capactio/capact/tree/main/hub-content/type/database/postgresql/database.yaml). In the step, we are providing the inputs to the **Interface** via the `.arguments.artifacts` field. We also have to map the output of this step to our output definitions in `additionalOutput` and the implemented **Interface** in the `capact-outputTypeInstances` field.
+In the next step we are creating a database for the Mattermost server. If you look at the **Interface** definition of [`cap.interface.database.postgresql.create-db`](https://github.com/capactio/hub-manifests/tree/main/manifests/interface/database/postgresql/create-db.yaml), you will see, that it requires a `postgresql` **TypeInstance** of **Type** [`cap.type.database.postgresql.config`](https://github.com/capactio/hub-manifests/tree/main/manifests/type/database/postgresql/config.yaml) and input parameters [`cap.type.database.postgresql.database-input`](https://github.com/capactio/hub-manifests/tree/main/manifests/type/database/postgresql/database-input.yaml), and outputs a `database` **TypeInstance** of **Type** [`cap.type.database.postgresql.database`](https://github.com/capactio/hub-manifests/tree/main/manifests/type/database/postgresql/database.yaml). In the step, we are providing the inputs to the **Interface** via the `.arguments.artifacts` field. We also have to map the output of this step to our output definitions in `additionalOutput` and the implemented **Interface** in the `capact-outputTypeInstances` field.
 
 The `render-helm-args`, `fill-db-params-in-helm-args` and `fill-user-params-in-helm-args` steps are used to prepare the input parameters for the `helm.install` **Interface**. Jinja template engine is used here to render the Helm runner arguments with the required data from the `postgresql` and `database` **TypeInstances**. Those steps don't create any **TypeInstances** and serve only the purpose of creating the input parameters for the Helm runner.
-You can check the schema of the Helm runner args in the [Type manifest](https://github.com/capactio/capact/tree/main/hub-content/type/runner/helm/run-input.yaml).
+You can check the schema of the Helm runner args in the [Type manifest](https://github.com/capactio/hub-manifests/tree/main/manifests/type/runner/helm/run-input.yaml).
 
 > To create the input parameters for `helm.install` we have to use data from two artifacts. As the current `jinja.run` **Interface** consumes only a template and a single variables input, we have to perform this operation twice. To separate the variables substituted in the first, second and third operation, we add prefixes to the variables.
 >
@@ -599,7 +599,7 @@ arguments:
     - name: runner-context
       from: "{{workflow.outputs.artifacts.runner-context}
 ```
-To verify, if a runner needs the context, check the **Interface** of the runner (e.g. [Interface for Helm runner](https://github.com/capactio/capact/tree/main/hub-content/interface/runner/helm/run.yaml)).
+To verify, if a runner needs the context, check the **Interface** of the runner (e.g. [Interface for Helm runner](https://github.com/capactio/hub-manifests/tree/main/manifests/interface/runner/helm/run.yaml)).
 
 ## Validate the manifests using Capact CLI
 
@@ -607,9 +607,9 @@ You can use the Capact CLI to validate the manifests you created. The `capact va
 
 > For now the Capact CLI does not verify the content of the `action` property in **Implementations**. It will not verify, that your workflow is correct and will execute properly.
 
-To verify all your manifests in `hub-content` directory, execute:
+To verify all your manifests in `manifests` directory, execute:
 ```
-capact validate hub-content/**/*.yaml
+capact validate manifests/**/*.yaml
 ```
 
 You can read more about the Capact CLI [here](https://github.com/capactio/capact/tree/main/cmd/cli/README.md).
@@ -632,9 +632,9 @@ kubectl port-forward -n capact-system svc/neo4j-neo4j 7474 7687
 
 Then populate the data, with the populator:
 ```
-APP_JSON_PUBLISH_ADDR=<your-local-docker-ip-address> APP_MANIFESTS_PATH=hub-content ./populator register ocf-manifests .
+APP_JSON_PUBLISH_ADDR=<your-local-docker-ip-address> APP_MANIFESTS_PATH=manifests ./populator register ocf-manifests .
 
-APP_JSON_PUBLISH_ADDR=http://172.17.0.1 APP_MANIFESTS_PATH=hub-content populator register ocf-manifests .
+APP_JSON_PUBLISH_ADDR=http://172.17.0.1 APP_MANIFESTS_PATH=manifests populator register ocf-manifests .
 ```
 
 ## Create and run your Action
@@ -747,7 +747,7 @@ First we need to create an Interface, and a Type for user input:
 Input type which just accepts a new password.
 
 <details>
-  <summary>hub-content/type/database/postgresql/change-password-input.yaml</summary>
+  <summary>manifests/type/database/postgresql/change-password-input.yaml</summary>
 
 ```yaml
 ocfVersion: 0.0.1
@@ -803,7 +803,7 @@ It accepts a user input defined earlier and two TypeInstances:
 The Interface outputs modified User TypeInstance, to enable future parent workflows to consume updated password.
 
 <details>
-  <summary>hub-content/interface/database/postgresql/change-password.yaml</summary>
+  <summary>manifests/interface/database/postgresql/change-password.yaml</summary>
 
 ```yaml
 ocfVersion: 0.0.1
@@ -864,7 +864,7 @@ signature:
 The last step is to create an Implementation. Here we will just use simple `postgres` container and execute `psql` binary.
 
 <details>
-  <summary>hub-content/implementation/postgresql/change-password.yaml</summary>
+  <summary>manifests/implementation/postgresql/change-password.yaml</summary>
 
 ```yaml
 ocfVersion: 0.0.1
