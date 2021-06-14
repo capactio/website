@@ -154,13 +154,13 @@ You can export the following environment variables to configure the script:
 - To disable higher resource requests and limits for components, use `INCREASE_RESOURCE_LIMITS=false`.
 - To override Capact Helm chart values, use `CUSTOM_CAPACT_SET_FLAGS` e.g. `CUSTOM_CAPACT_SET_FLAGS="--set gateway.auth.password=myPass"`.
 - To override Ingress NGINX Helm chart values, use `CUSTOM_NGINX_SET_FLAGS`.
-- To override the Git branch from which the source manifests should be populated, use `OCH_MANIFESTS_SOURCE_REPO_REF`, e.g. `OCH_MANIFESTS_SOURCE_REPO_REF="my-fancy-branch"`
+- To override the Git branch from which the source manifests should be populated, use `HUB_MANIFESTS_SOURCE_REPO_REF`, e.g. `HUB_MANIFESTS_SOURCE_REPO_REF="my-fancy-branch"`
 - To override Cert Manager Helm chart values, use `CUSTOM_CERT_MANAGER_SET_FLAGS`.
 
 
 ### Access Gateway GraphQL Playground
 
-Capact Gateway aggregates all GraphQL APIs from multiple components (Local OCH, Public OCH, Engine) into a single endpoint.
+Capact Gateway aggregates all GraphQL APIs from multiple components (Local Hub, Public Hub, Engine) into a single endpoint.
 
 To see the Gateway URL and authentication details, use the following command:
 
@@ -233,9 +233,9 @@ If you want to build and push Docker image for a single component, follow these 
 
 1. Build a specific Docker image:
     
-    For application defined under [cmd](https://github.com/capactio/capact/tree/main/cmd) package use it names, e.g. for `och`:
+    For application defined under [cmd](https://github.com/capactio/capact/tree/main/cmd) package use it names, e.g. for `hub`:
     ```bash
-    make build-app-image-och
+    make build-app-image-hub
     ```
 
     For tests defined under [test](https://github.com/capactio/capact/tree/main/test) package use it names, e.g. for `e2e`:
@@ -245,9 +245,9 @@ If you want to build and push Docker image for a single component, follow these 
 
 2. Push the built Docker image to a registry:
 
-    For application defined under [cmd](https://github.com/capactio/capact/tree/main/cmd) package use it names, e.g. for `och`:
+    For application defined under [cmd](https://github.com/capactio/capact/tree/main/cmd) package use it names, e.g. for `hub`:
     ```bash
-    make push-app-image-och
+    make push-app-image-hub
     ```
 
     For tests defined under [test](https://github.com/capactio/capact/tree/main/test) package use it names, e.g. for `e2e`:
@@ -326,8 +326,8 @@ This project uses the [GQLGen](https://github.com/99designs/gqlgen) library, whi
 
 In Capact project we have three GraphQL schemas, from which the Go code is generated:
 - [Engine](https://github.com/capactio/capact/tree/main/pkg/engine/api/graphql/schema.graphql)
-- [Local OCH](https://github.com/capactio/capact/tree/main/och-js/graphql/local/schema.graphql)
-- [Public OCH](https://github.com/capactio/capact/tree/main/och-js/graphql/public/schema.graphql)
+- [Local Hub](https://github.com/capactio/capact/tree/main/hub-js/graphql/local/schema.graphql)
+- [Public Hub](https://github.com/capactio/capact/tree/main/hub-js/graphql/public/schema.graphql)
 
 Each time the GraphQL schema changes, you need to update generated resources. To do this, execute:
 

@@ -7,7 +7,7 @@ This document describes how to prepare content which uses Terraform Runner.
 - [MinIO client](https://min.io/download)
 - [Capact development cluster](../development/development-guide.md#development-cluster)
     
-    > **NOTE:** Use `ENABLE_POPULATOR=false` environmental variable, as you will manually upload your OCF manifests into OCH.
+    > **NOTE:** Use `ENABLE_POPULATOR=false` environmental variable, as you will manually upload your OCF manifests into Hub.
 
 ## MinIO access configuration
 
@@ -39,12 +39,12 @@ On the list, you should see the `terraform` bucket, which is created by default.
 
 ## Uploading Terraform modules
 
-In the `och-content/implementation/gcp/cloudsql/postgresql/install-0.2.0-module` directory there is a Terraform module to configure CloudSQL Postgresql instance.
+In the `hub-content/implementation/gcp/cloudsql/postgresql/install-0.2.0-module` directory there is a Terraform module to configure CloudSQL Postgresql instance.
 
 1. Create tar directory first:
 
     ```shell
-    cd och-content/implementation/gcp/cloudsql/postgresql/install-0.2.0-module && tar -zcvf /tmp/cloudsql.tgz . && cd -
+    cd hub-content/implementation/gcp/cloudsql/postgresql/install-0.2.0-module && tar -zcvf /tmp/cloudsql.tgz . && cd -
     ```
 
 1. Upload it to MinIO:
@@ -65,18 +65,18 @@ As you port-forwarded in-cluster MinIO installation, you can check that by using
 To use the module, you need to prepare Capact manifests - InterfaceGroup, Interface, Implementation and Types.
 
 In this example, we have them all already defined for PostgreSQL installation. To create your own manifests, you can base on them:
-- [InterfaceGroup](https://github.com/capactio/capact/tree/main/och-content/interface/database/postgresql.yaml)
-- [Interface](https://github.com/capactio/capact/tree/main/och-content/interface/database/postgresql/install.yaml)
-- [Implementation](https://github.com/capactio/capact/tree/main/och-content/implementation/terraform/gcp/cloudsql/postgresql/install.yaml). The manifest uses Terraform Runner.
+- [InterfaceGroup](https://github.com/capactio/capact/tree/main/hub-content/interface/database/postgresql.yaml)
+- [Interface](https://github.com/capactio/capact/tree/main/hub-content/interface/database/postgresql/install.yaml)
+- [Implementation](https://github.com/capactio/capact/tree/main/hub-content/implementation/terraform/gcp/cloudsql/postgresql/install.yaml). The manifest uses Terraform Runner.
   
   Instead of using GCS as module source, you can use internal MinIO URL, such as `http://argo-minio.argo:9000/terraform/cloudsql/cloudsql.tgz`.
 
-- [Input Type](https://github.com/capactio/capact/tree/main/och-content/type/database/postgresql/install-input.yaml)
-- [Output Type](https://github.com/capactio/capact/tree/main/och-content/type/database/postgresql/config.yaml)
+- [Input Type](https://github.com/capactio/capact/tree/main/hub-content/type/database/postgresql/install-input.yaml)
+- [Output Type](https://github.com/capactio/capact/tree/main/hub-content/type/database/postgresql/config.yaml)
 
 ## Populating content
 
-To read more how to populate content, see the [Populate the manifests into OCH](./guide.md#populate-the-manifests-into-och) section in the "Content Development Guide" document.
+To read more how to populate content, see the [Populate the manifests into Hub](./guide.md#populate-the-manifests-into-hub) section in the "Content Development Guide" document.
 
 ## Running Action
 

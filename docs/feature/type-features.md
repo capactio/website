@@ -44,8 +44,8 @@ Currently, the feature brings the following benefits:
    # (...)
    ```
 
-1. User queries OCH for all Types with prefix `cap.core.type.platform.*`.
-1. OCH returns the following Types:
+1. User queries Hub for all Types with prefix `cap.core.type.platform.*`.
+1. Hub returns the following Types:
 
    ```yaml
    - name: "cap.core.type.platform.kubernetes"
@@ -94,7 +94,7 @@ Type entities can be defined in a form of composition of other Types. It gives y
 
 To enable Content Creator to compose Types in JSON schema, we use, among other things, [built-in JSON Schema combining functionality](http://json-schema.org/understanding-json-schema/reference/combining.html). Every time we see a reference to external JSON schema, we fetch the type and embed its schema.
 
-Once Content Creator submits a new Type and there is a reference to other Type, we create edges in the OCH for every single Type reference. It enables us to easily find Types, which are derived from original Types.
+Once Content Creator submits a new Type and there is a reference to other Type, we create edges in the Hub for every single Type reference. It enables us to easily find Types, which are derived from original Types.
 
 ![Type composition](./assets/type-composition.svg)
 

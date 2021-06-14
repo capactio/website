@@ -121,7 +121,7 @@ If you release major or minor version, create a dedicated release branch.
 1. Replace Populator target branch from `main` to the release branch:
   
    ```bash
-   sed -i.bak "s/branch: main/branch: ${RELEASE_BRANCH}/g" "deploy/kubernetes/charts/capact/charts/och-public/values.yaml"
+   sed -i.bak "s/branch: main/branch: ${RELEASE_BRANCH}/g" "deploy/kubernetes/charts/capact/charts/hub-public/values.yaml"
    ```
 
 1. Review and commit the changes:

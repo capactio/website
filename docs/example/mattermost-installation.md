@@ -284,7 +284,7 @@ To change the Mattermost installation, we need to adjust our cluster policy to p
 
 1. Install Mattermost with the new cluster policy:
 
-   The cluster policy was updated to prefer GCP solutions for the PostgreSQL Interface. As a result, during the render process, the Capact Engine will select a Cloud SQL Implementation which is available in our OCH server.
+   The cluster policy was updated to prefer GCP solutions for the PostgreSQL Interface. As a result, during the render process, the Capact Engine will select a Cloud SQL Implementation which is available in our Hub server.
    
    Repeat the steps 4–11 from [Install all Mattermost components in a Kubernetes cluster](#install-all-mattermost-components-in-a-kubernetes-cluster) in the `gcp-scenario` Namespace.
 
@@ -309,22 +309,22 @@ The following section extends the tutorial with additional topics, to let you di
 
 #### OCF manifests
 
-A user consumes content stored in Open Capability Hub (OCH). The content is defined using Open Capability Format (OCF) manifests. The OCF specification defines the shape of manifests that Capact understands, such as Interface or Implementation.
+A user consumes content stored in Capact Hub. The content is defined using Open Capability Format (OCF) manifests. The OCF specification defines the shape of manifests that Capact understands, such as Interface or Implementation.
 
-To see all the manifest that OCH stores, navigate to the [OCH content structure](https://github.com/capactio/capact/tree/main/och-content).
+To see all the manifest that Hub stores, navigate to the [Hub content structure](https://github.com/capactio/capact/tree/main/hub-content).
 
 To see the Mattermost installation manifests, click on the following links:
- - [Mattermost installation Interface](https://github.com/capactio/capact/tree/main/och-content/interface/productivity/mattermost/install.yaml) — a generic description of Mattermost installation (action name, input, and output — a concept similar to interfaces in programming languages),
- - [Mattermost installation Implementation](https://github.com/capactio/capact/tree/main/och-content/implementation/mattermost/mattermost-team-edition/install.yaml) — represents the dynamic workflow for Mattermost Installation.
+ - [Mattermost installation Interface](https://github.com/capactio/capact/tree/main/hub-content/interface/productivity/mattermost/install.yaml) — a generic description of Mattermost installation (action name, input, and output — a concept similar to interfaces in programming languages),
+ - [Mattermost installation Implementation](https://github.com/capactio/capact/tree/main/hub-content/implementation/mattermost/mattermost-team-edition/install.yaml) — represents the dynamic workflow for Mattermost Installation.
 
 #### Content development
 
-To make it easier to develop new OCH content, we implemented a dedicated CLI. Currently, it exposes the validation feature for OCF manifests. It detects the manifest kind and the OCF version to properly validate a given file. You can use it to validate one or multiple files at a single run.
+To make it easier to develop new Hub content, we implemented a dedicated CLI. Currently, it exposes the validation feature for OCF manifests. It detects the manifest kind and the OCF version to properly validate a given file. You can use it to validate one or multiple files at a single run.
 
-To validate all OCH manifests, navigate to the repository root directory and run the following command:
+To validate all Hub manifests, navigate to the repository root directory and run the following command:
 
 ```bash
-capact validate ./och-content/**/*.yaml
+capact validate ./hub-content/**/*.yaml
 ```
 
 In the future, we plan to extend the Capact CLI with additional features, such as:

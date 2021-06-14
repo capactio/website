@@ -152,7 +152,7 @@ The bastion host can access the Capact gateway and has Capact CLI preinstalled, 
   capact login "https://${CAPACT_GATEWAY_HOST}" -u "${CAPACT_GATEWAY_USERNAME}" -p "${CAPACT_GATEWAY_PASSWORD}"
   ```
 
-1. Verify, if you can query the Capact Gateway and list all Interfaces in the OCH:
+1. Verify, if you can query the Capact Gateway and list all Interfaces in the Hub:
   ```bash
   capact hub interfaces search
   ```

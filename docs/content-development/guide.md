@@ -14,7 +14,7 @@
 - [Runners](#runners)
 - [Write the Implementation for the Interface](#write-the-implementation-for-the-interface)
 - [Validate the manifests using Capact CLI](#validate-the-manifests-using-capact-cli)
-- [Populate the manifests into OCH](#populate-the-manifests-into-och)
+- [Populate the manifests into Hub](#populate-the-manifests-into-hub)
 - [Run your new action](#run-your-new-action)
   * [View the Action workflow in Argo UI](#view-the-action-workflow-in-argo-ui)
   * [View the Action Custom Resource](#view-the-action-custom-resource)
@@ -83,10 +83,10 @@ Let's try to create manifests required to define a capability to install [Matter
 First, we need to create an **InterfaceGroup** manifest, which groups **Interfaces** corresponding to some application.
 Let's create a InterfaceGroup called `cap.interface.productivity.mattermost`, which will group **Interfaces** operating on Mattermost instances.
 
-In `och-content/interface/productivity/`, create a file called `mattermost.yaml`, with the following content:
+In `hub-content/interface/productivity/`, create a file called `mattermost.yaml`, with the following content:
 
 <details>
-  <summary>och-content/interface/productivity/mattermost.yaml</summary>
+  <summary>hub-content/interface/productivity/mattermost.yaml</summary>
 
 ```yaml
 ocfVersion: 0.0.1
@@ -106,7 +106,7 @@ metadata:
       url: your-website
 
 signature:
-  och: eyJ0eXAiOiJKV1QiLA0KICJhbGciOiJIUzI1NiJ9
+  hub: eyJ0eXAiOiJKV1QiLA0KICJhbGciOiJIUzI1NiJ9
 ```
 </details>
 
@@ -115,12 +115,12 @@ signature:
 ### Create the Interface manifest
 
 After we have the **InterfaceGroup**, let's create the **Interface** for installing Mattermost.
-Create the directory `och-content/interface/productivity/mattermost`.
+Create the directory `hub-content/interface/productivity/mattermost`.
 
 Inside this directory, create a file `install.yaml` with the following content:
 
 <details>
-  <summary>och-content/interface/productivity/mattermost/install.yaml</summary>
+  <summary>hub-content/interface/productivity/mattermost/install.yaml</summary>
 
 ```yaml
 ocfVersion: 0.0.1
@@ -163,7 +163,7 @@ spec:
           revision: 0.1.0
 
 signature:
-  och: eyJ0eXAiOiJKV1QiLA0KICJhbGciOiJIUzI1NiJ9
+  hub: eyJ0eXAiOiJKV1QiLA0KICJhbGciOiJIUzI1NiJ9
 ```
 </details>
 
@@ -180,7 +180,7 @@ Although Mattermost needs a database, we don't specify it as an input argument h
 Now we need to define the two **Types**, which we use in our **Interface**: `cap.type.productivity.mattermost.install-input` and `cap.type.productivity.mattermost.config`.
 
 <details>
-  <summary>och-content/type/productivity/mattermost/install-input.yaml</summary>
+  <summary>hub-content/type/productivity/mattermost/install-input.yaml</summary>
 
 ```yaml
 ocfVersion: 0.0.1
@@ -223,12 +223,12 @@ spec:
       }
 
 signature:
-  och: eyJ0eXAiOiJKV1QiLA0KICJhbGciOiJIUzI1NiJ9
+  hub: eyJ0eXAiOiJKV1QiLA0KICJhbGciOiJIUzI1NiJ9
 ```
 </details>
 
 <details>
-  <summary>och-content/type/productivity/mattermost/config.yaml</summary>
+  <summary>hub-content/type/productivity/mattermost/config.yaml</summary>
 
 ```yaml
 ocfVersion: 0.0.1
@@ -279,7 +279,7 @@ spec:
       }
 
 signature:
-  och: eyJ0eXAiOiJKV1QiLA0KICJhbGciOiJIUzI1NiJ9
+  hub: eyJ0eXAiOiJKV1QiLA0KICJhbGciOiJIUzI1NiJ9
 ```
 </details>
 
@@ -296,7 +296,7 @@ The Action execution is handled by runners. Currently, we provide the following 
 - [Terraform Runner](https://github.com/capactio/capact/tree/main/cmd/terraform-runner/README.md)
 - [CloudSQL Runner](https://github.com/capactio/capact/tree/main/cmd/cloudsql-runner/README.md) (deprecated in favor of Terraform Runner)
 
-To check the schema of the runner input, you have to look in the [`och-content/type/runner`](https://github.com/capactio/capact/tree/main/och-content/type/runner) directory. You can find there the JSON schema and an example input for the runner.
+To check the schema of the runner input, you have to look in the [`hub-content/type/runner`](https://github.com/capactio/capact/tree/main/hub-content/type/runner) directory. You can find there the JSON schema and an example input for the runner.
 
 You can read more about runners in [this document](../architecture/runner.md).
 
@@ -307,10 +307,10 @@ You can read more about runners in [this document](../architecture/runner.md).
 
 After we defined the **Interfaces**, and the **Types**, we can write an **Implementation** of `mattermost.install`. Our **Implementation** will use a PostgreSQL database, which will be provided by another **Interface**, which is already available in Capact. We also allow users to provide his own PostgreSQL instance **TypeInstance**.
 
-Create a file `och-content/implementation/mattermost/mattermost-team-edition/install.yaml` with the following content:
+Create a file `hub-content/implementation/mattermost/mattermost-team-edition/install.yaml` with the following content:
 
 <details>
-  <summary>och-content/implementation/mattermost/mattermost-team-edition/install.yaml</summary>
+  <summary>hub-content/implementation/mattermost/mattermost-team-edition/install.yaml</summary>
 
 ```yaml
 ocfVersion: 0.0.1
@@ -549,7 +549,7 @@ spec:
                         from: "{{workflow.outputs.artifacts.runner-context}}"
 
 signature:
-  och: eyJ0eXAiOiJKV1QiLA0KICJhbGciOiJIUzI1NiJ9
+  hub: eyJ0eXAiOiJKV1QiLA0KICJhbGciOiJIUzI1NiJ9
 ```
 </details>
 
@@ -559,8 +559,8 @@ Let's take a look on the **Implementation** YAML. **Implementation** has the fol
 | ----------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
 | `appVersion`                  | Application versions, which this **Implementation** supports.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              |
 | `additionalInput`             | Additional input for the **Implementation**, compared to the **Interface**. In our case, here we define the `postgresql.config`, as our **Implementation** uses a PostgreSQL instance for Mattermost.                                                                                                                                                                                                                                                                                                                                                                                                                                      |
-| `additionalOutput`            | This section defines any additional **TypeInstances**, which are created in this **Implementation**, compared to the **Interface**. In our **Implementation**, we create a database in the database instance with the `postgresql.create-db` **Interface**, which outputs an `postgresql.database` **TypeInstance**. We have to write this down in `additionalOutput`, so Capact will resolve this **TypeInstance** metadata for uploading it to OCH.                                                                                                                                                                                      |
-| `outputTypeInstanceRelations` | Specifies all output TypeInstances to upload to OCH with theirs relationships between them. Only the TypeInstances created in this Implementation have to be mentioned here. If a TypeInstances in created in another action and brought into the context with `capact-outputTypeInstances`, then it should not be defined here.                                                                                                                                                                                                                                                                                                                                                                                               |
+| `additionalOutput`            | This section defines any additional **TypeInstances**, which are created in this **Implementation**, compared to the **Interface**. In our **Implementation**, we create a database in the database instance with the `postgresql.create-db` **Interface**, which outputs an `postgresql.database` **TypeInstance**. We have to write this down in `additionalOutput`, so Capact will resolve this **TypeInstance** metadata for uploading it to Hub.                                                                                                                                                                                      |
+| `outputTypeInstanceRelations` | Specifies all output TypeInstances to upload to Hub with theirs relationships between them. Only the TypeInstances created in this Implementation have to be mentioned here. If a TypeInstances in created in another action and brought into the context with `capact-outputTypeInstances`, then it should not be defined here.                                                                                                                                                                                                                                                                                                                                                                                               |
 | `implements`                  | Defines which **Interfaces** are implemented by this **Implementation**.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    |
 | `requires`                    | List of system prerequisites that need to be present in the environment managed by Capact to use this **Implementation**. In our example, we will deploy Mattermost as a Helm chart on Kubernetes, which means we need a Kubernetes cluster. Requirement items can specify `alias` and be used inside workflow under `{{workflow.outputs.artifacts.{alias}}}`, where `{alias-name}` is the alias. A TypeInstance with alias is injected into the workflow based on Policy configuration. To learn more, see the [TypeInstance Injection](../feature/policy-configuration.md#typeinstance-injection) paragraph in Policy Configuration document. |
 | `imports`                     | Here we define all other **Interfaces**, we use in our **Implementation**. We can then refer to them as `'<alias>.<method-name>'`.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          |
@@ -581,10 +581,10 @@ Let's go through the **Implementation** and try to understand, what is happening
 
 > The `input-parameters` for `postgresql.install` are hardcoded in this example. In a real workflow, they should be generated or taken from the `input-parameters` for this **Implementation**.
 
-In the next step we are creating a database for the Mattermost server. If you look at the **Interface** definition of [`cap.interface.database.postgresql.create-db`](https://github.com/capactio/capact/tree/main/och-content/interface/database/postgresql/create-db.yaml), you will see, that it requires a `postgresql` **TypeInstance** of **Type** [`cap.type.database.postgresql.config`](https://github.com/capactio/capact/tree/main/och-content/type/database/postgresql/config.yaml) and input parameters [`cap.type.database.postgresql.database-input`](https://github.com/capactio/capact/tree/main/och-content/type/database/postgresql/database-input.yaml), and outputs a `database` **TypeInstance** of **Type** [`cap.type.database.postgresql.database`](https://github.com/capactio/capact/tree/main/och-content/type/database/postgresql/database.yaml). In the step, we are providing the inputs to the **Interface** via the `.arguments.artifacts` field. We also have to map the output of this step to our output definitions in `additionalOutput` and the implemented **Interface** in the `capact-outputTypeInstances` field.
+In the next step we are creating a database for the Mattermost server. If you look at the **Interface** definition of [`cap.interface.database.postgresql.create-db`](https://github.com/capactio/capact/tree/main/hub-content/interface/database/postgresql/create-db.yaml), you will see, that it requires a `postgresql` **TypeInstance** of **Type** [`cap.type.database.postgresql.config`](https://github.com/capactio/capact/tree/main/hub-content/type/database/postgresql/config.yaml) and input parameters [`cap.type.database.postgresql.database-input`](https://github.com/capactio/capact/tree/main/hub-content/type/database/postgresql/database-input.yaml), and outputs a `database` **TypeInstance** of **Type** [`cap.type.database.postgresql.database`](https://github.com/capactio/capact/tree/main/hub-content/type/database/postgresql/database.yaml). In the step, we are providing the inputs to the **Interface** via the `.arguments.artifacts` field. We also have to map the output of this step to our output definitions in `additionalOutput` and the implemented **Interface** in the `capact-outputTypeInstances` field.
 
 The `render-helm-args`, `fill-db-params-in-helm-args` and `fill-user-params-in-helm-args` steps are used to prepare the input parameters for the `helm.install` **Interface**. Jinja template engine is used here to render the Helm runner arguments with the required data from the `postgresql` and `database` **TypeInstances**. Those steps don't create any **TypeInstances** and serve only the purpose of creating the input parameters for the Helm runner.
-You can check the schema of the Helm runner args in the [Type manifest](https://github.com/capactio/capact/tree/main/och-content/type/runner/helm/run-input.yaml).
+You can check the schema of the Helm runner args in the [Type manifest](https://github.com/capactio/capact/tree/main/hub-content/type/runner/helm/run-input.yaml).
 
 > To create the input parameters for `helm.install` we have to use data from two artifacts. As the current `jinja.run` **Interface** consumes only a template and a single variables input, we have to perform this operation twice. To separate the variables substituted in the first, second and third operation, we add prefixes to the variables.
 >
@@ -599,7 +599,7 @@ arguments:
     - name: runner-context
       from: "{{workflow.outputs.artifacts.runner-context}
 ```
-To verify, if a runner needs the context, check the **Interface** of the runner (e.g. [Interface for Helm runner](https://github.com/capactio/capact/tree/main/och-content/interface/runner/helm/run.yaml)).
+To verify, if a runner needs the context, check the **Interface** of the runner (e.g. [Interface for Helm runner](https://github.com/capactio/capact/tree/main/hub-content/interface/runner/helm/run.yaml)).
 
 ## Validate the manifests using Capact CLI
 
@@ -607,21 +607,21 @@ You can use the Capact CLI to validate the manifests you created. The `capact va
 
 > For now the Capact CLI does not verify the content of the `action` property in **Implementations**. It will not verify, that your workflow is correct and will execute properly.
 
-To verify all your manifests in `och-content` directory, execute:
+To verify all your manifests in `hub-content` directory, execute:
 ```
-capact validate och-content/**/*.yaml
+capact validate hub-content/**/*.yaml
 ```
 
 You can read more about the Capact CLI [here](https://github.com/capactio/capact/tree/main/cmd/cli/README.md).
 
-## Populate the manifests into OCH
+## Populate the manifests into Hub
 
 After we have the manifests ready, we can start our local Capact environment. In the root of the cloned `capact` repository run:
 ```
 ENABLE_POPULATOR=false make dev-cluster
 ```
 
-This can take a few minutes. We disabled the populator sidecar in OCH public, as we will populate the data from our local repository using the populator.
+This can take a few minutes. We disabled the populator sidecar in Hub public, as we will populate the data from our local repository using the populator.
 
 > You can read more about the populator, how to compile and use it, in this [README](https://github.com/capactio/capact/tree/main/cmd/populator/docs/populator_register-ocf-manifests.md).
 
@@ -632,9 +632,9 @@ kubectl port-forward -n capact-system svc/neo4j-neo4j 7474 7687
 
 Then populate the data, with the populator:
 ```
-APP_JSON_PUBLISH_ADDR=<your-local-docker-ip-address> APP_MANIFESTS_PATH=och-content ./populator register ocf-manifests .
+APP_JSON_PUBLISH_ADDR=<your-local-docker-ip-address> APP_MANIFESTS_PATH=hub-content ./populator register ocf-manifests .
 
-APP_JSON_PUBLISH_ADDR=http://172.17.0.1 APP_MANIFESTS_PATH=och-content populator register ocf-manifests .
+APP_JSON_PUBLISH_ADDR=http://172.17.0.1 APP_MANIFESTS_PATH=hub-content populator register ocf-manifests .
 ```
 
 ## Create and run your Action
@@ -734,7 +734,7 @@ Events:
   Warning  Render runner action  2s (x15 over 2m58s)  action-controller  while resolving Implementation for Action: while rendering Action: No implementation found for "cap.interface.productivity.mattermost.install"
 ```
 
-In the case above, we can see that the action rendering is failing, because the Capact Engine is not able to find the **Implementation** for `cap.interface.productivity.mattermost.install` **Interface** in OCH.
+In the case above, we can see that the action rendering is failing, because the Capact Engine is not able to find the **Implementation** for `cap.interface.productivity.mattermost.install` **Interface** in Hub.
 
 ## Update TypeInstance
 
@@ -747,7 +747,7 @@ First we need to create an Interface, and a Type for user input:
 Input type which just accepts a new password.
 
 <details>
-  <summary>och-content/type/database/postgresql/change-password-input.yaml</summary>
+  <summary>hub-content/type/database/postgresql/change-password-input.yaml</summary>
 
 ```yaml
 ocfVersion: 0.0.1
@@ -790,7 +790,7 @@ spec:
       }
 
 signature:
-  och: eyJ0eXAiOiJKV1QiLA0KICJhbGciOiJIUzI1NiJ9
+  hub: eyJ0eXAiOiJKV1QiLA0KICJhbGciOiJIUzI1NiJ9
 ```
 </details>
 
@@ -803,7 +803,7 @@ It accepts a user input defined earlier and two TypeInstances:
 The Interface outputs modified User TypeInstance, to enable future parent workflows to consume updated password.
 
 <details>
-  <summary>och-content/interface/database/postgresql/change-password.yaml</summary>
+  <summary>hub-content/interface/database/postgresql/change-password.yaml</summary>
 
 ```yaml
 ocfVersion: 0.0.1
@@ -857,14 +857,14 @@ spec:
           revision: 0.1.0
 
 signature:
-  och: eyJ0eXAiOiJKV1QiLA0KICJhbGciOiJIUzI1NiJ9
+  hub: eyJ0eXAiOiJKV1QiLA0KICJhbGciOiJIUzI1NiJ9
 ```
 </details>
 
 The last step is to create an Implementation. Here we will just use simple `postgres` container and execute `psql` binary.
 
 <details>
-  <summary>och-content/implementation/postgresql/change-password.yaml</summary>
+  <summary>hub-content/implementation/postgresql/change-password.yaml</summary>
 
 ```yaml
 ocfVersion: 0.0.1
@@ -1001,7 +1001,7 @@ spec:
                   path: /user.yml
 
 signature:
-  och: eyJ0eXAiOiJKV1QiLA0KICJhbGciOiJIUzI1NiJ9
+  hub: eyJ0eXAiOiJKV1QiLA0KICJhbGciOiJIUzI1NiJ9
 ```
 </details>
 
