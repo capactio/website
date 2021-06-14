@@ -8,19 +8,15 @@ module.exports = () => {
     ...generateDocsRedirectsForVersion(""),
     ...generateDocsRedirectsForVersion("next"),
     ...generateDocsRedirectsForVersion("0.3"),
-    ...generateDocsRedirectsForVersion("0.4", ""), // redirect from 0.4 to latest
+    ...generateDocsRedirectsForVersion("0.4", true), // redirect from 0.4 to latest
   ];
   
   return redirects;
 };
 
-const generateDocsRedirectsForVersion = (version, targetVersionOverride) => {
-  const versionSubstring = version != "" ? `/${version}` : "";
-  const fromPrefix = `/docs${versionSubstring}`;
-  const toPrefix =
-    typeof targetVersionOverride !== "undefined"
-      ? `/docs${targetVersionOverride}`
-      : fromPrefix;
+const generateDocsRedirectsForVersion = (version, useLatestVersionAsTarget) => {
+  const fromPrefix = version != "" ? `/docs/${version}` : "/docs";
+  const toPrefix = useLatestVersionAsTarget ? `/docs` : fromPrefix;
 
   return [
     {

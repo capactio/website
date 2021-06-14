@@ -1,5 +1,5 @@
 // eslint-disable-next-line @typescript-eslint/no-var-requires
-const customRedirects = require("./redirects.js");
+const getCustomRedirects = require("./redirects.js");
 
 /** @type {import('@docusaurus/types').DocusaurusConfig} */
 module.exports = {
@@ -149,7 +149,7 @@ module.exports = {
       "@docusaurus/plugin-client-redirects",
       {
         redirects: [
-          ...customRedirects(),
+          ...getCustomRedirects(),
         ],
       },
     ],
