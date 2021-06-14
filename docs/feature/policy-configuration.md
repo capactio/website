@@ -1,23 +1,5 @@
 # Policy configuration
 
-## Table of Contents
-
-<!-- toc -->
-
-- [Introduction](#introduction)
-- [Syntax](#syntax)
-  * [Definition of rules for Interface](#definition-of-rules-for-interface)
-  * [Selecting Implementations](#selecting-implementations)
-  * [TypeInstance injection](#typeinstance-injection)
-  * [Example](#example)
-- [Configuration](#configuration)
-  * [View current Policy](#view-current-policy)
-  * [Modify Policy using CLI](#modify-policy-using-cli)
-  * [Modify Policy with Capact installation/upgrade overrides](#modify-policy-with-capact-installationupgrade-overrides)
-  * [Reloading policy by Engine](#reloading-policy-by-engine)
-
-<!-- tocstop -->
-
 ## Introduction
 
 The key Capact feature is dependencies interchangeability. Applications define theirs dependencies by using Interfaces. Depending on Cluster Admin configuration, every time User runs Action, a different Implementation may be picked for a given Interface.

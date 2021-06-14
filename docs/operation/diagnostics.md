@@ -2,34 +2,6 @@
 
 Here you can find the list of basic diagnostic actions that may help you look for bug causes.
 
-## Table of contents
-
-<!-- toc -->
-
-- [Engine](#engine)
-  * [Engine health](#engine-health)
-  * [Engine logs](#engine-logs)
-  * [Checking Action status](#checking-action-status)
-  * [Checking Action status message](#checking-action-status-message)
-  * [Checking rendered Action workflow](#checking-rendered-action-workflow)
-  * [Checking Action execution status](#checking-action-execution-status)
-  * [Checking cluster Policy](#checking-cluster-policy)
-- [Gateway](#gateway)
-  * [Gateway health](#gateway-health)
-  * [Gateway logs](#gateway-logs)
-- [Public Hub](#public-hub)
-  * [Public Hub health](#public-hub-health)
-  * [Public Hub logs](#public-hub-logs)
-  * [Hub Populator logs](#hub-populator-logs)
-  * [Checking if Public Hub is populated](#checking-if-public-hub-is-populated)
-- [Local Hub](#local-hub)
-  * [Local Hub health](#local-hub-health)
-  * [Local Hub logs](#local-hub-logs)
-  * [Checking if TypeInstance exists](#checking-if-typeinstance-exists)
-- [Pod restart](#pod-restart)
-
-<!-- tocstop -->
-
 ## Engine 
 
 This section describes [Engine](../architecture/e2e-architecture.md#engine) related diagnostic.

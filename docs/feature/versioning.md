@@ -2,26 +2,6 @@
 
 This document describes Capact versioning strategy.
 
-## Table of contents
-
-<!-- toc -->
-
-- [Overview](#overview)
-- [Diagram](#diagram)
-- [OCF Version](#ocf-version)
-  * [Supporting multiple OCF versions in Hub](#supporting-multiple-ocf-versions-in-hub)
-  * [Deprecation policy of OCF versions](#deprecation-policy-of-ocf-versions)
-- [Manifests revision](#manifests-revision)
-- [TypeInstance **resourceVersion**](#typeinstance-resourceversion)
-- [Core manifests](#core-manifests)
-- [Application version](#application-version)
-  * [Default application versions in SemVer format](#default-application-versions-in-semver-format)
-  * [Default application versions in different format than SemVer](#default-application-versions-in-different-format-than-semver)
-  * [Conflict prevention](#conflict-prevention)
-- [Engine and CLI versions](#engine-and-cli-versions)
-
-<!-- tocstop -->
-
 ## Overview
 
 The versioning for OCF and Hub are similar in concept to how Kubernetes implements versioning. Below is a table comparing Capact versioning to Kubernetes versioning.

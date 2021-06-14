@@ -2,20 +2,6 @@
 
 This document describes how to identify and resolve common Capact problems that might occur.
 
-## Table of contents
-
-<!-- toc -->
-
-- [Action](#action)
-  * [Action does not have status](#action-does-not-have-status)
-  * [Action stuck in the `BeingRendered` phase](#action-stuck-in-the-beingrendered-phase)
-  * [Action in the `Failed` phase](#action-in-the-failed-phase)
-  * [Clean up Action execution pods](#clean-up-action-execution-pods)
-  * [Wrong Implementation was selected](#wrong-implementation-was-selected)
-- [Unreachable Gateway](#unreachable-gateway)
-
-<!-- tocstop -->
-
 ## Action
 
 In this section, you can find common [Action](./../terminology.md#action) failures that might occur.

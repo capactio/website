@@ -1,28 +1,5 @@
 # Guide
 
-## Table of contents
-
-<!-- toc -->
-
-- [Introduction](#introduction)
-- [Prerequisites](#prerequisites)
-- [Types, Interfaces and Implementations](#types-interfaces-and-implementations)
-- [Define your Types and Interfaces](#define-your-types-and-interfaces)
-  * [Create the Interface Group manifest](#create-the-interface-group-manifest)
-  * [Create the Interface manifest](#create-the-interface-manifest)
-  * [Create the Type manifests](#create-the-type-manifests)
-- [Runners](#runners)
-- [Write the Implementation for the Interface](#write-the-implementation-for-the-interface)
-- [Validate the manifests using Capact CLI](#validate-the-manifests-using-capact-cli)
-- [Populate the manifests into Hub](#populate-the-manifests-into-hub)
-- [Run your new action](#run-your-new-action)
-  * [View the Action workflow in Argo UI](#view-the-action-workflow-in-argo-ui)
-  * [View the Action Custom Resource](#view-the-action-custom-resource)
-- [Update TypeInstance](#update-typeinstance)
-- [Summary](#summary)
-
-<!-- tocstop -->
-
 ## Introduction
 
 This guide shows the first steps on how to develop OCF content for Capact. We will show how to:

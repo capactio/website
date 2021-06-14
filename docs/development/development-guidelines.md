@@ -24,7 +24,7 @@ All tools should:
 
 ## Testing
 
-For assertions in Go unit-tests we are using [testify](https://github.com/stretchr/testify) library as this gives as simple matchers functions which we do not have to write by ourself. 
+For assertions in Go unit-tests we are using [testify](https://github.com/stretchr/testify) library as this gives as simple matchers functions which we do not have to write by ourselves. 
 
 For integration tests we are using [BDD Ginkgo testing framework](https://github.com/onsi/ginkgo) in combination with [Gomega matcher library](https://github.com/onsi/gomega). 
 

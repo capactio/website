@@ -6,23 +6,6 @@
 
 This document describes jobs created to automate the process of testing, building, and deploying newly merged functionality.
 
-##  Table of Contents
-
-<!-- toc -->
-
-- [Overview](#overview)
-- [Repository secrets](#repository-secrets)
-- [Pipelines](#pipelines)
-  * [Pull request](#pull-request)
-  * [Main branch](#main-branch)
-  * [Recreate a long-running cluster](#recreate-a-long-running-cluster)
-    + [Let's encrypt certificates](#lets-encrypt-certificates)
-  * [Execute integration tests on a long-running cluster](#execute-integration-tests-on-a-long-running-cluster)
-- [Accessing encrypted files on CI](#accessing-encrypted-files-on-ci)
-- [Add a new pipeline](#add-a-new-pipeline)
-
-<!-- tocstop -->
-
 ##  Overview
 
 For all our CI/CD jobs, we use [GitHub Actions](https://docs.github.com/en/free-pro-team@latest/actions). Our workflows are defined in the [`.github/workflows`](https://github.com/capactio/capact/tree/main/.github/workflows) directory. All scripts used for the CI/CD purpose are defined in the [`/hack/ci/`](https://github.com/capactio/capact/tree/main/hack/ci) directory. For example, the [`/hack/ci/setup-env.sh`](https://github.com/capactio/capact/tree/main/hack/ci/setup-env.sh) file has defined all environment variables used for every pipeline job.

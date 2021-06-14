@@ -2,21 +2,6 @@
 
 This tutorial shows how to set up a private Amazon Elastic Kubernetes Service (Amazon EKS) cluster with full Capact installation using Terraform.
 
-## Table of Contents
-
-<!-- toc -->
-
-- [Architecture](#architecture)
-- [Prerequisites](#prerequisites)
-- [Installation](#installation)
-- [Access API server from the bastion host](#access-api-server-from-the-bastion-host)
-- [Use Capact CLI from the bastion host](#use-capact-cli-from-the-bastion-host)
-- [Connect to Capact Gateway from local machine](#connect-to-capact-gateway-from-local-machine)
-- [Cleanup](#cleanup)
-- [Limitations and bugs](#limitations-and-bugs)
-
-<!-- tocstop -->
-
 ## Architecture
 
 ![Diagram](./assets/Capact_EKS.svg)

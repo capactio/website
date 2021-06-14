@@ -2,45 +2,6 @@
 
 Read this document to learn how to develop the project. Please also follow guidelines defined in [this](development-guidelines.md) document.
 
-## Table of Contents
-
-<!-- toc -->
-
-- [Prerequisites](#prerequisites)
-- [Dependency management](#dependency-management)
-- [Makefile](#makefile)
-- [Testing](#testing)
-  * [Unit tests](#unit-tests)
-  * [Lint tests](#lint-tests)
-  * [Integration tests](#integration-tests)
-    + [Cross-functional](#cross-functional)
-  * [K8s controller](#k8s-controller)
-  * [Docker Image Security Scan](#docker-image-security-scan)
-- [Development cluster](#development-cluster)
-  * [Create a cluster and install components](#create-a-cluster-and-install-components)
-  * [Access Gateway GraphQL Playground](#access-gateway-graphql-playground)
-  * [Rebuild Docker images and update cluster](#rebuild-docker-images-and-update-cluster)
-  * [Swap a cluster deployment with your local process](#swap-a-cluster-deployment-with-your-local-process)
-  * [Delete cluster](#delete-cluster)
-- [Build and push Docker images](#build-and-push-docker-images)
-  * [All components](#all-components)
-  * [Single component](#single-component)
-  * [Releasing Helm Charts](#releasing-helm-charts)
-- [Build Binaries](#build-binaries)
-- [Generators](#generators)
-  * [Generate Go code from the OCF JSON Schemas](#generate-go-code-from-the-ocf-json-schemas)
-  * [Generate K8s resources](#generate-k8s-resources)
-  * [Generate code from GraphQL schema](#generate-code-from-graphql-schema)
-  * [Generate documentation](#generate-documentation)
-- [Instrumentation](#instrumentation)
-  * [Enable metrics scrape](#enable-metrics-scrape)
-  * [Add Grafana Dashboard](#add-grafana-dashboard)
-  * [Access Prometheus and Grafana](#access-prometheus-and-grafana)
-    + [Prometheus](#prometheus)
-    + [Grafana](#grafana)
-
-<!-- tocstop -->
-
 ## Prerequisites
 
 * [Go](https://golang.org/dl/) at least 1.16
@@ -170,7 +131,7 @@ helm get notes -n capact-system capact
 
 ### Rebuild Docker images and update cluster
 
-To rebuild all Docker images and upgrade Helm chart on dev cluster with new images, execute:
+To rebuild all Docker images and upgrade the Helm charts on development cluster with new images, execute:
 
 ```bash
 make dev-cluster-update
@@ -365,7 +326,7 @@ A recommendation is to use one ConfigMap per dashboard as Grafana doesn't handle
 
 Check the [Engine Helm chart](https://github.com/capactio/capact/tree/main/deploy/kubernetes/charts/capact/charts/engine) for a reference on how to store and load the dashboards from JSON to ConfigMap.
 
-> **CAUTION:** The size of a ConfigMap is limited to 1MB.
+> **CAUTION:** The size of a ConfigMap is limited to 1 MB.
 
 Useful materials when creating Grafana dashboards:
 - [List of Prometheus query functions with description](https://prometheus.io/docs/prometheus/latest/querying/functions/#functions)
