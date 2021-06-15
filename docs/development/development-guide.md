@@ -43,9 +43,16 @@ Read this document to learn how to develop the project. Please also follow guide
 
 ## Prerequisites
 
+* Make
 * [Go](https://golang.org/dl/) at least 1.16
 * [Docker](https://www.docker.com/)
-* Make
+* [GoReleaser](https://goreleaser.com/install/) CLI installed
+  
+  > **NOTE**: Use the commit SHA, as we use the `no_unique_dist_dir` feature, which was not yet released.
+  
+  ```bash
+  go install github.com/goreleaser/goreleaser@b53dbb89d02aa3673782f3d063d7d5039446baac
+  ```
 
 Helper scripts may introduce additional dependencies. However, all helper scripts support the `SKIP_DEPS_INSTALLATION` environment variable flag.
 **By default, flag is set to `true`**, so all scripts try to use tools installed on your local machine as this speed up the process.

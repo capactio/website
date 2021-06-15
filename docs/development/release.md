@@ -2,6 +2,21 @@
 
 This document describes Capact release process. Currently, it consists of a set of manual steps, however in future it will be automated.
 
+## Prerequisites
+
+* Make
+* [Git](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git)
+* [Go](https://golang.org/dl/) at least 1.16
+* [Docker](https://www.docker.com/)
+* [UPX](https://github.com/upx/upx/releases) tool installed
+* [GoReleaser](https://goreleaser.com/install/) CLI installed
+  
+  > **NOTE**: Use the commit SHA, as we use the `no_unique_dist_dir` feature, which was not yet released.
+  
+  ```bash
+  go install github.com/goreleaser/goreleaser@b53dbb89d02aa3673782f3d063d7d5039446baac
+  ```
+
 ## Steps
 
 ### Export environmental variables
@@ -154,17 +169,9 @@ If you release major or minor version, create a dedicated release branch.
    git push origin v${RELEASE_VERSION}
    ```
 
-1. Install [GoReleaser](https://goreleaser.com/install/):
-   
-   > **NOTE**: Use the commit SHA, as we use the `no_unique_dist_dir` feature, which was not yet released.
- 
-   ```bash
-   go install github.com/goreleaser/goreleaser@b53dbb89d02aa3673782f3d063d7d5039446baac
-   ```
-
 1. Release tools binaries:
    
-   > **NOTE**: GoReleaser uses the git tag as binaries version. Make sure [the UPX tool is installed](https://github.com/upx/upx/releases) before running the command.
+   > **NOTE**: GoReleaser uses the git tag as binaries version.
    
    ```bash
    make release-binaries
