@@ -33,7 +33,7 @@ On the other hand, [`cluster-api`](https://github.com/kubernetes-sigs/cluster-ap
 To sum it up, it looks like there are different opinions how to represent the state. For more details, read the article ["What the heck are Conditions in Kubernetes controllers?"](https://dev.to/maelvls/what-the-heck-are-kubernetes-conditions-for-4je7).
 
 Analyzing our case, we found out that:
-- we need to show on UI a simple high level status for a given Action. Calculating it from conditions array would be complex.
-- Currently, UI and `kubectl` are the only consumers of the Action status. Conditions array wouldn't bring many benefits to us at a current state of the project.
+- In Capact CLI we need to present user a simple high level status for a given Action. Calculating it from conditions array would be complex.
+- Currently, Capact CLI and `kubectl` are the only consumers of the Action status. Conditions array wouldn't bring many benefits to us at a current state of the project.
 
 We decided that we initially go with the `phase` approach. In the future, we may introduce conditions array, following [Kubernetes API conventions and guidelines](https://github.com/kubernetes/community/blob/master/contributors/devel/sig-architecture/api-conventions.md#spec-and-status).

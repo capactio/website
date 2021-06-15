@@ -117,5 +117,5 @@ To achieve that, the following queries have to be executed:
 
 ## Limitations
 
-- For alpha release, to filter Implementations with the ones that are supported on a given system, UI always send TypeInstances list. In the future, there will be a dedicated query, where the available TypeInstances will be detected automatically and all Implementations will be filtered based on them.
+- For alpha release, to filter Implementations with the ones that are supported on a given system, client (such as CLI) always send TypeInstances list. In the future, there will be a dedicated query, where the available TypeInstances will be detected automatically and all Implementations will be filtered based on them.
 - For alpha and GA release we don't support revision ranges.

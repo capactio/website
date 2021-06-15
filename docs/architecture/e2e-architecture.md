@@ -17,17 +17,6 @@ It is stored in a form of multiple JSON Schema files. From the JSON schemas all 
 
 OCF manifests are stored in [Hub](#hub).
 
-### UI
-
-UI is the easy way to manage Actions and consume [Hub](#hub) content.
-
-It exposes the following functionalities:
-- see available Implementations for a given system, grouped by InterfaceGroups and Interfaces,
-- see the available TypeInstances, along with theirs status and metrics,
-- render and execute Actions, with advanced rendering mode support.
-
-UI does all HTTP requests to [Gateway](#gateway).
-
 ### CLI
 
 CLI is command line tool which makes easier with working the [OCF](#ocf) manifests and Actions.
@@ -38,7 +27,7 @@ CLI utilizes [SDK](#sdk).
 
 ### Gateway
 
-Gateway is a GraphQL reverse proxy. It aggregates multiple remote GraphQL schemas into a single endpoint. It enables UI to have a single destination for all GraphQL operations.
+Gateway is a GraphQL reverse proxy. It aggregates multiple remote GraphQL schemas into a single endpoint. It enables [CLI](#cli) and other clients to have a single destination for all GraphQL operations.
 
 Based on the GraphQL operation, it forwards the query or mutation to a corresponding service:
 - [Engine](#engine) - for CRUD operations on Actions,
@@ -83,7 +72,7 @@ The section contains detailed interaction diagrams, to understand how the system
 
 ### Executing Action
 
-On the following diagram, User executes the WordPress install Action using UI.
+On the following diagram, User executes the WordPress install Action using [CLI](#cli).
 
 > **NOTE:** To make the diagram more readable, some details have been omitted, such as User impersonation setup or details about watching built-in Runner status. Also, the Gateway component was excluded. Every operation proxied by Gateway is described with _(via Gateway)_ phrase.
 

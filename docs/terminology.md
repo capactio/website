@@ -32,7 +32,6 @@ To learn more about runners, see the dedicated [`runner.md`](./architecture/runn
 There are the following components in the system:
 
 - [OCF](./architecture/e2e-architecture.md#ocf)
-- [UI](./architecture/e2e-architecture.md#ui)
 - [CLI](./architecture/e2e-architecture.md#cli)
 - [Gateway](./architecture/e2e-architecture.md#gateway)
 - [Engine](./architecture/e2e-architecture.md#engine)
