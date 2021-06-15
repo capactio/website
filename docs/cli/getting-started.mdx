@@ -8,10 +8,10 @@ In addition to a Capact GraphQL API, Capact features a command-line interface th
 
 ## Install
 
-Capact has two types of release channels, **Stable**, and **Latest**:
+Capact has two types of release channels: **Stable** and **Latest**:
 
-- The **Stable** channel has binaries for the releases.
-- The **Latest** channel has binaries build from the latest commit on the `main` branch.
+- The **Stable** channel contains binaries produced for the [Capact releases](https://github.com/capactio/capact/releases).
+- The **Latest** channel contains binaries built from the latest commit on the [Capact repository `main` branch](https://github.com/capactio/capact/commits/main).
 
 ### Stable - from the latest release
 
@@ -66,9 +66,14 @@ curl -Lo capact https://storage.googleapis.com/capactio-binaries/v0.3.0/capact-w
 <TabItem value="docker">
 
 ```shell
-#	Export credential store configuration:
+# Export credential store configuration:
 export CAPACT_CREDENTIALS_STORE_BACKEND=file
 export CAPACT_CREDENTIALS_STORE_FILE_PASSPHRASE=pass
+
+# Export variables to log in to Gateway
+export GATEWAY_URL=https://gateway.{domain}
+export USERNAME={username}
+export PASSWORD={password}
 
 docker run --rm \
 -e CAPACT_CREDENTIALS_STORE_BACKEND \
@@ -142,9 +147,14 @@ curl -Lo capact https://storage.googleapis.com/capactio-binaries/latest/capact-w
 <TabItem value="docker">
 
 ```shell
-#	Export credential store configuration:
+# Export credential store configuration:
 export CAPACT_CREDENTIALS_STORE_BACKEND=file
 export CAPACT_CREDENTIALS_STORE_FILE_PASSPHRASE=pass
+
+# Export variables to log in to Gateway
+export GATEWAY_URL=https://gateway.{domain}
+export USERNAME={username}
+export PASSWORD={password}
 
 docker run --rm \
 	-e CAPACT_CREDENTIALS_STORE_BACKEND \

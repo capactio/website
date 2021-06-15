@@ -188,18 +188,20 @@ If you release major or minor version, create a dedicated release branch.
 If you release a new major or minor Capact version, follow these steps:
 
 1. Clone the [`website`](https://github.com/capactio/website) repository locally.
-1. Follow instructions from the [`README.md`](https://github.com/capactio/website/blob/main/README.md) document to fullfil all prerequisites.
+1. Follow instructions from the [`README.md`](https://github.com/capactio/website/blob/main/README.md) document to fulfill all prerequisites.
 1. Create and checkout new branch:
     
    ```bash
    git checkout -b prepare-${RELEASE_MAJOR_MINOR_VERSION}
-   ```   
+   ```
+
 1. Synchronize Capact CLI documentation according to the [Synchronize CLI documentation](https://github.com/capactio/website/blob/main/README.md#synchronize-cli-documentation) section.
 1. Run the following command:
     
     ```bash
     npm run docusaurus docs:version ${RELEASE_MAJOR_MINOR_VERSION}
     ```
+
 1. Update redirects in the [`redirects.js`](https://github.com/capactio/website/blob/main/redirects.js) file to make sure we point to proper documents for all documentation versions:
 
     For example, for `0.3` release, change the line:
@@ -213,6 +215,12 @@ If you release a new major or minor Capact version, follow these steps:
     ```javascript
     ...generateDocsRedirectsForVersion("0.2"),
     ...generateDocsRedirectsForVersion("0.3", ""), // redirect from 0.3 to latest
+    ```
+
+1. Update stable release version for Capact binaries:   
+
+    ```bash
+    sed -i.bak "s/capactio-binaries\/v\([0-9]*\.[0-9]*\.[0-9]*\)/capactio-binaries\/v${RELEASE_VERSION}/g" ./docs/cli/getting-started.mdx
     ```
 
 1. Commit and push the changes

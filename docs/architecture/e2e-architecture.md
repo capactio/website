@@ -32,7 +32,7 @@ UI does all HTTP requests to [Gateway](#gateway).
 
 CLI is command line tool which makes easier with working the [OCF](#ocf) manifests and Actions.
 
-To read the documentation about CLI tool, see the [`docs`](https://github.com/capactio/capact/tree/main/cmd/cli/docs) subdirectory in the `cmd/cli` directory.
+To read the documentation about CLI tool, see the [Getting started](../cli/getting-started.mdx) document.
 
 CLI utilizes [SDK](#sdk).
 
