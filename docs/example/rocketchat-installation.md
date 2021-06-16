@@ -28,22 +28,7 @@ The following tools are required:
 ### Install all RocketChat components in a Kubernetes cluster
 
 
-1. Setup Capact CLI
-
-    To obtain the Gateway URL and password run:
-    
-    ```bash
-    HOST=`kubectl -n capact-system get ingress capact-gateway -o go-template --template="{{ (index .spec.rules 0).host }}"`
-    USERNAME=`helm -n capact-system get values capact --all -o json | jq .global.gateway.auth.username -r`
-    PASSWORD=`helm -n capact-system get values capact --all -o json | jq .global.gateway.auth.password -r`
-    ```
-
-    Configure Capact CLI:
-
-    ```bash
-    capact login "https://${HOST}" -u ${USERNAME} -p ${PASSWORD}
-    capact config set-context https://${HOST}
-    ```
+1. [Setup Capact CLI](../cli/getting-started.mdx#first-use)
 
 1. Make sure to separate workloads
 

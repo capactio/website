@@ -52,20 +52,7 @@ As a result, all external solutions, such as Cloud SQL, have a lower priority, a
     kubectl create namespace $NAMESPACE
     ```
  
-1. Login to Capact in the CLI:
-
-    To obtain the Gateway URL and authorization information, run:
-    
-    ```bash
-    export CAPACT_GATEWAY_HOST=$(kubectl -n capact-system get ingress capact-gateway -ojsonpath='{.spec.rules[0].host}')
-    export CAPACT_GATEWAY_USERNAME=$(kubectl -n capact-system get secret capact-gateway -ogo-template={{.data.username | base64decode }})
-    export CAPACT_GATEWAY_PASSWORD=$(kubectl -n capact-system get secret capact-gateway -ogo-template='{{.data.password | base64decode}}')
-    ```
-
-    Login using Capact CLI:
-    ```bash
-    capact login "$CAPACT_GATEWAY_HOST" -u "$CAPACT_GATEWAY_USERNAME" -p "$CAPACT_GATEWAY_PASSWORD"
-    ```
+1. [Setup Capact CLI](../cli/getting-started.mdx#first-use)
 
 1. List all Interfaces:
 

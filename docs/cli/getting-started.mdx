@@ -183,8 +183,20 @@ Run `capact -h` or `capact <command> -h` to see the help output which correspond
 To begin working with Capact using the `capact` CLI, start with log in into a given cluster:
 
 ```shell
+# start interactive setup
 capact login
+
+# provide all information from command line
+capact login "$CAPACT_GATEWAY_HOST" -u "$CAPACT_GATEWAY_USERNAME" -p "$CAPACT_GATEWAY_PASSWORD"
 ```
+
+> **NOTE:** If you do not know the authorization details, you can obtain them from the cluster where Capact was installed:
+>
+>    ```bash
+>    export CAPACT_GATEWAY_HOST=$(kubectl -n capact-system get ingress capact-gateway -ojsonpath='{.spec.rules[0].host}')
+>    export CAPACT_GATEWAY_USERNAME=$(kubectl -n capact-system get secret capact-gateway -ogo-template={{.data.username | base64decode }})
+>    export CAPACT_GATEWAY_PASSWORD=$(kubectl -n capact-system get secret capact-gateway -ogo-template='{{.data.password | base64decode}}')
+>    ```
 
 If URL and credentials are valid, the output is:
 
