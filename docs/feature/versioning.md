@@ -66,7 +66,6 @@ The deprecation policy is very similar to the [Kubernetes deprecation policy](ht
 Once we deprecate an OCF version, we will include deprecation notices in Hub release notes. We will warn users every time they access deprecated OCF:
 
 - in CLI,
-- on UI,
 - through the GraphQL API (using [Warning header](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Warning)).
 
 A deprecated OCF version will have a transition period (see [Kubernetes deprecation policy](https://kubernetes.io/docs/reference/using-api/deprecation-policy/) for details) where it’s still supported by Hub. After that period, we remove support for the deprecated OCF version from the Hub release.

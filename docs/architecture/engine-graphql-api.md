@@ -22,7 +22,7 @@ To run sample GraphQL queries and mutations against Engine GraphQL API, follow t
 
 The basic mode of rendering Action is when user doesn't provide optional TypeInstances for nested Actions.
 
-1. User creates Action with `createAction` mutation, providing Implementation or Interface path (e.g. `cap.interface.cms.wordpress.install`), input parameters and TypeInstances (required and optional for the root Action).
+1. User creates Action with `createAction` mutation, providing Implementation or Interface path (e.g. `cap.interface.productivity.mattermost.install`), input parameters and TypeInstances (required and optional for the root Action).
 1. Engine saves Action details and sets the Action status to `INITIAL`.
 1. Engine detects newly created Action and changes the Action status to `BEING_RENDERED`.
 1. Once Engine resolves all nested Implementations, it changes the Action status to `READY_TO_RUN`. From now on, user is able to run the rendered Action.
@@ -31,7 +31,7 @@ The basic mode of rendering Action is when user doesn't provide optional TypeIns
 
 The advanced mode of rendering Action is when user can provide optional TypeInstances for every nested Action.
 
-1. User creates Action with `createAction` mutation, providing Implementation or Interface path (e.g. `cap.interface.cms.wordpress.install`), input parameters and TypeInstances (required and optional for the root Action).
+1. User creates Action with `createAction` mutation, providing Implementation or Interface path (e.g. `cap.interface.productivity.mattermost.install`), input parameters and TypeInstances (required and optional for the root Action).
 1. Engine saves Action details and sets the Action status to `INITIAL`.
 1. Engine detects newly created Action and changes the Action status to `BEING_RENDERED`.
 1. In loop, until Engine resolves all nested Actions:
