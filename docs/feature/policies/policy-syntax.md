@@ -1,14 +1,19 @@
-# Policy configuration
+# Policy syntax
 
 ## Introduction
 
-The key Capact feature is dependencies interchangeability. Applications define theirs dependencies by using Interfaces. Depending on Cluster Admin configuration, every time User runs Action, a different Implementation may be picked for a given Interface.
+The key Capact feature is dependencies interchangeability. Applications define theirs dependencies by using Interfaces. Policies can be used to control, which dependency Implementation is chosen for an Interface. They allow also to tweak the dependency, by providing additional, Implementation specific parameters. 
 
-The Cluster Admin preferences are set via Policy. Currently, there is a single, cluster-wide Policy. This document describes the functionality.
+There are three ways how to provide policy configuration:
+- Global policy
+- Action policy
+- Workflow step policy
+
+The policies from these the source are merged and evaluated during Action rendering.
 
 ## Syntax
 
-Policy is defined in a form of YAML file. It contains two main features:
+Policy is defined in a form of YAML. It contains two main features:
 - selecting Implementations based on their constraints,
 - injecting given TypeInstance for Implementation with a set of constraints.
 
@@ -147,9 +152,40 @@ If the `alias` property is defined for an item from `requires` section, Engine i
 
 Even if the Implementation satisfies the constraints, and the `alias` is not defined or `inject.typeInstances[].typeRef` cannot be found in the `requires` section, the TypeInstance is not injected in workflow. In this case Engine doesn't return an error.
 
-### Example
+### Additional parameter injection
 
-The following YAML snippet presents full Policy example with additional comments:
+You can also provide additional parameters to tweak the Implementation. The Implementation parameters Type is specified in the Implementation manifest in `.spec.additionalInput.parameters`. For example, the AWS RDS for Postgresql Implementation has the following additional parameters:
+```yaml
+metadata:
+  prefix: cap.implementation.aws.rds.postgresql
+  name: install
+spec:
+  additionalInput:
+    parameters:
+      typeRef:
+        path: cap.type.aws.rds.postgresql.install-input
+        revision: 0.1.0
+```
+
+To change the AWS region to `us-east-1` for the AWS RDS for PostgresSQL Implementation you can provide the following policy:
+
+```yaml
+rules:
+  - interface:
+      path: cap.interface.database.postgresql.install 
+    oneOf:
+      - implementationConstraints:
+          path: "cap.implementation.aws.rds.postgresql.install"
+        inject:
+          parameters:
+            region: us-east-1
+```
+
+### Examples
+
+#### Global policy
+
+The following YAML snippet presents full Global policy example with additional comments:
 
 ```yaml
 rules: # Configures the following behavior for Engine during rendering Action
