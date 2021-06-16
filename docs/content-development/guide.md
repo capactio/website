@@ -17,7 +17,7 @@ To develop and test the created content, you will need to have a Capact environm
 * [Docker](https://docs.docker.com/engine/install/)
 * [kind](https://kind.sigs.k8s.io/docs/user/quick-start/#installation)
 * [kubectl](https://kubernetes.io/docs/tasks/tools/install-kubectl/)
-* [Capact CLI](https://github.com/capactio/capact/releases)
+* [Capact CLI](../cli/getting-started.mdx)
 * [populator](https://github.com/capactio/capact/tree/main/cmd/populator/docs/populator_register-ocf-manifests.md) - For now, you need to compile it from source
 
 Also, clone the Capact repository with the current OCF content.

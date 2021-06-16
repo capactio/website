@@ -55,5 +55,9 @@ const generateDocsRedirectsForVersion = (version, useLatestVersionAsTarget) => {
       from: `${fromPrefix}/development`,
       to: `${toPrefix}/development/development-guide`,
     },
+    {
+      from: `${fromPrefix}/cli`,
+      to: `${toPrefix}/cli/getting-started`,
+    },
   ];
 };
