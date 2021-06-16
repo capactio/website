@@ -221,6 +221,7 @@ If you release a new major or minor Capact version, follow these steps:
 
     ```bash
     sed -i.bak "s/capactio-binaries\/v\([0-9]*\.[0-9]*\.[0-9]*\)/capactio-binaries\/v${RELEASE_VERSION}/g" ./docs/cli/getting-started.mdx
+    sed -i.bak "s/capact-cli:v\([0-9]*\.[0-9]*\.[0-9]*\)/capact-cli:v${RELEASE_VERSION}/g" ./docs/cli/getting-started.mdx
     ```
 
 1. Commit and push the changes
