@@ -58,8 +58,8 @@ As a result, all external solutions, such as Cloud SQL, have a lower priority, a
     
     ```bash
     export CAPACT_GATEWAY_HOST=$(kubectl -n capact-system get ingress capact-gateway -ojsonpath='{.spec.rules[0].host}')
-    export CAPACT_GATEWAY_USERNAME=$(kubectl -n capact-system get deployment capact-gateway -oyaml | grep -A1 "name: APP_AUTH_USERNAME" | tail -1 | awk -F ' ' '{print $2}')
-    export CAPACT_GATEWAY_PASSWORD=$(kubectl -n capact-system get deployment capact-gateway -oyaml | grep -A1 "name: APP_AUTH_PASSWORD" | tail -1 | awk -F ' ' '{print $2}')
+    export CAPACT_GATEWAY_USERNAME=$(kubectl -n capact-system get secret capact-gateway -ogo-template={{.data.username | base64decode }})
+    export CAPACT_GATEWAY_PASSWORD=$(kubectl -n capact-system get secret capact-gateway -ogo-template='{{.data.password | base64decode}}')
     ```
 
     Login using Capact CLI:
