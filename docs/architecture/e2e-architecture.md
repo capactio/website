@@ -72,8 +72,8 @@ The section contains detailed interaction diagrams, to understand how the system
 
 ### Executing Action
 
-On the following diagram, User executes the WordPress install Action using [CLI](#cli).
+On the following diagram, User executes the Mattermost installation using [CLI](#cli).
 
-> **NOTE:** To make the diagram more readable, some details have been omitted, such as User impersonation setup or details about watching built-in Runner status. Also, the Gateway component was excluded. Every operation proxied by Gateway is described with _(via Gateway)_ phrase.
+> **NOTE:** To make the diagram more readable, some details have been omitted, such as TypeInstance injection into workflow and details about watching built-in Runner status. Also, the Gateway component was excluded. Every operation proxied by Gateway is described with _(via Gateway)_ phrase.
 
-![Sequence diagram for WordPress install Action](assets/action-sequence-diagram.svg)
+![Sequence diagram for Mattermost installation](assets/action-sequence-diagram.svg)
