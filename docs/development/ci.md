@@ -102,7 +102,6 @@ The following steps show how to checkout the code, set up the Go environment, an
 
 ```yaml
     # Each job needs to request a given set of permissions.
-    # More info can be found here: https://docs.github.com/en/actions/reference/authentication-in-a-workflow#permissions-for-the-github_token
     permissions:
       contents: read
 
