@@ -170,7 +170,6 @@ To check the logs since a given time, use the `--since-time` flag, for example:
 - Check if manifests can be fetched from the Public Hub. Install the latest [stable Capact CLI](../cli/getting-started.mdx), and run:
 
   ```bash
-  capact login # If not logged yet.
   capact hub interfaces search
   ```
 
@@ -228,7 +227,6 @@ To check the logs since a given time, use the `--since-time` flag, for example:
 To check if TypeInstance exists. Install the latest [stable Capact CLI](../cli/getting-started.mdx), and run:
                                
 ```bash
-capact login # If not logged yet.
 capact typeinstance get {TYPE_INSTANCE_ID}
 ```
 
