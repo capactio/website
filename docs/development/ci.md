@@ -96,9 +96,15 @@ Currently, [`decrypt.yaml`](https://github.com/capactio/capact/tree/main/.github
 
 To create a new pipeline you must follow the rules of the syntax used by GitHub Actions. The new workflow must be defined in the [`.github/workflows`](https://github.com/capactio/capact/tree/main/.github/workflows) directory. All scripts for CI/CD purposes must be defined in the [`/hack/ci/`](https://github.com/capactio/capact/tree/main/hack/ci) directory.
 
+In the [`capactio`](https://github.com/capactio) organization, the `GITHUB_TOKEN` generated for GitHub Actions has the read-only scope by default. Additional scopes must be set for all jobs in a Workflow or a specific Job. See the [authentication in a Workflow](https://docs.github.com/en/actions/reference/authentication-in-a-workflow#permissions-for-the-github_token) manual page for more info.
+
 The following steps show how to checkout the code, set up the Go environment, and authorize to GHCR and GKE in case they are necessary.
 
 ```yaml
+    # Each job needs to request a given set of permissions.
+    permissions:
+      contents: read
+
     steps:    
       - name: Checkout code
         uses: actions/checkout@v2
