@@ -35,7 +35,7 @@ There are few differences between them:
 1. Kubevela uses declarative API to describe application, its configuration and dependencies. Capact is using workflow-based approach. We believe that it makes Capact more flexible, especially for day-2 operations.
     For example, with Capact you can create an advanced workflow for doing a backup. In the workflow first you pause an application, create volume snapshot, create DB snapshot, copy snapshot to S3 bucket and rotate the previous backups.
 
-1. Capact has interchangeable dependencies as a built-in feature. Dependencies are described using Interfaces. You can configure Implementation preferences for any Interface  with [Policies](./feature/policy-configuration.md) to select Implementation based on a Interface while managing applications. For example, if your application depends on SQL database, for local development, you can prefer to use in-cluster PostgreSQL installed by Helm, but for production environment you prefer managed solution such as AWS RDS.
+1. Capact has interchangeable dependencies as a built-in feature. Dependencies are described using Interfaces. You can configure Implementation preferences for any Interface  with [Policies](./feature/policies/overview.md) to select Implementation based on a Interface while managing applications. For example, if your application depends on SQL database, for local development, you can prefer to use in-cluster PostgreSQL installed by Helm, but for production environment you prefer managed solution such as AWS RDS.
 
 1. With Kubevela and Crossplane you can provision infrastructure and deploy applications. With Capact you can do the same, but it goes beyond that. With workflow based approach you can use it for anything. You can have action which runs data processing, which runs diagnostics, you can create advanced backup process or even do machine learning.
 
@@ -43,7 +43,7 @@ There are few differences between them:
 
 Helm is a package manager for Kubernetes. Capact uses [Helm runner](https://github.com/capactio/capact/tree/main/cmd/helm-runner/README.md) to install applications in Kubernetes. Capact goes beyond Kubernetes and can deploy and manage diverse workloads like AWS RDS or EC2 instances. In a way, Capact extends Helm.
 
-Depending on set [Policies](./feature/policy-configuration.md) Capact can use different solutions. For example, if you are deploying an application which is using a database, you may use RDS PostgreSQL and pass required values to the Helm chart or use in-cluster PostgreSQL also installed by Helm.
+Depending on set [Policies](./feature/policies/overview.md) Capact can use different solutions. For example, if you are deploying an application which is using a database, you may use RDS PostgreSQL and pass required values to the Helm chart or use in-cluster PostgreSQL also installed by Helm.
 
 Helm provides you a way to install, update and delete charts. Capact on the other hand allows you to run multiple day-2 operations, such as doing backups, running diagnostics, etc.
 
