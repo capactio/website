@@ -60,9 +60,6 @@ module.exports = {
           className: "github-icon-link",
           "aria-label": "GitHub",
         },
-        {
-          html: `<iframe src="https://ghbtns.com/github-btn.html?user=capactio&repo=capact&type=star&count=true" frameborder="0" scrolling="0" width="150" height="20" title="GitHub"></iframe>`,
-        },
       ],
     },
     footer: {
@@ -127,7 +124,7 @@ module.exports = {
       {
         docs: {
           sidebarPath: require.resolve("./sidebars.js"),
-          editUrl: "https://github.com/capactio/capact/edit/main/",
+          editUrl: "https://github.com/capactio/website/edit/main/",
           showLastUpdateAuthor: true,
           showLastUpdateTime: true,
           versions: {
