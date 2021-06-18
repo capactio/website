@@ -120,22 +120,7 @@ The bastion host can access the Capact gateway and has Capact CLI preinstalled, 
   ssh -i hack/eks/config/bastion_ssh_private_key ubuntu@$(cat hack/eks/config/bastion_public_ip)
   ```
 
-1. Get the address and credentials to the Capact Gateway:
-  ```bash
-  # get the gateway address
-  export CAPACT_GATEWAY_HOST=$(kubectl -n capact-system get ingress capact-gateway -ojsonpath='{.spec.rules[0].host}')
-
-  # get the gateway username
-  export CAPACT_GATEWAY_USERNAME=$(kubectl -n capact-system get deployment capact-gateway -oyaml | grep -A1 "name: APP_AUTH_USERNAME" | tail -1 | awk -F ' ' '{print $2}')
-
-  # get the gateway password
-  export CAPACT_GATEWAY_PASSWORD=$(kubectl -n capact-system get deployment capact-gateway -oyaml | grep -A1 "name: APP_AUTH_PASSWORD" | tail -1 | awk -F ' ' '{print $2}')
-  ```
-
-1. Login to the cluster:
-  ```bash
-  capact login "https://${CAPACT_GATEWAY_HOST}" -u "${CAPACT_GATEWAY_USERNAME}" -p "${CAPACT_GATEWAY_PASSWORD}"
-  ```
+1. [Setup Capact CLI](../cli/getting-started.mdx#first-use)
 
 1. Verify, if you can query the Capact Gateway and list all Interfaces in the Hub:
   ```bash

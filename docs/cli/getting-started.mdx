@@ -178,12 +178,21 @@ Run `capact -h` or `capact <command> -h` to see the help output which correspond
 
 ## First use
 
-> **NOTE:** The `capact action watch` command calls the Kubernetes API directly. If you want to use this command, kubeconfig has to be configured with the same cluster as the one which the Gateway points to.
-
-To begin working with Capact using the `capact` CLI, start with log in into a given cluster:
+To begin working with Capact using the `capact` CLI, start with log in interactively into a given cluster:
 
 ```shell
+# start interactive setup
 capact login
+```
+
+If you do not know the authorization details, you can obtain them from the cluster where Capact was installed:
+```bash
+export CAPACT_GATEWAY_HOST=$(kubectl -n capact-system get ingress capact-gateway -ojsonpath='{.spec.rules[0].host}')
+export CAPACT_GATEWAY_USERNAME=$(kubectl -n capact-system get secret capact-gateway -ogo-template='{{.data.username | base64decode }}')
+export CAPACT_GATEWAY_PASSWORD=$(kubectl -n capact-system get secret capact-gateway -ogo-template='{{.data.password | base64decode}}')
+
+# provide all information from command line
+capact login "$CAPACT_GATEWAY_HOST" -u "$CAPACT_GATEWAY_USERNAME" -p "$CAPACT_GATEWAY_PASSWORD"
 ```
 
 If URL and credentials are valid, the output is:
@@ -197,6 +206,12 @@ Now you are ready to interact with the cluster via CLI. For example, fetch all a
 ```shell
 capact hub interfaces get
 ```
+
+> **NOTE:** The `capact action watch` command calls the Kubernetes API directly. If you want to use this command, kubeconfig has to be configured with the same cluster as the one which the Gateway points to.
+
+### Log into multiple servers
+
+> **NOTE:** We do not support setting kubeconfig per server. You need to manage it manually by changing the kubeconfig context, for example via `kubectl`.
 
 You can log into multiple clusters. To check in which cluster you already logged in, run:
 
