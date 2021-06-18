@@ -103,6 +103,14 @@ Debugging steps:
 
 - If you use cloud solutions, such as GCP or AWS, you need to specify TypeInstance ID in the cluster Policy. This TypeInstance must hold a subscription which allows to provision a given service on the hyperscaler side. If TypeInstance doesn't exist, Engine will ignore this configuration. [Check if TypeInstance with a given ID exists](diagnostics.md#checking-if-typeinstance-exists) 
 
+## Namespace stuck in the `Terminating` state
+     
+If the Namespace has been marked for deletion and the Capact components were removed before, the Namespace may become stuck in the `Terminating` state. This is typically due to the fact that the Capact Engine cannot execute clean-up logic and remove the finalizer from the Action resource. To resolve it, you need to remove the finalizer from the Action:
+
+```bash
+kubectl patch actions.core.capact.io ${ACTION_NAME} -n {ACTION_NAMESPACE} -p '{"metadata":{"finalizers":null}}' --type=merge
+```
+
 ## Unreachable Gateway
 
 Gateway aggregates GraphQL APIs from the Capact Engine, Public Hub, and Local Hub. If one of the aggregated component is not working properly, Gateway is not working either.
