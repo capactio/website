@@ -1,0 +1,200 @@
+---
+sidebar_position: 1
+---
+
+# Overview
+
+## Introduction
+
+The key Capact feature is dependencies interchangeability. Applications define theirs dependencies by using Interfaces. Policies can be used to control, which dependency Implementation is chosen for an Interface. They allow also to tweak the dependency, by providing additional, Implementation specific parameters. 
+
+There are three ways how to provide policy configuration:
+- [Global policy](./global-policy.md)
+- [Action policy](./action-policy.md)
+- [Workflow step policy](./workflow-step-policy.md)
+
+The policies from these the source are merged and evaluated during Action rendering.
+
+## Syntax
+
+Policy is defined in a form of YAML. It contains two main features:
+- selecting Implementations based on their constraints,
+- injecting given TypeInstance or additional parameters for Implementation with a set of constraints.
+
+### Definition of rules for Interface
+
+To specify the Interface, for which the rule is defined, use the `interface` property. There are three different Interface selectors:
+
+- Interface with exact revision:
+
+    ```yaml
+    rules:
+    - interface:
+        path: cap.interface.database.postgresql.install
+        revision: 0.1.0 # exact revision
+      oneOf:
+        - implementationConstraints:
+            # (...)
+    ```
+
+- Interface with any revision:
+
+    ```yaml
+    rules:
+    - interface:
+        path: cap.interface.database.postgresql.install
+        # any revision
+      oneOf:
+        - implementationConstraints:
+            # (...)
+    ```
+- any Interface, using `cap.*` as an Interface path:
+    
+    ```yaml
+    rules:
+    - interface:
+        path: cap.* # any Interface
+      oneOf:
+        - implementationConstraints:
+            # (...)
+    ```
+
+Engine will search for rules for a given Interface in the same order as specified in the list above. If an entry for a given Interface is found, then Engine uses it to fetch Implementations from Hub.
+
+For every Interface, Cluster Admin can set the order of selected Implementations, based on theirs constraints. The order of the list is important, as it is taken into account by Engine during queries to Hub. Engine iterates over list of `oneOf` items until it finds at least one Implementation satisfying the Implementation constraints.
+
+### Selecting Implementations
+
+You can select Implementations based on the following Implementation constraints:
+
+- `path`, which specifies the exact path for the Implementation. If the Implementation is found, then **any** revision of the Implementation is used. 
+
+    ```yaml
+    - interface:
+        path: cap.interface.database.postgresql.install
+      oneOf:
+        - implementationConstraints:
+            path: "cap.implementation.bitnami.postgresql.install" # any revision can be used
+    ```
+
+- `attributes`, which specifies the Attributes the selected Implementation must contain.
+
+    ```yaml
+    - interface:
+        path: cap.interface.database.postgresql.install
+      oneOf:
+        - implementationConstraints:
+            attributes:
+              - path: "cap.attribute.cloud.provider.gcp"
+                revision: "0.1.0"
+              - path: "cap.attribute.workload.stateful"
+                # any revision
+    ```
+
+- `requires`, which specifies the Type references, which should be included in the `spec.requires` field for an Implementation to be selected.
+
+    ```yaml
+    - interface:
+        path: cap.interface.database.postgresql.install
+      oneOf:
+        - implementationConstraints:
+            requires:
+              - path: "cap.core.type.platform.kubernetes" # any revision
+              - path: "cap.type.gcp.auth.service-account"
+                revision: "0.1.0" # exact revision 
+    ```
+
+- Empty constraints, which means any Implementation for a given Interface.
+    
+    ```yaml
+    - interface:
+        path: cap.interface.database.postgresql.install
+      oneOf:
+        - implementationConstraints: {} # any Implementation that implements the Interface
+    ```
+
+You can also deny all Implementations for a given Interface with the following syntax:
+
+```yaml
+- interface:
+    path: cap.interface.database.postgresql.install
+  oneOf: [] # deny all Implementations for a given Interface
+```
+
+### TypeInstance injection
+
+Along with Implementation constraints, Cluster Admin may configure TypeInstances, which are downloaded and injected in the Implementation workflow. This can be helpful for example, in case you are using Implementations, which are deploying infrastructure on a public cloud (like AWS or GCP) and you want to ensure that everything is deployed in the same account. For example:
+
+```yaml
+rules:
+  - interface:
+      path: cap.interface.database.postgresql.install 
+    oneOf:
+      - implementationConstraints:
+          requires:
+           - path: "cap.type.gcp.auth.service-account"
+        inject:
+          typeInstances:
+            - id: 9038dcdc-e959-41c4-a690-d8ebf929ac0c
+              typeRef:
+                path: "cap.type.gcp.auth.service-account"
+                revision: "0.1.0"
+```
+
+The rule defines that Engine should select Implementation, which requires GCP Service Account TypeInstance. To inject the TypeInstance in a proper place, the Implementation must define `alias` for a given requirement:
+
+```yaml
+  requires:
+    cap.type.gcp.auth:
+      allOf:
+        - name: service-account
+          alias: gcp-sa # required for TypeInstance injection based on Policy
+          revision: 0.1.0
+```
+
+If the `alias` property is defined for an item from `requires` section, Engine injects a workflow step which downloads a given TypeInstance by ID and outputs it under the `alias`. For this example, in the Implementation workflow, the TypeInstance value is available under `{{workflow.outputs.artifacts.gcp-sa}}`.
+
+Even if the Implementation satisfies the constraints, and the `alias` is not defined or `inject.typeInstances[].typeRef` cannot be found in the `requires` section, the TypeInstance is not injected in workflow. In this case Engine doesn't return an error.
+
+### Additional parameter injection
+
+You can also provide additional parameters to tweak the Implementation. The Implementation parameters Type is specified in the Implementation manifest in `.spec.additionalInput.parameters`. For example, for AWS RDS for Postgresql Implementation you can provide additional parameters of Type `cap.type.aws.rds.postgresql.install-input`:
+
+```yaml
+metadata:
+  prefix: cap.implementation.aws.rds.postgresql
+  name: install
+spec:
+  additionalInput:
+    parameters:
+      typeRef:
+        path: cap.type.aws.rds.postgresql.install-input
+        revision: 0.1.0
+```
+
+To change the AWS region to `us-east-1` for the AWS RDS for PostgresSQL Implementation, you can provide the following policy:
+
+```yaml
+rules:
+  - interface:
+      path: cap.interface.database.postgresql.install 
+    oneOf:
+      - implementationConstraints:
+          path: "cap.implementation.aws.rds.postgresql.install"
+        inject:
+          parameters:
+            region: us-east-1
+```
+
+## Merging of different policies
+
+There are three different policies, which are merged together, when rendering the Action: Global, Action and Workflow step policies. Merging is necessary to calculate the final policy, which is used to select an Implementation and inject TypeInstaces and parameters. The priority order of the policies is configurable by the Capact Admin. The default order is (highest to lowest):
+1. Action policy
+2. Global policy
+3. Workflow step policy
+
+The following rules apply, when the Engine merges the policy rules:
+1. Two policy rules are merged, when they have the same `interface` field. Merging is done by joining the `oneOf` lists, based on the priority order.
+2. If in the merged policy rules, there are two elements in `oneOf`, with the same `implementationConstraints`, then we merge them into a single element:
+   - `additionalInput` of the elements are deep merged based on the priority order
+   - `typeInstances` of the elements are joined together. If there are two TypeInstances with the same Type Reference, then the one from the higher priority order policy is chosen.
