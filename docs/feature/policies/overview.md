@@ -203,7 +203,10 @@ The following rules apply, when the Engine merges the policy rules:
 
 You can change the policy priority order, by using the following command:
 ```bash
-helm -n capact-system upgrade capact capactio/capact --devel --reuse-values --set 'engine.policyOrder=WORKFLOW\,ACTION\,GLOBAL'
+helm -n capact-system upgrade capact capactio/capact \
+  --devel \
+  --reuse-values \
+  --set 'engine.policyOrder=WORKFLOW\,ACTION\,GLOBAL'
 ```
 
 The command above would change the policy order to (highest to lowest):
