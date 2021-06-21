@@ -12,7 +12,7 @@ To get started with Capact, check out these links:
 - **Introduction:** To learn what is Capact, read the [Introduction](./introduction.md) document. See also the [Terminology](./terminology.md) to understand all terms used through the Capact documentation.
 - **Installation:** To learn how to install Capact, follow the [local](./installation/local.md), [AWS](./installation/aws-eks.md) and [GCP](./installation/gcp-gke.md) installation tutorials.
 - **Examples:** To read how to use Capact based on real life examples, see the [Mattermost installation](./example/mattermost-installation.md).
-- **Content Development**:  To learn how to create content for Capact, see the [Content development guide](./content-development/guide.md).
+- **Content Development**: To learn how to create content for Capact, see the [Content development guide](./content-development/guide.md).
 - **Development:** To run Capact on your local machine and start contributing to Capact, read the [development guide](./development/development-guide.md).
 
 To read the full documentation, navigate to the [capact.io/docs](https://capact.io/docs) website.
@@ -35,9 +35,9 @@ There are few differences between them:
 1. Kubevela uses declarative API to describe application, its configuration and dependencies. Capact is using workflow-based approach. We believe that it makes Capact more flexible, especially for day-2 operations.
     For example, with Capact you can create an advanced workflow for doing a backup. In the workflow first you pause an application, create volume snapshot, create DB snapshot, copy snapshot to S3 bucket and rotate the previous backups.
 
-1. Capact has interchangeable dependencies as a built-in feature. Dependencies are described using Interfaces. You can configure Implementation preferences for any Interface  with [Policies](./feature/policies/overview.md) to select Implementation based on a Interface while managing applications. For example, if your application depends on SQL database, for local development, you can prefer to use in-cluster PostgreSQL installed by Helm, but for production environment you prefer managed solution such as AWS RDS.
+1. Capact has interchangeable dependencies as a built-in feature. Dependencies are described using Interfaces. You can configure Implementation preferences for any Interface with [Policies](./feature/policies/overview.md) to select Implementation based on an Interface while managing applications. For example, if your application depends on SQL database, for local development, you can prefer to use in-cluster PostgreSQL installed by Helm, but for production environment you prefer managed solution such as AWS RDS.
 
-1. With Kubevela and Crossplane you can provision infrastructure and deploy applications. With Capact you can do the same, but it goes beyond that. With workflow based approach you can use it for anything. You can have action which runs data processing, which runs diagnostics, you can create advanced backup process or even do machine learning.
+1. With Kubevela and Crossplane you can provision infrastructure and deploy applications. Using Capact you can do the same, but it goes beyond that. With workflow based approach you can use it for anything. You can have action which runs data processing, which runs diagnostics, you can create advanced backup process or even do machine learning.
 
 ### Helm
 
@@ -62,6 +62,6 @@ For example, when running Capact manifests, you can deploy AWS RDS and EKS defin
 
 Capact supports Terraform runner to use Terraform modules to manage your infrastucture. Pulumi is similar to Terraform, however, Instead of having its configuration language, you can use programming languages like Python, Go, JavaScript and others. There could be a Pulumi runner for Capact, which allows you to use Pulumi content in OCF manifests.
 
-## What is the origin of name "Capact"?
+## What is the origin of name “Capact”?
 
-Capact is a combination of two shortened words: "**cap**ability" and "**act**ion". Capact makes it easy to manage system capabilities via running Actions. In the end, everything boils down to actions. Actions can provision infrastructure, can deploy applications, can process data. Once you start using Capact, the possibilities are virtually endless.
+Capact is a combination of two shortened words: “**cap**ability” and “**act**ion”. Capact makes it easy to manage system capabilities via running Actions. In the end, everything boils down to actions. Actions can provision infrastructure, can deploy applications, can process data. Once you start using Capact, the possibilities are virtually endless.

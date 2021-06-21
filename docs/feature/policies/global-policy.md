@@ -5,7 +5,7 @@ sidebar_position: 2
 
 The Global policy, is a policy used for every Action in Capact. This policy is configured by the Capact Admin and can be used to:
 
-- set recommended configuration values for Implementations (e.g. use always AWS RDS in Multi-AZ for Postgresql databases)
+- set recommended configuration values for Implementations (e.g. always use AWS RDS in Multi-AZ for PostgreSQL databases)
 - provide credentials for external services (e.g. inject a GCP Service Account TypeInstance for Google Cloud Platform Implementations)
 
 ## Example

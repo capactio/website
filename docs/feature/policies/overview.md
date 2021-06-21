@@ -198,3 +198,15 @@ The following rules apply, when the Engine merges the policy rules:
 2. If in the merged policy rules, there are two elements in `oneOf`, with the same `implementationConstraints`, then we merge them into a single element:
    - `additionalInput` of the elements are deep merged based on the priority order
    - `typeInstances` of the elements are joined together. If there are two TypeInstances with the same Type Reference, then the one from the higher priority order policy is chosen.
+
+## Change priority order of the policies
+
+You can change the policy priority order, by using the following command:
+```bash
+helm -n capact-system upgrade capact capactio/capact --devel --reuse-values --set 'engine.policyOrder=WORKFLOW\,ACTION\,GLOBAL'
+```
+
+The command above would change the policy order to (highest to lowest):
+1. Workflow step policy
+2. Action policy
+3. Global policy

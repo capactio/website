@@ -23,3 +23,5 @@ The following YAML snippet presents an Action step in the Implementation with a 
             - implementationConstraints: # Enforces that the cap.implementation.bitnami.postgresql.install is selected
                 path: "cap.implementation.bitnami.postgresql.install"
 ```
+
+In this case the policy will enforce that the `cap.implementation.bitnami.postgresql.install` Implementation will be selected, if no other policy is overriding this setting.
