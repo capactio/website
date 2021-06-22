@@ -60,9 +60,10 @@ h5 {
 
 html[data-theme="dark"] {
   --ifm-link-color: var(--capact-orange-lighter);
+  --ifm-navbar-background-color: var(--capact-white);
   --ifm-menu-color-active: var(--capact-orange-lighter);
   --ifm-footer-background-color: var(--capact-blue-dark);
-  --ifm-navbar-background-color: var(--capact-white);
+  --ifm-footer-link-hover-color: var(--capact-orange-lighter);
 }
 
 /* Navbar */
