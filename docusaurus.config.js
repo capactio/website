@@ -14,9 +14,9 @@ module.exports = {
   projectName: "website",
   themeConfig: {
     announcementBar: {
-      id: "work_in_progress",
+      id: "capact_os_release",
       content:
-        "⚠️ Capact website is under heavy development. Come back and visit us soon!",
+        `🚀 The very first public Capact release is here! <a href="https://github.com/capactio/capact" target="_blank">Check out our repository and give us a star on GitHub!</a>`,
       backgroundColor: "var(--announcement-bar-background)",
       textColor: "var(--announcement-bar-text)",
       isCloseable: true,
