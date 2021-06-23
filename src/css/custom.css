@@ -37,6 +37,9 @@ h5 {
   --capact-orange-lighter: #ffba0d;
   --capact-gray-light: #ededed;
 
+  --announcement-bar-background: var(--capact-gray-light);
+  --announcement-bar-text: var(--capact-black);
+
   /* Override the default Infima variables here. */
 
   --ifm-color-primary: var(--capact-blue);
@@ -60,9 +63,13 @@ h5 {
 
 html[data-theme="dark"] {
   --ifm-link-color: var(--capact-orange-lighter);
+  --ifm-navbar-background-color: var(--capact-white);
   --ifm-menu-color-active: var(--capact-orange-lighter);
   --ifm-footer-background-color: var(--capact-blue-dark);
-  --ifm-navbar-background-color: var(--capact-white);
+  --ifm-footer-link-hover-color: var(--capact-orange-lighter);
+
+  --announcement-bar-background: var(--ifm-background-color);
+  --announcement-bar-text: var(--capact-white);
 }
 
 /* Navbar */

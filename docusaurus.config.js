@@ -17,8 +17,8 @@ module.exports = {
       id: "work_in_progress",
       content:
         "⚠️ Capact website is under heavy development. Come back and visit us soon!",
-      backgroundColor: "#fafbfc",
-      textColor: "#091E42",
+      backgroundColor: "var(--announcement-bar-background)",
+      textColor: "var(--announcement-bar-text)",
       isCloseable: true,
     },
     colorMode: {
