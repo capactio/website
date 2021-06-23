@@ -1,11 +1,11 @@
 import React, { FC, ReactElement, ImgHTMLAttributes } from "react";
 import clsx from "clsx";
-import styles from "./HomepageFeatures.module.css";
+import styles from "./Features.module.css";
 
 const FeatureList: SingleFeature[] = [
   {
     title: "Unify your workflow",
-    SVG: require("../../static/img/placeholder.svg").default, // TODO:
+    SVG: require("../../../static/img/placeholder.svg").default, // TODO:
     description: (
       <>
         Capact unifies the way how to manage applications (or middleware, or infrastructure, or anything in between), run day-two operations and execute arbitrary workflows. Learn once, use everywhere! 
@@ -14,7 +14,7 @@ const FeatureList: SingleFeature[] = [
   },
   {
     title: "Interchangeable Dependencies",
-    SVG: require("../../static/img/placeholder.svg").default,  // TODO:
+    SVG: require("../../../static/img/placeholder.svg").default,  // TODO:
     description: (
       <>
         You don't need to worry about the dependencies. With generic concepts in mind, Capact will resolve the dependencies automatically, according to your preferences.
@@ -23,7 +23,7 @@ const FeatureList: SingleFeature[] = [
   },
   {
     title: "Collaborate",
-    SVG: require("../../static/img/placeholder.svg").default, // TODO:
+    SVG: require("../../../static/img/placeholder.svg").default, // TODO:
     description: (
       <>
         Capact is open source and powered by the community. Let's work together to enable DRY at a global scale!
@@ -52,7 +52,7 @@ export const Feature: FC<SingleFeature> = ({ SVG, title, description }) => {
   );
 };
 
-export const HomepageFeatures: FC = () => {
+export const Features: FC = () => {
   return (
     <section className={styles.features}>
       <div className="container">
