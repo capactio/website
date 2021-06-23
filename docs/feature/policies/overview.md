@@ -13,7 +13,7 @@ There are three ways how to provide policy configuration:
 - [Action policy](./action-policy.md)
 - [Workflow step policy](./workflow-step-policy.md)
 
-The policies from three sources above are merged and evaluated during Action rendering.
+The policies from the three sources above are merged and evaluated during Action rendering.
 
 ## Syntax
 
@@ -142,7 +142,7 @@ rules:
                 revision: "0.1.0"
 ```
 
-> Instructions how to create a TypeInstance using the Capact CLI can be found [here](./../../cli/commands/capact_typeinstance_create.md).
+> **NOTE:** Instructions how to create a TypeInstance using the Capact CLI can be found [here](./../../cli/commands/capact_typeinstance_create.md).
 
 The rule defines that Engine should select Implementation, which requires GCP Service Account TypeInstance. To inject the TypeInstance in a proper place, the Implementation must define `alias` for a given requirement:
 
