@@ -1,5 +1,8 @@
 # Capact.io Website
 
+[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
+[![GitHub Actions main branch CI](https://github.com/capactio/website/actions/workflows/branch-build.yaml/badge.svg?branch=main)](https://github.com/capactio/website/actions/workflows/branch-build.yaml?query=branch%3Amain)
+
 This repository contains source code of the [**capact.io**](https://capact.io) website.
 
 ## Development
