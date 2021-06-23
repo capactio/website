@@ -13,7 +13,7 @@ There are three ways how to provide policy configuration:
 - [Action policy](./action-policy.md)
 - [Workflow step policy](./workflow-step-policy.md)
 
-The policies from these the source are merged and evaluated during Action rendering.
+The policies from three sources above are merged and evaluated during Action rendering.
 
 ## Syntax
 
@@ -72,6 +72,7 @@ You can select Implementations based on the following Implementation constraints
     ```yaml
     - interface:
         path: cap.interface.database.postgresql.install
+        revision: 0.1.0 # revision is optional, if not provided any Interface revision matches
       oneOf:
         - implementationConstraints:
             path: "cap.implementation.bitnami.postgresql.install" # any revision can be used
@@ -140,6 +141,8 @@ rules:
                 path: "cap.type.gcp.auth.service-account"
                 revision: "0.1.0"
 ```
+
+> Instructions how to create a TypeInstance using the Capact CLI can be found [here](./../../cli/commands/capact_typeinstance_create.md).
 
 The rule defines that Engine should select Implementation, which requires GCP Service Account TypeInstance. To inject the TypeInstance in a proper place, the Implementation must define `alias` for a given requirement:
 

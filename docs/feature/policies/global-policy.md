@@ -75,7 +75,7 @@ You can use additional flags to configure the command behavior, such as output f
 
 ### Modify Global policy using CLI
 
-> **NOTE:** If you update Policy using CLI, Policy rules will be restored to default every time you upgrade Capact installation. To avoid such scenario, update the Policy during Capact installation or upgrade. To learn how to do it, read the section [Modify Policy with Capact installation/upgrade overrides](#modify-policy-with-capact-installationupgrade-overrides).
+> **NOTE:** If you update Policy using CLI, Policy rules will be restored to default every time you upgrade Capact installation. To avoid such scenario, update the Policy during Capact installation or upgrade. To learn how to do it, read the section [Modify Policy with Capact installation/upgrade overrides](#modify-global-policy-with-capact-installationupgrade-overrides).
 
 To update the policy interactively using CLI, run:
 
@@ -126,7 +126,7 @@ To get familiar with an example content of the file, see the [Example](#example)
    helm upgrade capact ./charts/capact -n capact-system --reuse-values -f /path/to/cluster-policy.overrides.yaml
    ```
 
-To read more about Capact installation and upgrade, see the [`README.md`](https://github.com/capactio/capact/tree/main/deploy/kubernetes/charts/argo/charts/argo/README.md) document of the Capact deployment.
+To read more about Capact installation and upgrade, see the [`README.md`](https://github.com/capactio/capact/blob/main/deploy/kubernetes/README.md) document of the Capact deployment.
 
 ### Reloading policy by Engine
 

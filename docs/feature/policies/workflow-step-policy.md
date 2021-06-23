@@ -7,6 +7,8 @@ The Workflow step policy, is an optional policy, which can be provided in the Im
 - an Implementation depends on another Implementation and an Interface cannot be used,
 - the Content Creator wants to prefer some Implementation in the Action steps.
 
+This policy can be only provided by the Content Creator and cannot be changed without uploading a new Implementation manifest. Other policies can overwrite it, when a different policy has a higher priority. To check the default policy priority order see [this section](./overview.md#merging-of-different-policies).
+
 ## Example
 
 The following YAML snippet presents an Action step in the Implementation with a Workflow step policy:
@@ -23,5 +25,23 @@ The following YAML snippet presents an Action step in the Implementation with a 
             - implementationConstraints: # Enforces that the cap.implementation.bitnami.postgresql.install is selected
                 path: "cap.implementation.bitnami.postgresql.install"
 ```
+
+> **NOTE:** Instead of providing the full Interface path you can use the alias from the Interfaces imported in the Implementation:
+> ```yaml
+> spec:
+>   imports:
+>     - interfaceGroupPath: cap.interface.database.postgresql.install
+>       alias: postgresql
+>       methods:
+>         - name: install
+>           revision: 0.1.0
+> ```
+> ```yaml
+> - - capact-action: postgresql.install
+>     capact-policy:
+>       rules:
+>         - interface:
+>             path: postgresql.install
+> ```
 
 In this case the policy will enforce that the `cap.implementation.bitnami.postgresql.install` Implementation will be selected, if no other policy is overriding this setting.
