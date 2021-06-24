@@ -1,7 +1,7 @@
 import React, { FunctionComponent } from "react";
 import Layout from "@theme/Layout";
 import useDocusaurusContext from "@docusaurus/useDocusaurusContext";
-import { Features } from "../components/homepage/Features";
+import { KeyFeatures } from "../components/homepage/KeyFeatures";
 import { Hero } from "../components/homepage/Hero";
 
 interface DocusaurusContext {
@@ -20,7 +20,7 @@ const Homepage: FunctionComponent = () => {
     >
       <Hero />
       <main>
-        <Features />
+        <KeyFeatures />
       </main>
     </Layout>
   );

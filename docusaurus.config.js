@@ -51,13 +51,13 @@ module.exports = {
         {
           to: "/slack",
           position: "right",
-          className: "slack-icon-link",
+          className: "header-icon-link slack-icon color-adjustable",
           "aria-label": "Slack",
         },
         {
           href: "https://github.com/capactio",
           position: "right",
-          className: "github-icon-link",
+          className: "header-icon-link github-icon color-adjustable",
           "aria-label": "GitHub",
         },
       ],
