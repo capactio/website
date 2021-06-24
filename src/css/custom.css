@@ -59,6 +59,9 @@ h5 {
 
   --ifm-footer-padding-vertical: 4rem;
   --ifm-footer-background-color: var(--capact-gray-lighter);
+
+  --ifm-button-background-color: var(--capact-orange-light);
+  --ifm-button-border-color: var(--capact-orange-light);
 }
 
 /* Variables for dark mode */
@@ -69,6 +72,7 @@ html[data-theme="dark"] {
   --ifm-menu-color-active: var(--capact-orange-lighter);
   --ifm-footer-background-color: var(--capact-blue-dark);
   --ifm-footer-link-hover-color: var(--capact-orange-lighter);
+  --ifm-pagination-nav-color-hover: var(--capact-orange-lighter);
 
   --announcement-bar-background: var(--ifm-background-color);
   --announcement-bar-text: var(--capact-white);
@@ -166,4 +170,39 @@ html[data-theme="dark"] .table-of-contents__link:hover code,
 html[data-theme="dark"] .table-of-contents__link--active,
 html[data-theme="dark"] .table-of-contents__link--active code {
   color: var(--capact-orange-lighter);
+}
+
+/* Buttons */
+
+.button--primary:not(.button--outline) {
+  --ifm-button-background-color: var(--capact-orange-light);
+}
+
+.button--primary:not(.button--outline):hover,
+.button--primary:not(.button--outline):active,
+.button--primary:not(.button--outline):focus {
+  --ifm-button-background-color: var(--capact-orange-dark);
+  --ifm-button-border-color: var(--capact-orange-dark);
+  background-color: var(--capact-orange-dark);
+  border-color: var(--ifm-button-border-color);
+}
+
+.button--primary {
+  --ifm-button-border-color: var(--capact-orange-light);
+}
+
+/* Responsiveness-related helpers */
+
+.mobile-display {
+  display: none;
+}
+
+@media (max-width: 996px) {
+  .mobile-hide {
+    display: none !important;
+  }
+
+  .mobile-display {
+    display: block !important;
+  }
 }

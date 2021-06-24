@@ -1,0 +1,15 @@
+.buttons {
+    align-items: left;
+    display: flex;
+    justify-content: left;
+}
+
+.buttons a + a {
+    margin-left: 1rem;
+}
+
+@media (max-width: 996px) {
+    .terminalWrapper {
+        margin-top: 2rem;
+    }
+}

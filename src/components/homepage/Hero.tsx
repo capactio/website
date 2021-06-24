@@ -9,11 +9,24 @@ interface IconButtonProps {
   additionalClassName?: string;
 }
 
+const IllustrationColumn: FunctionComponent<{className?: string}> = ({className}) => (
+  <div className={clsx("col col--6", styles.illustrationWrapper, className)}>
+    {/* // TODO: Replace with actual illustration */}
+    <img src="/img/logo.svg" className={styles.illustration} />
+  </div>
+);
+
 const IconButton: FunctionComponent<IconButtonProps> = ({
   label,
   url,
   additionalClassName,
-}) => <Link className={clsx(styles.iconButton, additionalClassName)} aria-label={label} to={url}></Link>;
+}) => (
+  <Link
+    className={clsx(styles.iconButton, additionalClassName)}
+    aria-label={label}
+    to={url}
+  ></Link>
+);
 
 export const Hero: FunctionComponent = () => {
   // TODO: Move data to custom fields
@@ -36,6 +49,7 @@ export const Hero: FunctionComponent = () => {
     <header className={clsx("hero hero--primary", styles.heroBanner)}>
       <div className="container">
         <div className="row">
+          <IllustrationColumn className="mobile-display" />
           <div className="col col--6">
             <h1 className="hero__title">
               A simple way to manage
@@ -53,10 +67,7 @@ export const Hero: FunctionComponent = () => {
               ))}
             </div>
           </div>
-          <div className={clsx("col col--6", styles.illustrationWrapper)}>
-            {/* // TODO: Replace with actual illustration */}
-            <img src="/img/logo.svg" className={styles.illustration} />
-          </div>
+          <IllustrationColumn className="mobile-hide"/>
         </div>
       </div>
     </header>

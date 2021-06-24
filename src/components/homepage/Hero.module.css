@@ -12,9 +12,14 @@
   max-height: 350px;
 }
 
-@media screen and (max-width: 966px) {
+@media (max-width: 966px) {
   .heroBanner {
     padding: 2rem;
+  }
+
+  .illustration {
+    margin-bottom: 2rem;
+    max-height: 200px;
   }
 }
 
