@@ -3,18 +3,49 @@ import clsx from "clsx";
 import styles from "./Hero.module.css";
 import Link from "@docusaurus/Link";
 
+const heroData = {
+  title: (
+    <>
+      A simple way to manage
+      <br />
+      applications and infrastructure
+    </>
+  ),
+  subtitle: (
+    <>
+      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras a mi a augue
+      pulvinar ultrices quis quis lacus.
+    </>
+  ),
+  illustrationSrc: "/img/logo.svg", // TODO: Replace with actual illustration
+  buttons: [
+    {
+      label: "GitHub",
+      additionalClassName: "github-icon",
+      url: "https://github.com/capactio/capact",
+    },
+    {
+      label: "Slack",
+      additionalClassName: "slack-icon",
+      url: "/slack",
+    },
+  ],
+};
+
+const IllustrationColumn: FunctionComponent<{
+  src: string;
+  className?: string;
+}> = ({ src, className }) => (
+  <div className={clsx("col col--6", styles.illustrationWrapper, className)}>
+    <img src={src} className={styles.illustration} />
+  </div>
+);
+
 interface IconButtonProps {
   label: string;
   url: string;
   additionalClassName?: string;
 }
-
-const IllustrationColumn: FunctionComponent<{className?: string}> = ({className}) => (
-  <div className={clsx("col col--6", styles.illustrationWrapper, className)}>
-    {/* // TODO: Replace with actual illustration */}
-    <img src="/img/logo.svg" className={styles.illustration} />
-  </div>
-);
 
 const IconButton: FunctionComponent<IconButtonProps> = ({
   label,
@@ -29,37 +60,19 @@ const IconButton: FunctionComponent<IconButtonProps> = ({
 );
 
 export const Hero: FunctionComponent = () => {
-  // TODO: Move data to custom fields
-  // const { siteConfig }: DocusaurusContext = useDocusaurusContext();
-
-  const buttons = [
-    {
-      label: "GitHub",
-      additionalClassName: "github-icon",
-      url: "https://github.com/capactio/capact",
-    },
-    {
-      label: "Slack",
-      additionalClassName: "slack-icon",
-      url: "/slack",
-    },
-  ];
+  const { title, subtitle, illustrationSrc, buttons } = heroData;
 
   return (
     <header className={clsx("hero hero--primary", styles.heroBanner)}>
       <div className="container">
         <div className="row">
-          <IllustrationColumn className="mobile-display" />
+          <IllustrationColumn
+            src={illustrationSrc}
+            className="mobile-display"
+          />
           <div className="col col--6">
-            <h1 className="hero__title">
-              A simple way to manage
-              <br />
-              applications and infrastructure
-            </h1>
-            <p className="hero__subtitle">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras a mi
-              a augue pulvinar ultrices quis quis lacus.
-            </p>
+            <h1 className="hero__title">{title}</h1>
+            <p className="hero__subtitle">{subtitle}</p>
 
             <div className={styles.buttons}>
               {buttons.map((props) => (
@@ -67,7 +80,7 @@ export const Hero: FunctionComponent = () => {
               ))}
             </div>
           </div>
-          <IllustrationColumn className="mobile-hide"/>
+          <IllustrationColumn src={illustrationSrc} className="mobile-hide" />
         </div>
       </div>
     </header>

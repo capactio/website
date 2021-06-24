@@ -6,7 +6,7 @@ import React, {
 import styles from "./KeyFeatures.module.css";
 import { FullWidthSection } from "../layout/FullWidthSection";
 
-const FeatureList: SingleFeature[] = [
+const FeatureList: FeatureData[] = [
   {
     title: "Unify your workflow",
     SVG: require("../../../static/img/placeholder.svg").default, // TODO:
@@ -41,13 +41,13 @@ const FeatureList: SingleFeature[] = [
   },
 ];
 
-interface SingleFeature {
+interface FeatureData {
   title: string;
   description: ReactElement;
   SVG: FunctionComponent<ImgHTMLAttributes<SVGSVGElement>>;
 }
 
-export const Feature: FunctionComponent<SingleFeature> = ({
+export const KeyFeature: FunctionComponent<FeatureData> = ({
   SVG,
   title,
   description,
@@ -69,7 +69,7 @@ export const KeyFeatures: FunctionComponent = () => {
   return (
     <FullWidthSection title="Key Features">
       {FeatureList.map((props) => (
-        <Feature key={props.title} {...props} />
+        <KeyFeature key={props.title} {...props} />
       ))}
     </FullWidthSection>
   );
