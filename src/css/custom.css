@@ -35,12 +35,14 @@ h5 {
   --capact-orange: #f48c06;
   --capact-orange-light: #faa307;
   --capact-orange-lighter: #ffba0d;
+  --capact-gray-lighter: #f5f5f5;
   --capact-gray-light: #ededed;
+  --capact-gray-dark: #333;
 
-  --announcement-bar-background: var(--capact-gray-light);
+  --announcement-bar-background: var(--capact-gray-lighter);
   --announcement-bar-text: var(--capact-black);
 
-  /* Override the default Infima variables here. */
+  --section-border-color: var(--capact-gray-light);
 
   --ifm-color-primary: var(--capact-blue);
   --ifm-color-primary-dark: var(--capact-blue);
@@ -56,7 +58,7 @@ h5 {
   --ifm-h3-font-size: 1.6rem;
 
   --ifm-footer-padding-vertical: 4rem;
-  --ifm-footer-background-color: var(--capact-gray-light);
+  --ifm-footer-background-color: var(--capact-gray-lighter);
 }
 
 /* Variables for dark mode */
@@ -70,6 +72,8 @@ html[data-theme="dark"] {
 
   --announcement-bar-background: var(--ifm-background-color);
   --announcement-bar-text: var(--capact-white);
+
+  --section-border-color: var(--capact-gray-dark);
 }
 
 /* Navbar */

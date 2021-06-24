@@ -1,6 +1,6 @@
 .section {
     padding: 8rem 0;
-    border-bottom: 1px solid var(--capact-gray-light);
+    border-bottom: 1px solid var(--section-border-color);
 }
 
 .header {
