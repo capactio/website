@@ -17,7 +17,7 @@ const heroData = {
       pulvinar ultrices quis quis lacus.
     </>
   ),
-  illustrationSrc: "/img/logo.svg", // TODO: Replace with actual illustration
+  illustrationSrc: "/img/logo.svg", // TODO: Replace with target illustration
   buttons: [
     {
       label: "GitHub",
@@ -36,7 +36,7 @@ const IllustrationColumn: FunctionComponent<{
   src: string;
   className?: string;
 }> = ({ src, className }) => (
-  <div className={clsx("col col--6", styles.illustrationWrapper, className)}>
+  <div className={clsx(styles.illustrationWrapper, className)}>
     <img src={src} className={styles.illustration} />
   </div>
 );
@@ -68,9 +68,9 @@ export const Hero: FunctionComponent = () => {
         <div className="row">
           <IllustrationColumn
             src={illustrationSrc}
-            className="mobile-display"
+            className="col col--5 mobile-display"
           />
-          <div className="col col--6">
+          <div className="col col--7">
             <h1 className="hero__title">{title}</h1>
             <p className="hero__subtitle">{subtitle}</p>
 
@@ -80,7 +80,7 @@ export const Hero: FunctionComponent = () => {
               ))}
             </div>
           </div>
-          <IllustrationColumn src={illustrationSrc} className="mobile-hide" />
+          <IllustrationColumn src={illustrationSrc} className="col col--5 mobile-hide" />
         </div>
       </div>
     </header>
