@@ -1,11 +1,12 @@
 .section {
-    padding: 7rem 0;
+    padding: 8rem 0;
+    border-bottom: 1px solid var(--capact-gray-light);
 }
 
 .header {
     display: block;
     width: 100%;
     text-align: center;
-    padding: 1rem 0;
+    padding: 0 0 1rem;
     margin: 0 0 5rem;
 }

@@ -3,6 +3,8 @@ import Layout from "@theme/Layout";
 import useDocusaurusContext from "@docusaurus/useDocusaurusContext";
 import { KeyFeatures } from "../components/homepage/KeyFeatures";
 import { Hero } from "../components/homepage/Hero";
+import { WhatIs } from "../components/homepage/WhatIs";
+import { GetStarted } from "../components/homepage/GetStarted";
 
 interface DocusaurusContext {
   siteConfig: {
@@ -20,7 +22,9 @@ const Homepage: FunctionComponent = () => {
     >
       <Hero />
       <main>
+        <WhatIs />
         <KeyFeatures />
+        <GetStarted />
       </main>
     </Layout>
   );
