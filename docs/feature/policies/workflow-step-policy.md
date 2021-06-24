@@ -43,4 +43,6 @@ The following YAML snippet presents an Action step in the Implementation with a 
 >         - interface: postgresql.install
 > ```
 
+> **NOTE:** You cannot inject TypeInstances in the Workflow step policy. Manifests can be used by any Capact installation, and it is not possible to predict the ID a TypeInstance will have in a given Capact environment.
+
 In this case the policy will enforce that the `cap.implementation.bitnami.postgresql.install` Implementation will be selected, if no other policy is overriding this setting.
