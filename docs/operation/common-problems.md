@@ -99,7 +99,7 @@ Symptoms:
 
 Debugging steps:
 
-- [Check if proper policy exists and has proper configuration](diagnostics.md#checking-cluster-policy). Read the [Policy configuration](../feature/policy-configuration.md) document to get familiar with the syntax and available set of features.
+- [Check if proper policy exists and has proper configuration](diagnostics.md#checking-cluster-policy). Read the [Policy overview](../feature/policies/overview.md) document to get familiar with the syntax and available set of features.
 
 - If you use cloud solutions, such as GCP or AWS, you need to specify TypeInstance ID in the cluster Policy. This TypeInstance must hold a subscription which allows to provision a given service on the hyperscaler side. If TypeInstance doesn't exist, Engine will ignore this configuration. [Check if TypeInstance with a given ID exists](diagnostics.md#checking-if-typeinstance-exists) 
 

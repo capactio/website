@@ -37,7 +37,7 @@ const generateDocsRedirectsForVersion = (version, useLatestVersionAsTarget) => {
     },
     {
       from: `${fromPrefix}/feature`,
-      to: `${toPrefix}/feature/policy-configuration`,
+      to: `${toPrefix}/feature/policies/overview`,
     },
     {
       from: `${fromPrefix}/architecture`,

@@ -166,7 +166,7 @@ helm delete -n $NAMESPACE $(helm list -f="mattermost-*|postgresql-*" -q -n $NAME
 
 ### Install Mattermost with an external CloudSQL database
 
-To change the Mattermost installation, we need to adjust our cluster policy to prefer GCP solutions. Read more about policy configuration [here](../feature/policy-configuration.md).
+To change the Mattermost installation, we need to adjust our Global policy to prefer GCP solutions. Read more about Global policy configuration [here](../feature/policies/global-policy.md).
 
 #### Instructions
 
@@ -241,7 +241,7 @@ To change the Mattermost installation, we need to adjust our cluster policy to p
     capact policy apply -f /tmp/policy.yaml
     ``` 
 
-    >**NOTE**: If you are not familiar with the policy syntax above, check the [policy configuration document](../feature/policy-configuration.md).  
+    >**NOTE**: If you are not familiar with the policy syntax above, check the [policy overview document](../feature/policies/overview.md).
 
 1. Create a Kubernetes Namespace:
 
