@@ -40,8 +40,7 @@ The following YAML snippet presents an Action step in the Implementation with a 
 > - - capact-action: postgresql.install
 >     capact-policy:
 >       rules:
->         - interface:
->             path: postgresql.install
+>         - interface: postgresql.install
 > ```
 
 In this case the policy will enforce that the `cap.implementation.bitnami.postgresql.install` Implementation will be selected, if no other policy is overriding this setting.
