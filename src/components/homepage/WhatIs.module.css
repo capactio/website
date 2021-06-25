@@ -14,7 +14,9 @@ ul.highlights li + li {
 .highlightIconWrapper {
   text-align: center;
   width: var(--feature-icon-size);
-  height: var(--feature-icon-size);
+}
+
+.highlightIcon {
   font-size: calc(var(--feature-icon-size) / 2);
 }
 

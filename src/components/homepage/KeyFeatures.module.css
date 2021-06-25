@@ -9,7 +9,13 @@
 .featureIconWrapper {
   width: var(--feature-icon-size);
   height: var(--feature-icon-size);
-  font-size: calc(var(--feature-icon-size) / 2);
-  margin: 0 auto 2rem;
+  margin: 0 auto 1rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   text-align: center;
+}
+
+.featureIcon {
+  font-size: calc(var(--feature-icon-size) / 1.5);
 }

@@ -1,5 +1,6 @@
 import React, { FunctionComponent, ReactNode } from "react";
 import { FullWidthSection } from "../layout/FullWidthSection";
+import { Icon } from "../layout/Icon";
 import styles from "./WhatIs.module.css";
 
 const whatIsData = {
@@ -23,6 +24,7 @@ const whatIsData = {
   ),
   highlights: [
     {
+      iconName: "dashboard",
       body: (
         <>
           Donec ac ligula fringilla, convallis libero eu, sodales lorem. Etiam
@@ -32,6 +34,7 @@ const whatIsData = {
       ),
     },
     {
+      iconName: "account_circle",
       body: (
         <>
           Maecenas ullamcorper, ligula at fringilla mattis, ipsum lorem
@@ -41,6 +44,7 @@ const whatIsData = {
       ),
     },
     {
+      iconName: "thumb_up",
       body: (
         <>
           Sed et efficitur risus. Curabitur porttitor massa in augue blandit,
@@ -53,13 +57,16 @@ const whatIsData = {
 };
 
 interface HighlightProps {
+  iconName: string;
   body: ReactNode;
 }
 
-const Highlight: FunctionComponent<HighlightProps> = ({ body }) => (
+const Highlight: FunctionComponent<HighlightProps> = ({ iconName, body }) => (
   <li>
     <div className={styles.highlight}>
-      <div className={styles.highlightIconWrapper}>🚧</div>
+      <div className={styles.highlightIconWrapper}>
+        <Icon className={styles.highlightIcon}>{iconName}</Icon>
+      </div>
       <p className={styles.highlightDesc}>{body}</p>
     </div>
   </li>
@@ -69,11 +76,11 @@ export const WhatIs: FunctionComponent = () => {
   const { title, body, highlights } = whatIsData;
   return (
     <FullWidthSection title="What is Capact?">
-      <div className="col col--5">
+      <div className="col col--6">
         <h3>{title}</h3>
         <>{body}</>
       </div>
-      <div className="col col--7">
+      <div className="col col--6">
         <ul className={styles.highlights}>
           {highlights.map((item) => (
             <Highlight {...item} />

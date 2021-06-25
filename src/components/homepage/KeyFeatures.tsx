@@ -4,13 +4,12 @@ import React, {
 } from "react";
 import styles from "./KeyFeatures.module.css";
 import { FullWidthSection } from "../layout/FullWidthSection";
+import { Icon } from "../layout/Icon";
 
 const FeatureList: FeatureData[] = [
   {
     title: "Unify your workflow",
-    icon: (
-      <>🚧</>
-    ),
+    iconName: "account_tree",
     description: (
       <>
         Capact unifies the way how to manage applications (or middleware, or
@@ -21,9 +20,7 @@ const FeatureList: FeatureData[] = [
   },
   {
     title: "Interchangeable Dependencies",
-    icon: (
-      <>🚧</>
-    ),
+    iconName: "published_with_changes",
     description: (
       <>
         You don't need to worry about the dependencies. With generic concepts in
@@ -34,9 +31,7 @@ const FeatureList: FeatureData[] = [
   },
   {
     title: "Collaborate",
-    icon: (
-      <>🚧</>
-    ),
+    iconName: "group_work",
     description: (
       <>
         Capact is open source and powered by the community. Let's work together
@@ -49,11 +44,11 @@ const FeatureList: FeatureData[] = [
 interface FeatureData {
   title: string;
   description: ReactElement;
-  icon: React.ReactNode,
+  iconName: string,
 }
 
 export const KeyFeature: FunctionComponent<FeatureData> = ({
-  icon,
+  iconName,
   title,
   description,
 }) => {
@@ -61,7 +56,7 @@ export const KeyFeature: FunctionComponent<FeatureData> = ({
     <div className="col col--4">
       <div className="text--center">
         <div className={styles.featureIconWrapper}>
-          {icon}
+          <Icon className={styles.featureIcon}>{iconName}</Icon>
         </div>
       </div>
       <div className="text--center padding-horiz--md">
