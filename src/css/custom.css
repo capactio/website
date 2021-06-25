@@ -42,6 +42,8 @@ h5 {
   --announcement-bar-background: var(--capact-gray-lighter);
   --announcement-bar-text: var(--capact-black);
 
+  --feature-icon-size: 80px;
+
   --section-border-color: var(--capact-gray-light);
 
   --ifm-color-primary: var(--capact-blue);
@@ -137,12 +139,6 @@ html[data-theme="dark"] .slack-icon.color-adjustable:before {
 }
 
 /* Hero */
-
-header.hero {
-  padding: 8rem 0;
-  background: var(--capact-orange-lighter);
-  color: var(--capact-black);
-}
 
 .hero__title {
   margin: 1rem 0;

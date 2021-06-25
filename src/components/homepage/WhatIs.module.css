@@ -1,5 +1,6 @@
 ul.highlights {
   list-style-type: none;
+  padding: 0;
 }
 
 ul.highlights li + li {
@@ -10,10 +11,11 @@ ul.highlights li + li {
   display: flex;
 }
 
-.highlightIcon {
-  width: 60px;
-  height: 60px;
-  font-size: 30px;
+.highlightIconWrapper {
+  text-align: center;
+  width: var(--feature-icon-size);
+  height: var(--feature-icon-size);
+  font-size: calc(var(--feature-icon-size) / 2);
 }
 
 .highlightDesc {

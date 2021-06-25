@@ -6,8 +6,10 @@
   width: 100%;
 }
 
-.featureSvg {
-  height: 200px;
-  width: 200px;
-  margin-bottom: 2rem;
+.featureIconWrapper {
+  width: var(--feature-icon-size);
+  height: var(--feature-icon-size);
+  font-size: calc(var(--feature-icon-size) / 2);
+  margin: 0 auto 2rem;
+  text-align: center;
 }

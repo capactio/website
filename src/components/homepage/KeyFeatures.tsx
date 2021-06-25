@@ -1,7 +1,6 @@
 import React, {
   FunctionComponent,
   ReactElement,
-  ImgHTMLAttributes,
 } from "react";
 import styles from "./KeyFeatures.module.css";
 import { FullWidthSection } from "../layout/FullWidthSection";
@@ -9,7 +8,9 @@ import { FullWidthSection } from "../layout/FullWidthSection";
 const FeatureList: FeatureData[] = [
   {
     title: "Unify your workflow",
-    SVG: require("../../../static/img/placeholder.svg").default, // TODO:
+    icon: (
+      <>🚧</>
+    ),
     description: (
       <>
         Capact unifies the way how to manage applications (or middleware, or
@@ -20,7 +21,9 @@ const FeatureList: FeatureData[] = [
   },
   {
     title: "Interchangeable Dependencies",
-    SVG: require("../../../static/img/placeholder.svg").default, // TODO:
+    icon: (
+      <>🚧</>
+    ),
     description: (
       <>
         You don't need to worry about the dependencies. With generic concepts in
@@ -31,7 +34,9 @@ const FeatureList: FeatureData[] = [
   },
   {
     title: "Collaborate",
-    SVG: require("../../../static/img/placeholder.svg").default, // TODO:
+    icon: (
+      <>🚧</>
+    ),
     description: (
       <>
         Capact is open source and powered by the community. Let's work together
@@ -44,18 +49,20 @@ const FeatureList: FeatureData[] = [
 interface FeatureData {
   title: string;
   description: ReactElement;
-  SVG: FunctionComponent<ImgHTMLAttributes<SVGSVGElement>>;
+  icon: React.ReactNode,
 }
 
 export const KeyFeature: FunctionComponent<FeatureData> = ({
-  SVG,
+  icon,
   title,
   description,
 }) => {
   return (
     <div className="col col--4">
       <div className="text--center">
-        <SVG className={styles.featureSvg} alt={title} />
+        <div className={styles.featureIconWrapper}>
+          {icon}
+        </div>
       </div>
       <div className="text--center padding-horiz--md">
         <h3>{title}</h3>

@@ -59,7 +59,7 @@ interface HighlightProps {
 const Highlight: FunctionComponent<HighlightProps> = ({ body }) => (
   <li>
     <div className={styles.highlight}>
-      <div className={styles.highlightIcon}>🚧</div>
+      <div className={styles.highlightIconWrapper}>🚧</div>
       <p className={styles.highlightDesc}>{body}</p>
     </div>
   </li>
@@ -69,11 +69,11 @@ export const WhatIs: FunctionComponent = () => {
   const { title, body, highlights } = whatIsData;
   return (
     <FullWidthSection title="What is Capact?">
-      <div className="col col--6">
+      <div className="col col--5">
         <h3>{title}</h3>
         <>{body}</>
       </div>
-      <div className="col col--6">
+      <div className="col col--7">
         <ul className={styles.highlights}>
           {highlights.map((item) => (
             <Highlight {...item} />

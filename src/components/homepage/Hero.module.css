@@ -1,7 +1,10 @@
 .heroBanner {
+  background: var(--capact-orange-lighter);
+  color: var(--capact-black);
   text-align: left;
   position: relative;
   overflow: hidden;
+  padding: 8rem 0 7rem;
 }
 
 .illustrationWrapper {
