@@ -15,8 +15,7 @@ module.exports = {
   themeConfig: {
     announcementBar: {
       id: "capact_os_release",
-      content:
-        `🚀 The very first public Capact release is here! <a href="https://github.com/capactio/capact" target="_blank">Check out our repository and give us a star on GitHub!</a>`,
+      content: `🚀 The very first public Capact release is here! <a href="https://github.com/capactio/capact" target="_blank">Check out our repository and give us a star on GitHub!</a>`,
       backgroundColor: "var(--announcement-bar-background)",
       textColor: "var(--announcement-bar-text)",
       isCloseable: true,
@@ -83,12 +82,8 @@ module.exports = {
           ],
         },
         {
-          title: "Community",
+          title: "Social",
           items: [
-            {
-              label: "Slack",
-              to: "/slack",
-            },
             {
               label: "Twitter",
               href: "https://twitter.com/CapactIO",
@@ -104,13 +99,15 @@ module.exports = {
           ],
         },
         {
-          title: "GitHub",
+          title: "Community",
           items: [
             {
-              html: `<iframe src="https://ghbtns.com/github-btn.html?user=capactio&repo=capact&type=star" frameborder="0" scrolling="0" width="150" height="20" title="GitHub"></iframe>`,
+              label: "GitHub",
+              to: "https://github.com/capactio/capact",
             },
             {
-              html: `<iframe src="https://ghbtns.com/github-btn.html?user=capactio&repo=capact&type=fork" frameborder="0" scrolling="0" width="150" height="20" title="GitHub"></iframe>`,
+              label: "Slack",
+              to: "/slack",
             },
           ],
         },
@@ -145,9 +142,7 @@ module.exports = {
     [
       "@docusaurus/plugin-client-redirects",
       {
-        redirects: [
-          ...getCustomRedirects(),
-        ],
+        redirects: [...getCustomRedirects()],
       },
     ],
   ],
