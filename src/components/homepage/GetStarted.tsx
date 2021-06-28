@@ -9,9 +9,9 @@ const getStartedData = {
   body: (
     <>
       <p>
-        The easiest and fastest way to try out Capact is bootstrapping a Capact
-        cluster on your local machine. Install Capact CLI and use dedicated
-        commands to create and run the cluster. Have fun!
+        It's easy to try out Capact on your local machine. Install the CLI,
+        bootstrap a cluster and use Capact to deploy something, like Mattermost.
+        Have fun!
       </p>
       <p>
         If you want to learn more about Capact, get familiar with concepts and

@@ -11,7 +11,7 @@ const FeatureList: FeatureData[] = [
       <>
         Capact unifies the way how to manage applications (or middleware, or
         infrastructure, or anything in between), run day-two operations and
-        execute arbitrary workflows. Learn once, use everywhere.
+        execute arbitrary (or ad-hoc) workflows.
       </>
     ),
   },
@@ -21,9 +21,9 @@ const FeatureList: FeatureData[] = [
     description: (
       <>
         In Capact, all dependencies are abstracted away and resolved dynamically
-        according to your preferences. Preferring managed solutions from
-        a&nbsp;specific cloud provider? Are you on-premise solutions fan? Either
-        way, Capact got you covered!
+        according to your preferences. Want to use managed solutions from your
+        cloud provider? Or maybe you are an on-prem aficionado? Capact's got you
+        covered!
       </>
     ),
   },
@@ -32,16 +32,8 @@ const FeatureList: FeatureData[] = [
     iconName: "group_work",
     description: (
       <>
-        Capact is an ecosystem for people to contribute where they have the
-        biggest strengths. Do not reinvent the wheel. Let's work together to
-        enable{" "}
-        <a
-          href="https://en.wikipedia.org/wiki/Don%27t_repeat_yourself"
-          target="_blank"
-        >
-          DRY principle
-        </a>{" "}
-        at a global scale!
+        Capact is an ecosystem. Codify and contribute your subject matter
+        expertise. Do not reinvent the wheel. Publish once, use anywhere. Let's get stuff done together!
       </>
     ),
   },

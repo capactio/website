@@ -10,15 +10,15 @@ const whatIsData = {
       <p>
         Capact (pronounced: "cape-act", /ˈkeɪp.ækt/) is essentially an
         extensible, community-powered framework for Getting Things Done. What
-        are things, you may ask? Anything really, though initially we are
-        focused on day-one and day-two workflows for deploying and managing
-        applications and containerized or cloud-native infrastructure. Where it
-        goes from there is up to the imagination of the community.
+        things, you may ask? Anything really, though initially we are focused on
+        day-one and day-two workflows for deploying and managing applications
+        and cloud-native infrastructure. Where it goes from there is up to the
+        community's imagination.
       </p>
       <p>
         Learning new tools and technologies takes time, and executing your newly
         learned skills in a production-ready fashion takes even longer. Capact
-        allows its users and contributors to use industry-standard (and
+        allows its users and contributors to use open standard (and
         community-maintained) abstractions and rely on the expertise of the
         implementation developers to make things work.
       </p>
@@ -26,21 +26,18 @@ const whatIsData = {
   ),
   highlights: [
     {
-      iconName: "checklist",
+      iconName: "auto_awesome_mosaic",
       body: (
         <>
-          Build dynamic and flexible workflows to get things done. Deploy and
-          manage applications, infrastructure, as well as run arbitrary
-          workloads.
+          Mix and match your tooling or API of choice. For example, chain Terraform, Helm and Slack API.
         </>
       ),
     },
     {
-      iconName: "auto_awesome_mosaic",
+      iconName: "checklist",
       body: (
         <>
-          Use existing capabilities as building blocks for your workflows,
-          instead of building them from a scratch.
+         Capact is powered by GraphQL API. Use it through the included nifty CLI or any way you like. 
         </>
       ),
     },
@@ -49,7 +46,14 @@ const whatIsData = {
       body: (
         <>
           Capact is a totally free-to-use, open source project, powered by the
-          community. Join us and collaborate!
+          community. Let's work together to
+        enable{" "}
+        <a
+          href="https://en.wikipedia.org/wiki/Don%27t_repeat_yourself"
+          target="_blank"
+        >
+          DRY
+        </a>{" "}at a global scale!
         </>
       ),
     },

@@ -6,16 +6,15 @@ import Link from "@docusaurus/Link";
 const heroData = {
   title: (
     <>
-      A&nbsp;simple way to manage
+      A&nbsp;unified way to manage
       <br />
       applications and infrastructure
     </>
   ),
   subtitle: (
     <>
-      Deploy and manage capabilities in a&nbsp;collaborative manner.
-      <br />
-      Learn once, use everywhere.
+      Vendor-agnostic, crowdsourced expertise, packaged and ready to use. Learn
+      once, use everywhere.
     </>
   ),
   illustrationSrc: "/img/logo.svg", // TODO: Replace with target illustration
