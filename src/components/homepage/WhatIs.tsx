@@ -26,35 +26,33 @@ const whatIsData = {
   ),
   highlights: [
     {
-      iconName: "auto_awesome_mosaic",
+      iconName: "widgets",
       body: (
-        <>
-          Mix and match your tooling or API of choice. For example, chain Terraform, Helm and Slack API.
-        </>
+        <p>
+          Mix and match your tooling or API of choice. For example, chain
+          Terraform, Helm and Slack API.
+        </p>
       ),
     },
     {
-      iconName: "checklist",
+      iconName: "integration_instructions",
       body: (
-        <>
-         Capact is powered by GraphQL API. Use it through the included nifty CLI or any way you like. 
-        </>
+        <p>
+          Capact is powered by GraphQL API. Use it through the included nifty
+          CLI or any way you like.
+        </p>
       ),
     },
     {
       iconName: "groups",
       body: (
-        <>
+        <p>
           Capact is a totally free-to-use, open source project, powered by the
-          community. Let's work together to
-        enable{" "}
-        <a
-          href="https://en.wikipedia.org/wiki/Don%27t_repeat_yourself"
-          target="_blank"
-        >
-          DRY
-        </a>{" "}at a global scale!
-        </>
+          community. Let's work together to enable <a
+            href="https://en.wikipedia.org/wiki/Don%27t_repeat_yourself"
+            target="_blank"
+          >DRY</a> at a global scale!
+        </p>
       ),
     },
   ],
@@ -71,7 +69,7 @@ const Highlight: FunctionComponent<HighlightProps> = ({ iconName, body }) => (
       <div className={styles.highlightIconWrapper}>
         <Icon className={styles.highlightIcon}>{iconName}</Icon>
       </div>
-      <p className={styles.highlightDesc}>{body}</p>
+      <div className={styles.highlightDesc}>{body}</div>
     </div>
   </li>
 );
@@ -86,8 +84,8 @@ export const WhatIs: FunctionComponent = () => {
       <div className="col col--6">{body}</div>
       <div className="col col--6">
         <ul className={styles.highlights}>
-          {highlights.map((item) => (
-            <Highlight {...item} />
+          {highlights.map((item, idx) => (
+            <Highlight key={idx} {...item} />
           ))}
         </ul>
       </div>

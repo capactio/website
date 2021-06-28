@@ -49,6 +49,7 @@ export const GetStarted: FunctionComponent = () => {
         <div className={styles.buttons}>
           {buttons.map((btn) => (
             <Link
+              key={btn.url}
               className={clsx("button button--lg", btn.additionalClassName)}
               to={btn.url}
             >

@@ -33,7 +33,8 @@ const FeatureList: FeatureData[] = [
     description: (
       <>
         Capact is an ecosystem. Codify and contribute your subject matter
-        expertise. Do not reinvent the wheel. Publish once, use anywhere. Let's get stuff done together!
+        expertise. Do not reinvent the wheel. Publish once, use anywhere. Let's
+        get stuff done together!
       </>
     ),
   },

@@ -2,6 +2,7 @@
   align-items: left;
   display: flex;
   justify-content: left;
+  margin-top: 2rem;
 }
 
 .buttons a + a {

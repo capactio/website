@@ -11,13 +11,17 @@ ul.highlights li + li {
   display: flex;
 }
 
+.highlight p a {
+  display: inline;
+}
+
 .highlightIconWrapper {
   text-align: center;
   width: var(--feature-icon-size);
 }
 
 .highlightIcon {
-  font-size: calc(var(--feature-icon-size) / 2.2);
+  font-size: calc(var(--feature-icon-size) / 2.3);
 }
 
 .highlightDesc {

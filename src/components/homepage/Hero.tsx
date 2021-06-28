@@ -13,8 +13,8 @@ const heroData = {
   ),
   subtitle: (
     <>
-      Vendor-agnostic, crowdsourced expertise, packaged and ready to use. Learn
-      once, use everywhere.
+      Vendor-agnostic, crowdsourced expertise, packaged
+      <br /> and ready to use. Learn once, use everywhere.
     </>
   ),
   illustrationSrc: "/img/logo.svg", // TODO: Replace with target illustration
