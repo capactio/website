@@ -8,48 +8,48 @@ const whatIsData = {
   body: (
     <>
       <p>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras a mi a
-        augue pulvinar ultrices quis quis lacus. Nunc at libero vitae ipsum
-        fringilla congue quis sed ex. In ornare erat sapien, nec hendrerit nisi
-        viverra vel. Praesent et porta tellus, at aliquet lorem. Sed et dui
-        orci. Donec aliquet lorem nec turpis ultricies, id placerat odio semper.
+        Capact (pronounced: "cape-act", /ˈkeɪp.ækt/) is essentially an
+        extensible, community-powered framework for Getting Things Done. What
+        are things, you may ask? Anything really, though initially we are
+        focused on day-one and day-two workflows for deploying and managing
+        applications and containerized or cloud-native infrastructure. Where it
+        goes from there is up to the imagination of the community.
       </p>
       <p>
-        Nulla feugiat odio et tempor gravida. Aliquam vel erat ex. Suspendisse
-        molestie ornare mi fermentum ullamcorper. Aliquam pellentesque justo et
-        augue semper, et tempus ex laoreet. Nullam non magna erat. Fusce
-        imperdiet ante eget nunc consequat, quis fermentum leo auctor.
+        Learning new tools and technologies takes time, and executing your newly
+        learned skills in a production-ready fashion takes even longer. Capact
+        allows its users and contributors to use industry-standard (and
+        community-maintained) abstractions and rely on the expertise of the
+        implementation developers to make things work.
       </p>
     </>
   ),
   highlights: [
     {
-      iconName: "dashboard",
+      iconName: "checklist",
       body: (
         <>
-          Donec ac ligula fringilla, convallis libero eu, sodales lorem. Etiam
-          et dolor mollis, molestie dolor sed, sodales lorem. Nullam fringilla
-          fringilla nisi eget gravida.
+          Build dynamic and flexible workflows to get things done. Deploy and
+          manage applications, infrastructure, as well as run arbitrary
+          workloads.
         </>
       ),
     },
     {
-      iconName: "account_circle",
+      iconName: "auto_awesome_mosaic",
       body: (
         <>
-          Maecenas ullamcorper, ligula at fringilla mattis, ipsum lorem
-          elementum velit, quis fermentum mauris massa et metus. Curabitur
-          congue enim lorem, nec tempor sapien laoreet sit amet.
+          Use existing capabilities as building blocks for your workflows,
+          instead of building them from a scratch.
         </>
       ),
     },
     {
-      iconName: "thumb_up",
+      iconName: "groups",
       body: (
         <>
-          Sed et efficitur risus. Curabitur porttitor massa in augue blandit,
-          vel pretium velit venenatis. Phasellus quis augue varius, interdum
-          ante quis, pharetra nunc.
+          Capact is a totally free-to-use, open source project, powered by the
+          community. Join us and collaborate!
         </>
       ),
     },
@@ -76,10 +76,10 @@ export const WhatIs: FunctionComponent = () => {
   const { title, body, highlights } = whatIsData;
   return (
     <FullWidthSection title="What is Capact?">
-      <div className="col col--6">
+      <div className="col col--12">
         <h3>{title}</h3>
-        <>{body}</>
       </div>
+      <div className="col col--6">{body}</div>
       <div className="col col--6">
         <ul className={styles.highlights}>
           {highlights.map((item) => (

@@ -17,7 +17,7 @@ ul.highlights li + li {
 }
 
 .highlightIcon {
-  font-size: calc(var(--feature-icon-size) / 2);
+  font-size: calc(var(--feature-icon-size) / 2.2);
 }
 
 .highlightDesc {

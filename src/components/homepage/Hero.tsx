@@ -6,15 +6,16 @@ import Link from "@docusaurus/Link";
 const heroData = {
   title: (
     <>
-      A simple way to manage
+      A&nbsp;simple way to manage
       <br />
       applications and infrastructure
     </>
   ),
   subtitle: (
     <>
-      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras a mi a augue
-      pulvinar ultrices quis quis lacus.
+      Deploy and manage capabilities in a&nbsp;collaborative manner.
+      <br />
+      Learn once, use everywhere.
     </>
   ),
   illustrationSrc: "/img/logo.svg", // TODO: Replace with target illustration
@@ -80,7 +81,10 @@ export const Hero: FunctionComponent = () => {
               ))}
             </div>
           </div>
-          <IllustrationColumn src={illustrationSrc} className="col col--5 mobile-hide" />
+          <IllustrationColumn
+            src={illustrationSrc}
+            className="col col--5 mobile-hide"
+          />
         </div>
       </div>
     </header>

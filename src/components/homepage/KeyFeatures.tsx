@@ -1,7 +1,4 @@
-import React, {
-  FunctionComponent,
-  ReactElement,
-} from "react";
+import React, { FunctionComponent, ReactElement } from "react";
 import styles from "./KeyFeatures.module.css";
 import { FullWidthSection } from "../layout/FullWidthSection";
 import { Icon } from "../layout/Icon";
@@ -14,18 +11,19 @@ const FeatureList: FeatureData[] = [
       <>
         Capact unifies the way how to manage applications (or middleware, or
         infrastructure, or anything in between), run day-two operations and
-        execute arbitrary workflows. Learn once, use everywhere!
+        execute arbitrary workflows. Learn once, use everywhere.
       </>
     ),
   },
   {
-    title: "Interchangeable Dependencies",
+    title: "Interchange dependencies",
     iconName: "published_with_changes",
     description: (
       <>
-        You don't need to worry about the dependencies. With generic concepts in
-        mind, Capact will resolve the dependencies automatically, according to
-        your preferences.
+        In Capact, all dependencies are abstracted away and resolved dynamically
+        according to your preferences. Preferring managed solutions from
+        a&nbsp;specific cloud provider? Are you on-premise solutions fan? Either
+        way, Capact got you covered!
       </>
     ),
   },
@@ -34,8 +32,16 @@ const FeatureList: FeatureData[] = [
     iconName: "group_work",
     description: (
       <>
-        Capact is open source and powered by the community. Let's work together
-        to enable DRY at a global scale!
+        Capact is an ecosystem for people to contribute where they have the
+        biggest strengths. Do not reinvent the wheel. Let's work together to
+        enable{" "}
+        <a
+          href="https://en.wikipedia.org/wiki/Don%27t_repeat_yourself"
+          target="_blank"
+        >
+          DRY principle
+        </a>{" "}
+        at a global scale!
       </>
     ),
   },
@@ -44,7 +50,7 @@ const FeatureList: FeatureData[] = [
 interface FeatureData {
   title: string;
   description: ReactElement;
-  iconName: string,
+  iconName: string;
 }
 
 export const KeyFeature: FunctionComponent<FeatureData> = ({
