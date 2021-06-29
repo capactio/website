@@ -10,7 +10,7 @@ const FeatureList: FeatureData[] = [
     description: (
       <>
         Capact unifies the way how to manage applications (or middleware, or
-        infrastructure, or anything in between), run day-two operations and
+        infrastructure, or anything else in between), run day-two operations and
         execute arbitrary (or ad-hoc) workflows.
       </>
     ),
@@ -20,10 +20,10 @@ const FeatureList: FeatureData[] = [
     iconName: "published_with_changes",
     description: (
       <>
-        In Capact, all dependencies are abstracted away and resolved dynamically
-        according to your preferences. Want to use managed solutions from your
-        cloud provider? Or maybe you are an on-prem aficionado? Capact's got you
-        covered!
+        In Capact, all dependencies are abstracted away and resolved
+        dynamically, at runtime, according to your desired preferences. Want to
+        use managed solutions from your cloud provider? Or maybe you are an
+        on-prem aficionado? Capact's got you covered!
       </>
     ),
   },
@@ -33,7 +33,7 @@ const FeatureList: FeatureData[] = [
     description: (
       <>
         Capact is an ecosystem. Codify and contribute your subject matter
-        expertise. Do not reinvent the wheel. Publish once, use anywhere. Let's
+        expertise. Don't reinvent the wheel. Publish once, use anywhere. Let's
         get stuff done together!
       </>
     ),
