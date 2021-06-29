@@ -13,6 +13,7 @@ Or alternatively SCSS: https://docusaurus.io/docs/styling-layout#sassscss
 /* Fonts */
 
 @import url("https://fonts.googleapis.com/css2?family=Barlow:wght@700&family=Fira+Code&family=Fira+Sans:ital,wght@0,400;0,700;1,400;1,700&display=swap");
+@import url("https://fonts.googleapis.com/icon?family=Material+Icons");
 
 h1,
 h2,
@@ -35,12 +36,16 @@ h5 {
   --capact-orange: #f48c06;
   --capact-orange-light: #faa307;
   --capact-orange-lighter: #ffba0d;
+  --capact-gray-lighter: #f5f5f5;
   --capact-gray-light: #ededed;
+  --capact-gray-dark: #333;
 
-  --announcement-bar-background: var(--capact-gray-light);
+  --announcement-bar-background: var(--capact-gray-lighter);
   --announcement-bar-text: var(--capact-black);
 
-  /* Override the default Infima variables here. */
+  --feature-icon-size: 80px;
+
+  --section-border-color: var(--capact-gray-light);
 
   --ifm-color-primary: var(--capact-blue);
   --ifm-color-primary-dark: var(--capact-blue);
@@ -56,7 +61,10 @@ h5 {
   --ifm-h3-font-size: 1.6rem;
 
   --ifm-footer-padding-vertical: 4rem;
-  --ifm-footer-background-color: var(--capact-gray-light);
+  --ifm-footer-background-color: var(--capact-gray-lighter);
+
+  --ifm-button-background-color: var(--capact-orange-light);
+  --ifm-button-border-color: var(--capact-orange-light);
 }
 
 /* Variables for dark mode */
@@ -67,9 +75,12 @@ html[data-theme="dark"] {
   --ifm-menu-color-active: var(--capact-orange-lighter);
   --ifm-footer-background-color: var(--capact-blue-dark);
   --ifm-footer-link-hover-color: var(--capact-orange-lighter);
+  --ifm-pagination-nav-color-hover: var(--capact-orange-lighter);
 
   --announcement-bar-background: var(--ifm-background-color);
   --announcement-bar-text: var(--capact-white);
+
+  --section-border-color: var(--capact-gray-dark);
 }
 
 /* Navbar */
@@ -97,52 +108,41 @@ html[data-theme="dark"] .navbar {
   --ifm-navbar-background-color: var(--capact-blue-dark);
 }
 
-.github-icon-link:hover,
-.slack-icon-link:hover {
+.header-icon-link:before {
+  content: "";
+  width: 24px;
+  height: 24px;
+  display: flex;
+}
+
+.header-icon-link:hover {
   opacity: 0.7;
 }
 
-.github-icon-link:before,
-.slack-icon-link:before {
-  content: "";
-  width: 24px;
-  height: 24px;
-  display: flex;
-}
-
-.github-icon-link:before {
-  content: "";
-  width: 24px;
-  height: 24px;
-  display: flex;
+.github-icon:before {
   background: url("data:image/svg+xml,%3Csvg viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12'/%3E%3C/svg%3E")
     no-repeat;
 }
 
-html[data-theme="dark"] .github-icon-link:before {
+html[data-theme="dark"] .github-icon.color-adjustable:before {
   background: url("data:image/svg+xml,%3Csvg viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath fill='white' d='M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12'/%3E%3C/svg%3E")
     no-repeat;
 }
 
-.slack-icon-link:before {
+.slack-icon:before {
   background: url("data:image/svg+xml,%3Csvg viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg' %3E %3Cpath fill-rule='evenodd' clip-rule='evenodd' d='M13 10C13 11.1046 13.8954 12 15 12C16.1046 12 17 11.1046 17 10V5C17 3.89543 16.1046 3 15 3C13.8954 3 13 3.89543 13 5V10ZM5 8C3.89543 8 3 8.89543 3 10C3 11.1046 3.89543 12 5 12H10C11.1046 12 12 11.1046 12 10C12 8.89543 11.1046 8 10 8H5ZM15 13C13.8954 13 13 13.8954 13 15C13 16.1046 13.8954 17 15 17H20C21.1046 17 22 16.1046 22 15C22 13.8954 21.1046 13 20 13H15ZM10 22C8.89543 22 8 21.1046 8 20L8 15C8 13.8954 8.89543 13 10 13C11.1046 13 12 13.8954 12 15V20C12 21.1046 11.1046 22 10 22ZM8 5C8 3.89543 8.89543 3 10 3C11.1046 3 12 3.89543 12 5V7H10C8.89543 7 8 6.10457 8 5ZM3 15C3 16.1046 3.89543 17 5 17C6.10457 17 7 16.1046 7 15V13H5C3.89543 13 3 13.8954 3 15ZM17 20C17 21.1046 16.1046 22 15 22C13.8954 22 13 21.1046 13 20V18H15C16.1046 18 17 18.8954 17 20ZM22 10C22 8.89543 21.1046 8 20 8C18.8954 8 18 8.89543 18 10V12H20C21.1046 12 22 11.1046 22 10Z' fill='currentColor' /%3E %3C/svg%3E")
     no-repeat;
 }
 
-html[data-theme="dark"] .slack-icon-link:before {
+html[data-theme="dark"] .slack-icon.color-adjustable:before {
   background: url("data:image/svg+xml,%3Csvg viewBox='0 0 24 24' fill='white' xmlns='http://www.w3.org/2000/svg' %3E %3Cpath fill-rule='evenodd' clip-rule='evenodd' d='M13 10C13 11.1046 13.8954 12 15 12C16.1046 12 17 11.1046 17 10V5C17 3.89543 16.1046 3 15 3C13.8954 3 13 3.89543 13 5V10ZM5 8C3.89543 8 3 8.89543 3 10C3 11.1046 3.89543 12 5 12H10C11.1046 12 12 11.1046 12 10C12 8.89543 11.1046 8 10 8H5ZM15 13C13.8954 13 13 13.8954 13 15C13 16.1046 13.8954 17 15 17H20C21.1046 17 22 16.1046 22 15C22 13.8954 21.1046 13 20 13H15ZM10 22C8.89543 22 8 21.1046 8 20L8 15C8 13.8954 8.89543 13 10 13C11.1046 13 12 13.8954 12 15V20C12 21.1046 11.1046 22 10 22ZM8 5C8 3.89543 8.89543 3 10 3C11.1046 3 12 3.89543 12 5V7H10C8.89543 7 8 6.10457 8 5ZM3 15C3 16.1046 3.89543 17 5 17C6.10457 17 7 16.1046 7 15V13H5C3.89543 13 3 13.8954 3 15ZM17 20C17 21.1046 16.1046 22 15 22C13.8954 22 13 21.1046 13 20V18H15C16.1046 18 17 18.8954 17 20ZM22 10C22 8.89543 21.1046 8 20 8C18.8954 8 18 8.89543 18 10V12H20C21.1046 12 22 11.1046 22 10Z' /%3E %3C/svg%3E")
     no-repeat;
 }
 
 /* Hero */
 
-header.hero {
-  padding: 8rem 0;
-  background: var(--capact-orange-light);
-}
-
 .hero__title {
-  margin: 1rem 0 3rem;
+  margin: 1rem 0;
 }
 
 /* Footer */
@@ -167,4 +167,39 @@ html[data-theme="dark"] .table-of-contents__link:hover code,
 html[data-theme="dark"] .table-of-contents__link--active,
 html[data-theme="dark"] .table-of-contents__link--active code {
   color: var(--capact-orange-lighter);
+}
+
+/* Buttons */
+
+.button--primary:not(.button--outline) {
+  --ifm-button-background-color: var(--capact-orange-light);
+}
+
+.button--primary:not(.button--outline):hover,
+.button--primary:not(.button--outline):active,
+.button--primary:not(.button--outline):focus {
+  --ifm-button-background-color: var(--capact-orange-dark);
+  --ifm-button-border-color: var(--capact-orange-dark);
+  background-color: var(--capact-orange-dark);
+  border-color: var(--ifm-button-border-color);
+}
+
+.button--primary {
+  --ifm-button-border-color: var(--capact-orange-light);
+}
+
+/* Responsiveness-related helpers */
+
+.mobile-display {
+  display: none;
+}
+
+@media (max-width: 996px) {
+  .mobile-hide {
+    display: none !important;
+  }
+
+  .mobile-display {
+    display: block !important;
+  }
 }

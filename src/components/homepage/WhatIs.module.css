@@ -1,0 +1,40 @@
+ul.highlights {
+  list-style-type: none;
+  padding: 0;
+}
+
+ul.highlights li + li {
+  margin-top: 2rem;
+}
+
+.highlight {
+  display: flex;
+}
+
+.highlight p a {
+  display: inline;
+}
+
+.highlightIconWrapper {
+  text-align: center;
+  width: var(--feature-icon-size);
+}
+
+.highlightIcon {
+  font-size: calc(var(--feature-icon-size) / 2.3);
+}
+
+.highlightDesc {
+  display: flex;
+  flex: 1 1;
+  flex-direction: column;
+  justify-content: center;
+  text-align: left;
+  margin-left: 1rem;
+}
+
+@media (max-width: 966px) {
+  .highlights {
+    margin-top: 2rem;
+  }
+}

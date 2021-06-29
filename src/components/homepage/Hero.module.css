@@ -1,0 +1,48 @@
+.heroBanner {
+  background: var(--capact-orange-lighter);
+  color: var(--capact-black);
+  text-align: left;
+  position: relative;
+  overflow: hidden;
+  padding: 8rem 0 7rem;
+}
+
+.illustrationWrapper {
+  text-align: center;
+}
+
+.illustration {
+  max-height: 300px;
+}
+
+@media (max-width: 966px) {
+  .heroBanner {
+    padding: 4rem 2rem;
+  }
+
+  .illustration {
+    margin-bottom: 2rem;
+    max-height: 200px;
+  }
+}
+
+.buttons {
+  display: flex;
+  align-items: left;
+  justify-content: left;
+}
+
+.iconButton:before {
+  width: 36px;
+  height: 36px;
+  content: "";
+  display: flex;
+}
+
+.iconButton:hover {
+  opacity: 0.7;
+}
+
+.iconButton + .iconButton {
+  margin-left: 15px;
+}
