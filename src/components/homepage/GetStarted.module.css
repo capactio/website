@@ -13,4 +13,17 @@
   .terminalWrapper {
     margin-top: 2rem;
   }
+
+  .buttons {
+    display: block;
+  }
+
+  .buttons a {
+    display: block;
+    width: 100%;
+  }
+
+  .buttons a + a {
+    margin: 1rem 0 0;
+  }
 }
