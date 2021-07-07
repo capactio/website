@@ -17,9 +17,9 @@
     "sync-cli-docs": "npm run delete-cli-docs; rsync -av --progress ../capact/cmd/cli/docs/* $(pwd)/docs/cli/commands"
   },
   "dependencies": {
-    "@docusaurus/core": "2.0.0-beta.1",
-    "@docusaurus/plugin-client-redirects": "^2.0.0-beta.1",
-    "@docusaurus/preset-classic": "2.0.0-beta.1",
+    "@docusaurus/core": "2.0.0-beta.3",
+    "@docusaurus/plugin-client-redirects": "^2.0.0-beta.3",
+    "@docusaurus/preset-classic": "2.0.0-beta.3",
     "@mdx-js/react": "^1.6.21",
     "@svgr/webpack": "^5.5.0",
     "clsx": "^1.1.1",
@@ -41,14 +41,14 @@
     ]
   },
   "devDependencies": {
-    "@docusaurus/module-type-aliases": "^2.0.0-beta.1",
+    "@docusaurus/module-type-aliases": "^2.0.0-beta.3",
     "@tsconfig/docusaurus": "^1.0.2",
-    "@types/react": "^17.0.8",
+    "@types/react": "^17.0.13",
     "@types/react-helmet": "^6.1.1",
     "@types/react-router-dom": "^5.1.7",
-    "@typescript-eslint/eslint-plugin": "^4.28.0",
-    "@typescript-eslint/parser": "^4.28.0",
-    "eslint": "^7.29.0",
-    "typescript": "^4.3.4"
+    "@typescript-eslint/eslint-plugin": "^4.28.2",
+    "@typescript-eslint/parser": "^4.28.2",
+    "eslint": "^7.30.0",
+    "typescript": "^4.3.5"
   }
 }

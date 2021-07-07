@@ -145,6 +145,12 @@ html[data-theme="dark"] .slack-icon.color-adjustable:before {
   margin: 1rem 0;
 }
 
+@media (max-width: 966px) {
+  .hero__title {
+    font-size: 2.3rem;
+  }
+}
+
 /* Footer */
 
 .footer__copyright {

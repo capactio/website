@@ -1,6 +1,7 @@
 ul.highlights {
   list-style-type: none;
   padding: 0;
+  margin: 0;
 }
 
 ul.highlights li + li {
@@ -34,7 +35,11 @@ ul.highlights li + li {
 }
 
 @media (max-width: 966px) {
-  .highlights {
+  ul.highlights {
     margin-top: 2rem;
+  }
+
+  .highlightIconWrapper {
+    width: calc(var(--feature-icon-size) / 1.5);
   }
 }
