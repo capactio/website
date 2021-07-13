@@ -1,5 +1,6 @@
 import React, { FunctionComponent } from "react";
 import { FullWidthSection } from "../layout/FullWidthSection";
+import { GetStartedTerminal } from "./GetStartedTerminal";
 import styles from "./GetStarted.module.css";
 import Link from "@docusaurus/Link";
 import clsx from "clsx";
@@ -31,16 +32,10 @@ const getStartedData = {
       additionalClassName: "button--outline",
     },
   ],
-  terminal: (
-    <>
-      {/* TODO: Replace it with interactive terminal in https://github.com/capactio/capact/issues/328 */}
-      <img src="/img/terminal.svg" />
-    </>
-  ),
 };
 
 export const GetStarted: FunctionComponent = () => {
-  const { title, body, buttons, terminal } = getStartedData;
+  const { title, body, buttons } = getStartedData;
   return (
     <FullWidthSection title="Get started">
       <div className="col col--6">
@@ -59,7 +54,7 @@ export const GetStarted: FunctionComponent = () => {
         </div>
       </div>
       <div className="col col--6">
-        <div className={styles.terminalWrapper}>{terminal}</div>
+        <div className={styles.terminalWrapper}><GetStartedTerminal /></div>
       </div>
     </FullWidthSection>
   );
