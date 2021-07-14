@@ -33,7 +33,7 @@ import TabItem from '@theme/TabItem';
 <TabItem value="macos">
 
 ```shell
-curl -Lo capact https://storage.googleapis.com/capactio-binaries/v0.3.0/capact-darwin-amd64
+curl -Lo capact https://github.com/capactio/capact/releases/download/v0.4.0/capact-darwin-amd64
 ```
 
 Copy to binary directory:
@@ -46,7 +46,7 @@ chmod +x capact && mv capact /usr/local/bin/capact
 <TabItem value="linux">
 
 ```shell
-curl -Lo capact https://storage.googleapis.com/capactio-binaries/v0.3.0/capact-linux-amd64
+curl -Lo capact https://github.com/capactio/capact/releases/download/v0.4.0/capact-linux-amd64
 ```
 
 Copy to binary directory:
@@ -59,7 +59,7 @@ chmod +x capact && mv capact /usr/local/bin/capact
 <TabItem value="windows">
 
 ```shell
-curl -Lo capact https://storage.googleapis.com/capactio-binaries/v0.3.0/capact-windows-amd64.exe
+curl -Lo capact https://github.com/capactio/capact/releases/download/v0.4.0/capact-windows-amd64.exe
 ```
 
 </TabItem>
@@ -79,7 +79,7 @@ docker run --rm \
 -e CAPACT_CREDENTIALS_STORE_BACKEND \
 -e CAPACT_CREDENTIALS_STORE_FILE_PASSPHRASE \
 -v $HOME/.config/capact:/.config/capact/ \
-ghcr.io/capactio/tools/capact-cli:v0.3.0 login $GATEWAY_URL -u $USERNAME -p $PASSWORD
+ghcr.io/capactio/tools/capact-cli:v0.4.0 login $GATEWAY_URL -u $USERNAME -p $PASSWORD
 ```
 
 </TabItem>
@@ -88,7 +88,7 @@ ghcr.io/capactio/tools/capact-cli:v0.3.0 login $GATEWAY_URL -u $USERNAME -p $PAS
 To install a different release version, change the path to point to the desired version and architecture:
 
 ```shell
-curl -Lo capact https://storage.googleapis.com/capactio-binaries/v0.3.0/capact-$OS-$ARCH
+curl -Lo capact https://github.com/capactio/capact/releases/download/v0.4.0/capact-$OS-$ARCH
 ```
 
 </TabItem>
@@ -113,7 +113,7 @@ Install Capact CLI binary with `curl`:
 <TabItem value="macos">
 
 ```shell
-curl -Lo capact https://storage.googleapis.com/capactio-binaries/latest/capact-darwin-amd64
+curl -Lo capact https://github.com/capactio/capact/releases/download/latest/capact-darwin-amd64
 ```
 
 Copy to binary directory:
@@ -126,7 +126,7 @@ chmod +x capact && mv capact /usr/local/bin/capact
 <TabItem value="linux">
 
 ```shell
-curl -Lo capact https://storage.googleapis.com/capactio-binaries/latest/capact-linux-amd64
+curl -Lo capact https://github.com/capactio/capact/releases/download/latest/capact-linux-amd64
 ```
 
 
@@ -140,7 +140,7 @@ chmod +x capact && mv capact /usr/local/bin/capact
 <TabItem value="windows">
 
 ```shell
-curl -Lo capact https://storage.googleapis.com/capactio-binaries/latest/capact-windows-amd64.exe
+curl -Lo capact https://github.com/capactio/capact/releases/download/latest/capact-windows-amd64.exe
 ```
 
 </TabItem>
@@ -168,7 +168,7 @@ docker run --rm \
 To install a different release version, change the path to point to the desired version and architecture:
 
 ```shell
-curl -Lo capact https://storage.googleapis.com/capactio-binaries/latest/capact-$OS-$ARCH
+curl -Lo capact https://github.com/capactio/capact/releases/download/latest/capact-$OS-$ARCH
 ```
 
 </TabItem>

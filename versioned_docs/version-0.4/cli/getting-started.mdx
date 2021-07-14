@@ -1,0 +1,274 @@
+---
+sidebar_position: 1
+---
+
+# Getting Started
+
+In addition to a Capact GraphQL API, Capact features a command-line interface that wraps common functionality and formats output. The Capact CLI is a single static binary. It is a wrapper around the Capact GraphQL API and Kubernetes API.
+
+## Install
+
+Capact has two types of release channels: **Stable** and **Latest**:
+
+- The **Stable** channel contains binaries produced for the [Capact releases](https://github.com/capactio/capact/releases).
+- The **Latest** channel contains binaries built from the latest commit on the [Capact repository `main` branch](https://github.com/capactio/capact/commits/main).
+
+### Stable - from the latest release
+
+Install Capact CLI binary with `curl`:
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+<Tabs
+	groupId="operating-systems"
+	defaultValue="macos"
+	values={[
+		{label: 'MacOS', value: 'macos'},
+		{label: 'Linux', value: 'linux'},
+		{label: 'Windows', value: 'windows'},
+		{label: 'Docker', value: 'docker'},
+		{label: 'Other', value: 'other'},
+	]}>
+<TabItem value="macos">
+
+```shell
+curl -Lo capact https://storage.googleapis.com/capactio-binaries/v0.3.0/capact-darwin-amd64
+```
+
+Copy to binary directory:
+
+```shell
+chmod +x capact && mv capact /usr/local/bin/capact
+```
+
+</TabItem>
+<TabItem value="linux">
+
+```shell
+curl -Lo capact https://storage.googleapis.com/capactio-binaries/v0.3.0/capact-linux-amd64
+```
+
+Copy to binary directory:
+
+```shell
+chmod +x capact && mv capact /usr/local/bin/capact
+```
+
+</TabItem>
+<TabItem value="windows">
+
+```shell
+curl -Lo capact https://storage.googleapis.com/capactio-binaries/v0.3.0/capact-windows-amd64.exe
+```
+
+</TabItem>
+<TabItem value="docker">
+
+```shell
+# Export credential store configuration:
+export CAPACT_CREDENTIALS_STORE_BACKEND=file
+export CAPACT_CREDENTIALS_STORE_FILE_PASSPHRASE=pass
+
+# Export variables to log in to Gateway
+export GATEWAY_URL=https://gateway.{domain}
+export USERNAME={username}
+export PASSWORD={password}
+
+docker run --rm \
+-e CAPACT_CREDENTIALS_STORE_BACKEND \
+-e CAPACT_CREDENTIALS_STORE_FILE_PASSPHRASE \
+-v $HOME/.config/capact:/.config/capact/ \
+ghcr.io/capactio/tools/capact-cli:v0.3.0 login $GATEWAY_URL -u $USERNAME -p $PASSWORD
+```
+
+</TabItem>
+<TabItem value="other">
+
+To install a different release version, change the path to point to the desired version and architecture:
+
+```shell
+curl -Lo capact https://storage.googleapis.com/capactio-binaries/v0.3.0/capact-$OS-$ARCH
+```
+
+</TabItem>
+</Tabs>
+
+Run `capact -h` or `capact <command> -h` to see the help output which corresponds to a given command.
+
+### Latest - from the latest `main` commit
+
+Install Capact CLI binary with `curl`:
+
+<Tabs
+	groupId="operating-systems"
+	defaultValue="macos"
+	values={[
+		{label: 'MacOS', value: 'macos'},
+		{label: 'Linux', value: 'linux'},
+		{label: 'Windows', value: 'windows'},
+		{label: 'Docker', value: 'docker'},
+		{label: 'Other', value: 'other'},
+	]}>
+<TabItem value="macos">
+
+```shell
+curl -Lo capact https://storage.googleapis.com/capactio-binaries/latest/capact-darwin-amd64
+```
+
+Copy to binary directory:
+
+```shell
+chmod +x capact && mv capact /usr/local/bin/capact
+```
+
+</TabItem>
+<TabItem value="linux">
+
+```shell
+curl -Lo capact https://storage.googleapis.com/capactio-binaries/latest/capact-linux-amd64
+```
+
+
+Copy to binary directory:
+
+```shell
+chmod +x capact && mv capact /usr/local/bin/capact
+```
+
+</TabItem>
+<TabItem value="windows">
+
+```shell
+curl -Lo capact https://storage.googleapis.com/capactio-binaries/latest/capact-windows-amd64.exe
+```
+
+</TabItem>
+<TabItem value="docker">
+
+```shell
+# Export credential store configuration:
+export CAPACT_CREDENTIALS_STORE_BACKEND=file
+export CAPACT_CREDENTIALS_STORE_FILE_PASSPHRASE=pass
+
+# Export variables to log in to Gateway
+export GATEWAY_URL=https://gateway.{domain}
+export USERNAME={username}
+export PASSWORD={password}
+
+docker run --rm \
+	-e CAPACT_CREDENTIALS_STORE_BACKEND \
+	-e CAPACT_CREDENTIALS_STORE_FILE_PASSPHRASE \
+	-v $HOME/.config/capact:/.config/capact/ \
+	ghcr.io/capactio/tools/capact-cli:latest login $GATEWAY_URL -u $USERNAME -p $PASSWORD
+```
+
+</TabItem>
+<TabItem value="other">
+To install a different release version, change the path to point to the desired version and architecture:
+
+```shell
+curl -Lo capact https://storage.googleapis.com/capactio-binaries/latest/capact-$OS-$ARCH
+```
+
+</TabItem>
+</Tabs>
+
+Run `capact -h` or `capact <command> -h` to see the help output which corresponds to a given command.
+
+## First use
+
+> **NOTE**: This section requires acess to an existing Capact installation. To learn how to install Capact, see the [Installation](../installation/local.md) guides.
+
+To begin working with Capact using the `capact` CLI, start with log in interactively into a given cluster:
+
+```shell
+# start interactive setup
+capact login
+```
+
+If you do not know the authorization details, you can obtain them from the cluster where Capact was installed:
+```bash
+export CAPACT_GATEWAY_HOST=$(kubectl -n capact-system get ingress capact-gateway -ojsonpath='{.spec.rules[0].host}')
+export CAPACT_GATEWAY_USERNAME=$(kubectl -n capact-system get secret capact-gateway -ogo-template='{{.data.username | base64decode }}')
+export CAPACT_GATEWAY_PASSWORD=$(kubectl -n capact-system get secret capact-gateway -ogo-template='{{.data.password | base64decode}}')
+
+# provide all information from command line
+capact login "$CAPACT_GATEWAY_HOST" -u "$CAPACT_GATEWAY_USERNAME" -p "$CAPACT_GATEWAY_PASSWORD"
+```
+
+If URL and credentials are valid, the output is:
+
+```shell
+Login Succeeded
+```
+
+Now you are ready to interact with the cluster via CLI. For example, fetch all available Interfaces:
+
+```shell
+capact hub interfaces get
+```
+
+> **NOTE:** The `capact action watch` command calls the Kubernetes API directly. If you want to use this command, kubeconfig has to be configured with the same cluster as the one which the Gateway points to.
+
+### Log into multiple servers
+
+> **NOTE:** We do not support setting kubeconfig per server. You need to manage it manually by changing the kubeconfig context, for example via `kubectl`.
+
+You can log into multiple clusters. To check in which cluster you already logged in, run:
+
+```shell
+capact config get-contexts
+```
+
+Example output:
+
+```shell
+                      SERVER                       AUTH TYPE    DEFAULT
++------------------------------------------------+------------+---------+
+  https://gateway.capact.local                     Basic Auth   YES
+  https://gateway.capact.io                        Basic Auth   NO
+```
+
+To change the default context, run:
+
+```shell
+# Selects which Hub server to use of via a prompt
+capact config set-context
+```
+
+If you want to log out, run:
+
+```shell
+# Select what server to log out of via a prompt
+capact logout
+```
+
+## Autocompletion
+
+To learn how to enable `capact` autocompletion, run:
+
+```shell
+capact completion -h
+```
+
+> **NOTE:** Be sure to **restart your shell** after installing autocompletion.
+
+When you start typing a `capact` command, press the `<tab>` character to show a list of available completions. Type `-<tab>` to show available flag completions.
+
+## Credential store options
+
+The `capact login` uses [keyring](https://github.com/99designs/keyring) library to store credentials securely. The supported store backends are:
+
+* [macOS Keychain](https://support.apple.com/en-au/guide/keychain-access/welcome/mac)
+* [Windows Credential Manager](https://support.microsoft.com/en-au/help/4026814/windows-accessing-credential-manager)
+* Secret Service ([Gnome Keyring](https://wiki.gnome.org/Projects/GnomeKeyring), [KWallet](https://kde.org/applications/system/org.kde.kwalletmanager5))
+* [KWallet](https://kde.org/applications/system/org.kde.kwalletmanager5)
+* [Pass](https://www.passwordstore.org/)
+* Encrypted file
+
+Use the `CAPACT_CREDENTIALS_STORE_BACKEND` environment variable to change the default backend.
+
+## Next steps
+
+✨ After setting up Capact CLI, you are ready to start a journey with the Capact project. Check out our [Mattermost installation example](../example/mattermost-installation.md) to learn how to use Capact CLI to provision an example application.
