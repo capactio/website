@@ -5,33 +5,28 @@ import Terminal from 'react-animated-term';
 
 
 const spinner = ['⠋', '⠙', '⠹', '⠸', '⠼', '⠴', '⠦', '⠧', '⠇', '⠏'];
-const cmdStep = (title) => {
-  return {
-    text: title,
-    cmd: true,
-    delay: 10
-  }
-}
-const spinningStep = (title, repeatCount = 0) => {
-  return {
-    text: `✔ ${title}`,
-    cmd: false,
-    repeat: repeatCount > 0,
-    repeatCount: repeatCount,
-    frames: spinner.map(function (spinnerItem) {
-      return {
-        text: `${spinnerItem} ${title}`,
-        delay: 10
-      }
-    })
-  }
-}
+const cmdStep = (title:string) => ({
+  text: title,
+  cmd: true,
+  delay: 10
+})
+
+const spinningStep = (title:string, repeatCount = 0, frameDelay = 10) => ({
+  text: `✔ ${title}`,
+  cmd: false,
+  repeat: repeatCount > 0,
+  repeatCount: repeatCount,
+  frames: spinner.map((spinnerItem) => ({
+    text: `${spinnerItem} ${title}...`,
+    delay: frameDelay
+  }))
+})
 
 const termLines = [
   cmdStep("capact env create kind"),
-  spinningStep("Creating cluster `kind-dev-capact`..."),
+  spinningStep("Creating cluster `kind-dev-capact`"),
   cmdStep("capact install"),
-  spinningStep("Installing Capact on cluster...", 2),
+  spinningStep("Installing Capact on cluster"),
   cmdStep("capact login https://gateway.capact.local -u user -p pass"),
   {
     text: '✔ Login succeeded',
