@@ -5,13 +5,13 @@ import Terminal from 'react-animated-term';
 
 
 const spinner = ['⠋', '⠙', '⠹', '⠸', '⠼', '⠴', '⠦', '⠧', '⠇', '⠏'];
-const cmdStep = (title:string) => ({
+const cmdStep = (title: string) => ({
   text: title,
   cmd: true,
   delay: 10
 })
 
-const spinningStep = (title:string, repeatCount = 0, frameDelay = 10) => ({
+const spinningStep = (title: string, repeatCount = 0, frameDelay = 10) => ({
   text: `✔ ${title}`,
   cmd: false,
   repeat: repeatCount > 0,
@@ -36,7 +36,6 @@ const termLines = [
 ]
 
 export const GetStartedTerminal: FunctionComponent = () => {
-  console.log(termLines);
   return (
     <Terminal
       lines={termLines}
