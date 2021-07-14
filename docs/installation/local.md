@@ -44,4 +44,4 @@ To remove your local Kubernetes cluster created in the [Create local Kubernetes 
 capact environment delete kind
 ```
 
-> **NOTE:** This command deletes the local cluster with all data, including your run ran Actions history and Local Hub with stored TypeInstances. Make sure you cleaned up all external resources (e.g. managed PostgreSQL databases) based on the TypeInstance data.
+> **NOTE:** This command deletes the local cluster with all data, including history of executed Actions and created TypeInstances. Make sure you cleaned up all external resources (e.g. managed PostgreSQL databases) based on the TypeInstance data.

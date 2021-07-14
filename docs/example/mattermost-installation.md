@@ -105,7 +105,7 @@ As a result, all external solutions, such as Cloud SQL, have a lower priority, a
     capact action create -n $NAMESPACE --name mattermost-install cap.interface.productivity.mattermost.install --parameters-from-file /tmp/mattermost-install.yaml
     ```
 
-2. Get the status of the Action from the previous step:
+1. Get the status of the Action from the previous step:
 
     ```bash
     capact action get -n $NAMESPACE mattermost-install
@@ -119,7 +119,7 @@ As a result, all external solutions, such as Cloud SQL, have a lower priority, a
 
     In the `STATUS` column you can see the current status of the Action. When the Action workflow is being rendered by the Engine, you will see the `BEING_RENDERED` status. After the Action finished rendering and the status is `READY_TO_RUN`, you can go to the next step.
 
-3. Run the rendered Action:
+1. Run the rendered Action:
 
     After the Action is in `READY_TO_RUN` status, you can run it. To do this, execute the following command:
 
@@ -127,26 +127,26 @@ As a result, all external solutions, such as Cloud SQL, have a lower priority, a
     capact action run -n $NAMESPACE mattermost-install
     ```
 
-4. Check the Action execution and wait till it is finished:
+1. Check the Action execution and wait till it is finished:
     
     ```bash
     capact action watch -n $NAMESPACE mattermost-install
     ```
 
-5. Get the ID of the `cap.type.productivity.mattermost.config` TypeInstance:
+1. Get the ID of the `cap.type.productivity.mattermost.config` TypeInstance:
     
     ```bash
     capact action get -n $NAMESPACE mattermost-install -ojson | jq -r '.Actions[].output.typeInstances | map(select(.typeRef.path == "cap.type.productivity.mattermost.config"))'
     ```
 
-6. Get the TypeInstance value: 
+1. Get the TypeInstance value: 
 
     Use the ID from the previous step and fetch the TypeInstance value:
     ```bash
     capact typeinstance get {type-instance-id} -ojson | jq -r '.[0].latestResourceVersion.spec.value'
     ```
 
-7. Open the Mattermost console using the **host** from the TypeInstance value, you got in the previous step.
+1. Open the Mattermost console using the **host** from the TypeInstance value, you got in the previous step.
 
     ![mattermost-website](./assets/mattermost-website.png)
 
