@@ -6,9 +6,8 @@
 module.exports = () => {
   const redirects = [
     ...generateDocsRedirectsForVersion(""), // latest version
-    // TODO: Uncomment on 0.4.0 release:
-    // ...generateDocsRedirectsForVersion("next"), // unreleased version
-    // ...generateDocsRedirectsForVersion("0.4", true), // redirect from 0.4 to latest
+    ...generateDocsRedirectsForVersion("next"), // unreleased version
+    ...generateDocsRedirectsForVersion("0.4", true), // redirect from 0.4 to latest
   ];
 
   return redirects;
