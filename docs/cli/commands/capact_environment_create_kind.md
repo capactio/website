@@ -1,0 +1,1 @@
+Placeholder - it will be replaced when we synchronize CLI docs
