@@ -24,12 +24,12 @@ module.exports = {
       defaultMode: "light",
       respectPrefersColorScheme: true,
     },
-    algolia: {
-      // TODO: Once we publish capact.io website, request API key from Algolia
-      apiKey: "YOUR_API_KEY",
-      indexName: "YOUR_INDEX_NAME",
-      contextualSearch: true,
-    },
+    // TODO: Uncomment once we have Algolia DocSearch index and API key
+    // algolia: {
+    //   apiKey: "YOUR_API_KEY",
+    //   indexName: "YOUR_INDEX_NAME",
+    //   contextualSearch: true,
+    // },
     navbar: {
       title: "Capact",
       logo: {
