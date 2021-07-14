@@ -1,0 +1,35 @@
+.Terminal-console,
+.Terminal-code {
+  font-size: 1rem;
+  line-height: 1.5rem;
+  font-family: var(--ifm-font-family-monospace);
+}
+
+.Terminal-term {
+  height: 280px;
+}
+
+@media (max-width: 996px) {
+  .Terminal-term {
+    height: 400px;
+  }
+}
+
+.Terminal-control-btn {
+  font-family: var(--ifm-font-family-base);
+  border: 0;
+  padding: 0 5px;
+  font-size: 0.8rem;
+  font-weight: bold;
+  transition: color var(--ifm-transition-fast)
+    var(--ifm-transition-timing-default);
+}
+
+.Terminal-code .Terminal-prompt,
+.Terminal-control-btn:hover {
+  color: var(--capact-orange-lighter);
+}
+
+.Terminal-cursor {
+  background: var(--capact-orange-lighter);
+}
