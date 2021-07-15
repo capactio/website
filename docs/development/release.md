@@ -9,14 +9,8 @@ This document describes Capact release process. Currently, it consists of a set 
 * [Go](https://golang.org/dl/) at least 1.16
 * [Docker](https://www.docker.com/)
 * [UPX](https://github.com/upx/upx/releases) tool installed
-* [GoReleaser](https://goreleaser.com/install/) CLI installed
+* [GoReleaser](https://goreleaser.com/install/) CLI installed at least v0.173.2
   
-  > **NOTE**: Use the commit SHA, as we use the `no_unique_dist_dir` feature, which was not yet released.
-  
-  ```bash
-  go install github.com/goreleaser/goreleaser@b53dbb89d02aa3673782f3d063d7d5039446baac
-  ```
-
 ## Steps
 
 ### Export environmental variables
@@ -43,7 +37,7 @@ export RELEASE_MAJOR_MINOR=0.3
 export RELEASE_BRANCH=release-${RELEASE_MAJOR_MINOR_VERSION}
 ```
 
-### Create a pre-release pull request
+### Prepare Capact for release
 
 1. Checkout the destination branch for the pull request.
 
@@ -99,8 +93,73 @@ export RELEASE_BRANCH=release-${RELEASE_MAJOR_MINOR_VERSION}
    - As the pull request target branch, pick the proper destination branch from the first step of this section.
     
 1. Merge the pull request.
+
+### Prepare Hub for release 
+
+1. Checkout the [hub-manifests](https://github.com/capactio/hub-manifests) repository destination branch for the pull request.
+
+    - For major and minor release versions, set the destination branch to `main`. 
+    - For patch releases, set the destination to corresponding release branch. For example, for `0.3.1` release, checkout the `release-0.3` branch.
+
+    ```bash
+    git checkout {destination-branch}
+    ```
+
+1. Create and checkout new branch:
     
-### Create release branch
+   ```bash
+   git checkout -b prepare-${RELEASE_VERSION}
+   ```   
+
+1. Replace all Runners images in [`manifests/implementation/runner`](https://github.com/capactio/hub-manifests/tree/main/manifests/implementation/runner) to release versions.
+   
+1. Review and commit the changes:
+
+   ```bash
+   git add .
+   git commit -m "Update Runners images to release versions"
+   ```
+    
+1. Create the pull request from the branch.
+   
+   - In the pull request description, write the GitHub release notes that will be posted with the release to review.
+   - As the pull request target branch, pick the proper destination branch from the first step of this section.
+    
+1. Merge the pull request.
+
+#### Create release branch
+
+If you release major or minor version, create a dedicated release branch.
+
+1. Checkout the destination branch and pull the latest changes:
+
+    ```bash
+    git checkout {destination_branch}
+    git pull
+    ```
+
+1. Create a new branch:
+   
+    ```bash
+    git checkout -b ${RELEASE_BRANCH}
+    ```
+
+1. Create new tag and push it and release branch to upstream:
+
+    > **NOTE**: Git tag is in a form of SemVer version with `v` prefix, such as `v0.3.0`.
+   
+    ```bash
+    git tag v${RELEASE_VERSION} HEAD
+    ```
+   
+1. Push the release branch with tag to upstream:
+
+   ```bash
+   git push -u upstream ${RELEASE_BRANCH}
+   git push upstream v${RELEASE_VERSION}
+   ```
+
+### Create Capact release branch
 
 If you release major or minor version, create a dedicated release branch.
 
@@ -154,7 +213,7 @@ If you release major or minor version, create a dedicated release branch.
 
 ### Create new git tag and publish binaries
 
-1. Create new tag and push it and release branch to origin:
+1. Create new tag and push it and release branch to upstream:
 
     > **NOTE**: Git tag is in a form of SemVer version with `v` prefix, such as `v0.3.0`.
    
@@ -162,11 +221,11 @@ If you release major or minor version, create a dedicated release branch.
     git tag v${RELEASE_VERSION} HEAD
     ```
    
-1. Review the changes you've made and push the release branch with tag to origin:
+1. Review the changes you've made and push the release branch with tag to upstream:
 
    ```bash
-   git push -u origin ${RELEASE_BRANCH}
-   git push origin v${RELEASE_VERSION}
+   git push -u upstream ${RELEASE_BRANCH}
+   git push upstream v${RELEASE_VERSION}
    ```
 
 1. Release tools binaries:
@@ -188,7 +247,9 @@ If you release major or minor version, create a dedicated release branch.
 If you release a new major or minor Capact version, follow these steps:
 
 1. Clone the [`website`](https://github.com/capactio/website) repository locally.
+
 1. Follow instructions from the [`README.md`](https://github.com/capactio/website/blob/main/README.md) document to fulfill all prerequisites.
+
 1. Create and checkout new branch:
     
    ```bash
@@ -196,6 +257,7 @@ If you release a new major or minor Capact version, follow these steps:
    ```
 
 1. Synchronize Capact CLI documentation according to the [Synchronize CLI documentation](https://github.com/capactio/website/blob/main/README.md#synchronize-cli-documentation) section.
+
 1. Run the following command:
     
     ```bash
@@ -233,6 +295,7 @@ If you release a new major or minor Capact version, follow these steps:
     ```
 
 1. Create a new pull request for the `website` repository.
+
 1. Merge the pull request.
 
 To read more about documentation versioning, see the [Versioning](https://docusaurus.io/docs/versioning) page on the Docusaurus website.
