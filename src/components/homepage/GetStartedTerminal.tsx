@@ -3,35 +3,19 @@ import 'react-animated-term/dist/react-animated-term.css';
 import "./GetStartedTerminal.overrides.css";
 import Terminal from 'react-animated-term';
 
-
-const spinner = ['⠋', '⠙', '⠹', '⠸', '⠼', '⠴', '⠦', '⠧', '⠇', '⠏'];
 const cmdStep = (title: string) => ({
   text: title,
   cmd: true,
   delay: 10
 })
 
-const spinningStep = (title: string, repeatCount = 0, frameDelay = 10) => ({
-  text: `✔ ${title}`,
-  cmd: false,
-  repeat: repeatCount > 0,
-  repeatCount: repeatCount,
-  frames: spinner.map((spinnerItem) => ({
-    text: `${spinnerItem} ${title}...`,
-    delay: frameDelay
-  }))
-})
-
 const termLines = [
+  cmdStep("# Create local kind cluster"),
   cmdStep("capact env create kind"),
-  spinningStep("Creating cluster `kind-dev-capact`"),
+  cmdStep("# Install Capact"),
   cmdStep("capact install"),
-  spinningStep("Installing Capact on cluster"),
+  cmdStep("# Log in to the Capact Gateway"),
   cmdStep("capact login https://gateway.capact.local -u user -p pass"),
-  {
-    text: '✔ Login succeeded',
-    delay: 10
-  },
   cmdStep("# You're all set! Enjoy using Capact!"),
 ]
 
@@ -39,7 +23,7 @@ export const GetStartedTerminal: FunctionComponent = () => {
   return (
     <Terminal
       lines={termLines}
-      interval={80}
+      interval={50}
     />
   )
 }

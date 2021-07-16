@@ -30,6 +30,10 @@
   color: var(--capact-orange-lighter);
 }
 
+.Terminal-prompt {
+  user-select: none;
+}
+
 .Terminal-cursor {
   background: var(--capact-orange-lighter);
 }
