@@ -122,7 +122,6 @@ export RELEASE_BRANCH=release-${RELEASE_MAJOR_MINOR_VERSION}
     
 1. Create the pull request from the branch.
    
-   - In the pull request description, write the GitHub release notes that will be posted with the release to review.
    - As the pull request target branch, pick the proper destination branch from the first step of this section.
     
 1. Merge the pull request.
@@ -144,14 +143,6 @@ If you release major or minor version, create a dedicated release branch.
     git checkout -b ${RELEASE_BRANCH}
     ```
 
-1. Create new tag and push it and release branch to upstream:
-
-    > **NOTE**: Git tag is in a form of SemVer version with `v` prefix, such as `v0.3.0`.
-   
-    ```bash
-    git tag v${RELEASE_VERSION} HEAD
-    ```
-   
 1. Push the release branch with tag to upstream:
 
    ```bash
