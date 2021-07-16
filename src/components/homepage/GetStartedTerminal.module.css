@@ -1,0 +1,21 @@
+.terminal {
+  width: 100%;
+  font-family: "Fira Code", Consolas, Menlo, Monaco, "Courier New", Courier,
+    monospace;
+  font-size: 1rem;
+  padding: 60px 30px 30px;
+  border: 1px solid var(--capact-gray-dark);
+}
+
+.lineDimmed {
+  color: var(--color-text-subtle);
+}
+
+[data-ty="input"]::before {
+  color: var(--capact-orange-lighter);
+  vertical-align: baseline;
+}
+
+[data-ty] {
+  line-height: 2rem;
+}
