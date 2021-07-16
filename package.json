@@ -25,7 +25,6 @@
     "clsx": "^1.1.1",
     "file-loader": "^6.2.0",
     "react": "^17.0.1",
-    "react-animated-term": "^2.0.0",
     "react-dom": "^17.0.1",
     "url-loader": "^4.1.1"
   },
