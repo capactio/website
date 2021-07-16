@@ -19,11 +19,11 @@ const terminalData = [
     text: "capact install",
   },
   {
-    text: "# Log in to the Capact Gateway",
+    text: "# Log in interactively to the Capact Gateway",
     dimmed: true,
   },
   {
-    text: "capact login https://gateway.capact.local -u user -p pass"
+    text: "capact login https://gateway.capact.local"
   },
   {
     text: "# You're all set! Enjoy using Capact!",

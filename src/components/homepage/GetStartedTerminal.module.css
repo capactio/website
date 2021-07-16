@@ -2,7 +2,7 @@
   width: 100%;
   font-family: "Fira Code", Consolas, Menlo, Monaco, "Courier New", Courier,
     monospace;
-  font-size: 0.95rem;
+  font-size: 1rem;
   padding: 60px 30px 30px;
   border: 1px solid var(--capact-gray-dark);
 }
