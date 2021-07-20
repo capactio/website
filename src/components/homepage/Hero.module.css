@@ -38,17 +38,26 @@
   justify-content: left;
 }
 
-.iconButton:before {
-  width: 36px;
-  height: 36px;
-  content: "";
-  display: flex;
-}
-
-.iconButton:hover {
-  opacity: 0.7;
-}
-
-.iconButton + .iconButton {
+.buttons a + a {
   margin-left: 15px;
+}
+
+.buttonDark:global(.button--outline) {
+--ifm-button-color: var(--capact-black);
+--ifm-button-border-color: var(--capact-black);
+}
+
+.buttonDark:global(.button--outline):hover {
+  background-color: var(--capact-black);
+  --ifm-button-color: var(--capact-white);
+}
+
+.buttonDark:global(.button--primary:not(.button--outline)) {
+  --ifm-button-background-color: var(--capact-black);
+  --ifm-button-border-color: var(--capact-black);
+  --ifm-button-color: var(--capact-white);
+}
+
+.buttonDark:global(.button--primary:not(.button--outline)):hover {
+  --ifm-button-border-color: var(--capact-orange-dark);
 }
