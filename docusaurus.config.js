@@ -37,11 +37,6 @@ module.exports = {
       },
       items: [
         {
-          label: "Get started",
-          to: "/docs/installation/local",
-          position: "left",
-        },
-        {
           type: "doc",
           docId: "introduction",
           position: "left",
