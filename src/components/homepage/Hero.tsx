@@ -20,14 +20,14 @@ const heroData = {
   illustrationSrc: "/img/logo.svg", // TODO: Replace with target illustration
   buttons: [
     {
-      label: "GitHub",
-      additionalClassName: "github-icon",
-      url: "https://github.com/capactio/capact",
+      label: "Get started",
+      additionalClassName: "button--primary",
+      url: "/docs/installation/local",
     },
     {
-      label: "Slack",
-      additionalClassName: "slack-icon",
-      url: "/slack",
+      label: "GitHub",
+      additionalClassName: "button--outline",
+      url: "https://github.com/capactio/capact",
     },
   ],
 };
@@ -53,10 +53,10 @@ const IconButton: FunctionComponent<IconButtonProps> = ({
   additionalClassName,
 }) => (
   <Link
-    className={clsx(styles.iconButton, additionalClassName)}
+    className={clsx("button button--lg", styles.buttonDark, additionalClassName)}
     aria-label={label}
     to={url}
-  ></Link>
+  >{label}</Link>
 );
 
 export const Hero: FunctionComponent = () => {
