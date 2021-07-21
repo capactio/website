@@ -15,23 +15,6 @@
   max-height: 300px;
 }
 
-@media (max-width: 966px) {
-  .heroBanner {
-    padding: 4rem 1rem;
-  }
-
-  .illustration {
-    margin-bottom: 2rem;
-    max-height: 200px;
-  }
-}
-
-@media (max-width: 350px) {
-  .heroBanner {
-    padding: 3rem 0rem;
-  }
-}
-
 .buttons {
   display: flex;
   align-items: left;
@@ -42,9 +25,39 @@
   margin-left: 15px;
 }
 
+@media (max-width: 966px) {
+  .heroBanner {
+    padding: 4rem 1rem;
+  }
+
+  .illustration {
+    margin-bottom: 2rem;
+    max-height: 200px;
+  }
+
+  .buttons {
+    display: block;
+  }
+
+  .buttons a {
+    display: block;
+    width: 100%;
+  }
+
+  .buttons a + a {
+    margin: 1rem 0 0;
+  }
+}
+
+@media (max-width: 350px) {
+  .heroBanner {
+    padding: 3rem 0rem;
+  }
+}
+
 .buttonDark:global(.button--outline) {
---ifm-button-color: var(--capact-black);
---ifm-button-border-color: var(--capact-black);
+  --ifm-button-color: var(--capact-black);
+  --ifm-button-border-color: var(--capact-black);
 }
 
 .buttonDark:global(.button--outline):hover {

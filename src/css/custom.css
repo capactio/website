@@ -66,6 +66,9 @@ h5 {
 
   --ifm-button-background-color: var(--capact-orange-light);
   --ifm-button-border-color: var(--capact-orange-light);
+
+  --ifm-global-radius: 4px;
+  --ifm-button-border-radius: calc(var(--ifm-global-radius) * 1.5);
 }
 
 /* Variables for dark mode */
