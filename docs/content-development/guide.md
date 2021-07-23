@@ -115,18 +115,10 @@ spec:
   input:
     parameters: # the Interface requires `input-parameters` of Type "cap.type.productivity.mattermost.install-input"
       input-parameters: 
-        jsonSchema:
-          value: |-
-            {
-              "$schema": "http://json-schema.org/draft-07/schema",
-              "$ocfRefs": {
-                "inputType": {
-                  "name": "cap.type.productivity.mattermost.install-input",
-                  "revision": "0.1.0"
-                }
-              },
-              "allOf": [ { "$ref": "#/$ocfRefs/inputType" } ]
-            }
+        typeRef:
+          name: cap.type.productivity.mattermost.install-input
+          revision: 0.1.0
+
   output:
     typeInstances: # the Interface outputs TypeInstance of Type "cap.type.productivity.mattermost.config"
       mattermost-config: 
@@ -177,15 +169,16 @@ spec:
         "required": [
             "host"
         ],
-        "$ocfRefs": {
+        "definitions": {
           "hostname": {
-            "name": "cap.core.type.networking.hostname",
-            "revision": "0.1.0"
+            "type": "string",
+            "format": "hostname",
+            "title": "Hostname"
           }
         },
         "properties": {
           "host": {
-            "$ref": "#/$ocfRefs/hostname"
+            "$ref": "#/definitions/hostname"
           }
         },
         "additionalProperties": true
@@ -223,22 +216,29 @@ spec:
         "required": [
             "version"
         ],
-        "$ocfRefs": {
+        "definitions": {
           "semVer": {
-            "name": "cap.core.type.versioning.semver",
-            "revision": "0.1.0"
+            "type": "string",
+            "minLength": 5,
+            "pattern": "^(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)(?:-((?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*)(?:\.(?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*))*))?(?:\+([0-9a-zA-Z-]+(?:\.[0-9a-zA-Z-]+)*))?$",
+            "title": "Semantic Versioning version",
+            "examples": [
+                "1.19.0"
+                "2.0.1-alpha1"
+            ]
           }
           "hostname": {
-            "name": "cap.core.type.networking.hostname",
-            "revision": "0.1.0"
+            "type": "string",
+            "format": "hostname",
+            "title": "Hostname"
           }
         },
         "properties": {
           "version": {
-            "$ref": "#/$ocfRefs/semVer"
+            "$ref": "#/definitions/semVer"
           }
           "host": {
-            "$ref": "#/$ocfRefs/hostname"
+            "$ref": "#/definitions/hostname"
           }
         },
         "additionalProperties": true
@@ -810,18 +810,10 @@ spec:
         verbs: ["get", "update"]  # you need to add "update" verb when you want to update this TypeInstance
     parameters:
       input-parameters:
-        jsonSchema:
-          value: |-
-            {
-              "$schema": "http://json-schema.org/draft-07/schema",
-              "$ocfRefs": {
-                "inputType": {
-                  "name": "cap.type.database.postgresql.change-password-input",
-                  "revision": "0.1.0"
-                }
-              },
-              "allOf": [ { "$ref": "#/$ocfRefs/inputType" } ]
-            }
+        typeRef:
+          name: cap.type.database.postgresql.change-password-input
+          revision: 0.1.0
+
   output:
     typeInstances:
       user: # return modified TypeInstance to allow creating parent workflows which use updated values
