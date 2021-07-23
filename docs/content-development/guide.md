@@ -81,13 +81,8 @@ metadata:
     - email: your.email@example.com
       name: your-name
       url: your-website
-
-signature:
-  hub: eyJ0eXAiOiJKV1QiLA0KICJhbGciOiJIUzI1NiJ9
 ```
 </details>
-
-> The `signature` field is required, but currently we haven't yet implemented a signing mechanism, so you can put a dummy value there.
 
 ### Create the Interface manifest
 
@@ -138,9 +133,6 @@ spec:
         typeRef:
           path: cap.type.productivity.mattermost.config
           revision: 0.1.0
-
-signature:
-  hub: eyJ0eXAiOiJKV1QiLA0KICJhbGciOiJIUzI1NiJ9
 ```
 </details>
 
@@ -198,9 +190,6 @@ spec:
         },
         "additionalProperties": true
       }
-
-signature:
-  hub: eyJ0eXAiOiJKV1QiLA0KICJhbGciOiJIUzI1NiJ9
 ```
 </details>
 
@@ -254,9 +243,6 @@ spec:
         },
         "additionalProperties": true
       }
-
-signature:
-  hub: eyJ0eXAiOiJKV1QiLA0KICJhbGciOiJIUzI1NiJ9
 ```
 </details>
 
@@ -524,9 +510,6 @@ spec:
                         from: "{{steps.fill-db.outputs.artifacts.render}}"
                       - name: runner-context
                         from: "{{workflow.outputs.artifacts.runner-context}}"
-
-signature:
-  hub: eyJ0eXAiOiJKV1QiLA0KICJhbGciOiJIUzI1NiJ9
 ```
 </details>
 
@@ -781,9 +764,6 @@ spec:
         },
         "additionalProperties": false
       }
-
-signature:
-  hub: eyJ0eXAiOiJKV1QiLA0KICJhbGciOiJIUzI1NiJ9
 ```
 </details>
 
@@ -848,9 +828,6 @@ spec:
         typeRef:
           path: cap.type.database.postgresql.user
           revision: 0.1.0
-
-signature:
-  hub: eyJ0eXAiOiJKV1QiLA0KICJhbGciOiJIUzI1NiJ9
 ```
 </details>
 
@@ -992,9 +969,6 @@ spec:
               artifacts:
                 - name: user
                   path: /user.yml
-
-signature:
-  hub: eyJ0eXAiOiJKV1QiLA0KICJhbGciOiJIUzI1NiJ9
 ```
 </details>
 
