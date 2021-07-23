@@ -27,11 +27,14 @@ If you use AWS SSO on your account, then you can also configure SSO for AWS CLI 
   export CAPACT_NAME={name_of_the_environment}
   export CAPACT_REGION={aws_region_in_which_to_deploy_capact}
   export CAPACT_DOMAIN_NAME={domain_name_used_for_the_capact_environment}
-  export CAPACT_DOCKER_TAG={capact_version_to_install}
   export TERRAFORM_STATE_BUCKET={s3_bucket_for_the_remote_statefile}
   ```
 
 1. Configure optional parameters.
+   - To select a specific Capact version set the following environment variable:
+     ```bash
+     export CAPACT_VERSION={capact_version}
+     ```
 
    - By default, the cluster worker nodes are created in a single availability zone. To increase the number of availability zones, where the cluster worker nodes are created, run:
      
