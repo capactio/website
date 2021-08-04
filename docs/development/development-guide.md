@@ -123,6 +123,7 @@ You can export the following environment variables to configure the script:
 - To override Capact Helm chart values, use `CUSTOM_CAPACT_SET_FLAGS` e.g. `CUSTOM_CAPACT_SET_FLAGS="--set gateway.auth.password=myPass"`.
 - To override Ingress NGINX Helm chart values, use `CUSTOM_NGINX_SET_FLAGS`.
 - To override the Git branch from which the source manifests should be populated, use `HUB_MANIFESTS_SOURCE_REPO_REF`, e.g. `HUB_MANIFESTS_SOURCE_REPO_REF="my-fancy-branch"`
+- To override the Git URL from which the source manifests should be populated, use `HUB_MANIFESTS_SOURCE_REPO_URL`, e.g. `HUB_MANIFESTS_SOURCE_REPO_URL="github.com/capactio/hub-manifests"`. For more information about syntax check the [`go-getter`](https://github.com/hashicorp/go-getter#url-format) project README.
 - To override Cert Manager Helm chart values, use `CUSTOM_CERT_MANAGER_SET_FLAGS`.
 
 
