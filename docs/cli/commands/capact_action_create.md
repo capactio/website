@@ -20,10 +20,12 @@ capact action create INTERFACE [flags]
       --name string                       The Action name. By default, a random name is generated.
   -n, --namespace string                  Kubernetes namespace where the Action is to be created
       --parameters-from-file string       Path to the Action input parameters file in YAML format
+      --timeout duration                  Timeout for HTTP request (default 30s)
       --type-instances-from-file string   Path to the Action input TypeInstances file in YAML format. Example:
                                           typeInstances:
                                             - name: "config"
                                               id: "ABCD-1234-EFGH-4567"
+      --validate                          Validate created Action before sending it to server (default true)
 ```
 
 ### Options inherited from parent commands
