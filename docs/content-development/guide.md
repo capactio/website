@@ -29,7 +29,7 @@ Some other materials worth reading before are:
 - [Mattermost installation tutorial](../example/mattermost-installation.md) - Learn how to execute actions in Capact.
 - [Argo Workflows documentation](https://argoproj.github.io/argo-workflows/) - Capact action syntax is based on Argo workflows, so it's highly recommended you understand what is Argo and how to create Argo workflows.
 - [Capact runners](../architecture/runner.md) - Understand, what are Capact runners.
-- [Capact CLI validate command](../cli/commands/capact_validate.md) - Learn how to validate your manifests syntax.
+- [Capact CLI validate command](../cli/commands/capact_manifest_validate.md) - Learn how to validate your manifests syntax.
 
 ## Types, Interfaces and Implementations
 
