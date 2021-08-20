@@ -161,7 +161,7 @@ Even if the Implementation satisfies the constraints, and the `alias` is not def
 
 ### Additional parameter injection
 
-You can also provide additional parameters to tweak the Implementation. The Implementation parameters Type is specified in the Implementation manifest in `.spec.additionalInput.parameters`. For example, for AWS RDS for Postgresql Implementation you can provide additional parameters of Type `cap.type.aws.rds.postgresql.install-input`:
+You can also provide additional parameters to tweak the Implementation. The Implementation parameters Type is specified in the Implementation manifest in `.spec.additionalInput.parameters`. For example, for AWS RDS for PostgreSQL Implementation you can provide additional parameters of Type `cap.type.aws.rds.postgresql.install-input`:
 
 ```yaml
 metadata:
@@ -191,7 +191,7 @@ rules:
 
 ## Merging of different policies
 
-There are three different policies, which are merged together, when rendering the Action: Global, Action and Workflow step policies. Merging is necessary to calculate the final policy, which is used to select an Implementation and inject TypeInstaces and parameters. The priority order of the policies is configurable by the Capact Admin. The default order is (highest to lowest):
+There are three different policies, which are merged together, when rendering the Action: Global, Action and Workflow step policies. Merging is necessary to calculate the final policy, which is used to select an Implementation and inject TypeInstances and parameters. The priority order of the policies is configurable by the Capact Admin. The default order is (highest to lowest):
 1. Action policy
 2. Global policy
 3. Workflow step policy
