@@ -122,9 +122,11 @@ You can also deny all Implementations for a given Interface with the following s
   oneOf: [] # deny all Implementations for a given Interface
 ```
 
-### TypeInstance injection
+### Required TypeInstance injection
 
-Along with Implementation constraints, Cluster Admin may configure TypeInstances, which are downloaded and injected in the Implementation workflow. This can be helpful for example, in case you are using Implementations, which are deploying infrastructure on a public cloud (like AWS or GCP) and you want to ensure that everything is deployed in the same account. For example:
+Along with Implementation constraints, Cluster Admin may configure TypeInstances, which are downloaded and injected in the Implementation workflow. The prerequisite is that the Implementation must contain matching Type Reference in `spec.requires` property, along with defined `alias` for such requirement.
+
+This can be helpful, for example, in case you are using Implementations, which are deploying infrastructure on a public cloud (like AWS or GCP) and you want to ensure that everything is deployed in the same account. For example:
 
 ```yaml
 rules:
@@ -135,11 +137,9 @@ rules:
           requires:
            - path: "cap.type.gcp.auth.service-account"
         inject:
-          typeInstances:
+          requiredTypeInstances:
             - id: 9038dcdc-e959-41c4-a690-d8ebf929ac0c
-              typeRef:
-                path: "cap.type.gcp.auth.service-account"
-                revision: "0.1.0"
+              description: "GCP Service Account" # optional
 ```
 
 > **NOTE:** Instructions how to create a TypeInstance using the Capact CLI can be found [here](./../../cli/commands/capact_typeinstance_create.md).

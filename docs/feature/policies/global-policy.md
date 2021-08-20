@@ -27,12 +27,12 @@ rules: # Configures the following behavior for Engine during rendering Action
             - path: "cap.type.gcp.auth.service-account"
               # in any revision
         inject:
-          typeInstances: # For such Implementation, inject the following TypeInstances: 
+          requiredTypeInstances: # For such Implementation, inject the following TypeInstances if matching Type Reference is used in `Implementation.spec.requires` property along with `alias`: 
+
+            # Find Type Reference for the given TypeInstance ID. Then, find the alias of the Type reference in `spec.requires` property.
+            # If it is defined, inject the TypeInstance with ID `9038dcdc-e959-41c4-a690-d8ebf929ac0c` under this alias.
             - id: 9038dcdc-e959-41c4-a690-d8ebf929ac0c
-              typeRef: # Find the alias of the Type reference in `spec.requires` property.
-                      # If it is defined, inject the TypeInstance with ID `9038dcdc-e959-41c4-a690-d8ebf929ac0c` under this alias.
-                path: "cap.type.gcp.auth.service-account"
-                revision: "0.1.0"
+              description: "GCP Service Account" # optional
               
       - implementationConstraints: # In second place find and select Implementation which:
           attributes: # contains the following attributes
