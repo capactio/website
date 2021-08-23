@@ -161,7 +161,7 @@ Even if the Implementation satisfies the constraints, and the `alias` is not def
 
 ### Additional parameter injection
 
-You can also provide additional parameters to tweak the Implementation. The Implementation parameters Type is specified in the Implementation manifest in `.spec.additionalInput.parameters`. For example, for AWS RDS for Postgresql Implementation you can provide additional parameters of Type `cap.type.aws.rds.postgresql.install-input`:
+You can also provide additional parameters to tweak the Implementation. The Implementation parameters Type is specified in the Implementation manifest in `.spec.additionalInput.parameters`. For example, for AWS RDS for Postgresql Implementation you can provide `additional-parameters` of Type `cap.type.aws.rds.postgresql.install-input`:
 
 ```yaml
 metadata:
@@ -170,9 +170,10 @@ metadata:
 spec:
   additionalInput:
     parameters:
-      typeRef:
-        path: cap.type.aws.rds.postgresql.install-input
-        revision: 0.1.0
+      additional-parameters:
+        typeRef:
+          path: cap.type.aws.rds.postgresql.install-input
+          revision: 0.1.0
 ```
 
 To change the AWS region to `us-east-1` for the AWS RDS for PostgresSQL Implementation, you can provide the following policy:
@@ -185,8 +186,10 @@ rules:
       - implementationConstraints:
           path: "cap.implementation.aws.rds.postgresql.install"
         inject:
-          parameters:
-            region: us-east-1
+          additionalParameters: # Injects additional parameters for the Implementation
+            - name: additional-parameters # Name must match one of the parameter defined under `additionalInput.parameters` in the Implementation
+              value: 
+                region: us-east-1
 ```
 
 ## Merging of different policies
