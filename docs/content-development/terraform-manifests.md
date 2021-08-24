@@ -99,6 +99,6 @@ To make sure the Terraform-based Implementation is selected, you may use additio
              requires:
                - path: "cap.type.gcp.auth.service-account"
            inject:
-            typeInstances:
+            requiredTypeInstances:
              # (...)
 ```

@@ -122,9 +122,11 @@ You can also deny all Implementations for a given Interface with the following s
   oneOf: [] # deny all Implementations for a given Interface
 ```
 
-### TypeInstance injection
+### Required TypeInstance injection
 
-Along with Implementation constraints, Cluster Admin may configure TypeInstances, which are downloaded and injected in the Implementation workflow. This can be helpful for example, in case you are using Implementations, which are deploying infrastructure on a public cloud (like AWS or GCP) and you want to ensure that everything is deployed in the same account. For example:
+Along with Implementation constraints, Cluster Admin may configure TypeInstances, which are downloaded and injected in the Implementation workflow. The prerequisite is that the Implementation must contain matching Type Reference in `spec.requires` property, along with defined `alias` for such requirement.
+
+This can be helpful, for example, in case you are using Implementations, which are deploying infrastructure on a public cloud (like AWS or GCP) and you want to ensure that everything is deployed in the same account. For example:
 
 ```yaml
 rules:
@@ -135,11 +137,9 @@ rules:
           requires:
            - path: "cap.type.gcp.auth.service-account"
         inject:
-          typeInstances:
+          requiredTypeInstances:
             - id: 9038dcdc-e959-41c4-a690-d8ebf929ac0c
-              typeRef:
-                path: "cap.type.gcp.auth.service-account"
-                revision: "0.1.0"
+              description: "GCP Service Account" # optional
 ```
 
 > **NOTE:** Instructions how to create a TypeInstance using the Capact CLI can be found [here](./../../cli/commands/capact_typeinstance_create.md).
@@ -161,7 +161,7 @@ Even if the Implementation satisfies the constraints, and the `alias` is not def
 
 ### Additional parameter injection
 
-You can also provide additional parameters to tweak the Implementation. The Implementation parameters Type is specified in the Implementation manifest in `.spec.additionalInput.parameters`. For example, for AWS RDS for Postgresql Implementation you can provide additional parameters of Type `cap.type.aws.rds.postgresql.install-input`:
+You can also provide additional parameters to tweak the Implementation. The Implementation parameters Type is specified in the Implementation manifest in `.spec.additionalInput.parameters`. For example, for AWS RDS for PostgreSQL Implementation you can provide additional parameters of Type `cap.type.aws.rds.postgresql.install-input`:
 
 ```yaml
 metadata:
@@ -191,7 +191,7 @@ rules:
 
 ## Merging of different policies
 
-There are three different policies, which are merged together, when rendering the Action: Global, Action and Workflow step policies. Merging is necessary to calculate the final policy, which is used to select an Implementation and inject TypeInstaces and parameters. The priority order of the policies is configurable by the Capact Admin. The default order is (highest to lowest):
+There are three different policies, which are merged together, when rendering the Action: Global, Action and Workflow step policies. Merging is necessary to calculate the final policy, which is used to select an Implementation and inject TypeInstances and parameters. The priority order of the policies is configurable by the Capact Admin. The default order is (highest to lowest):
 1. Action policy
 2. Global policy
 3. Workflow step policy
