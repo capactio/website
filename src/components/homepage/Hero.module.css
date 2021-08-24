@@ -15,6 +15,16 @@
   max-height: 300px;
 }
 
+.buttons {
+  display: flex;
+  align-items: left;
+  justify-content: left;
+}
+
+.buttons a + a {
+  margin-left: 15px;
+}
+
 @media (max-width: 966px) {
   .heroBanner {
     padding: 4rem 1rem;
@@ -24,6 +34,19 @@
     margin-bottom: 2rem;
     max-height: 200px;
   }
+
+  .buttons {
+    display: block;
+  }
+
+  .buttons a {
+    display: block;
+    width: 100%;
+  }
+
+  .buttons a + a {
+    margin: 1rem 0 0;
+  }
 }
 
 @media (max-width: 350px) {
@@ -32,23 +55,22 @@
   }
 }
 
-.buttons {
-  display: flex;
-  align-items: left;
-  justify-content: left;
+.buttonDark:global(.button--outline) {
+  --ifm-button-color: var(--capact-black);
+  --ifm-button-border-color: var(--capact-black);
 }
 
-.iconButton:before {
-  width: 36px;
-  height: 36px;
-  content: "";
-  display: flex;
+.buttonDark:global(.button--outline):hover {
+  background-color: var(--capact-black);
+  --ifm-button-color: var(--capact-white);
 }
 
-.iconButton:hover {
-  opacity: 0.7;
+.buttonDark:global(.button--primary:not(.button--outline)) {
+  --ifm-button-background-color: var(--capact-black);
+  --ifm-button-border-color: var(--capact-black);
+  --ifm-button-color: var(--capact-white);
 }
 
-.iconButton + .iconButton {
-  margin-left: 15px;
+.buttonDark:global(.button--primary:not(.button--outline)):hover {
+  --ifm-button-border-color: var(--capact-orange-dark);
 }

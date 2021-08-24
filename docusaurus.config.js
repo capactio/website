@@ -24,12 +24,11 @@ module.exports = {
       defaultMode: "light",
       respectPrefersColorScheme: true,
     },
-    // TODO: Uncomment once we have Algolia DocSearch index and API key
-    // algolia: {
-    //   apiKey: "YOUR_API_KEY",
-    //   indexName: "YOUR_INDEX_NAME",
-    //   contextualSearch: true,
-    // },
+    algolia: {
+      apiKey: "43ffd9615b1dd6ac0f6f9987e624d73d",
+      indexName: "capact",
+      contextualSearch: true,
+    },
     navbar: {
       title: "Capact",
       logo: {

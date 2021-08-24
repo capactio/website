@@ -15,8 +15,6 @@ This tutorial shows how to set up a private Google Kubernetes Engine (GKE) clust
 
 ## Instructions
 
-[![asciicast](https://asciinema.org/a/395877.svg)](https://asciinema.org/a/395877)
-
 ### Create GKE private cluster 
 
 1. Check the latest stable Capact release on [Capact GitHub releases](https://github.com/capactio/capact/releases) page.
@@ -65,22 +63,28 @@ This tutorial shows how to set up a private Google Kubernetes Engine (GKE) clust
     EOF
     ```
        
-    **3. Initialize your Terraform working directory.**
+    **3. Create Cloud Storage bucket for Terraform state file.**
+    ```bash
+    export GOOGLE_APPLICATION_CREDENTIALS={PATH_TO_SA_JSON_FILE}
+    export TERRAFORM_STATE_BUCKET="capact-terraform-state" # you have to change the bucket name
+    gsutil mb "gs://${TERRAFORM_STATE_BUCKET}"
+    ```
+
+    **4. Initialize your Terraform working directory.**
        
     ```bash
-    terraform -chdir=hack/ci/terraform/ init
+    terraform -chdir=hack/ci/terraform/ init -backend-config="bucket=${TERRAFORM_STATE_BUCKET}"
     ```
        
-    **4. Create a GKE cluster.**
+    **5. Create a GKE cluster.**
        
     > **NOTE:** This takes around 10 minutes to finish.
     
     ```bash
-    GOOGLE_APPLICATION_CREDENTIALS={PATH_TO_SA_JSON_FILE} \
     terraform -chdir=hack/ci/terraform/ apply
     ```
     
-    **5. Fetch GKE credentials.**
+    **6. Fetch GKE credentials.**
        
     ```bash
     gcloud container clusters get-credentials $CLUSTER_NAME --region $REGION
@@ -90,7 +94,7 @@ This tutorial shows how to set up a private Google Kubernetes Engine (GKE) clust
      - The primary range of **subnetwork-${CLUSTER_NAME}**
      - The secondary range used for Pods
     
-    **6. If you have your machine outside your VPC network, authorize it to access the public endpoint.**
+    **7. If you have your machine outside your VPC network, authorize it to access the public endpoint.**
        
     ```bash
     gcloud container clusters update $CLUSTER_NAME --region $REGION \
@@ -121,7 +125,7 @@ This guide explains how to deploy Capact on a cluster using your own domain.
       export DNS_ZONE={YOUR_DNS_ZONE} # e.g. own-domain
       ```
 
-   2. Create a DNS-managed zone in your Google project. Run:
+   1. Create a DNS-managed zone in your Google project. Run:
    
       ```bash
       gcloud dns --project=$GCP_PROJECT managed-zones create $DNS_ZONE --description= --dns-name=$DNS_NAME
@@ -129,7 +133,7 @@ This guide explains how to deploy Capact on a cluster using your own domain.
    
       Alternatively, create the DNS-managed zone through the GCP UI. In the **Network** section navigate to **Network Services**, click **Cloud DNS**, and select **Create Zone**.
    
-   3. Delegate your domain to Google name servers.
+   1. Delegate your domain to Google name servers.
    
       - Get the list of the name servers from the zone details. This is a sample list:
     
@@ -142,7 +146,7 @@ This guide explains how to deploy Capact on a cluster using your own domain.
     
       - Set up your domain to use these name servers.
    
-   4. Check if everything is set up correctly and your domain is managed by Google name servers. Run:
+   1. Check if everything is set up correctly and your domain is managed by Google name servers. Run:
    
       ```bash
       host -t ns $DNS_NAME
@@ -162,16 +166,18 @@ This guide explains how to deploy Capact on a cluster using your own domain.
 1. Install all Capact components (Capact core, Grafana, Prometheus, Neo4J, NGINX, Argo, Cert Manager)
    
    ```bash
-   CUSTOM_CAPACT_SET_FLAGS="--set global.domainName=$DOMAIN --set global.gateway.auth.password=$GATEWAY_PASSWORD" \
-   DOCKER_REPOSITORY="ghcr.io/capactio" \
-   OVERRIDE_DOCKER_TAG="{CAPACT_VERSION_TAG}" # Version tag pattern is first 7 characters of commit SHA from main or release branch, e.g. `afc9d43` \
-   ./hack/ci/cluster-components-install-upgrade.sh
+   capact install --environment gke --capact-overrides "global.domainName=${DOMAIN},global.gateway.auth.password=${GATEWAY_PASSWORD}"
    ```
 
    >**NOTE:** This command installs ingress which automatically creates a LoadBalancer. If you have your own LoadBalancer, you can use it by adding 
-   > `CUSTOM_NGINX_SET_FLAGS="--set ingress-nginx.controller.service.loadBalancerIP={YOUR_LOAD_BALANCER_IP}"` to the above install command. If your domain points to your LoadBalance IP, skip the next step.
+   > `--ingress-controller-overrides "ingress-nginx.controller.service.loadBalancerIP={YOUR_LOAD_BALANCER_IP}"` to the above install command. If your domain points to your LoadBalance IP, skip the next step.
 
-   >**NOTE:** To install different Capact version, change `OVERRIDE_DOCKER_TAG` to different Docker image tag. 
+   >**NOTE:** To install a different Capact version, add `--version {version}` to the install command above.
+
+1. Configure Let's Encrypt to issue certificates for the GKE cluster:
+   ```bash
+   ./hack/ci/install-cert-manager.sh
+   ```
 
 1. Update the DNS record
    

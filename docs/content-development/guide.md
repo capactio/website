@@ -29,7 +29,7 @@ Some other materials worth reading before are:
 - [Mattermost installation tutorial](../example/mattermost-installation.md) - Learn how to execute actions in Capact.
 - [Argo Workflows documentation](https://argoproj.github.io/argo-workflows/) - Capact action syntax is based on Argo workflows, so it's highly recommended you understand what is Argo and how to create Argo workflows.
 - [Capact runners](../architecture/runner.md) - Understand, what are Capact runners.
-- [Capact CLI validate command](../cli/commands/capact_validate.md) - Learn how to validate your manifests syntax.
+- [Capact CLI validate command](../cli/commands/capact_manifest_validate.md) - Learn how to validate your manifests syntax.
 
 ## Types, Interfaces and Implementations
 
@@ -81,13 +81,8 @@ metadata:
     - email: your.email@example.com
       name: your-name
       url: your-website
-
-signature:
-  hub: eyJ0eXAiOiJKV1QiLA0KICJhbGciOiJIUzI1NiJ9
 ```
 </details>
-
-> The `signature` field is required, but currently we haven't yet implemented a signing mechanism, so you can put a dummy value there.
 
 ### Create the Interface manifest
 
@@ -120,27 +115,16 @@ spec:
   input:
     parameters: # the Interface requires `input-parameters` of Type "cap.type.productivity.mattermost.install-input"
       input-parameters: 
-        jsonSchema:
-          value: |-
-            {
-              "$schema": "http://json-schema.org/draft-07/schema",
-              "$ocfRefs": {
-                "inputType": {
-                  "name": "cap.type.productivity.mattermost.install-input",
-                  "revision": "0.1.0"
-                }
-              },
-              "allOf": [ { "$ref": "#/$ocfRefs/inputType" } ]
-            }
+        typeRef:
+          name: cap.type.productivity.mattermost.install-input
+          revision: 0.1.0
+
   output:
     typeInstances: # the Interface outputs TypeInstance of Type "cap.type.productivity.mattermost.config"
       mattermost-config: 
         typeRef:
           path: cap.type.productivity.mattermost.config
           revision: 0.1.0
-
-signature:
-  hub: eyJ0eXAiOiJKV1QiLA0KICJhbGciOiJIUzI1NiJ9
 ```
 </details>
 
@@ -185,22 +169,20 @@ spec:
         "required": [
             "host"
         ],
-        "$ocfRefs": {
+        "definitions": {
           "hostname": {
-            "name": "cap.core.type.networking.hostname",
-            "revision": "0.1.0"
+            "type": "string",
+            "format": "hostname",
+            "title": "Hostname"
           }
         },
         "properties": {
           "host": {
-            "$ref": "#/$ocfRefs/hostname"
+            "$ref": "#/definitions/hostname"
           }
         },
         "additionalProperties": true
       }
-
-signature:
-  hub: eyJ0eXAiOiJKV1QiLA0KICJhbGciOiJIUzI1NiJ9
 ```
 </details>
 
@@ -234,29 +216,33 @@ spec:
         "required": [
             "version"
         ],
-        "$ocfRefs": {
+        "definitions": {
           "semVer": {
-            "name": "cap.core.type.versioning.semver",
-            "revision": "0.1.0"
+            "type": "string",
+            "minLength": 5,
+            "pattern": "^(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)(?:-((?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*)(?:\.(?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*))*))?(?:\+([0-9a-zA-Z-]+(?:\.[0-9a-zA-Z-]+)*))?$",
+            "title": "Semantic Versioning version",
+            "examples": [
+                "1.19.0"
+                "2.0.1-alpha1"
+            ]
           }
           "hostname": {
-            "name": "cap.core.type.networking.hostname",
-            "revision": "0.1.0"
+            "type": "string",
+            "format": "hostname",
+            "title": "Hostname"
           }
         },
         "properties": {
           "version": {
-            "$ref": "#/$ocfRefs/semVer"
+            "$ref": "#/definitions/semVer"
           }
           "host": {
-            "$ref": "#/$ocfRefs/hostname"
+            "$ref": "#/definitions/hostname"
           }
         },
         "additionalProperties": true
       }
-
-signature:
-  hub: eyJ0eXAiOiJKV1QiLA0KICJhbGciOiJIUzI1NiJ9
 ```
 </details>
 
@@ -524,9 +510,6 @@ spec:
                         from: "{{steps.fill-db.outputs.artifacts.render}}"
                       - name: runner-context
                         from: "{{workflow.outputs.artifacts.runner-context}}"
-
-signature:
-  hub: eyJ0eXAiOiJKV1QiLA0KICJhbGciOiJIUzI1NiJ9
 ```
 </details>
 
@@ -781,9 +764,6 @@ spec:
         },
         "additionalProperties": false
       }
-
-signature:
-  hub: eyJ0eXAiOiJKV1QiLA0KICJhbGciOiJIUzI1NiJ9
 ```
 </details>
 
@@ -830,27 +810,16 @@ spec:
         verbs: ["get", "update"]  # you need to add "update" verb when you want to update this TypeInstance
     parameters:
       input-parameters:
-        jsonSchema:
-          value: |-
-            {
-              "$schema": "http://json-schema.org/draft-07/schema",
-              "$ocfRefs": {
-                "inputType": {
-                  "name": "cap.type.database.postgresql.change-password-input",
-                  "revision": "0.1.0"
-                }
-              },
-              "allOf": [ { "$ref": "#/$ocfRefs/inputType" } ]
-            }
+        typeRef:
+          name: cap.type.database.postgresql.change-password-input
+          revision: 0.1.0
+
   output:
     typeInstances:
       user: # return modified TypeInstance to allow creating parent workflows which use updated values
         typeRef:
           path: cap.type.database.postgresql.user
           revision: 0.1.0
-
-signature:
-  hub: eyJ0eXAiOiJKV1QiLA0KICJhbGciOiJIUzI1NiJ9
 ```
 </details>
 
@@ -992,9 +961,6 @@ spec:
               artifacts:
                 - name: user
                   path: /user.yml
-
-signature:
-  hub: eyJ0eXAiOiJKV1QiLA0KICJhbGciOiJIUzI1NiJ9
 ```
 </details>
 
