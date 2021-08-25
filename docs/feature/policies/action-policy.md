@@ -23,6 +23,10 @@ rules: # Configures the following behavior for Engine during rendering Action
             - name: additional-parameters # Name must match one of the parameter defined under `additionalInput.parameters` in the Implementation
               value: 
                 replicaCount: 3
+          additionalTypeInstances: # Injects additional TypeInstances for the Implementation
+            - name: sample # Name must match one of the parameter defined under `additionalInput.typeInstances` in the Implementation
+              id: 0b6dba9a-d111-419d-b236-357cf0e8603a
+
   - interface: # Configures a second rule in the Action policy
       path: cap.interface.database.mongodb.install
     oneOf:

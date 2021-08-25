@@ -33,6 +33,13 @@ rules: # Configures the following behavior for Engine during rendering Action
             # If it is defined, inject the TypeInstance with ID `9038dcdc-e959-41c4-a690-d8ebf929ac0c` under this alias.
             - id: 9038dcdc-e959-41c4-a690-d8ebf929ac0c
               description: "GCP Service Account" # optional
+          additionalParameters: # Injects additional parameters for the Implementation
+            - name: additional-parameters # Name must match one of the parameter defined under `additionalInput.parameters` in the Implementation
+              value: 
+                replicaCount: 3
+          additionalTypeInstances: # Injects additional TypeInstances for the Implementation
+            - name: sample # Name must match one of the parameter defined under `additionalInput.typeInstances` in the Implementation
+              id: 0b6dba9a-d111-419d-b236-357cf0e8603a
               
       - implementationConstraints: # In second place find and select Implementation which:
           attributes: # contains the following attributes

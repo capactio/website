@@ -176,7 +176,7 @@ spec:
           revision: 0.1.0
 ```
 
-To change the AWS region to `us-east-1` for the AWS RDS for PostgresSQL Implementation, you can provide the following policy:
+For example, to change the AWS region to `us-east-1` for the AWS RDS for PostgreSQL Implementation, you can provide the following policy:
 
 ```yaml
 rules:
@@ -192,6 +192,39 @@ rules:
                 region: us-east-1
 ```
 
+### Additional TypeInstance injection
+
+Apart from additional parameters, you can also inject additional TypeInstance to change Implementation behavior. The supported additional TypeInstances by Implementation are specified in the Implementation manifest under the `.spec.additionalInput.typeInstances` property:
+
+```yaml
+metadata:
+  prefix: cap.implementation.mattermost.mattermost-team-edition
+  name: install
+spec:
+  additionalInput:
+    typeInstances:
+      postgresql:
+        typeRef:
+          path: cap.type.database.postgresql.config
+          revision: 0.1.0
+        verbs: ["get"]
+```
+
+For example, for Mattermost installation, you can provide existing PostgreSQL database using this feature:
+
+```yaml
+rules:
+  - interface:
+      path: cap.interface.productivity.mattermost.install 
+    oneOf:
+      - implementationConstraints:
+          path: "cap.implementation.mattermost.mattermost-team-edition.install"
+        inject:
+          additionalTypeInstances: # Injects additional parameters for the Implementation
+            - name: postgresql # Name must match one of the parameter defined under `additionalInput.parameters` in the Implementation
+              id: 5077d0e2-95d3-495f-b7b3-f59c99a547fa
+```
+
 ## Merging of different policies
 
 There are three different policies, which are merged together, when rendering the Action: Global, Action and Workflow step policies. Merging is necessary to calculate the final policy, which is used to select an Implementation and inject TypeInstances and parameters. The priority order of the policies is configurable by the Capact Admin. The default order is (highest to lowest):
@@ -203,7 +236,7 @@ The following rules apply, when the Engine merges the policy rules:
 1. Two policy rules are merged, when they have the same `interface` field. Merging is done by joining the `oneOf` lists, based on the priority order.
 2. If in the merged policy rules, there are two elements in `oneOf`, with the same `implementationConstraints`, then we merge them into a single element:
    - `additionalInput` of the elements are deep merged based on the priority order
-   - `typeInstances` of the elements are joined together. If there are two TypeInstances with the same Type Reference, then the one from the higher priority order policy is chosen.
+   - for both `requiredTypeInstances` and `additionalTypeInstances`, the elements are joined together. If there are two TypeInstances with the same Type Reference, then the one from the higher priority order policy is chosen.
 
 ## Change priority order of the policies
 
