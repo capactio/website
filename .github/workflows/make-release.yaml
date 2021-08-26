@@ -41,4 +41,6 @@ jobs:
           npm run sync-cli-docs
           rm -rf "${CAPACT_REPO_DIR}"
       - name: Make release commit
+        env:
+          RELEASE_VERSION: "${{ github.event.inputs.version }}"
         run: ./hack/make-release.sh
