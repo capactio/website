@@ -1,7 +1,7 @@
 name: Make release
 
 # Required secrets:
-# GITHUB_PAT - GitHub personal access token with permissions to make commits to repository
+# GH_PAT - GitHub username with personal access token with permissions to make commits to repository, must be in format: "<username>:<PAT>"
 
 on:
   workflow_dispatch:
@@ -20,14 +20,12 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
-        with:
-          persist-credentials: false
       - name: Setup Git credentials
         # Replacing the GH Action token with PAT is required to trigger the branch-build workflow on a commit:
         # https://docs.github.com/en/actions/reference/events-that-trigger-workflows#triggering-new-workflows-using-a-personal-access-token
         run: |
           git remote remove origin
-          git remote add origin https://trojan295:${{secrets.GITHUB_PAT}}@github.com/${{github.repository}}.git
+          git remote add origin https://${{secrets.GH_PAT}}@github.com/${{github.repository}}.git
           git config --global user.email "bot@capact.io"
           git config --global user.name "Capact Bot"
       - name: Checkout Capact repository
