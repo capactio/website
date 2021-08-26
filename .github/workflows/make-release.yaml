@@ -35,7 +35,7 @@ jobs:
           ref: "v${{ github.event.inputs.version }}"
           path: "capact-repo"
       - name: Setup npm
-        run: npm build
+        run: npm install
       - name: Synchronize CLI documentation
         env:
           CAPACT_REPO_DIR: capact-repo
