@@ -20,12 +20,6 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
-      - name: Checkout Capact repository
-        uses: actions/checkout@v2
-        with:
-          repository: "capactio/capact"
-          ref: "v${{ github.event.inputs.version }}"
-          path: "../capact"
       - name: Setup Git credentials
         # Replacing the GH Action token with PAT is required to trigger the branch-build workflow on a commit:
         # https://docs.github.com/en/actions/reference/events-that-trigger-workflows#triggering-new-workflows-using-a-personal-access-token
@@ -34,7 +28,17 @@ jobs:
           git remote add origin https://${{secrets.GITHUB_PAT}}@github.com/${{github.repository}}.git
           git config --global user.email "bot@capact.io"
           git config --global user.name "Capact Bot"
+      - name: Checkout Capact repository
+        uses: actions/checkout@v2
+        with:
+          repository: "capactio/capact"
+          ref: "v${{ github.event.inputs.version }}"
+          path: "capact-repo"
       - name: Synchronize CLI documentation
-        run: npm run sync-cli-docs
-      - name: Release
+        env:
+          CAPACT_REPO_DIR: capact-repo
         run: |
+          npm run sync-cli-docs
+          rm -rf "${CAPACT_REPO_DIR}"
+      - name: Make release commit
+        run: ./hack/make-release.sh
