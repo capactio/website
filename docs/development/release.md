@@ -1,98 +1,29 @@
 # Capact release process
 
-This document describes Capact release process. Currently, it consists of a set of manual steps, however in future it will be automated.
+This document describes Capact release process.
 
 ## Prerequisites
 
-* Make
-* [Git](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git)
-* [Go](https://golang.org/dl/) at least 1.16
-* [Docker](https://www.docker.com/)
-* [UPX](https://github.com/upx/upx/releases) tool installed
-* [GoReleaser](https://goreleaser.com/install/) CLI installed at least v0.173.2
-  
+- [Git](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git)
+- An GitHub Environment named `Release` on [`capactio/capact`](https://github.com/capactio/capact) repository with the following secrets set:
+  - `GCS_CREDS` — Base64 encoded Google Cloud Platform credentials in JSON format to access Google Cloud Storage for binary and chart releases,
+  - `GITHUB_PAT` — GitHub personal access token with permissions to make commits to repository.
+
 ## Steps
 
-### Export environmental variables
-
-Export environmental variable with the new Capact version:
-    
 Use [Semantic Versioning 2.0.0](https://semver.org/spec/v2.0.0.html) to specify the next Capact release.
 
-```bash
-export RELEASE_VERSION={major}.{minor}.{patch}
-export RELEASE_MAJOR_MINOR_VERSION={major}.{minor}
+### Release Capact container images and binaries
 
-# do not change the following line:
-export RELEASE_BRANCH=release-${RELEASE_MAJOR_MINOR_VERSION}
-```
+The release of Capact container images and binaries is automated and done using a GitHub Action workflow.
 
-For example, in case of the `0.3.0` release, it would be:
+1. Open the [Make release](https://github.com/capactio/capact/actions/workflows/make-release.yaml) workflow.
+1. Click `Run workflow` and depending on your scenario:
+   - if making a major/minor release from `main`, select the `main` branch and put the version in SemVer, e.g. `0.5.0`,
+   - if making a patch release from a release branch, select the given release branch and put the version in SemVer, e.g. `0.5.1`.
+1. Click `Run workflow` to start the release workflow.
 
-```bash
-export RELEASE_VERSION=0.3.0 
-export RELEASE_MAJOR_MINOR=0.3
-
-# do not change the following line:
-export RELEASE_BRANCH=release-${RELEASE_MAJOR_MINOR_VERSION}
-```
-
-### Prepare Capact for release
-
-1. Checkout the destination branch for the pull request.
-
-    - For major and minor release versions, set the destination branch to `main`. 
-    - For patch releases, set the destination to corresponding release branch. For example, for `0.3.1` release, checkout the `release-0.3` branch.
-
-    ```bash
-    git checkout {destination-branch}
-    ```
-
-1. Create and checkout new branch:
-    
-   ```bash
-   git checkout -b prepare-${RELEASE_VERSION}
-   ```   
-
-1. Modify `.github/workflows/branch-build.yaml` and append new branch to **on.push.branches**:
-
-    ```yaml
-    branches:
-      - "main"
-      - "release-0.2"
-      # (...)
-      - "release-{major}.{minor}" # append the new release branch item
-    ```
-
-1. Change versions of all Helm charts:
-
-   ```bash
-   DEPLOY_DIR=deploy/kubernetes/charts
-   for d in ${DEPLOY_DIR}/*/ ; do
-     sed -i.bak "s/^version: .*/version: ${RELEASE_VERSION}/g" "${d}/Chart.yaml"
-   done
-   ```
-
-1. Change CLI version:
-
-    ```bash
-   sed -i.bak "s/Version = .*/Version = \"${RELEASE_VERSION}\"/g" "internal/cli/info.go"
-   ```
-   
-1. Commit the changes and push the branch to origin.
-    
-    ```bash
-    git add .
-    git commit -m "Prepare ${RELEASE_VERSION} release"
-    git push -u origin prepare-${RELEASE_VERSION}
-    ```
-    
-1. Create the pull request from the branch.
-   
-   - In the pull request description, write the GitHub release notes that will be posted with the release to review.
-   - As the pull request target branch, pick the proper destination branch from the first step of this section.
-    
-1. Merge the pull request.
+The workflow will prepare the release branch, tag the appropriate commit and create a GitHub Release. [`gren`](https://github.com/github-tools/github-release-notes) is used to create the release notes from merged pull requests.
 
 ### Prepare Hub for release 
 
@@ -125,113 +56,6 @@ export RELEASE_BRANCH=release-${RELEASE_MAJOR_MINOR_VERSION}
    - As the pull request target branch, pick the proper destination branch from the first step of this section.
     
 1. Merge the pull request.
-
-#### Create release branch
-
-If you release major or minor version, create a dedicated release branch.
-
-1. Checkout the destination branch and pull the latest changes:
-
-    ```bash
-    git checkout {destination_branch}
-    git pull
-    ```
-
-1. Create a new branch:
-   
-    ```bash
-    git checkout -b ${RELEASE_BRANCH}
-    ```
-
-1. Push the release branch with tag to upstream:
-
-   ```bash
-   git push -u upstream ${RELEASE_BRANCH}
-   git push upstream v${RELEASE_VERSION}
-   ```
-
-### Create Capact release branch
-
-If you release major or minor version, create a dedicated release branch.
-
-1. Checkout the destination branch and pull the latest changes:
-
-    ```bash
-    git checkout {destination_branch}
-    git pull
-    ```
-
-1. Create a new branch:
-   
-    ```bash
-    git checkout -b ${RELEASE_BRANCH}
-    ```
-
-#### Release Helm charts
-
-1. Get the latest commit short hash on the destination branch:
-    
-   ```bash
-   export CAPACT_IMAGE_TAG=$(git rev-parse --short HEAD | sed 's/.$//')
-   ```  
-
-   > **NOTE:** It will be used as a Docker image tag for the release Helm charts. Make sure all the component images with this tag have been built on CI.  
-
-1. Replace default tag for Capact chart:
-
-    ```bash
-    sed -i.bak "s/overrideTag: \"latest\"/overrideTag: \"${CAPACT_IMAGE_TAG}\"/g" "deploy/kubernetes/charts/capact/values.yaml"
-    ```
-
-1. Replace Populator target branch from `main` to the release branch:
-  
-   ```bash
-   sed -i.bak "s/branch: main/branch: ${RELEASE_BRANCH}/g" "deploy/kubernetes/charts/capact/charts/hub-public/values.yaml"
-   ```
-
-1. Review and commit the changes:
-
-   ```bash
-   git add .
-   git commit -m "Set fixed Capact image tag and Populator source branch"
-   ```
-
-1. Release Helm charts:
-   
-    ```bash
-    make release-charts
-    ```
-
-### Create new git tag and publish binaries
-
-1. Create new tag and push it and release branch to upstream:
-
-    > **NOTE**: Git tag is in a form of SemVer version with `v` prefix, such as `v0.3.0`.
-   
-    ```bash
-    git tag v${RELEASE_VERSION} HEAD
-    ```
-   
-1. Review the changes you've made and push the release branch with tag to upstream:
-
-   ```bash
-   git push -u upstream ${RELEASE_BRANCH}
-   git push upstream v${RELEASE_VERSION}
-   ```
-
-1. Release tools binaries:
-   
-   > **NOTE**: GoReleaser uses the git tag as binaries version.
-   
-   ```bash
-   make release-binaries
-   ```
-
-## Create GitHub release
-    
-1. Navigate to the [New GitHub release](https://github.com/capactio/capact/releases/new) page.
-1. Copy the release notes from the pull request created in the [Create a pre-release pull request](#create-a-pre-release-pull-request) section.
-1. Create the new GitHub release with the copied notes.
 
 ## Release documentation
 
