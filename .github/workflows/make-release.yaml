@@ -31,7 +31,7 @@ jobs:
       - name: Checkout Capact repository
         uses: actions/checkout@v2
         with:
-          repository: "capactio/capact"
+          repository: "trojan295/capact"
           ref: "v${{ github.event.inputs.version }}"
           path: "capact-repo"
       - name: Setup npm
