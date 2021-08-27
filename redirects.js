@@ -7,7 +7,7 @@ module.exports = () => {
   const redirects = [
     ...generateDocsRedirectsForVersion(""), // latest version
     ...generateDocsRedirectsForVersion("next"), // unreleased version
-    ...generateDocsRedirectsForVersion("0.4", true), // redirect from 0.4 to latest
+    ...generateDocsRedirectsForVersion("0.4", true), // redirect from x.y version to latest
   ];
 
   return redirects;

@@ -11,8 +11,8 @@ release::generate_docs() {
 release::update_binary_links() {
   local -r version="$1"
 
-  sed -i.bak "s/capactio-binaries\/v\([0-9]*\.[0-9]*\.[0-9]*\)/capactio-binaries\/v${version}/g" ./docs/cli/getting-started.mdx
-  sed -i.bak "s/capact-cli:v\([0-9]*\.[0-9]*\.[0-9]*\)/capact-cli:v${version}/g" ./docs/cli/getting-started.mdx
+  sed -i.bak -E "s|(https://github.com/capactio/capact/releases/download/v)([0-9]*\.[0-9]*\.[0-9]*)|\1${version}|g" ./docs/cli/getting-started.mdx
+  sed -i.bak -E "s|(ghcr.io/capactio/tools/capact-cli:v)([0-9]*\.[0-9]*\.[0-9]*)|\1${version}|g" ./docs/cli/getting-started.mdx
 }
 
 release::make_commit() {
