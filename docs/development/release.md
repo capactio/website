@@ -7,7 +7,7 @@ This document describes Capact release process.
 - [Git](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git)
 - An GitHub Environment named `Release` on [`capactio/capact`](https://github.com/capactio/capact) repository with the following secrets set:
   - `GCS_CREDS` — Base64 encoded Google Cloud Platform credentials in JSON format to access Google Cloud Storage for binary and chart releases,
-  - `GITHUB_PAT` — GitHub personal access token with permissions to make commits to repository.
+  - `GH_PAT` — GitHub personal access token with permissions to make commits to repository.
 
 ## Steps
 
@@ -24,6 +24,8 @@ The release of Capact container images and binaries is automated and done using 
 1. Click `Run workflow` to start the release workflow.
 
 The workflow will prepare the release branch, tag the appropriate commit and create a GitHub Release. [`gren`](https://github.com/github-tools/github-release-notes) is used to create the release notes from merged pull requests.
+
+> *NOTE:* After the release is complete consider removing the `GH_PAT` from the Release environment.
 
 ### Prepare Hub for release 
 
