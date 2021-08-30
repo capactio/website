@@ -5,7 +5,7 @@ release::generate_docs() {
   local -r version="$1"
 
   npm run docusaurus docs:version "${version}"
-  sed -i.bak -E "s/...generateDocsRedirectsForVersion\(".+", true\)/...generateDocsRedirectsForVersion(\"${version}\", true)/" "./redirects.js"
+  sed -i.bak -E "s|...generateDocsRedirectsForVersion\(\"(.+)\", true\)|...generateDocsRedirectsForVersion(\"\1\"),\n    ...generateDocsRedirectsForVersion(\"${version}\", true)|" "./redirects.js"
 }
 
 release::update_binary_links() {
@@ -29,7 +29,7 @@ RELEASE_VERSION_MAJOR_MINOR="$(echo "${RELEASE_VERSION}" | sed -E 's/([0-9]+\.[0
 main() {
   release::generate_docs "${RELEASE_VERSION_MAJOR_MINOR}"
   release::update_binary_links "${RELEASE_VERSION}"
-  release::make_commit "${RELEASE_VERSION}"
+  #release::make_commit "${RELEASE_VERSION}"
 }
 
 main
