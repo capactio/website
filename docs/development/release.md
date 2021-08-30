@@ -29,35 +29,11 @@ The workflow will prepare the release branch, tag the appropriate commit and cre
 
 ### Prepare Hub for release 
 
-1. Checkout the [hub-manifests](https://github.com/capactio/hub-manifests) repository destination branch for the pull request.
+The release of Hub Manifests is automated and done using a GitHub Action workflow.
 
-    - For major and minor release versions, set the destination branch to `main`. 
-    - For patch releases, set the destination to corresponding release branch. For example, for `0.3.1` release, checkout the `release-0.3` branch.
-
-    ```bash
-    git checkout {destination-branch}
-    ```
-
-1. Create and checkout new branch:
-    
-   ```bash
-   git checkout -b prepare-${RELEASE_VERSION}
-   ```   
-
-1. Replace all Runners images in [`manifests/implementation/runner`](https://github.com/capactio/hub-manifests/tree/main/manifests/implementation/runner) to release versions.
-   
-1. Review and commit the changes:
-
-   ```bash
-   git add .
-   git commit -m "Update Runners images to release versions"
-   ```
-    
-1. Create the pull request from the branch.
-   
-   - As the pull request target branch, pick the proper destination branch from the first step of this section.
-    
-1. Merge the pull request.
+1. Open the [Make release](https://github.com/capactio/hub-manifests/actions/workflows/make-release.yaml) workflow.
+1. Click `Run workflow` and put the version parameter and the runner image tag from a [`capactio/capact`](https://github.com/capactio/capact) build.
+1. Click `Run workflow` to start the release workflow.
 
 ## Release documentation
 
@@ -65,7 +41,7 @@ The release of Capact documentation is automated and done using a GitHub Action 
 If you release a new major or minor Capact version, follow these steps:
 
 1. Open the [Make release](https://github.com/capactio/website/actions/workflows/make-release.yaml) workflow.
-1. Click `Run workflow` and for the version parameters, provide an already released Capact version.
+1. Click `Run workflow` and for the version parameter, provide an already released Capact version.
 1. Click `Run workflow` to start the release workflow.
 
 To read more about documentation versioning, see the [Versioning](https://docusaurus.io/docs/versioning) page on the Docusaurus website.
