@@ -90,7 +90,8 @@ As a result, all external solutions, such as Cloud SQL, have a lower priority, a
     Create input parameters for the Action, where you provide the ingress host for the Mattermost.
     ```bash
     cat <<EOF > /tmp/mattermost-install.yaml
-    host: mattermost.capact.local
+    input-parameters:
+      host: mattermost.capact.local
     EOF
     ```
 
