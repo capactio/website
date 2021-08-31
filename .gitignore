@@ -23,3 +23,6 @@ yarn-error.log*
 
 # Backup files
 *.bak
+
+# vim
+*.swp
