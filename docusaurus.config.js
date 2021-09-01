@@ -122,10 +122,10 @@ module.exports = {
       ],
       copyright: `Copyright © ${new Date().getFullYear()} Capact authors`,
     },
-    gtag: {
-      // You can also use your "G-" Measurement ID here.
-      trackingID: 'GTM-PH86LZ5'
-    },
+    // gtag: {
+    //   // You can also use your "G-" Measurement ID here.
+    //   trackingID: 'GTM-PH86LZ5'
+    // },
   },
   presets: [
     [
@@ -157,12 +157,12 @@ module.exports = {
         redirects: [...getCustomRedirects()],
       },
     ],
-    // [
-    //   require.resolve('docusaurus-gtm-plugin'),
-    //   {
-    //     id: 'GTM-PH86LZ5', // GTM Container ID
-    //   }
-    // ]
+    [
+      require("./src/plugin/gtm.js"),
+      {
+        trackingID: 'GTM-PH86LZ5', // GTM Container ID
+      }
+    ]
   ],
   customFields: {
     github: {
