@@ -11,7 +11,7 @@ const styles = {
 		zIndex: '9999',
 
 		bottom: '0px',
-		padding: '10px',
+		padding: '1em',
 
 		background: 'var(--capact-orange-lighter)',
 		opacity: '0.9',
@@ -20,9 +20,6 @@ const styles = {
 	button: {
 		border: '1px solid black',
 		borderRadius: 4,
-		width: 54,
-		height: 24,
-		lineHeight: '24px',
 		background: 'transparent',
 		color: 'black',
 		fontSize: '12px',
@@ -30,16 +27,12 @@ const styles = {
 	},
 	message: {
 		display: 'block',
-		padding: '9px 67px',
 		lineHeight: 1.3,
 		textAlign: 'center',
-		marginRight: 244,
 		color: 'black'
 	},
 	link: {
 		display: 'block',
-		padding: '9px 67px',
-		lineHeight: 1.3,
 		textAlign: 'center',
 		marginRight: 244,
 		color: 'black'
@@ -66,7 +59,7 @@ export const CookiesMessageBanner: FunctionComponent = () => {
 			buttonMessage={"Close"}
 			link={
 				<>
-					<a href="/disclaimer">Cookie Policy.</a>
+					<a href="/cookie-policy">Cookie Policy.</a>
 				{/*	TODO: change colors*/}
 				</>
 			}
