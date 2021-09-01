@@ -20,13 +20,23 @@ To use Minio to upload modules, enable port forward:
 kubectl -n capact-system port-forward svc/argo-minio --address 0.0.0.0 9000:9000
 ```
 
+Get the credentials:
+
+```bash
+MINIO_ACCESSKEY=$(kubectl  -n capact-system get secret argo-minio -o jsonpath='{.data.access-key}' | base64 --decode)
+MINIO_SECRETKEY=$(kubectl  -n capact-system get secret argo-minio -o jsonpath='{.data.secret-key}' | base64 --decode)
+```
+
 Using MinIO client, configure the access:
 
 ```shell
-SECRETKEY=$(kubectl  -n capact-system get secret argo-minio -o jsonpath='{.data.secretkey}' | base64 --decode)
-ACCESSKEY=$(kubectl  -n capact-system get secret argo-minio -o jsonpath='{.data.accesskey}' | base64 --decode)
+mc alias set minio http://localhost:9000 ${MINIO_ACCESSKEY} ${MINIO_SECRETKEY}
+```
 
-mc alias set minio http://localhost:9000 ${ACCESSKEY} ${SECRETKEY}
+Alternatively, use the Minio UI accessible under [http://localhost:9000](http://localhost:9000). Print the credentials to copy and paste them to log in form:
+
+```bash
+printf "Access key: ${MINIO_ACCESSKEY} \nSecret key: ${MINIO_SECRETKEY}\n"
 ```
 
 Verify that you can access MinIO:
