@@ -122,12 +122,12 @@ module.exports = {
       ],
       copyright: `Copyright © ${new Date().getFullYear()} Capact authors`,
     },
-    // gtag: {
-    //   // You can also use your "G-" Measurement ID here.
-    //   trackingID: 'GTM-PH86LZ5',
-    //   // Optional fields.
-    //   anonymizeIP: true, // Should IPs be anonymized?
-    // },
+    gtag: {
+      // You can also use your "G-" Measurement ID here.
+      trackingID: 'GTM-PH86LZ5',
+      // Optional fields.
+      anonymizeIP: true, // Should IPs be anonymized?
+    },
   },
   presets: [
     [
@@ -159,12 +159,12 @@ module.exports = {
         redirects: [...getCustomRedirects()],
       },
     ],
-    [
-      require.resolve('docusaurus-gtm-plugin'),
-      {
-        id: 'GTM-PH86LZ5', // GTM Container ID
-      }
-    ]
+    // [
+    //   require.resolve('docusaurus-gtm-plugin'),
+    //   {
+    //     id: 'GTM-PH86LZ5', // GTM Container ID
+    //   }
+    // ]
   ],
   customFields: {
     github: {
