@@ -124,9 +124,7 @@ module.exports = {
     },
     gtag: {
       // You can also use your "G-" Measurement ID here.
-      trackingID: 'GTM-PH86LZ5',
-      // Optional fields.
-      anonymizeIP: true, // Should IPs be anonymized?
+      trackingID: 'GTM-PH86LZ5'
     },
   },
   presets: [
