@@ -37,8 +37,10 @@ This document lists all TypeInstances, which are commonly used across our exampl
 1. Create AWS Credentials TypeInstance:
 
     ```bash
-    export TI_ID=$(capact typeinstance create -f /tmp/aws-ti.yaml -ojson | jq -r '.[].id')
+    capact typeinstance create -f /tmp/aws-ti.yaml -ojson
     ```
+
+1. Note the ID.
 
 ### GCP Service Account
 
