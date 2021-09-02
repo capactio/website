@@ -43,6 +43,11 @@ module.exports = {
           label: "Documentation",
         },
         {
+          to: "/blog",
+          label: "Blog",
+          position: "left"
+        },
+        {
           type: "docsVersionDropdown",
           position: "right",
         },
@@ -142,7 +147,11 @@ module.exports = {
             },
           },
         },
-        blog: false,
+        blog: {
+          showReadingTime: true,
+          // Please change this to your repo.
+          editUrl: "https://github.com/capactio/website/edit/main/blog/",
+        },
         theme: {
           customCss: require.resolve("./src/css/custom.css"),
         },
