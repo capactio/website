@@ -73,11 +73,13 @@ This document lists all TypeInstances, which are commonly used across our exampl
     ENDOFFILE
     ```
 
-1. Create a GCP Credentials TypeInstance:
+1. Create GCP Service Account TypeInstance:
+
     ```bash
-    export TI_ID=$(capact typeinstance create -f /tmp/gcp-sa-ti.yaml -ojson | jq -r '.[].id')
+    capact typeinstance create -f /tmp/gcp-sa-ti.yaml -ojson
     ```
 
+1. Note the ID.
 
 ## Next steps
 
