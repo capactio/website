@@ -247,8 +247,14 @@ To change the Mattermost installation, we need to adjust our Global policy to pr
 
 #### Instructions
 
-1. Create a TypeInstance with AWS Credentials. See how to create Type Instances with [AWS credentials](typeinstances.md#aws). 
-   Make sure that environment variable `TI_ID` exists.
+1. Create AWS Credentials TypeInstance.
+
+   1. Follow the [AWS Credentials TypeInstance creation](./typeinstances.md#aws-credentials) guide to create and obtain ID of the newly created TypeInstance. 
+   1. Export the TypeInstance ID as environment variable:
+
+    ```bash
+    export TI_ID={AWS credentials TypeInstance ID}
+    ```
 
 1. Update the cluster policy:
 
