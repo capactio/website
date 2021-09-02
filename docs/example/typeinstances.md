@@ -3,8 +3,8 @@
 This document lists all TypeInstances, which are commonly used across our examples. One of common use case is usage of cloud provider services. For example, to use managed database such as AWS RDS or Google Cloud SQL, you need to create TypeInstances which stores required credentials.
 
 ## Prerequisites
-* [Capact CLI](../cli/getting-started.mdx) installed.
-* Cluster with Capact installation. See the [installation tutorial](../installation/local.md). 
+- [Capact CLI](../cli/getting-started.mdx) installed.
+- Cluster with Capact installation. See the [installation tutorial](../installation/local.md). 
 - [`jq`](https://stedolan.github.io/jq/download/) installed.
 
 ## AWS Credentials
