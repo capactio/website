@@ -17,9 +17,11 @@ This document lists all TypeInstances, which are commonly used across our exampl
 1. Create a file with the AWS Credentials:
 
     ```bash
+    AWS_ACCESS_KEY_ID="{AWS access key ID}"
+    AWS_SECRET_ACCESS_KEY="{AWS secret access key}"
     cat > /tmp/aws-ti.yaml << ENDOFFILE
     typeInstances:
-      - alias: aws-sa
+      - alias: aws-credentials
         attributes:
           - path: cap.attribute.cloud.provider.aws
             revision: 0.1.0
@@ -27,8 +29,8 @@ This document lists all TypeInstances, which are commonly used across our exampl
           path: cap.type.aws.auth.credentials
           revision: 0.1.0
         value:
-          accessKeyID: {ACCESS_KEY}
-          secretAccessKey: {SECRET_KEY}
+          accessKeyID: ${AWS_ACCESS_KEY_ID}
+          secretAccessKey: ${AWS_SECRET_ACCESS_KEY}
     ENDOFFILE
     ```
 
