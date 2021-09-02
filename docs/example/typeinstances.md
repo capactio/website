@@ -79,6 +79,6 @@ This document lists all TypeInstances, which are commonly used across our exampl
     ```
 
 
-## Follow up
+## Next steps
 
-To see how to use created Type Instances check out our [Mattermost example](mattermost-installation.md).
+To see how to use created TypeInstances, check out our [Mattermost example](mattermost-installation.md).
