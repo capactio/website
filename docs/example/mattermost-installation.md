@@ -193,9 +193,9 @@ To change the Mattermost installation, we need to adjust our Global policy to pr
               requires:
                 - path: "cap.type.gcp.auth.service-account"
             inject:
-	      requiredTypeInstances:
+              requiredTypeInstances:
                 - id: ${TI_ID}
-		  description: "GCP Service Account"
+                  description: "GCP Service Account"
       - interface:
           path: cap.*
         oneOf:
