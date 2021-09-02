@@ -52,7 +52,7 @@ This document lists all TypeInstances, which are commonly used across our exampl
    
    4. Click **Create key** and choose `JSON` as the key type.
    
-   5. Save the `JSON` file.
+   5. Save the `JSON` file under the `/tmp/gcp-sa.json` path.
    
    6. Click **Done**.
 
