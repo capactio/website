@@ -169,7 +169,14 @@ To change the Mattermost installation, we need to adjust our Global policy to pr
 
 #### Instructions
 
-1. Create a TypeInstance with GCP Credentials. See how to create Type Instances with [GCP credentials](typeinstances.md#gcp). When creating a new service account, assign the `Cloud SQL Admin` role to it.
+1. Create a TypeInstance with GCP Service Account.
+
+   1. Follow the [GCP Service Account TypeInstance creation](./typeinstances.md#gcp-service-account) guide to create and obtain ID of the newly created TypeInstance. 
+   1. Export the TypeInstance ID as environment variable:
+
+    ```bash
+    export TI_ID={GCP Service Account TypeInstance ID}
+    ```
    Make sure that environment variable `TI_ID` exists.
 
 1. Update the cluster policy:
