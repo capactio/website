@@ -27,8 +27,8 @@ release::make_commit() {
 RELEASE_VERSION_MAJOR_MINOR="$(echo "${RELEASE_VERSION}" | sed -E 's/([0-9]+\.[0-9])\.[0-9]/\1/g')"
 
 main() {
-  release::generate_docs "${RELEASE_VERSION_MAJOR_MINOR}"
   release::update_binary_links "${RELEASE_VERSION}"
+  release::generate_docs "${RELEASE_VERSION_MAJOR_MINOR}"
   release::make_commit "${RELEASE_VERSION}"
 }
 
