@@ -177,7 +177,6 @@ To change the Mattermost installation, we need to adjust our Global policy to pr
     ```bash
     export TI_ID={GCP Service Account TypeInstance ID}
     ```
-   Make sure that environment variable `TI_ID` exists.
 
 1. Update the cluster policy:
 
