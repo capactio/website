@@ -6,7 +6,7 @@ This tutorial shows the basic concepts of Capact on the Mattermost installation 
 
 This instruction will guide you through the installation of Mattermost on a Kubernetes cluster using Capact. 
 
-Mattermost depends on the PostgreSQL database. Depending on the cluster configuration, with the Capact project, you can install Mattermost with a managed Cloud SQL database or a locally deployed PostgreSQL Helm chart.
+Mattermost depends on the PostgreSQL database. Depending on the cluster configuration, with the Capact project, you can install Mattermost with a managed Cloud SQL, AWS RDS database or a locally deployed PostgreSQL Helm chart.
 
 The diagrams below show possible scenarios:
 
@@ -169,42 +169,13 @@ To change the Mattermost installation, we need to adjust our Global policy to pr
 
 #### Instructions
 
-1. Create a GCP Service Account JSON access key:
-   
-   	1. Open [https://console.cloud.google.com](https://console.cloud.google.com) and select your project.
-   
-   	2. In the left pane, go to **IAM & Admin** and select **Service accounts**.
-   
-   	3. Click **Create service account**, name your account, and click **Create**.
-   
-   	4. Assign the `Cloud SQL Admin` role.
-   
-   	5. Click **Create key** and choose `JSON` as the key type.
-   
-   	6. Save the `JSON` file.
-   
-   	7. Click **Done**.
+1. Create a TypeInstance with GCP Service Account.
 
-1. Create a TypeInstance with the GCP Service Account:
-
-    ```yaml
-    # /tmp/gcp-sa-ti.yaml
-    typeInstances:
-      - alias: gcp-sa
-        typeRef:
-          path: cap.type.gcp.auth.service-account
-          revision: 0.1.0
-        attributes:
-          - path: cap.attribute.cloud.provider.gcp
-            revision: 0.1.0
-        value: { # Put here your GCP Service Account JSON.
-          "type": "service_account",
-          [...]
-        }
-    ```
+   1. Follow the [GCP Service Account TypeInstance creation](./typeinstances.md#gcp-service-account) guide to create and obtain ID of the newly created TypeInstance. 
+   1. Export the TypeInstance ID as environment variable:
 
     ```bash
-    export TI_ID=$(capact typeinstance create -f /tmp/gcp-sa-ti.yaml -ojson | jq -r '.[].id')
+    export TI_ID={GCP Service Account TypeInstance ID}
     ```
 
 1. Update the cluster policy:
@@ -262,6 +233,79 @@ To change the Mattermost installation, we need to adjust our Global policy to pr
 >⚠️ **CAUTION:** This removes all resources that you created.
 
 When you are done, remove the Cloud SQL manually and delete the Action:
+
+```bash
+kubectl delete action mattermost-instance -n $NAMESPACE
+helm delete -n $NAMESPACE $(helm list -f="mattermost-*" -q -n $NAMESPACE)
+```
+
+
+### Install Mattermost with an external AWS RDS database
+
+To change the Mattermost installation, we need to adjust our Global policy to prefer AWS solutions. Read more about Global policy configuration [here](../feature/policies/global-policy.md).
+
+#### Instructions
+
+1. Create AWS Credentials TypeInstance.
+
+   1. Follow the [AWS Credentials TypeInstance creation](./typeinstances.md#aws-credentials) guide to create and obtain ID of the newly created TypeInstance. 
+   1. Export the TypeInstance ID as environment variable:
+
+    ```bash
+    export TI_ID={AWS credentials TypeInstance ID}
+    ```
+
+1. Update the cluster policy:
+
+    ```bash
+    cat > /tmp/policy.yaml << ENDOFFILE
+    rules:
+      - interface:
+          path: cap.interface.database.postgresql.install
+        oneOf:
+           - implementationConstraints:
+               attributes:
+                 - path: "cap.attribute.cloud.provider.aws"
+             inject:
+               requiredTypeInstances:
+               - id: ${TI_ID}
+                 description: "AWS credentials"
+      - interface:
+          path: cap.*
+        oneOf:
+          - implementationConstraints:
+              requires:
+                - path: "cap.core.type.platform.kubernetes"
+          - implementationConstraints: {} # fallback to any Implementation
+    ENDOFFILE
+    ```
+
+    ```bash
+    capact policy apply -f /tmp/policy.yaml
+    ``` 
+
+    >**NOTE**: If you are not familiar with the policy syntax above, check the [policy overview document](../feature/policies/overview.md).
+
+1. Create a Kubernetes Namespace:
+
+    ```bash
+    export NAMESPACE=aws-scenario
+    kubectl create namespace $NAMESPACE
+    ```
+
+1. Install Mattermost with the new cluster policy:
+
+   The cluster policy was updated to prefer AWS solutions for the PostgreSQL Interface. As a result, during the render process, the Capact Engine will select a Cloud SQL Implementation which is available in our Hub server.
+   
+   Repeat the steps 4–11 from [Install all Mattermost components in a Kubernetes cluster](#install-all-mattermost-components-in-a-kubernetes-cluster) in the `aws-scenario` Namespace.
+
+🎉 Hooray! You now have your own Mattermost instance installed. Be productive!
+
+#### Clean-up
+
+>⚠️ **CAUTION:** This removes all resources that you created.
+
+When you are done, remove the AWS RDS manually and delete the Action:
 
 ```bash
 kubectl delete action mattermost-instance -n $NAMESPACE
