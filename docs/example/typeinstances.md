@@ -58,7 +58,8 @@ This document lists all TypeInstances, which are commonly used across our exampl
 
 1. Create a file with the GCP Credentials:
 
-    ```yaml
+    ```bash
+    export GCP_SA_VALUE=$(cat /tmp/gcp-sa.json | jq -c)
     cat > /tmp/gcp-sa-ti.yaml << ENDOFFILE
     typeInstances:
       - alias: gcp-sa
@@ -68,10 +69,7 @@ This document lists all TypeInstances, which are commonly used across our exampl
         attributes:
           - path: cap.attribute.cloud.provider.gcp
             revision: 0.1.0
-        value: { # Put here your GCP Service Account JSON.
-          "type": "service_account",
-          [...]
-        }
+        value: ${GCP_SA_VALUE}
     ENDOFFILE
     ```
 
