@@ -44,7 +44,7 @@ This document lists all TypeInstances, which are commonly used across our exampl
 
 1. Create a GCP Service Account JSON access key:
    
-   1. Open [https://console.cloud.google.com](https://console.cloud.google.com) and select your project.
+   1. Open [GCP Console](https://console.cloud.google.com) and select your project.
    
    2. In the left pane, go to **IAM & Admin** and select **Service accounts**.
    
