@@ -1,0 +1,50 @@
+name: Make release
+
+# Required secrets:
+# GH_PAT - GitHub username with personal access token with permissions to make commits to repository, must be in format: "<username>:<PAT>"
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: Version in SemVer (e.g. '0.5.0')
+        required: true
+
+jobs:
+  make-release:
+    name: Make release
+    runs-on: ubuntu-latest
+    environment: Release
+    permissions:
+      contents: read
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+        with:
+          persist-credentials: false
+      - name: Setup Git credentials
+        # Replacing the GH Action token with PAT is required to trigger the branch-build workflow on a commit:
+        # https://docs.github.com/en/actions/reference/events-that-trigger-workflows#triggering-new-workflows-using-a-personal-access-token
+        run: |
+          git remote remove origin
+          git remote add origin https://${{secrets.GH_PAT}}@github.com/${{github.repository}}.git
+          git config --global user.email "bot@capact.io"
+          git config --global user.name "Capact Bot"
+      - name: Checkout Capact repository
+        uses: actions/checkout@v2
+        with:
+          repository: "capactio/capact"
+          ref: "v${{ github.event.inputs.version }}"
+          path: "capact-repo"
+      - name: Setup npm
+        run: npm install
+      - name: Synchronize CLI documentation
+        env:
+          CAPACT_REPO_DIR: capact-repo
+        run: |
+          npm run sync-cli-docs
+          rm -rf "${CAPACT_REPO_DIR}"
+      - name: Make release commit
+        env:
+          RELEASE_VERSION: "${{ github.event.inputs.version }}"
+        run: ./hack/make-release.sh
