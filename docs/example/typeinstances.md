@@ -40,7 +40,7 @@ This document lists all TypeInstances, which are commonly used across our exampl
     export TI_ID=$(capact typeinstance create -f /tmp/aws-ti.yaml -ojson | jq -r '.[].id')
     ```
 
-### GCP
+### GCP Service Account
 
 1. Create a GCP Service Account JSON access key:
    
