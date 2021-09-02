@@ -6,7 +6,7 @@ To use cloud resources like AWS RDS or Google Cloud SQL you need to configure Ty
 
 1. Create a new User in [AWS dashboard](https://console.aws.amazon.com/iamv2/home?#/users)
 
-   - Add the **AdministratorAccess** permissions.
+   - Grant the proper permissions. You can use the predefined **AdministratorAccess** permission policy or use your own.
    - Note the access key and secret key.
 
 1. Create a file with the AWS Credentials:
