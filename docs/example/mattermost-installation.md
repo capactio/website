@@ -6,7 +6,7 @@ This tutorial shows the basic concepts of Capact on the Mattermost installation 
 
 This instruction will guide you through the installation of Mattermost on a Kubernetes cluster using Capact. 
 
-Mattermost depends on the PostgreSQL database. Depending on the cluster configuration, with the Capact project, you can install Mattermost with a managed Cloud SQL or AWS RDS database or a locally deployed PostgreSQL Helm chart.
+Mattermost depends on the PostgreSQL database. Depending on the cluster configuration, with the Capact project, you can install Mattermost with a managed Cloud SQL, AWS RDS database or a locally deployed PostgreSQL Helm chart.
 
 The diagrams below show possible scenarios:
 
