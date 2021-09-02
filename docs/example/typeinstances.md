@@ -7,7 +7,7 @@ This document lists all TypeInstances, which are commonly used across our exampl
 * Cluster with Capact installation. See the [installation tutorial](../installation/local.md). 
 - [`jq`](https://stedolan.github.io/jq/download/) installed.
 
-### AWS
+## AWS Credentials
 
 1. Create a new User in [AWS dashboard](https://console.aws.amazon.com/iamv2/home?#/users)
 
