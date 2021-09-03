@@ -674,7 +674,7 @@ Use the Capact CLI to run your Action.
 You can also check the status of the Action by monitoring the workflow for the Action on the Argo UI. This can give you useful information, when debugging your Action.
 To get access to the Argo UI, execute the following command to set up port-forwarding to Argo:
 ```
-kubectl port-forward -n capact-system svc/argo-server 2746
+kubectl -n capact-system port-forward svc/argo-argo-workflows-server 2746
 ```
 
 Now you can access the Argo UI with your browser by opening [http://127.0.0.1:2746](http://127.0.0.1:2746).

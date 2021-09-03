@@ -73,7 +73,7 @@ An Action is executed via Argo Workflows. To check the execution status you can 
   By default, the Argo UI is not exposed publicly. You need to port-forward the Service to your local machine: 
   
   ```bash
-  kubectl -n capact-system port-forward svc/argo-server 2746
+  kubectl -n capact-system port-forward svc/argo-argo-workflows-server 2746
   ```
 
   Navigate to [http://localhost:2746](http://localhost:2746) to open Argo UI. Argo Workflow has the same name as the executed Action.
