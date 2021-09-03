@@ -6,7 +6,6 @@
     padding: var(--ifm-navbar-padding-vertical) var(--ifm-navbar-padding-horizontal);
     background: var(--capact-gray-lighter);
     border-top: 1px solid var(--capact-gray-light);
-
     display: flex;
     flex-flow: row nowrap;
     justify-content: space-between;
@@ -23,7 +22,6 @@
     background: transparent;
     color: var(--capact-black);
     cursor: pointer;
-
     font-size: calc(0.875rem * var(--ifm-button-size-multiplier));
     font-weight: var(--ifm-button-font-weight);
 }
