@@ -111,7 +111,7 @@ module.exports = {
           ],
         },
         {
-          title: "Site Information",
+          title: "Legal",
           items: [
             {
               label: "Disclaimer",

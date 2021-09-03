@@ -24,7 +24,8 @@
     color: var(--capact-black);
     cursor: pointer;
 
-    /* Font size and weight is set only in dark mode */
+    font-size: calc(0.875rem * var(--ifm-button-size-multiplier));
+    font-weight: var(--ifm-button-font-weight);
 }
 
 .banner button:global(.button-close):hover {
@@ -50,13 +51,9 @@ html[data-theme="dark"] .banner {
 }
 
 html[data-theme="dark"] .banner button:global(.button-close) {
-    font-size: calc(0.875rem * var(--ifm-button-size-multiplier));
-    font-weight: var(--ifm-button-font-weight);
-
     border: 1px solid var(--ifm-button-border-color);
     background: transparent;
     color: var(--ifm-button-border-color);
-
 }
 
 html[data-theme="dark"] .banner button:global(.button-close):hover {

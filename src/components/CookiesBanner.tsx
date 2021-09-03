@@ -1,17 +1,11 @@
-import React, {FunctionComponent, useEffect, useState} from "react";
-import {Cookies} from "react-cookie";
-import CookieBanner from 'react-cookie-banner';
+import React, {FunctionComponent} from "react";
+import CookieBanner, {Cookies} from 'react-cookie-banner';
 import styles from "./CookiesBanner.module.css";
 
 export const CookiesMessageBanner: FunctionComponent = () => {
 	const cookies = new Cookies();
-	const [init, setInit] = useState<boolean>(false);
 
-	useEffect(() => {
-		setInit(true);
-	}, []);
-
-	if (!init || !cookies || cookies.get("accepts-cookies")) {
+	if (!cookies || cookies.get("accepts-cookies")) {
 		return null;
 	}
 
@@ -19,7 +13,7 @@ export const CookiesMessageBanner: FunctionComponent = () => {
 		<CookieBanner
 			disableStyle={true}
 			className={styles.banner}
-			message="By continuing to use our site you are consenting to Capact using cookies in accordance with our "
+			message="By continuing to use our site, you consent to Capact using cookies in accordance with our "
 			dismissOnScroll={false}
 			buttonMessage={"Close"}
 			link={
