@@ -110,6 +110,19 @@ module.exports = {
             },
           ],
         },
+        {
+          title: "Legal",
+          items: [
+            {
+              label: "Disclaimer",
+              to: "/disclaimer",
+            },
+            {
+              label: "Cookie Policy",
+              to: "/cookie-policy",
+            },
+          ],
+        },
       ],
       copyright: `Copyright © ${new Date().getFullYear()} Capact authors`,
     },
@@ -144,6 +157,12 @@ module.exports = {
         redirects: [...getCustomRedirects()],
       },
     ],
+    [
+      require("./src/plugin/gtm.js"),
+      {
+        trackingID: 'GTM-PH86LZ5', // GTM Container ID
+      }
+    ]
   ],
   customFields: {
     github: {
