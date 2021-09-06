@@ -23,7 +23,7 @@ First, check out [a list of common problems](./operation/common-problems.md) tha
 
 If you found a bug, please report it or contribute a fix. To do so, read our [Contribution guide](https://github.com/capactio/.github/blob/main/CONTRIBUTING.md). We are open for any type of contributions! 
 
-## How Capact compares to...
+## How does Capact compare to...
 
 ### Kubevela with Crossplane
 
