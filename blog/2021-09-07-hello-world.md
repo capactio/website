@@ -12,7 +12,7 @@ tags:
 ---
 
 
-TODO
+TODO: Intro
 
 <!--truncate-->
 
@@ -48,8 +48,16 @@ Here are other things to do:
 
 ## Wait, there's more!
 
+In a series of future blog posts we will highlight Capact features and cover some technical details for all interested developers out there.
 
-Capact 0.5.0 is just around the corner. We're working very hard to bring many UX improvements, both for Capact contributors and users. The list includes:
+Also, **a brand-new release**, Capact 0.5.0, is **just around the corner**. We're working very hard to bring many UX improvements, both for Capact users and content developers. The list includes:
+- complete Action input validation, and more advanced, concurrent Capact manifests validation with optional server-side checks,
+- experimental content development tools for Helm and Terraform-based (AWS and GCP) manifest generation,
+- Policy syntax and behavior changes for improving consistency and usability,
+- verbose output for Capact CLI,
+- dependency updates, including migration to Argo 3,
+- and much more!
 
+Stay tuned for the official announcement!
 
-There's so much more. In future blog posts we will highlight Capact features and also cover technical details for all developers around there. Stay tuned!
+![My body is ready](./assets/my-body-is-ready.gif)<br/>(source: [tenor.com](https://tenor.com/view/my-body-is-ready-splits-dance-gif-13190816))
