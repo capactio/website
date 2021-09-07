@@ -1,6 +1,6 @@
 ---
 slug: hello-world
-title: Hello world!
+title: Hello world! Introducing Capact, your new way to manage applications and infrastructure
 authors:
   - pkosiec
 tags:
@@ -12,31 +12,84 @@ tags:
 ---
 
 
-TODO: Intro
+![Competing standards](https://imgs.xkcd.com/comics/standards.png)<br/>(source: [xkcd.com](https://xkcd.com/927/))
+
+In cloud-native world there are many tools around to manage applications and infrastructure.
+
+
+Imagine ...
+
+
+Still looking for universal tool like this? Look no more. Introducing Capact, our solution for the problem stated above.
 
 <!--truncate-->
 
 ## What is Capact?
 
-TODO
+Capact is a new way to manage applications and infrastructure. 
 
-And the best thing is that Capact is **fully open source** under the Apache 2.0 license. How cool is that? 😎
+<!-- ![]() # TODO: Not this again GIF / meme -->
 
-## Use cases
+Yes, we get it, you already know a plenty of different tools for that. But Capact is different. How different?
 
-TODO
+Capact comes with truly unique feature - dependencies interchangeability. If you know the concept of interfaces from a variety of programming languages, you get the idea. Think about Capact as a way of executing workflows with steps, which are described with interfaces. An implementation for a given interface is resolved dynamically in runtime, according to your preferences. Also, these dynamic workflow steps are building blocks, which can be reused by others.
 
-## How does it compare to 
+Initially we are focused on day-one and day-two operations for managing applications and infrastructure. However, Capact is built with universal concepts in mind, which means you can run any arbitrary workflow you want. Data processing, system configuration, cluster benchmarking, auditing, running serverless workloads - the possibilities are virtually endless.
 
-TODO
+The best thing is that Capact is **fully open source** under the Apache 2.0 license. How cool is that? 😎
 
-## Get started
+## Capact concept in one minute
+
+The whole concept sounds confusing? Let's see that in action then.
+
+Let's take [Mattermost](https://mattermost.com/) installation as an example. Mattermost is an open-source alternative for Slack.
+
+Mattermost is a Go server application, which uses PostgreSQL database. If we want to install Mattermost, this how the workflow would look like:
+
+![Mattermost installation 1](./assets/capact-example1.svg)
+
+We need a PostgreSQL database first, to run Mattermost server. It's pretty simple. 
+
+Now, what if we make the PostgreSQL database installation abstract? Think about that as an empty slot, where you can put a puzzle with a specific shape.
+
+![Mattermost installation 2](./assets/capact-example2.svg)
+
+Assuming there are many puzzles out there, you see that only a few of them fit in the slot:
+
+![Mattermost installation 3](./assets/capact-example3.svg)
+
+In the case of PostgreSQL installation, there are four puzzles that fit:
+
+![Mattermost installation 4](./assets/capact-example4.svg)
+
+1. Install PostgreSQL Helm chart on a Kubernetes cluster
+1. Provision GCP CloudSQL for PostgreSQL database
+1. Provision AWS RDS for PostgreSQL database
+1. Reuse existing PostgreSQL database
+
+What's great is that Mattermost installation is also a bigger puzzle, which can be used by others! Maybe as a part of productivity stack installation, which could consist of Mattermost, [GitLab](https://about.gitlab.com/) and [Jitsi Meet](https://jitsi.org/jitsi-meet/)? 🤔
+
+![Mattermost installation 5](./assets/capact-example5.svg)
+
+And that's Capact. You can build your own workflows with existing puzzles which are available inside Capact Hub. You can also create your own puzzles. Share them with community and enable [DRY](https://en.wikipedia.org/wiki/Don%27t_repeat_yourself) at a global scale, together!
+
+## How does Capact differ from other tools?
+
+Capact doesn't compete with the ones you already know, but integrates them instead. Whenever you are for example [Helm](https://helm.sh) or [Terraform](https://terraform.io) user, you can still use your favorite tools and glue them together to achieve a given result.
+
+If you are familiar with [Kubevela](https://kubevela.io/), [Crossplane](https://crossplane.io/), and [Open Application Model](https://oam.dev/), you can see many similarities between the solution and Capact. Here are the main differences:
+- Capact has a unique built-in feature - interchangeable dependencies, which allows to highly reduce amount of duplicated code.
+- Capact is workflow-based solution, which gives your more flexibility. Unlike Kubevela and Crossplane, Capact is not limited to just infrastructure and application deployment. You can use it for virtually everything.
+
+To read a detailed comparison between Capact and other tools, see our [FAQ](/docs/faq#how-does-capact-compare-to).
+
+## Get started with Capact
 
 Interested in trying out Capact? Awesome! The easiest way to do so is installing it locally and trying out one of our examples to understand Capact basic concepts.
 
 1. [Install Capact CLI](https://capact.io/docs/cli/getting-started),
 1. [Install Capact locally with Capact CLI](https://capact.io/docs/installation/local),
-1. [Run different scenarios of Mattermost installation example](https://capact.io/docs/example/mattermost-installation).
+1. [Run different scenarios of Mattermost installation example](https://capact.io/docs/example/mattermost-installation).  
 
 Here are other things to do: 
 
@@ -45,6 +98,8 @@ Here are other things to do:
 📖 **Read our documentation:** If you want to get familiar with other installation options, examples, content development or contribution guides, navigate to the [full Capact documentation](https://capact.io/docs).
 
 🤔 **Get support:** If you need any help or you have a question for the maintainers team, join our [Slack channel](/slack) on the CNCF workspace and post a message - we will help you as much as we can!
+
+Currently, Capact is in experimental stage. We open-sourced Capact as early as possible to get early feedback and build the Capact future as a joint effort with the community.
 
 ## Wait, there's more!
 
@@ -60,4 +115,4 @@ Also, **a brand-new release**, Capact 0.5.0, is **just around the corner**. We'r
 
 Stay tuned for the official announcement!
 
-![My body is ready](./assets/my-body-is-ready.gif)<br/>(source: [tenor.com](https://tenor.com/view/my-body-is-ready-splits-dance-gif-13190816))
+<!-- ![]() # TODO: my body is ready GIF / meme -->
