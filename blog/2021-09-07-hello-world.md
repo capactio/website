@@ -1,6 +1,6 @@
 ---
-slug: hello-world
-title: Hello world! Introducing Capact, your new way to manage applications and infrastructure
+slug: introducing-capact
+title: Introducing Capact, your new way to manage applications and infrastructure
 authors:
   - pkosiec
 tags:
@@ -11,22 +11,27 @@ tags:
   - release-sneak-peek
 ---
 
+Managing the lifecycle of infrastructure, applications and processes in modern IT is problematic. 
+There are a variety of tools and best practices, which are ever-changing. It's a struggle to stay up to date with these practices, and not everyone is an expert in everything. Technical debt is inevitable.
 
-![Competing standards](https://imgs.xkcd.com/comics/standards.png)<br/>(source: [xkcd.com](https://xkcd.com/927/))
+We are ultimately all alone. Siloed within the context of team, department or company, locked-in in a particular ecosystem of tooling.  To deliver end-to-end capabilities, we build them from a scratch in a vacuum. We consume API calls, transform data, build and manage infrastructure and applications. Do we all really have different use cases? Don't we spend too much time on solving the same problems as others have?
 
-In cloud-native world there are many tools around to manage applications and infrastructure.
+What if we could share the expertise, and, in a result, save our time? While collaborating together we ensure we use the best tools out there, following best practices. This is something that already happens - we have plenty of libraries and frameworks out there. But what if we went a step further and have a way to create, use and share building blocks that are language-agnostic abstracted capabilities?
 
+For example, if you're not a cloud expert, maybe all you need to know is that you want a managed PostgreSQL database on AWS, and let others make it happen to provision AWS RDS for PostgreSQL using Terraform. If you need any Kubernetes 
+cluster - maybe by saying "I want any Kubernetes cluster" and letting magic happen, you could cover both local development (e.g. using [K3d](https://k3d.io)) and production (e.g. Google Cloud GKE) scenarios...
 
-Imagine ...
+What if I told you... **it is all possible**?
 
+<!-- // TODO: The future is now, old man -->
 
-Still looking for universal tool like this? Look no more. Introducing Capact, our solution for the problem stated above.
+Introducing Capact, crowdsourced expertise. Learn once, use everywhere.
 
 <!--truncate-->
 
 ## What is Capact?
 
-Capact is a new way to manage applications and infrastructure. 
+Capact is a new way to manage applications and infrastructure and run arbitrary workflows. 
 
 <!-- ![]() # TODO: Not this again GIF / meme -->
 
