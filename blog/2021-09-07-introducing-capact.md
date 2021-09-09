@@ -15,7 +15,7 @@ tags:
 Managing the lifecycle of infrastructure, applications and processes in modern IT is problematic. 
 There are a variety of tools and best practices, which are ever-changing. It's a struggle to stay up to date with these practices, and not everyone is an expert in everything. Technical debt is inevitable.
 
-We are ultimately all alone. Siloed within the context of team, department or company, locked-in in a particular ecosystem of tooling.  To deliver end-to-end capabilities, we build them from a scratch in a vacuum. We consume API calls, transform data, build and manage infrastructure and applications. Do we all really have different use cases? Don't we spend too much time on solving the same problems as others have?
+We are ultimately all alone. Siloed within the context of team, department or company, locked-in in a particular ecosystem of tooling. To deliver end-to-end capabilities, we build them from a scratch in a vacuum. We consume API calls, transform data, build and manage infrastructure and applications. Do we all really have different use cases? Don't we spend too much time on solving the same problems as others have?
 
 What if we could share the expertise, and, in a result, save our time? While collaborating together, we ensure we use the best tools out there, following best practices. This is something that already happens - we have plenty of libraries and frameworks out there. But what if we went a step further and have a way to create, use and share building blocks that are language-agnostic abstracted capabilities?
 
@@ -114,7 +114,7 @@ In a series of future blog posts we will highlight Capact features and cover som
 Also, **a brand-new release**, Capact 0.5.0, is **just around the corner**. We're working very hard to bring many UX improvements, both for Capact users and content developers. The list includes:
 - complete Action input validation, and more advanced, concurrent Capact manifests validation with optional server-side checks,
 - experimental content development tools for Helm and Terraform-based (AWS and GCP) manifest generation,
-- Policy syntax and behavior changes for improving consistency and usability,
+- [Policy](https://capact.io/docs/feature/policies/overview) syntax and behavior changes for improving consistency and usability,
 - verbose output for Capact CLI,
 - dependency updates, including migration to Argo 3,
 - and much more!
