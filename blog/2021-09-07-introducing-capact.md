@@ -4,10 +4,11 @@ title: Introducing Capact, your new way to manage applications and infrastructur
 authors:
   - pkosiec
 tags:
-  - introduction
   - capact
+  - introduction
   - kubernetes
   - release
+  - get-started
   - release-sneak-peek
 ---
 
@@ -23,21 +24,19 @@ cluster - maybe by saying "I want any Kubernetes cluster" and letting magic happ
 
 What if I told you... **it is all possible**?
 
-<!-- // TODO: The future is now, old man -->
+<!--truncate-->
 
 Introducing Capact, crowdsourced expertise. Learn once, use everywhere.
-
-<!--truncate-->
 
 ## What is Capact?
 
 Capact is a new way to manage applications and infrastructure and run arbitrary workflows. 
 
-<!-- ![]() # TODO: Not this again GIF / meme -->
+![Here we go again GIF](./assets/here-we-go-again-again.gif) <center><small>source: <a href="https://tenor.com/view/here-wego-again-again-ohboy-sigh-captain-america-gif-15496881" target="_blank">tenor.com</a></small></center>
 
 Yes, we get it, you already know a plenty of different tools for that. But Capact is different. How different?
 
-Capact comes with truly unique feature - dependencies interchangeability. If you know the concept of interfaces from a variety of programming languages, you get the idea. Think about Capact as a way of executing workflows with steps, which are described with interfaces. An implementation for a given interface is resolved dynamically in runtime, according to your preferences. Also, these dynamic workflow steps are building blocks, which can be reused by others.
+Capact comes with truly unique feature - **dependencies interchangeability**. If you know the concept of interfaces from a variety of programming languages, you get the idea. Think about Capact as a way of executing workflows with steps, which are described with interfaces. An implementation for a given interface is resolved dynamically in runtime, according to your preferences. Also, these dynamic workflow steps are building blocks, which can be reused by others.
 
 Initially we are focused on day-one and day-two operations for managing applications and infrastructure. However, Capact is built with universal concepts in mind, which means you can run any arbitrary workflow you want. Data processing, system configuration, cluster benchmarking, auditing, running serverless workloads - the possibilities are virtually endless.
 
@@ -100,6 +99,8 @@ Here are other things to do:
 
 ⭐ **Star our GitHub repository**: If you like the idea, show your interest in the project and [give us a GitHub star](https://github.com/capactio/capact)! You can also subscribe for new Capact releases. Thank you for your support!
 
+👉 **Follow us:** Interesting in Capact updates? Follow us on [Twitter](https://twitter.com/capactio)! Also, check out our [LinkedIn](https://www.linkedin.com/company/72586376) page and [YouTube](https://www.youtube.com/channel/UCajXtDttqVuZ_Bl7M3_qA8w) channel.
+
 📖 **Read our documentation:** If you want to get familiar with other installation options, examples, content development or contribution guides, navigate to the [full Capact documentation](https://capact.io/docs).
 
 🤔 **Get support:** If you need any help or you have a question for the maintainers team, join our [Slack channel](/slack) on the CNCF workspace and post a message - we will help you as much as we can!
@@ -120,4 +121,4 @@ Also, **a brand-new release**, Capact 0.5.0, is **just around the corner**. We'r
 
 Stay tuned for the official announcement!
 
-<!-- ![]() # TODO: my body is ready GIF / meme -->
+![Are you ready GIF](./assets/are-you-ready.gif) <center><small>source: <a href="https://tenor.com/view/are-you-ready-gif-5011220" target="_blank">tenor.com</a></small></center>

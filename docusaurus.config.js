@@ -92,7 +92,7 @@ module.exports = {
           items: [
             {
               label: "Twitter",
-              href: "https://twitter.com/CapactIO",
+              href: "https://twitter.com/capactio",
             },
             {
               label: "YouTube",
