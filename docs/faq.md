@@ -23,7 +23,7 @@ First, check out [a list of common problems](./operation/common-problems.md) tha
 
 If you found a bug, please report it or contribute a fix. To do so, read our [Contribution guide](https://github.com/capactio/.github/blob/main/CONTRIBUTING.md). We are open for any type of contributions! 
 
-## How Capact compares to...
+## How does Capact compare to...
 
 ### Kubevela with Crossplane
 
@@ -60,7 +60,7 @@ For example, when running Capact manifests, you can deploy AWS RDS and EKS defin
 
 ### Pulumi
 
-Capact supports Terraform runner to use Terraform modules to manage your infrastucture. Pulumi is similar to Terraform, however, Instead of having its configuration language, you can use programming languages like Python, Go, JavaScript and others. There could be a Pulumi runner for Capact, which allows you to use Pulumi content in OCF manifests.
+Capact supports Terraform runner to use Terraform modules to manage your infrastucture. Pulumi is similar to Terraform, however, instead of having its configuration language, you can use programming languages like Python, Go, JavaScript and others. There could be a Pulumi runner for Capact, which allows you to use Pulumi content in OCF manifests.
 
 ## What is the origin of name “Capact”?
 

@@ -1,6 +1,8 @@
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const getCustomRedirects = require("./redirects.js");
 
+const copyrightText = `Copyright © ${new Date().getFullYear()} Capact authors.`;
+
 /** @type {import('@docusaurus/types').DocusaurusConfig} */
 module.exports = {
   title: "Capact",
@@ -41,6 +43,11 @@ module.exports = {
           docId: "introduction",
           position: "left",
           label: "Documentation",
+        },
+        {
+          to: "/blog",
+          label: "Blog",
+          position: "left",
         },
         {
           type: "docsVersionDropdown",
@@ -85,7 +92,7 @@ module.exports = {
           items: [
             {
               label: "Twitter",
-              href: "https://twitter.com/CapactIO",
+              href: "https://twitter.com/capactio",
             },
             {
               label: "YouTube",
@@ -124,7 +131,7 @@ module.exports = {
           ],
         },
       ],
-      copyright: `Copyright © ${new Date().getFullYear()} Capact authors`,
+      copyright: copyrightText,
     },
   },
   presets: [
@@ -142,7 +149,14 @@ module.exports = {
             },
           },
         },
-        blog: false,
+        blog: {
+          showReadingTime: true,
+          editUrl: "https://github.com/capactio/website/edit/main/",
+          feedOptions: {
+            type: "all",
+            copyright: copyrightText,
+          },
+        },
         theme: {
           customCss: require.resolve("./src/css/custom.css"),
         },

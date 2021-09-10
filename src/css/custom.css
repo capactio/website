@@ -213,3 +213,10 @@ html[data-theme="dark"] .table-of-contents__link--active code {
     display: block !important;
   }
 }
+
+/* Blog */
+
+.blog-post-page article img {
+  display: block;
+  margin: 0 auto;
+}
