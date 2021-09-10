@@ -15,13 +15,14 @@ Subcommand for various manifest generation operations
 ```
   -h, --help            help for manifest-gen
   -o, --output string   Path to the output directory for the generated manifests (default "generated")
-      --override        Override existing manifest files
+      --overwrite       Overwrite existing manifest files
 ```
 
 ### Options inherited from parent commands
 
 ```
-  -c, --config string   Path to the YAML config file
+  -c, --config string                 Path to the YAML config file
+  -v, --verbose int/string[=simple]   Prints more verbose output. Allowed values: 0 - disable, 1 - simple, 2 - trace (default 0 - disable)
 ```
 
 ### SEE ALSO

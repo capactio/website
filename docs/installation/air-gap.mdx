@@ -1,0 +1,126 @@
+# Air Gap Install
+
+You can install Capact in an air-gapped environment using different methods, as we simply give you an option to create archive with Capact Docker images.
+
+This document describes air-gapped installation using k3d. You can use any Kubernetes cluster, but you need to take care of loading images into the cluster.
+
+> **NOTE:** Executed Action may still require internet access e.g. to download Terraform module, or to create Cloud SQL on GCP side.
+
+## Prerequisites
+
+- [Docker](https://www.docker.com/) installed
+- [Helm v3](https://helm.sh/docs/intro/install/) installed
+- [Capact CLI](../cli/getting-started.mdx#install) installed
+  <!-- Remove note after 0.5.0 release and point out that at least 0.5.0 needs to be used. -->
+  > **NOTE:** Install the latest Capact CLI version from the `main` branch.
+
+## Steps
+
+Steps from [**Do with the internet access**](#do-with-the-internet-access) you do only once as it's about preparing data that is later used for Capact installation.
+
+### Do with the internet access
+
+1. Export Capact version:
+
+   ```bash
+   export CAPACT_VERSION=<version> # e.g. 0.5.0, 0.4.0-61b2605
+   ```
+
+2. Create archive with Capact images for the given version:
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+<div className="tab-container-nested">
+<Tabs
+	groupId="ref"
+	defaultValue="stable"
+	values={[
+		{label: 'Stable', value: 'stable'},
+		{label: 'Latest', value: 'latest'},
+	]}>
+<TabItem value="stable">
+
+```bash
+capact alpha archive-images helm -v --version ${CAPACT_VERSION} -o ./archive.gzip.tar.gz --compress gzip
+```
+
+</TabItem>
+<TabItem value="latest">
+
+```bash
+capact alpha archive-images helm -v --version ${CAPACT_VERSION} --helm-repo @latest -o ./archive.gzip.tar.gz --compress gzip
+```
+
+</TabItem>
+</Tabs>
+</div>
+
+4. Fetch Capact Helm charts fo the given version:
+
+<div className="tab-container-nested">
+<Tabs
+	groupId="ref"
+	defaultValue="stable"
+	values={[
+		{label: 'Stable', value: 'stable'},
+		{label: 'Latest', value: 'latest'},
+	]}>
+<TabItem value="stable">
+
+```bash
+# Add Helm chart repository
+helm repo add capactio https://storage.googleapis.com/capactio-stable-charts
+# Create directory for pulled Helm charts
+mkdir local-charts && cd local-charts
+helm pull --version ${CAPACT_VERSION} capactio/argo capactio/capact capactio/cert-manager capactio/ingress-controller capactio/kubed capactio/monitoring capactio/neo4j
+```
+
+</TabItem>
+<TabItem value="latest">
+
+```bash
+# Add Helm chart repository
+helm repo add capactio-latest https://storage.googleapis.com/capactio-latest-charts
+# Create directory for pulled Helm charts
+mkdir local-charts && cd local-charts
+helm pull --version ${CAPACT_VERSION} capactio-latest/argo capactio-latest/capact capactio-latest/cert-manager capactio-latest/ingress-controller capactio-latest/kubed capactio-latest/monitoring capactio-latest/neo4j
+```
+
+</TabItem>
+</Tabs>
+</div>
+
+5. Create local k3d cluster with the pre-existing images.
+
+   ```bash
+   capact env create k3d -v --volume="$PWD/archive.gzip.tar.gz:/var/lib/rancher/k3s/agent/images/archive.gzip.tar.gz@server[*];agent[*]" --wait 5m
+   ```
+
+   > **NOTE:** You can create own Kubernetes cluster and load images tarball to your nodes or private Docker registry. For example, use `docker load -i ./archive.gzip.tar.gz`.
+
+   > **NOTE:** The `capact env create k3d` command needs internet access as the k3s server pulls such images: `rancher/local-path-provisioner`, `rancher/coredns-coredns`, `rancher/metrics-server`, `rancher/library-busybox`. You can also download those images as described in their [tutorial](https://rancher.com/docs/rancher/v2.0-v2.4/en/installation/other-installation-methods/air-gap/populate-private-registry/#3-save-the-images-to-your-workstation).
+
+### Without the internet access
+
+Once you have your local Kubernetes cluster set up, install Capact with the following command:
+
+```bash
+capact install --version ${CAPACT_VERSION} --helm-repo local-charts
+```
+
+Wait for the command to finish.
+
+## Next steps
+
+Configure Capact CLI to connect to your fresh local Capact installation. Follow the steps in the [First use](../cli/getting-started#first-use) section of the CLI Getting started guide. Enjoy using Capact!
+
+## Cleanup
+
+To remove your local Kubernetes cluster, run:
+
+```bash
+capact environment delete k3d
+```
+
+> **NOTE:** This command deletes the local cluster with all data, including history of executed Actions and created TypeInstances. Make sure you cleaned up all external resources (e.g. managed PostgreSQL databases) based on the TypeInstance data.
