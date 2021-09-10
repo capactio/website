@@ -151,7 +151,7 @@ module.exports = {
         },
         blog: {
           showReadingTime: true,
-          editUrl: "https://github.com/capactio/website/edit/main/blog/",
+          editUrl: "https://github.com/capactio/website/edit/main/",
           feedOptions: {
             type: "all",
             copyright: copyrightText,
