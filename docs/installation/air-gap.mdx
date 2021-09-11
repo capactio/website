@@ -42,14 +42,14 @@ import TabItem from '@theme/TabItem';
 <TabItem value="stable">
 
 ```bash
-capact alpha archive-images helm -v --version ${CAPACT_VERSION} -o ./archive.gzip.tar.gz --compress gzip
+capact alpha archive-images helm -v --version ${CAPACT_VERSION} -o ./capact-images-amd64.tar.gz --compress gzip
 ```
 
 </TabItem>
 <TabItem value="latest">
 
 ```bash
-capact alpha archive-images helm -v --version ${CAPACT_VERSION} --helm-repo @latest -o ./archive.gzip.tar.gz --compress gzip
+capact alpha archive-images helm -v --version ${CAPACT_VERSION} --helm-repo @latest -o ./capact-images-amd64.tar.gz --compress gzip
 ```
 
 </TabItem>
@@ -82,7 +82,7 @@ helm pull --version ${CAPACT_VERSION} --untar --untardir local-charts capactio/a
 # Add Helm chart repository
 helm repo add capactio-latest https://storage.googleapis.com/capactio-latest-charts
 # Download charts
-helm pull --version ${CAPACT_VERSION} --untar --untardir local-charts capactio-latest/argo capactio-latest/capact capactio-latest/cert-manager capactio-latest/ingress-controller capactio-latest/kubed capactio-latest/monitoring capactio-latest/neo4j --untardir local-charts-2
+helm pull --version ${CAPACT_VERSION} --untar --untardir local-charts capactio-latest/argo capactio-latest/capact capactio-latest/cert-manager capactio-latest/ingress-controller capactio-latest/kubed capactio-latest/monitoring capactio-latest/neo4j
 ```
 
 </TabItem>
@@ -120,7 +120,7 @@ curl -Lo core.capact.io_actions.yaml https://raw.githubusercontent.com/capactio/
 
    ```bash
    docker pull docker.io/rancher/k3s:v1.20.10-k3s1
-   curl -Lo k3s-airgap-images-amd64.tar https://github.com/k3s-io/k3s/releases/download/v1.20.10%2Bk3s1/k3s-airgap-images-amd64.tar
+   curl -Lo k3s-images-amd64.tar https://github.com/k3s-io/k3s/releases/download/v1.20.10%2Bk3s1/k3s-airgap-images-amd64.tar
    ```
 
    > **NOTE:** Do that only if k3d cluster is used.
@@ -131,17 +131,17 @@ curl -Lo core.capact.io_actions.yaml https://raw.githubusercontent.com/capactio/
 
    ```bash
    capact env create k3d -v \
-     --volume="$PWD/archive.gzip.tar.gz:/var/lib/rancher/k3s/agent/images/archive.gzip.tar.gz@server[*];agent[*]" \
-     --volume="$PWD/k3s-airgap-images-amd64.tar:/var/lib/rancher/k3s/agent/images/k3s-airgap-images-amd64.tar@server[*];agent[*]" \
+     --volume="$PWD/capact-images-amd64.tar.gz:/var/lib/rancher/k3s/agent/images/capact-images-amd64.tar.gz@server[*];agent[*]" \
+     --volume="$PWD/k3s-images-amd64.tar:/var/lib/rancher/k3s/agent/images/k3s-images-amd64.tar@server[*];agent[*]" \
      --wait 5m
    ```
 
-   > **NOTE:** You can create own Kubernetes cluster and load images to your nodes or private Docker registry. For example, use `docker load -i ./archive.gzip.tar.gz`.
+   > **NOTE:** You can create own Kubernetes cluster and load images to your nodes or private Docker registry. For example, use `docker load -i ./capact-images-amd64.tar.gz`.
 
 2. Once you have your local Kubernetes cluster set up, install Capact with the following command:
 
 	 ```bash
-	 capact install --version ${CAPACT_VERSION} --helm-repo local-charts --crd --capact-overrides="hub-public.populator.manifestsLocation.local=true"
+	 capact install --version ${CAPACT_VERSION} --helm-repo local-charts --crd ./core.capact.io_actions.yaml --capact-overrides="hub-public.populator.manifestsLocation.local=true"
 	 ```
 
    Wait for the command to finish.
