@@ -1,4 +1,4 @@
-# Air Gap Install
+# Air-Gap Install
 
 You can install Capact in an air-gapped environment using different methods, as we simply give you an option to create archive with Capact Docker images.
 
@@ -56,7 +56,7 @@ capact alpha archive-images helm -v --version ${CAPACT_VERSION} --helm-repo @lat
 </Tabs>
 </div>
 
-4. Fetch Capact Helm charts fo the given version:
+3. Fetch Capact Helm charts fo the given version:
 
 <div className="tab-container-nested">
 <Tabs
@@ -71,9 +71,8 @@ capact alpha archive-images helm -v --version ${CAPACT_VERSION} --helm-repo @lat
 ```bash
 # Add Helm chart repository
 helm repo add capactio https://storage.googleapis.com/capactio-stable-charts
-# Create directory for pulled Helm charts
-mkdir local-charts && cd local-charts
-helm pull --version ${CAPACT_VERSION} capactio/argo capactio/capact capactio/cert-manager capactio/ingress-controller capactio/kubed capactio/monitoring capactio/neo4j
+# Download charts
+helm pull --version ${CAPACT_VERSION} --untar --untardir local-charts capactio/argo capactio/capact capactio/cert-manager capactio/ingress-controller capactio/kubed capactio/monitoring capactio/neo4j
 ```
 
 </TabItem>
@@ -82,34 +81,70 @@ helm pull --version ${CAPACT_VERSION} capactio/argo capactio/capact capactio/cer
 ```bash
 # Add Helm chart repository
 helm repo add capactio-latest https://storage.googleapis.com/capactio-latest-charts
-# Create directory for pulled Helm charts
-mkdir local-charts && cd local-charts
-helm pull --version ${CAPACT_VERSION} capactio-latest/argo capactio-latest/capact capactio-latest/cert-manager capactio-latest/ingress-controller capactio-latest/kubed capactio-latest/monitoring capactio-latest/neo4j
+# Download charts
+helm pull --version ${CAPACT_VERSION} --untar --untardir local-charts capactio-latest/argo capactio-latest/capact capactio-latest/cert-manager capactio-latest/ingress-controller capactio-latest/kubed capactio-latest/monitoring capactio-latest/neo4j --untardir local-charts-2
 ```
 
 </TabItem>
 </Tabs>
 </div>
 
-5. Create local k3d cluster with the pre-existing images.
+4. Download Action CRD:
+
+<div className="tab-container-nested">
+<Tabs
+	groupId="ref"
+	defaultValue="stable"
+	values={[
+		{label: 'Stable', value: 'stable'},
+		{label: 'Latest', value: 'latest'},
+	]}>
+<TabItem value="stable">
+
+```bash
+curl -Lo core.capact.io_actions.yaml https://raw.githubusercontent.com/capactio/capact/v${CAPACT_VERSION}/deploy/kubernetes/crds/core.capact.io_actions.yaml
+```
+
+</TabItem>
+<TabItem value="latest">
+
+```bash
+curl -Lo core.capact.io_actions.yaml https://raw.githubusercontent.com/capactio/capact/main/deploy/kubernetes/crds/core.capact.io_actions.yaml
+```
+
+</TabItem>
+</Tabs>
+</div>
+
+5. Download k3d images:
 
    ```bash
-   capact env create k3d -v --volume="$PWD/archive.gzip.tar.gz:/var/lib/rancher/k3s/agent/images/archive.gzip.tar.gz@server[*];agent[*]" --wait 5m
+   docker pull docker.io/rancher/k3s:v1.20.10-k3s1
+   curl -Lo k3s-airgap-images-amd64.tar https://github.com/k3s-io/k3s/releases/download/v1.20.10%2Bk3s1/k3s-airgap-images-amd64.tar
    ```
 
-   > **NOTE:** You can create own Kubernetes cluster and load images tarball to your nodes or private Docker registry. For example, use `docker load -i ./archive.gzip.tar.gz`.
-
-   > **NOTE:** The `capact env create k3d` command needs internet access as the k3s server pulls such images: `rancher/local-path-provisioner`, `rancher/coredns-coredns`, `rancher/metrics-server`, `rancher/library-busybox`. You can also download those images as described in their [tutorial](https://rancher.com/docs/rancher/v2.0-v2.4/en/installation/other-installation-methods/air-gap/populate-private-registry/#3-save-the-images-to-your-workstation).
+   > **NOTE:** Do that only if k3d cluster is used.
 
 ### Without the internet access
 
-Once you have your local Kubernetes cluster set up, install Capact with the following command:
+1. Create k3d cluster with the pre-existing images.
 
-```bash
-capact install --version ${CAPACT_VERSION} --helm-repo local-charts
-```
+   ```bash
+   capact env create k3d -v \
+     --volume="$PWD/archive.gzip.tar.gz:/var/lib/rancher/k3s/agent/images/archive.gzip.tar.gz@server[*];agent[*]" \
+     --volume="$PWD/k3s-airgap-images-amd64.tar:/var/lib/rancher/k3s/agent/images/k3s-airgap-images-amd64.tar@server[*];agent[*]" \
+     --wait 5m
+   ```
 
-Wait for the command to finish.
+   > **NOTE:** You can create own Kubernetes cluster and load images to your nodes or private Docker registry. For example, use `docker load -i ./archive.gzip.tar.gz`.
+
+2. Once you have your local Kubernetes cluster set up, install Capact with the following command:
+
+	 ```bash
+	 capact install --version ${CAPACT_VERSION} --helm-repo local-charts --crd --capact-overrides="hub-public.populator.manifestsLocation.local=true"
+	 ```
+
+   Wait for the command to finish.
 
 ## Next steps
 
