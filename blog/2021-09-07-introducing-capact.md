@@ -19,7 +19,7 @@ We are ultimately all alone. Siloed within the context of team, department, or c
 
 What if we could share the expertise and, as a result, save time? Collaborating together, we ensure we use the best tools out there, and follow the best practices. This is something that already happens—we have plenty of libraries and frameworks out there. But what if we went a step further and have a way to create, use and share building blocks that are language-agnostic abstracted capabilities?
 
-For example, if you're not a cloud expert, all you need to know is that you want a managed PostgreSQL database on AWS and let others make it. In that way, services are managed by subject matter experts, and you can simply focus on your business logic. Likewise, if you need any Kubernetes cluster—by saying "I want any Kubernetes cluster" and letting the magic happen, you could cover both local development and production scenarios...
+For example, if you're not a cloud expert, all you need to know is that you want a managed PostgreSQL database on AWS and let others make it. In that way, services are managed by subject-matter experts, and you can simply focus on your business logic. Likewise, if you need any Kubernetes cluster—by saying "I want any Kubernetes cluster" and letting the magic happen, you could cover both local development and production scenarios...
 
 What if I told you... **it is all possible**?
 
@@ -37,7 +37,7 @@ Yes, we get it. You already know plenty of different tools for that. But Capact 
 
 Capact comes with a truly unique feature—**interchangeability of dependencies**. If you know the concept of interfaces from a variety of programming languages, you get the idea. Think about Capact as a way of executing workflows with steps, which are described with interfaces. An implementation for a given interface is resolved dynamically at runtime, according to your preferences. Also, these dynamic workflow steps are building blocks, which can be reused by others (or even nested within other workflows).
 
-Initially, we focused on day-one and day-two operations for managing applications and infrastructure. However, Capact is built with universal concepts in mind, so you can run any arbitrary workflow you want. For example, you can do data processing, ML workloads, system configuration, cluster benchmarking, auditing, running serverless workloads—the possibilities are virtually endless.
+Initially, we focused on day-one and day-two operations for managing applications and infrastructure. However, Capact is built with universal concepts in mind, so you can run any arbitrary workflow you want. For example, you can do data processing, machine learning workloads, system configuration, cluster benchmarking, auditing, running serverless workloads—the possibilities are virtually endless.
 
 The best thing is that Capact is **fully open-source** under the Apache 2.0 license. How cool is that? 😎
 
