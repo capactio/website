@@ -119,7 +119,8 @@ curl -Lo core.capact.io_actions.yaml https://raw.githubusercontent.com/capactio/
 5. Download k3d images:
 
    ```bash
-   docker pull docker.io/rancher/k3s:v1.20.10-k3s1
+   docker pull rancher/k3s:v1.20.10-k3s1
+   docker pull rancher/k3d-proxy
    curl -Lo k3s-images-amd64.tar https://github.com/k3s-io/k3s/releases/download/v1.20.10%2Bk3s1/k3s-airgap-images-amd64.tar
    ```
 
