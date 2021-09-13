@@ -50,24 +50,8 @@ The following tools are required:
 
     ```bash
     cat > /tmp/rocketchat-params.yaml << ENDOFFILE
-    host: chat.${CAPACT_DOMAIN_NAME}
-    replicaCount: 3
-    resources:
-      requests:
-        memory: "2G"
-        cpu: "1"
-      limits:
-        memory: "4G"
-        cpu: "1"
-    affinity:
-      nodeAffinity:
-        requiredDuringSchedulingIgnoredDuringExecution:
-          nodeSelectorTerms:
-          - matchExpressions:
-            - key: node.capact.io/type
-              operator: NotIn
-              values:
-              - storage    
+    input-parameters:
+      host: chat.${CAPACT_DOMAIN_NAME}
     ENDOFFILE
     ```
 

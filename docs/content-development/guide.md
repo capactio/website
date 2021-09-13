@@ -627,7 +627,8 @@ Use the Capact CLI to run your Action.
 
     ```bash
     cat > /tmp/mattermost-params.yaml << ENDOFFILE
-    host: mattermost.${CAPACT_DOMAIN_NAME}
+    input-parameters:
+      host: mattermost.${CAPACT_DOMAIN_NAME}
     ENDOFFILE
     ```
 
@@ -973,32 +974,36 @@ We only updated the user password. Now you need to update the Mattermost setting
 Before using the new Interface you again need to populate data with the populator and run a new action. You can use the same GraphQL
 queries as before. Just change Query Variables:
 
-<details>
-  <summary>Query variables</summary>
+1. Create a file with update parameters:
 
-```json
-{
-  "actionName": "change-db-user-password",
-  "in": {
-    "name": "change-db-user-password",
-    "actionRef": {
-      "path": "cap.interface.database.postgresql.change-password",
-      "revision": "0.1.0"
-    }
-    input: {
-      parameters: "{\"password\": \"new-password\"}"
-      typeInstances: [
-        { name: "postgresql", id: "<Postgresql TypeInstance ID" }
-        { name: "user", id: "User TypeInstance ID" }
-      ]
-    }
-  }
-}
-```
-</details>
+    ```bash
+    cat > /tmp/update-password.yaml << ENDOFFILE
+    input-parameters:
+      password: "new-password"
+    ENDOFFILE
+    ```
 
+1. Create a file with input TypeInstances:
+
+    ```bash
+    cat > /tmp/update-password-tis.yaml << ENDOFFILE
+    typeInstances:
+      - name: "postgresql"
+        id: "<Postgresql TypeInstance ID>"
+      - name: "user"
+        id: "<User TypeInstance ID>"
+    ENDOFFILE
+    ```
+
+2. Create an Action:
+
+    ```bash
+    capact action create cap.interface.database.postgresql.change-password \
+    --name update-password \
+    --parameters-from-file /tmp/update-password.yaml \
+    --type-instances-from-file /tmp/update-password-tis.yaml
+    ```
 
 ## Summary
 
 In this guide we went through different OCF manifests and their syntax. We created manifests which added a capability to install Mattermost server instances. We also showed, how you can test the manifests you are creating and where to check for useful information, when debugging your action.
-
