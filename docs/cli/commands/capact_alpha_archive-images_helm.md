@@ -31,7 +31,7 @@ capact alpha archive-images helm --version 0.5.0 --output-stdout | gzip > myimag
 
 ```
       --compress string          Use a given compress algorithm. Allowed values: gzip
-      --helm-repo string         Capact Helm chart repository localtion. It can be relative path to current working directory or URL. Use @latest tag to select repository which holds the latest Helm chart versions. (default "https://storage.googleapis.com/capactio-stable-charts")
+      --helm-repo string         Capact Helm chart repository location. It can be relative path to current working directory or URL. Use @latest tag to select repository which holds the latest Helm chart versions. (default "https://storage.googleapis.com/capactio-stable-charts")
   -h, --help                     help for helm
   -o, --output string            Write output to a file, instead of standard output.
       --output-stdout            Write output to a standard output, instead of file.
