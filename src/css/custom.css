@@ -5,7 +5,7 @@
  * work well for content-centric websites.
  */
 
-/* 
+/*
 TODO: Migrate global styles to CSS-in-JS once available: https://github.com/facebook/docusaurus/issues/3236
 Or alternatively SCSS: https://docusaurus.io/docs/styling-layout#sassscss
 */
@@ -219,4 +219,10 @@ html[data-theme="dark"] .table-of-contents__link--active code {
 .blog-post-page article img {
   display: block;
   margin: 0 auto;
+}
+
+/* Tabs in mdx */
+.tab-container-nested {
+  margin: 0 0 var(--ifm-list-margin);
+  padding-left: var(--ifm-list-left-padding);
 }

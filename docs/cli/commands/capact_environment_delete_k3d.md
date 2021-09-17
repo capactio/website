@@ -1,15 +1,21 @@
 ---
-title: capact environment
+title: capact environment delete k3d
 ---
 
-## capact environment
+## capact environment delete k3d
 
-This command consists of multiple subcommands to interact with a Capact environments
+Delete local k3d cluster
+
+```
+capact environment delete k3d [flags]
+```
 
 ### Options
 
 ```
-  -h, --help   help for environment
+  -h, --help              help for k3d
+      --name string       Cluster name (default "dev-capact")
+      --remove-registry   Remove registry (default true)
 ```
 
 ### Options inherited from parent commands
@@ -21,7 +27,5 @@ This command consists of multiple subcommands to interact with a Capact environm
 
 ### SEE ALSO
 
-* [capact](capact.md)	 - Collective Capability Manager CLI
-* [capact environment create](capact_environment_create.md)	 - This command consists of multiple subcommands to create a Capact environment
 * [capact environment delete](capact_environment_delete.md)	 - This command consists of multiple subcommands to delete created Capact environment
 

@@ -8,7 +8,7 @@ Generate Terraform based manifests
 
 ### Synopsis
 
-Generate Terraform based manifests based on a Terraform module
+Generate Implementation manifests based on a Terraform module
 
 ```
 capact alpha manifest-gen implementation terraform [MANIFEST_PATH] [TERRAFORM_MODULE_PATH] [flags]
@@ -40,9 +40,10 @@ capact alpha manifest-gen implementation terraform cap.implementation.gcp.clouds
 ### Options inherited from parent commands
 
 ```
-  -c, --config string   Path to the YAML config file
-  -o, --output string   Path to the output directory for the generated manifests (default "generated")
-      --override        Override existing manifest files
+  -c, --config string                 Path to the YAML config file
+  -o, --output string                 Path to the output directory for the generated manifests (default "generated")
+      --overwrite                     Overwrite existing manifest files
+  -v, --verbose int/string[=simple]   Prints more verbose output. Allowed values: 0 - disable, 1 - simple, 2 - trace (default 0 - disable)
 ```
 
 ### SEE ALSO
