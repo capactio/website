@@ -17,7 +17,7 @@ module.exports = {
   themeConfig: {
     announcementBar: {
       id: "capact_os_release",
-      content: `🚀 The very first public Capact release is here! <a href="https://github.com/capactio/capact" target="_blank">Check out our repository and give us a star on GitHub!</a>`,
+      content: `🚀 Capact 0.5.0 is here! <a href="https://github.com/capactio/capact" target="_blank">Check out our repository and give us a star on GitHub!</a>`,
       backgroundColor: "var(--announcement-bar-background)",
       textColor: "var(--announcement-bar-text)",
       isCloseable: true,
