@@ -20,7 +20,7 @@ Sharing expertise is something that already happens—we have plenty of librarie
 
 For example, if you're not a cloud expert, all you need to know is that you want a managed PostgreSQL database on AWS. Let the subject-matter experts take care of it, and simply focus on your business logic. Likewise, if you need any Kubernetes cluster—by saying "I want any Kubernetes cluster" and letting the magic happen, you could cover both local development and production scenarios…
 
-What if I told you… **it is all possible**?
+What if I told you… **now this is all possible**?
 
 <!--truncate-->
 
