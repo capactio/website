@@ -123,7 +123,7 @@ Also, as of September 20th 2021, **a brand-new release**, Capact 0.5.0, **is her
 
 To see the full list of features, read the [release notes](https://github.com/capactio/capact/releases/tag/v0.5.0).
  
-Are you ready to start start playing around with Capact?
+Are you ready to start playing around with Capact?
 
 ![Are you ready GIF](./assets/are-you-ready.gif) <center><small>source: <a href="https://tenor.com/view/are-you-ready-gif-5011220" target="_blank">tenor.com</a></small></center>
 
