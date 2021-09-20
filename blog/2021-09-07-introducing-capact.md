@@ -12,16 +12,15 @@ tags:
   - release-sneak-peek
 ---
 
-Managing the lifecycle of infrastructure, applications, and processes in modern IT is problematic.
-There are a variety of tools and best practices, which are ever-changing. It's a struggle to stay up-to-date with these practices, and not everyone is an expert at everything. Technical debt is inevitable.
+Managing the lifecycle of infrastructure, applications, and processes in modern IT is problematic. There are a variety of tools and best practices, which are ever-changing. It's a struggle to stay up-to-date with these practices, and not everyone is an expert at everything. Technical debt is inevitable.
 
-We are ultimately all alone. Siloed within the context of team, department, or company, locked-in in a particular ecosystem of tooling. To deliver end-to-end capabilities, we build them from scratch in a vacuum. We consume API calls, transform data, build and manage infrastructure and applications. Do we all really have different use cases? Don't we spend too much time solving the same problems as others have?
+We are ultimately all alone. We are siloed within the context of team, department, or company, locked-in in a particular ecosystem of tooling. To deliver end-to-end capabilities, we build them from scratch in a vacuum. We consume API calls, transform data, build and manage infrastructure and applications. Don't we spend too much time solving the same problems as others have?
 
-What if we could share the expertise and, as a result, save time? Collaborating together, we ensure we use the best tools out there, and follow the best practices. This is something that already happens—we have plenty of libraries and frameworks out there. But what if we went a step further and have a way to create, use and share building blocks that are language-agnostic abstracted capabilities?
+Sharing expertise is something that already happens—we have plenty of libraries and frameworks out there. But what if we went a step further and have a way to create, use and share building blocks that are **language-agnostic abstracted capabilities**?
 
-For example, if you're not a cloud expert, all you need to know is that you want a managed PostgreSQL database on AWS and let others make it. In that way, services are managed by subject-matter experts, and you can simply focus on your business logic. Likewise, if you need any Kubernetes cluster—by saying "I want any Kubernetes cluster" and letting the magic happen, you could cover both local development and production scenarios...
+For example, if you're not a cloud expert, all you need to know is that you want a managed PostgreSQL database on AWS. Let the subject-matter experts take care of it, and simply focus on your business logic. Likewise, if you need any Kubernetes cluster—by saying "I want any Kubernetes cluster" and letting the magic happen, you could cover both local development and production scenarios…
 
-What if I told you... **it is all possible**?
+What if I told you… **it is all possible**?
 
 <!--truncate-->
 
@@ -112,7 +111,7 @@ Currently, Capact is at an experimental stage. We open-sourced Capact as early a
 
 In a series of future blog posts, we will highlight Capact features and cover various topics for all!
 
-Also, **a brand-new release**, Capact 0.5.0, is **just around the corner**. We're working very hard to bring many UX improvements, both for Capact users and content developers. The list includes:
+Also, as of September 20th 2021, **a brand-new release**, Capact 0.5.0, **is here**. We were working really hard to bring many UX improvements, both for Capact users and content developers. The list includes:
 - Complete Action input validation and more advanced, concurrent Capact manifests validation with optional server-side checks,
 - Experimental content development tools for Helm and Terraform-based (AWS and GCP) manifest generation,
 - Policy syntax and behavior changes for improving consistency and usability,
@@ -122,6 +121,10 @@ Also, **a brand-new release**, Capact 0.5.0, is **just around the corner**. We'r
 - [k3d](https://k3d.io) support,
 - and much, much, more!
 
-Stay tuned for the official announcement!
+To see the full list of features, read the [release notes](https://github.com/capactio/capact/releases/tag/v0.5.0).
+ 
+Are you ready to start start playing around with Capact?
 
 ![Are you ready GIF](./assets/are-you-ready.gif) <center><small>source: <a href="https://tenor.com/view/are-you-ready-gif-5011220" target="_blank">tenor.com</a></small></center>
+
+*This post was updated on 20.09.2021 to highlight that the Capact 0.5.0 release is publicly available.*
