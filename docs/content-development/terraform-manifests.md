@@ -5,9 +5,9 @@ This document describes how to prepare content which uses Terraform Runner.
 ## Prerequisites
 
 - [MinIO client](https://min.io/download)
-- [Capact development cluster](../installation/local.md)
+- [Capact local cluster](../installation/local.md)
     
-    > **NOTE:** Use `ENABLE_POPULATOR=false` environmental variable, as you will manually upload your OCF manifests into Hub.
+    > **NOTE:** Use `--capact-overrides=hub-public.populator.enabled=false` flag, as you will manually upload your OCF manifests into Hub.
 
 ## MinIO access configuration
 

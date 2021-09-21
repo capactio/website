@@ -1,6 +1,10 @@
-# Contributing to Capact
+---
+sidebar_position: 1
+---
 
-This document describes the process of contribution to this project. Any type of contribution is welcome!
+# Contributing
+
+This document describes the process of contribution to Capact. Any type of contribution is welcome!
 
 ## Contribution process
 
@@ -49,11 +53,7 @@ You can contact the reviewers by mentioning GitHub username (`@username`) in the
 
 ## Support Channels
 
-Join the Capact-related discussion on Slack!
-
-1. Create your Slack account on [https://slack.cncf.io](https://slack.cncf.io).
-1. Join the [`#capact`](https://cloud-native.slack.com/archives/C023YTAHKLG) channel!
-
+Join the Capact-related discussion on Slack! See the [Join us on Slack](./slack.md) short guide to learn, how to do it.
 To report bug or feature, use GitHub issues on a specific repository within the organization.
 
 ## Code of Conduct

@@ -61,7 +61,7 @@ module.exports = {
           position: "right",
         },
         {
-          to: "/slack",
+          to: "/community/slack",
           position: "right",
           className: "header-icon-link slack-icon color-adjustable",
           "aria-label": "Slack",
@@ -115,12 +115,16 @@ module.exports = {
           title: "Community",
           items: [
             {
+              label: "Contributing",
+              to: "/community/contributing",
+            },
+            {
               label: "GitHub",
               to: "https://github.com/capactio/capact",
             },
             {
               label: "Slack",
-              to: "/slack",
+              to: "/community/slack",
             },
           ],
         },

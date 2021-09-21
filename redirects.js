@@ -7,7 +7,7 @@ module.exports = () => {
   const redirects = [
     ...generateDocsRedirectsForVersion(""), // latest version
     ...generateDocsRedirectsForVersion("next"), // unreleased version
-    ...generateDocsRedirectsForVersion("0.4"),
+    ...generateLegacyDocsRedirectsForVersion("0.4"),
     ...generateDocsRedirectsForVersion("0.5", true), // redirect from x.y version to latest
   ];
 
@@ -52,12 +52,21 @@ const generateDocsRedirectsForVersion = (version, useLatestVersionAsTarget) => {
       to: `${toPrefix}/operation/common-problems`,
     },
     {
-      from: `${fromPrefix}/development`,
-      to: `${toPrefix}/development/development-guide`,
-    }, // TODO: remove once 0.4 and 0.5 are removed from the version switcher
-    {
       from: `${fromPrefix}/cli`,
       to: `${toPrefix}/cli/getting-started`,
+    },
+  ];
+};
+
+const generateLegacyDocsRedirectsForVersion = (version, useLatestVersionAsTarget) => {
+  const fromPrefix = version != "" ? `/docs/${version}` : "/docs";
+  const toPrefix = useLatestVersionAsTarget ? `/docs` : fromPrefix;
+
+  return [
+    ...generateDocsRedirectsForVersion(version, useLatestVersionAsTarget),
+    {
+      from: `${fromPrefix}/development`,
+      to: `${toPrefix}/development/development-guide`,
     },
   ];
 };

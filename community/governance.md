@@ -1,3 +1,7 @@
+---
+sidebar_position: 2
+---
+
 # Governance
 
 > **NOTE**: The Capact governance model is not static. It will evolve over time to meet the needs of the Capact community.
