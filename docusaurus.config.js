@@ -45,6 +45,13 @@ module.exports = {
           label: "Documentation",
         },
         {
+          type: "doc",
+          docId: "contributing",
+          docsPluginId: "community",
+          position: "left",
+          label: "Community",
+        },
+        {
           to: "/blog",
           label: "Blog",
           position: "left",
@@ -139,7 +146,7 @@ module.exports = {
       "@docusaurus/preset-classic",
       {
         docs: {
-          sidebarPath: require.resolve("./sidebars.js"),
+          sidebarPath: require.resolve("./sidebars.docs.js"),
           editUrl: "https://github.com/capactio/website/edit/main/",
           showLastUpdateAuthor: false,
           showLastUpdateTime: true,
@@ -165,6 +172,15 @@ module.exports = {
     ],
   ],
   plugins: [
+    [
+      '@docusaurus/plugin-content-docs',
+      {
+        id: 'community',
+        path: 'community',
+        routeBasePath: 'community',
+        sidebarPath: require.resolve('./sidebars.community.js'),
+      },
+    ],
     [
       "@docusaurus/plugin-client-redirects",
       {

@@ -30,7 +30,7 @@ To run sample GraphQL queries and mutations for Public or Local Hub, follow the 
 
 1. Open the Capact Gateway GraphQL Playground.
 
-   To see how to access the Gateway on development cluster, read the [Access Gateway GraphQL Playground](../development/development-guide.md#access-gateway-graphql-playground) section in development guide.
+   To obtain credentials and host, read the [First use](../cli/getting-started.mdx#first-use) section for Capact CLI.
 
 1. Navigate to a proper directory with GraphQL schema and examples.
    

@@ -1,4 +1,4 @@
-# Capact release process
+# Release process
 
 This document describes Capact release process.
 

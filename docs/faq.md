@@ -13,7 +13,7 @@ To get started with Capact, check out these links:
 - **Installation:** To learn how to install Capact, follow the [local](./installation/local.md), [AWS](./installation/aws-eks.md) and [GCP](./installation/gcp-gke.md) installation tutorials.
 - **Examples:** To read how to use Capact based on real life examples, see the [Mattermost installation](./example/mattermost-installation.md).
 - **Content Development**: To learn how to create content for Capact, see the [Content development guide](./content-development/guide.md).
-- **Development:** To run Capact on your local machine and start contributing to Capact, read the [development guide](./development/development-guide.md).
+- **Development:** To start contributing to Capact, read the [development guide](/community/development/development-guide).
 
 To read the full documentation, navigate to the [capact.io/docs](https://capact.io/docs) website.
 
@@ -21,7 +21,7 @@ To read the full documentation, navigate to the [capact.io/docs](https://capact.
 
 First, check out [a list of common problems](./operation/common-problems.md) that you may encounter. Next, read the [Basic diagnostics](./operation/diagnostics.md) guide and execute diagnostic actions which may help you find bug causes.
 
-If you found a bug, please report it or contribute a fix. To do so, read our [Contribution guide](https://github.com/capactio/.github/blob/main/CONTRIBUTING.md). We are open for any type of contributions! 
+If you found a bug, please report it or contribute a fix. To do so, read our [Contribution guide](/community/contributing). We are open for any type of contributions! 
 
 ## How does Capact compare to...
 

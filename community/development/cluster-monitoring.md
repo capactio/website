@@ -43,7 +43,7 @@ Now run the script to add your public IP address to the authorized control plane
 
 ## Check the cluster metrics
 
-Follow [this guide](operation/metrics.md) to connect to Grafana and check the cluster metrics.
+Follow [this guide](/docs/operation/metrics) to connect to Grafana and check the cluster metrics.
 
 ## Remove your IP from the authorized list
 

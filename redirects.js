@@ -54,7 +54,7 @@ const generateDocsRedirectsForVersion = (version, useLatestVersionAsTarget) => {
     {
       from: `${fromPrefix}/development`,
       to: `${toPrefix}/development/development-guide`,
-    },
+    }, // TODO: remove once 0.4 and 0.5 are removed from the version switcher
     {
       from: `${fromPrefix}/cli`,
       to: `${toPrefix}/cli/getting-started`,
