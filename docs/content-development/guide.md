@@ -20,9 +20,10 @@ To develop and test the created content, you will need to have a Capact environm
 * [Capact CLI](../cli/getting-started.mdx)
 * [populator](https://github.com/capactio/capact/tree/main/cmd/populator/docs/populator_register-ocf-manifests.md) - For now, you need to compile it from source
 
-Also, clone the Capact repository with the current OCF content.
+Also, clone the repository with the Capact manifests:
+
 ```bash
-git clone https://github.com/capactio/capact.git
+git clone git@github.com:capactio/hub-manifests.git
 ```
 
 Some other materials worth reading before are:
@@ -592,9 +593,10 @@ You can read more about the Capact CLI [here](https://github.com/capactio/capact
 
 ## Populate the manifests into Hub
 
-After we have the manifests ready, we can start our local Capact environment. In the root of the cloned `capact` repository run:
-```
-ENABLE_POPULATOR=false make dev-cluster
+After we have the manifests ready, we can start our local Capact environment. Follow the [Local installation](../installation/local.md) guide. During the actual Capact installation step, provide additional flag for `capact install` command:
+
+```bash
+capact install --capact-overrides=hub-public.populator.enabled=false
 ```
 
 This can take a few minutes. We disabled the populator sidecar in Hub public, as we will populate the data from our local repository using the populator.
