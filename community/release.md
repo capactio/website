@@ -11,6 +11,11 @@ Releasing new Capact version requires admin privileges in the `capact`, `hub-man
 
 ## Prerequisites
 
+- Admin role on the `capact`, `hub-manifests` and `website` repositories.
+- Disabled branch protection rules for all repositories. This allows the release jobs to commit directly to `main` and release branches. 
+
+    > **NOTE:** Do not forget to re-enable them after creating a release.
+
 - [Git](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git)
 - An GitHub Environment named `Release` on [`capactio/capact`](https://github.com/capactio/capact) repository with the following secrets set:
   - `GCS_CREDS` — Base64 encoded Google Cloud Platform credentials in JSON format to access Google Cloud Storage for binary and chart releases. Make sure that it has `storage.objects.create` permission,
