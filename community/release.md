@@ -1,17 +1,22 @@
----
-sidebar_position: 6
----
-
-# Release process
+# Capact release process
 
 This document describes Capact release process.
+
+---
+**NOTE**
+
+Releasing new Capact version requires admin privileges in the `capact`, `hub-manifests` and `website` repositories.
+
+---
 
 ## Prerequisites
 
 - [Git](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git)
 - An GitHub Environment named `Release` on [`capactio/capact`](https://github.com/capactio/capact) repository with the following secrets set:
-  - `GCS_CREDS` — Base64 encoded Google Cloud Platform credentials in JSON format to access Google Cloud Storage for binary and chart releases,
-  - `GH_PAT` — GitHub personal access token with permissions to make commits to repository.
+  - `GCS_CREDS` — Base64 encoded Google Cloud Platform credentials in JSON format to access Google Cloud Storage for binary and chart releases. Make sure that it has `storage.objects.create` permission,
+  - `GH_PAT` — GitHub personal access token. Make sure that it has selected `repo` and `write:packages` scopes.
+
+All our repositories have enabled branch protection rules which disallow directly committing to the repository. Make sure to disable them before proceeding and re-enable them after making a release.
 
 ## Steps
 
