@@ -1,4 +1,8 @@
-# Capact release process
+---
+sidebar_position: 6
+---
+
+# Release process
 
 This document describes Capact release process.
 

@@ -126,7 +126,6 @@ You can export the following environment variables to configure the script:
 - To override the Git URL from which the source manifests should be populated, use `HUB_MANIFESTS_SOURCE_REPO_URL`, e.g. `HUB_MANIFESTS_SOURCE_REPO_URL="github.com/capactio/hub-manifests"`. For more information about syntax check the [`go-getter`](https://github.com/hashicorp/go-getter#url-format) project README.
 - To override Cert Manager Helm chart values, use `CUSTOM_CERT_MANAGER_SET_FLAGS`.
 
-
 ### Access Gateway GraphQL Playground
 
 Capact Gateway aggregates all GraphQL APIs from multiple components (Local Hub, Public Hub, Engine) into a single endpoint.

@@ -45,6 +45,13 @@ module.exports = {
           label: "Documentation",
         },
         {
+          type: "doc",
+          docId: "contributing",
+          docsPluginId: "community",
+          position: "left",
+          label: "Community",
+        },
+        {
           to: "/blog",
           label: "Blog",
           position: "left",
@@ -54,7 +61,7 @@ module.exports = {
           position: "right",
         },
         {
-          to: "/slack",
+          to: "/community/slack",
           position: "right",
           className: "header-icon-link slack-icon color-adjustable",
           "aria-label": "Slack",
@@ -108,12 +115,16 @@ module.exports = {
           title: "Community",
           items: [
             {
+              label: "Contributing",
+              to: "/community/contributing",
+            },
+            {
               label: "GitHub",
               to: "https://github.com/capactio/capact",
             },
             {
               label: "Slack",
-              to: "/slack",
+              to: "/community/slack",
             },
           ],
         },
@@ -139,7 +150,7 @@ module.exports = {
       "@docusaurus/preset-classic",
       {
         docs: {
-          sidebarPath: require.resolve("./sidebars.js"),
+          sidebarPath: require.resolve("./sidebars.docs.js"),
           editUrl: "https://github.com/capactio/website/edit/main/",
           showLastUpdateAuthor: false,
           showLastUpdateTime: true,
@@ -165,6 +176,15 @@ module.exports = {
     ],
   ],
   plugins: [
+    [
+      '@docusaurus/plugin-content-docs',
+      {
+        id: 'community',
+        path: 'community',
+        routeBasePath: 'community',
+        sidebarPath: require.resolve('./sidebars.community.js'),
+      },
+    ],
     [
       "@docusaurus/plugin-client-redirects",
       {

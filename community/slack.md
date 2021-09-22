@@ -1,3 +1,7 @@
+---
+sidebar_position: 4
+---
+
 # Join us on Slack
 
 We have a dedicated channel on CNCF Slack workspace. This is the best place to ask any Capact-related question.

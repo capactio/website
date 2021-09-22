@@ -9,7 +9,7 @@ To run sample GraphQL queries and mutations against Engine GraphQL API, follow t
 
 1. Open the Capact Gateway GraphQL Playground. 
    
-   To see how to access the Gateway on development cluster, read the [Access Gateway GraphQL Playground](../development/development-guide.md#access-gateway-graphql-playground) section in development guide. 
+   To obtain credentials and host, read the [First use](../cli/getting-started.mdx#first-use) section for Capact CLI. 
 
 1. Copy and paste the [pkg/engine/api/graphql/examples.graphql](https://github.com/capactio/capact/tree/main/pkg/engine/api/graphql/examples.graphql) file content to the GraphQL Playground IDE.
 1. Click on the "Query Variables" tab.

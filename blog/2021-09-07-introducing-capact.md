@@ -103,7 +103,7 @@ Here are other things to do:
 
 📖 **Read our documentation:** If you want to get familiar with other installation options, examples, content development, or contribution guides, check out the [Capact documentation](/docs).
 
-🤔 **Get support:** If you need any help, or you have a question for us, join our [Slack channel](/slack) on the CNCF workspace and post a message—we'll do our best to get you sorted!
+🤔 **Get support:** If you need any help, or you have a question for us, join our [Slack channel](/community/slack) on the CNCF workspace and post a message—we'll do our best to get you sorted!
 
 Currently, Capact is at an experimental stage. We open-sourced Capact as early as possible to get early feedback and build Capact together with the community.
 
