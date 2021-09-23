@@ -13,9 +13,10 @@ This document describes Capact release process.
 
     > **NOTE:** Do not forget to re-enable them after creating a release.
 
-- An GitHub Environment named `Release` on [`capactio/hub-manifests`](https://github.com/capactio/hub-manifests) and [`capactio/website`](https://github.com/capactio/website) repositories with the following secret set:
-    - `GCS_CREDS` — Base64-encoded Google Cloud Platform credentials in JSON format to access Google Cloud Storage for binary and chart releases. Make sure that it has `storage.objects.create` permission.
+- An GitHub Environment named `Release` in [`capactio/capact`](https://github.com/capactio/capact), [`capactio/hub-manifests`](https://github.com/capactio/hub-manifests) and [`capactio/website`](https://github.com/capactio/website) repositories with the following secret set:
     - `GH_PAT` — GitHub personal access token. Make sure that it has selected `repo` and `write:packages` scopes. Must be in format: `"<username>:<PAT>"`
+- In GitHub Environment named `Release` in [`capactio/capact`](https://github.com/capactio/capact) repository add the following secret:
+    - `GCS_CREDS` — Base64-encoded Google Cloud Platform credentials in JSON format to access Google Cloud Storage for binary and chart releases. Make sure that it has `storage.objects.create` permission.
 
 ## Steps
 
