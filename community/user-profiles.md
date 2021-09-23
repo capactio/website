@@ -12,13 +12,13 @@ This section describes general roles of users, which we focus on, while developi
 
 The list is ordered to highlight the priority of focus for the user experience for different roles.
 
-1. **Action Operator**
+1. **System User**
 
-    Action Operator operates Capact Actions and manages TypeInstances related to the Actions. Action Operator executes arbitrary Actions. For example, Actions which install applications and provision infrastructure Mattermost, provisioning Kubernetes cluster, or creating new PostgreSQL user.
+    System User operates Capact Actions and manages TypeInstances related to the Actions. System User executes arbitrary Actions. For example, Actions which install applications and provision infrastructure Mattermost, provisioning Kubernetes cluster, or creating new PostgreSQL user.
 
 1. **System Administrator**
 
-    System Administrator operates Capact installation, that is, performs any day-one and day-two operations around installed Capact. Also, System Administrator manages global configuration for all Action Operators, such as [Global Policy](/docs/feature/policies/global-policy) or Capact Hub source.
+    System Administrator operates Capact installation, that is, performs any day-one and day-two operations around installed Capact. Also, System Administrator manages global configuration for all System Users, such as [Global Policy](/docs/feature/policies/global-policy) or Capact Hub source.
 
 1. **Content Developer**
 
@@ -37,18 +37,22 @@ Images have been downloaded from [thispersondoesnotexist.com](https://thisperson
 
 ![James](./assets/james.jpg)
 
-James is a 29 years old dev-ops engineer, which works at Schuppe LLC. Few year ago he completed bachelor's in Compute Science. At work he builds CI/CD pipelines and environments for different teams inside the company. From time to time he also helps with deployment and configuration of organization-wide productivity applications. 
+#### Description
 
-James is an open source enthusiast and cloud-native technologies passionate. He don't like to implement something that's already out there in the open source community.
+James is a 29 years old dev-ops engineer, which works at Schuppe company. Few years ago he completed bachelor's in Computer Science. At work, he builds CI/CD pipelines and environments for different teams inside the company. From time to time, he also helps with deployment and configuration of organization-wide productivity applications. 
 
-Recently he discovered Capact and started to use it for everyday tasks. He tries to reuse as many existing Capact content as he can, but if he sees a missing gap, he develops the manifests and contributes them to Capact.
+James is an open source enthusiast and cloud-native technologies passionate. He doesn't like to implement something that's already out there in the open source community.
+
+Recently, he discovered Capact and started to use it for everyday tasks. He tries to reuse as many existing Capact content as he can, but if he sees a missing gap, he develops the manifests and contributes them to Capact.
 
 #### Roles
-- Action Operator
+
+- System User
 - System Administrator
 - Content Developer
 
 #### Personality
+
 - Ambivert (half-introvert, half-extrovert)
 - Cloud-native geek
 - Eager to learn new things
@@ -64,6 +68,39 @@ Recently he discovered Capact and started to use it for everyday tasks. He tries
 - Writing boilerplate code
 - Implementing stuff that's already out there in open-source community
 - Missing or incomplete documentation for projects he uses
-- Overcomplicated solutions
 
+### Julienne
 
+![Julienne](./assets/julienne.jpg)
+
+#### Description
+
+Julienne is a software engineer working in a small company called Stomerce Software. The company provides e-commerce solution, both in a form of SaaS and on-premise offering.
+
+Julienne is a member of a team responsible for application delivery. Very often, Julienne helps the support team and assists customers with the on-premise application. Usual problems she tackles with are: app deployment on different environments, upgrade, backup and restore.
+
+The company is constantly looking for new ways to increase the number of customers. However, at the same time, the leadership notice that too much time is spent for support. They would like to have the engineering teams more focused on developing new features.
+
+Recently, Julienne discovered Capact, and she thinks that it will help the company achieve the goals. She develops Capact manifests to provide unified day-one and day-two operations for the on-premise app.
+
+#### Roles
+
+- Content Developer
+
+#### Personality
+
+- Extrovert
+- Patient
+- Determined
+
+#### Goals
+
+- Help the company getting more customers
+- Standardize day-one and day-two operations for the software regardless of the different setup
+- Reduce time spend on customer support
+
+#### Frustrations
+
+- Fragmentation of tooling used by customers
+- It's hard to support many deployment and management options
+- More time spent on customer assistance than developing new features
