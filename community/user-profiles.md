@@ -31,3 +31,39 @@ The list is ordered to highlight the priority of focus for the user experience f
 ## Personas
 
 This section describes fictional characters that represent typical users based on the [user profiles](#profiles).
+Images have been downloaded from [thispersondoesnotexist.com](https://thispersondoesnotexist.com/).
+
+### James
+
+![James](./assets/james.jpg)
+
+James is a 29 years old dev-ops engineer, which works at Schuppe LLC. Few year ago he completed bachelor's in Compute Science. At work he builds CI/CD pipelines and environments for different teams inside the company. From time to time he also helps with deployment and configuration of organization-wide productivity applications. 
+
+James is an open source enthusiast and cloud-native technologies passionate. He don't like to implement something that's already out there in the open source community.
+
+Recently he discovered Capact and started to use it for everyday tasks. He tries to reuse as many existing Capact content as he can, but if he sees a missing gap, he develops the manifests and contributes them to Capact.
+
+#### Roles
+- Action Operator
+- System Administrator
+- Content Developer
+
+#### Personality
+- Ambivert (half-introvert, half-extrovert)
+- Cloud-native geek
+- Eager to learn new things
+
+#### Goals
+
+- Get stuff done as fast as possible
+- Automating as many things as possible
+- Using libraries and projects from open-source community
+
+#### Frustrations
+
+- Writing boilerplate code
+- Implementing stuff that's already out there in open-source community
+- Missing or incomplete documentation for projects he uses
+- Overcomplicated solutions
+
+
