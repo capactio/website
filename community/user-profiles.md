@@ -39,9 +39,9 @@ Images have been downloaded from [thispersondoesnotexist.com](https://thisperson
 
 #### Description
 
-James is a 29 years old dev-ops engineer, which works at Schuppe company. Few years ago he completed bachelor's in Computer Science. At work, he builds CI/CD pipelines and environments for different teams inside the company. From time to time, he also helps with deployment and configuration of organization-wide productivity applications. 
+James is a talented 29 years old dev-ops engineer, which works at Schuppe company. Few years ago he completed bachelor's in Computer Science. At work, he builds CI/CD pipelines and environments for different teams inside the company. From time to time, he also helps with deployment and configuration of organization-wide productivity applications. 
 
-James is an open source enthusiast and cloud-native technologies passionate. He doesn't like to implement something that's already out there in the open source community.
+James is an open source enthusiast. While he likes cloud-native technologies, he prefers not to constantly learn new tools. He definitely doesn't like to implement something that's already out there in the open source community.
 
 Recently, he discovered Capact and started to use it for everyday tasks. He tries to reuse as many existing Capact content as he can, but if he sees a missing gap, he develops the manifests and contributes them to Capact.
 
@@ -54,8 +54,8 @@ Recently, he discovered Capact and started to use it for everyday tasks. He trie
 #### Personality
 
 - Ambivert (half-introvert, half-extrovert)
-- Cloud-native geek
-- Eager to learn new things
+- Pragmatic
+- Prefers not to constantly learn new tools
 
 #### Goals
 
@@ -69,19 +69,17 @@ Recently, he discovered Capact and started to use it for everyday tasks. He trie
 - Implementing stuff that's already out there in open-source community
 - Missing or incomplete documentation for projects he uses
 
-### Julienne
+### Simone
 
-![Julienne](./assets/julienne.jpg)
+![Simone](./assets/simone.jpg)
 
 #### Description
 
-Julienne is a software engineer working in a small company called Stomerce Software. The company provides e-commerce solution, both in a form of SaaS and on-premise offering.
+Simone is a software engineer working in a small company called Stomerce Software. The company provides e-commerce solution, both in a form of SaaS and on-premise offering. Stomerce Software has a limited support team and the leadership is not interested in providing professional services. Instead, the company wants to focus on offering the best end-user self-service experience possible.
 
-Julienne is a member of a team responsible for application delivery. Very often, Julienne helps the support team and assists customers with the on-premise application. Usual problems she tackles with are: app deployment on different environments, upgrade, backup and restore.
+Simone is a member of a team responsible for application delivery and minimizing the amount of friction around product adoption. Very often, Simone helps the support team and assists customers with the on-premise application. Usual problems she tackles with are: app deployment on different environments, upgrade, backup and restore.
 
-The company is constantly looking for new ways to increase the number of customers. However, at the same time, the leadership notice that too much time is spent for support. They would like to have the engineering teams more focused on developing new features.
-
-Recently, Julienne discovered Capact, and she thinks that it will help the company achieve the goals. She develops Capact manifests to provide unified day-one and day-two operations for the on-premise app.
+Recently, Simone discovered Capact, and she thinks that it will help the company achieve the goals. She develops Capact manifests to provide unified day-one and day-two operations for the on-premise app.
 
 #### Roles
 
@@ -95,8 +93,8 @@ Recently, Julienne discovered Capact, and she thinks that it will help the compa
 
 #### Goals
 
-- Help the company getting more customers
 - Standardize day-one and day-two operations for the software regardless of the different setup
+- Provide self-service options for the customers
 - Reduce time spend on customer support
 
 #### Frustrations
