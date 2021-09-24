@@ -30,7 +30,8 @@ The list is ordered to highlight the priority of focus for the user experience f
 
 ## Personas
 
-This section describes fictional characters that represent typical users based on the [user profiles](#profiles).
+This section describes fictional characters that represent typical users based on the [user profiles](#profiles). They were created to better understand expectations, concerns and motivation of target users.
+
 Images have been downloaded from [thispersondoesnotexist.com](https://thispersondoesnotexist.com/).
 
 ### James
