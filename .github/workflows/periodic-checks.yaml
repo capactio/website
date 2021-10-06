@@ -1,0 +1,34 @@
+name: Periodic Checks on main branch
+on:
+  schedule:
+    - cron: '0 */4 * * *'
+  workflow_dispatch:
+
+jobs:
+  markdown-link-check:
+    name: Check Markdown links
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Check links in *.mdx files
+        uses: gaurav-nelson/github-action-markdown-link-check@v1
+        with:
+          use-quiet-mode: 'yes'
+          file-extension: '.mdx'
+          base-branch: 'main'
+          config-file: '.mlc.config.json'
+          folder-path: 'docs, blog, community'
+      - name: Check links in *.md files
+        if: always() # validate also *.md even if errors found in mdx files.
+        uses: gaurav-nelson/github-action-markdown-link-check@v1
+        with:
+          use-quiet-mode: 'yes'
+          file-extension: '.md'
+          base-branch: 'main'
+          config-file: '.mlc.config.json'
+          folder-path: 'docs, blog, community'
+
