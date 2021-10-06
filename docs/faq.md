@@ -54,7 +54,7 @@ Capact is a glue connecting different tools, and it could use Operators to manag
 
 ### Terraform, Ansible, Chef, etc.
 
-In general, all these tools are used to describe and enforce the desired state of the environment. As Capact is a layer above of the tools, they can be used as a part of a Capact workflow and even can be mixed. We already have [Terraform runner](https://github.com/capactio/capact/tree/main/cmd/terraform-runner/README.md). Ansible and other runners are also possible.
+In general, all these tools are used to describe and enforce the desired state of the environment. As Capact is a layer above of the tools, they can be used as a part of a Capact workflow and even can be mixed. We already have [Terraform runner](https://github.com/capactioasdf/capact/tree/main/cmd/terraform-runner/README.md). Ansible and other runners are also possible.
 
 For example, when running Capact manifests, you can deploy AWS RDS and EKS defined as Terraform modules. Then, using Helm runner, you can deploy Mattermost in your Kubernetes cluster. All this can be done in one OCF manifest. See our [Mattermost example](./example/mattermost-installation.md) for more details.
 

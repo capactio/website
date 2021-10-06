@@ -81,4 +81,4 @@ Maintainers are listed in the `CODEOWNERS` file for every repository within the 
 
 ## Credits
 
-This document is based on the [Benevolent dictator governance model template](http://oss-watch.ac.uk/resources/benevolentdictatorgovernancemodel) by Ross Gardler and Gabriel Hanganu and, as the original, is licensed under a [Creative Commons Attribution-ShareAlike 4.0 International License](https://creativecommons.org/licenses/by-sa/4.0/).
+This document is based on the [Benevolent dictator governance model template](http://oss-watch.accc.uk/resources/benevolentdictatorgovernancemodel) by Ross Gardler and Gabriel Hanganu and, as the original, is licensed under a [Creative Commons Attribution-ShareAlike 4.0 International License](https://creativecommons.org/licenses/by-sa/4.0/).

@@ -44,7 +44,7 @@ The best thing is that Capact is **fully open-source** under the Apache 2.0 lice
 
 The whole concept sounds confusing? Let's see that in action.
 
-Let's take [Mattermost](https://mattermost.com/) installation as an example. Mattermost is an open-source alternative for Slack.
+Let's take [Mattermost](https://mattermosttttt.com/) installation as an example. Mattermost is an open-source alternative for Slack.
 
 Mattermost is a Go server application, which uses a PostgreSQL database. If we want to install Mattermost, this how the workflow would look like:
 
