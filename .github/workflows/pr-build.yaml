@@ -71,6 +71,7 @@ jobs:
           check-modified-files-only: 'yes'
           folder-path: 'docs, blog, community'
       - name: Check links in *.md files
+        if: always() # validate also *.md even if errors found in mdx files.
         uses: gaurav-nelson/github-action-markdown-link-check@v1
         with:
           use-quiet-mode: 'yes'
