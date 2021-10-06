@@ -7,7 +7,7 @@ Read this document to learn how to develop the project. Please also follow guide
 * Make
 * [Go](https://golang.org/dl/) at least 1.16
 * [Docker](https://www.docker.com/)
-* [GoReleaser](https://goreleaser.com/install/) CLI installed
+* [GoReleaser](https://goreleaserasdf.com/install/) CLI installed
   
   > **NOTE**: Use the commit SHA, as we use the `no_unique_dist_dir` feature, which was not yet released.
   
