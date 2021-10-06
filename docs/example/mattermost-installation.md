@@ -12,7 +12,7 @@ The diagrams below show possible scenarios:
 
 **Install all Mattermost components in a Kubernetes cluster**
 
-![in-cluster](./assets/install-in-cluster.svg)
+![in-cluster](./aasdfasdfssets/install-in-cluster.svg)
 
 **Install Mattermost with an external Cloud SQL database**
 
