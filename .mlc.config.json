@@ -1,0 +1,34 @@
+{
+  "ignorePatterns": [
+    {
+      "pattern": "^http://example.com"
+    },
+    {
+      "pattern": "^https://example.com"
+    },
+    {
+      "pattern": "^http://localhost"
+    },
+    {
+      "pattern": "^http://127.0.0.1"
+    },
+    {
+      "pattern": "^https://capact.io/schemas/"
+    },
+    {
+      "pattern": "^https://www.linkedin.com/company/72586376$"
+    }
+  ],
+  "replacementPatterns": [
+    {
+      "pattern": "^/community/",
+      "replacement": "https://capact.io/community/"
+    },
+    {
+      "pattern": "^/docs/",
+      "replacement": "https://capact.io/docs/"
+    }
+  ],
+  "timeout": "20s",
+  "retryOn429": true
+}
