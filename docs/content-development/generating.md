@@ -1,11 +1,13 @@
 # Generating manifests
 
-This document shows how to generate Manifests from existing Helm Charts and Terraform Modules. In this tutorial you will see how to generate Interface for the [Redis](https://redis.io) database. You will generate Implementations for the Bitnami [Helm Chart](https://github.com/bitnami/charts/tree/master/bitnami/redis) and AWS [Terraform module](https://github.com/umotif-public/terraform-aws-elasticache-redis)
+This document describes how to generate Manifests from existing Helm Charts and Terraform Modules. In this tutorial you will see how to generate an [Interface](https://github.com/capactio/capact/blob/main/ocf-spec/0.0.1/README.md#interface) for the [Redis](https://redis.io) database. You will generate [Implementations](https://github.com/capactio/capact/blob/main/ocf-spec/0.0.1/README.md#implementation) for the Bitnami [Helm Chart](https://github.com/bitnami/charts/tree/master/bitnami/redis) and AWS [Terraform module](https://github.com/umotif-public/terraform-aws-elasticache-redis).
 
 ## Prerequisites
 
+- Read [Content development guide](./guide.md) before
 - [git](https://git-scm.com/)
-- [Capact local cluster](../installation/local.md)
+- [helm](https://helm.sh/)
+- Capact cluster, for example run [locally](../installation/local.md)
     
     > **NOTE:** Use `--capact-overrides=hub-public.populator.enabled=false` flag, as you will manually upload your OCF manifests into Hub.
 
@@ -17,14 +19,14 @@ To create an Interface for the Redis database, first you need to choose a path f
 capact alpha manifest-gen interface cap.interface.database.redis.install
 ```
 
-It generated four files:
+It generates four files:
 
-* `generated/interface/database/redis.yaml` with an InterfaceGroup definition. As the name suggests it's grouping interfaces, like `install`, `update` and so on.
-* `generated/interface/database/redis/install.yaml` with an Interface definition. It defines input and output types which will be used for the Interface.
-* `generated/type/database/redis/install-input.yaml` with an input Type definition
-* `generated/type/database/redis/config.yaml` with an output Type definition
+* `generated/interface/database/redis.yaml` with an [InterfaceGroup](https://github.com/capactio/capact/blob/main/ocf-spec/0.0.1/README.md#interfacegroup) definition. As the name suggests, it's grouping interfaces for Redis domain. For example, `install`, `update` etc.
+* `generated/interface/database/redis/install.yaml` with an Interface definition. It defines the Interface signature.
+* `generated/type/database/redis/install-input.yaml` with an input [Type]() definition.
+* `generated/type/database/redis/config.yaml` with an output Type definition.
 
-All the files have a `metadata` section defined with fields like description, maintainer, name, e-mail and so on. Feel free to update them now. For example, metadata in `redis.yaml` file can look like this:
+All the files have a **metadata** property defined with fields like description, maintainer, name, e-mail and so on. Feel free to update them now. For example, metadata in `redis.yaml` file can look like this:
 
 ```yaml
 metadata:
@@ -77,31 +79,80 @@ Edit file `generated/type/database/redis/install-input.yaml` and replace empty s
       }
 ```
 
+Edit file `generated/type/database/redis/config.yaml` and replace empty schema with:
+
+```yaml
+    value: |-
+      {
+        "$schema": "http://json-schema.org/draft-07/schema",
+        "type": "object",
+        "title": "The schema for Redis configuration",
+        "examples": [
+          {
+            "password": "pass"
+          }
+        ],
+        "required": [
+          "host",
+          "port",
+          "password"
+        ],
+        "definitions": {
+          "hostname": {
+            "type": "string",
+            "format": "hostname",
+            "title": "Hostname"
+          },
+          "port": {
+            "type": "integer",
+            "title": "Port",
+            "minimum": 0,
+            "maximum": 65535
+          }
+        },
+        "properties": {
+          "password": {
+            "$id": "#/properties/rootPassword",
+            "type": "string",
+            "title": "Defines a database password"
+          },
+          "host": {
+            "$ref": "#/definitions/hostname"
+          },
+          "port": {
+            "$ref": "#/definitions/port"
+          }
+        },
+        "additionalProperties": false
+      }
+```
+
 ## Generating Helm Implementation
 
 Next step is to generate Implementation for a Helm Chart. First step is to clone git repository with Bitnami Charts:
 
 ```bash
-git clone git clone https://github.com/bitnami/charts.git
+helm repo add bitnami https://charts.bitnami.com/bitnami
+helm pull bitnami/redis --untar --untardir charts/bitnami
 ```
 
-Now you can generate a new Implementation manifest. You need to set a path to the chart and set which Interface is implemented:
+Now you can generate a new Implementation manifest. Set a path to the downloaded chart and specify which Interface is implemented:
 
 ```bash
 capact alpha manifest-gen implementation helm cap.implementation.bitnami.redis.install charts/bitnami/redis --repo "https://charts.bitnami.com/bitnami" -i cap.interface.database.redis.install
 ```
 
-It will generate two new files:
+It generates two files:
 
-* `generated/type/bitnami/redis/install-input.yaml` with and additional input Type definition
-* `generated/implementation/bitnami/redis/install.yaml` with an Implementation definition
+* `generated/type/bitnami/redis/install-input.yaml` with the Type for Implementation specific additional input.
+* `generated/implementation/bitnami/redis/install.yaml` with the Implementation definition for the Redis chart.
 
-Similarly to the Interface, you can update Metadata in both files. Now you need to adjust manifests to use input values from the Interface.
+Similarly to the Interface, you can update **metadata** in both files. Now you need to adjust manifests to use input values from the Interface.
 Modify files according to the following diffs:
 
 ```diff
---- a/generated/manifests/implementation/bitnami/redis/install.yaml
-+++ b/generated/manifests/implementation/bitnami/redis/install.yaml
+--- a/generated/implementation/bitnami/redis/install.yaml
++++ b/generated/implementation/bitnami/redis/install.yaml
 @@ -104,7 +104,7 @@ spec:
                                  enabled: <@ additionalinput.auth.enabled | default(true) | tojson @>
                                  existingSecret: <@ additionalinput.auth.existingSecret | default("") | tojson @>
@@ -123,10 +174,8 @@ Modify files according to the following diffs:
 ```
 
 ```diff
-diff --git a/manifests/type/bitnami/redis/install-input.yaml b/manifests/type/bitnami/redis/install-input.yaml
-index 799b68b..2929f56 100644
---- a/generated/manifests/type/bitnami/redis/install-input.yaml
-+++ b/generated/manifests/type/bitnami/redis/install-input.yaml
+--- a/generated/type/bitnami/redis/install-input.yaml
++++ b/generated/type/bitnami/redis/install-input.yaml
 @@ -36,16 +36,6 @@ spec:
                  "type": "boolean",
                  "form": true,
@@ -146,17 +195,17 @@ index 799b68b..2929f56 100644
            },
 ```
 
-Now your Helm manifests are ready to use!
+Now your Helm manifests are ready to use! See how can you [test it](#testing-manifests)
 
 ## Generating Terraform Implementation
 
 Next step is to generate Implementation for a Terraform module. First step is to clone git repository with the module:
 
 ```bash
-git clone https://github.com/umotif-public/terraform-aws-elasticache-redis.git
+git clone --depth 1 https://github.com/umotif-public/terraform-aws-elasticache-redis.git
 ```
 
-Now you can generate a new Implementation manifest. Similarly to Helm, you need to set a path to the module and set which Interface is implemented:
+Now you can generate a new Implementation manifest. You need to set a path to the module and set which Interface is implemented:
 
 ```bash
 capact alpha manifest-gen implementation terraform cap.implementation.aws.redis.install terraform-aws-elasticache-redis -i cap.interface.database.redis.install -s git::https://github.com/umotif-public/terraform-aws-elasticache-redis
@@ -164,19 +213,16 @@ capact alpha manifest-gen implementation terraform cap.implementation.aws.redis.
 
 It will generate two new files:
 
-* `generated/type/aws/redis/install-input.yaml` with and additional input Type definition
-* `generated/implementation/aws/redis/install.yaml` with an Implementation definition
+* `generated/type/aws/redis/install-input.yaml` with the Type for Implementation-specific additional input.
+* `generated/implementation/aws/redis/install.yaml` with the Implementation definition for AWS ElastiCache Terraform module.
 
-Similarly to the Interface and Helm Implementation, you can update Metadata in both files.
+Similarly to the Interface, you can update **metadata** in both files.
 
-Now you need to adjust manifests to use input values from the Interface and to use AWS credentials passed in TypeInstance.
-Modify files according to the following diffs:
+Now you need to adjust manifests to use input values from the Interface. Modify files according to the following diffs:
 
 ```diff
-diff --git a/manifests/type/aws/redis/install-input.yaml b/manifests/type/aws/redis/install-input.yaml
-index f6826c0..4f3c148 100644
---- a/manifests/type/aws/redis/install-input.yaml
-+++ b/manifests/type/aws/redis/install-input.yaml
+--- a/generated/type/aws/redis/install-input.yaml
++++ b/generated/type/aws/redis/install-input.yaml
 @@ -29,11 +28,6 @@ spec:
              "title": "at_rest_encryption_enabled",
              "description": "Whether to enable encryption at rest."
@@ -204,56 +250,26 @@ index f6826c0..4f3c148 100644
 ```
 
 ```diff
-diff --git a/manifests/implementation/aws/redis/install.yaml b/manifests/implementation/aws/redis/install.yaml
-index 83ee065..3b18132 100644
---- a/manifests/implementation/aws/redis/install.yaml
-+++ b/manifests/implementation/aws/redis/install.yaml
-@@ -34,12 +33,7 @@ spec:
-     - path: cap.interface.database.redis.install
-       revision: 0.1.0
+--- a/generated/implementation/aws/redis/install.yaml
++++ b/generated/implementation/aws/redis/install.yaml
+@@ -16,7 +16,7 @@ metadata:
+     name: "Apache 2.0"
 
-+  requires:
-+    cap.type.aws.auth:
-+      allOf:
-+        - name: credentials
-+          alias: aws-credentials
-+          revision: 0.1.0
--  requires: {}
-
-   imports:
-     - interfaceGroupPath: cap.interface.runner.argo
-@@ -82,8 +77,8 @@ spec:
-                       - name: additional-parameters
-                         from: "{{inputs.artifacts.additional-parameters}}"
-                         optional: true
-+                      - name: aws
-+                        from: "{{workflow.outputs.artifacts.aws-credentials}}"
--                      - name: provider-credentials
--                        from: "" # TODO(ContentDeveloper): Set credentials to the Terraform provider
-
-               - - name: create-module-args
-                   capact-action: jinja2.template
-@@ -100,11 +95,8 @@ spec:
-                             module:
-                               name: "install"
-                               source: "git::https://github.com/umotif-public/terraform-aws-elasticache-redis"
-+                            env:
-+                            - AWS_ACCESS_KEY_ID=<@ aws.accessKeyID @>
-+                            - AWS_SECRET_ACCESS_KEY=<@ aws.secretAccessKey @>
-+                            - AWS_DEFAULT_REGION=<@ additionalinput.region | default('eu-west-1') @>
+ spec:
+-  appVersion: "1.0.x" # TODO(ContentDeveloper): Set the supported application version here
++  appVersion: "6.2.x"
+   additionalInput:
+     parameters:
+       additional-parameters:
+@@ -104,6 +104,7 @@ spec:
+                             env:
+                               - AWS_ACCESS_KEY_ID=<@ providercredentials.accessKeyID @>
+                               - AWS_SECRET_ACCESS_KEY=<@ providercredentials.secretAccessKey @>
++                              - AWS_DEFAULT_REGION=<@ additionalinput.region | default('eu-west-1') @>
                              output:
                                goTemplate:
                                  elasticache_auth_token: "{{ .elasticache_auth_token }}"
-@@ -124,15 +116,15 @@ spec:
-                                 security_group_owner_id: "{{ .security_group_owner_id }}"
-                                 security_group_vpc_id: "{{ .security_group_vpc_id }}"
-                             variables: |+
-+                              name_prefix = <@ input.name | tojson @>
-+                              auth_token = <@ input.password | default(random_word(length=16)) | tojson @>
-+
-                               <%- if additionalinput.apply_immediately %>
-                               apply_immediately = <@ additionalinput.apply_immediately | tojson @>
-                               <%- endif %>
+@@ -129,9 +130,6 @@ spec:
                                <%- if additionalinput.at_rest_encryption_enabled %>
                                at_rest_encryption_enabled = <@ additionalinput.at_rest_encryption_enabled | tojson @>
                                <%- endif %>
@@ -263,7 +279,7 @@ index 83ee065..3b18132 100644
                                <%- if additionalinput.auto_minor_version_upgrade %>
                                auto_minor_version_upgrade = <@ additionalinput.auto_minor_version_upgrade | tojson @>
                                <%- endif %>
-@@ -175,6 +167,9 @@ spec:
+@@ -174,9 +172,6 @@ spec:
                                <%- if additionalinput.multi_az_enabled %>
                                multi_az_enabled = <@ additionalinput.multi_az_enabled | tojson @>
                                <%- endif %>
@@ -273,30 +289,19 @@ index 83ee065..3b18132 100644
                                <%- if additionalinput.node_type %>
                                node_type = <@ additionalinput.node_type | tojson @>
                                <%- endif %>
-@@ -245,10 +239,9 @@ spec:
+@@ -246,9 +241,10 @@ spec:
                            data: ""
                        - name: template
                          raw:
 -                          # TODO(ContentDeveloper): Fill the properties of the output TypeInstance here
                            data: |
+-                            property: value
 +                            password: "{{ .elasticache_auth_token }}"
 +                            port: "{{ .elasticache_port }}"
 +                            host: "{{ .elasticache_replication_group_arn }}"
--                            property: value
 
            - name: prepare-parameters
              inputs:
-@@ -258,8 +251,8 @@ spec:
-                 - name: additional-parameters
-                   path: /yamls/additionalinput.yaml
-                   optional: true
-+                - name: aws
-+                  path: /yamls/aws.yaml
--                - name: provider-credentials
--                  path: /yamls/providercredentials.yaml
-             container:
-               image: ghcr.io/capactio/pr/infra/merger:PR-428
-             outputs:
 ```
 
 Now your Terraform manifests are ready to use!
@@ -318,41 +323,42 @@ To test generated manifests you need to:
 
 1. Create an action
 
-   ```bash
-   capact act create cap.interface.database.redis.install --name redis --parameters-from-file input.yaml
+   * For Helm Implementation
 
-   ```
+     ```bash
+     capact act create cap.interface.database.redis.install --name redis --parameters-from-file input.yaml
+     ```
 
-1. To choose Terraform implementation instead of default Helm, create a policy file `policy.yaml`
+   * To choose Terraform implementation create a policy file `policy.yaml`
 
-   ```yaml
-   rules:
-     - interface:
-         path: cap.interface.database.redis.install
-       oneOf:
-       - implementationConstraints:
-           path: "cap.implementation.aws.redis.install"
-         inject:
-           requiredTypeInstances:
-             - id: <AWS Type Instance ID>
-               description: "AWS credentials"
-           additionalParameters:
-             - name: additional-parameters
-               value:
-                 vpc_id: <Your VPC ID>
-                 subnet_ids:
-                   - <Your VPC subnet id>
-                 number_cache_clusters: 1
-                 node_type: cache.t3.small
-   ```
+     ```yaml
+     rules:
+       - interface:
+	   path: cap.interface.database.redis.install
+	 oneOf:
+	 - implementationConstraints:
+	     path: "cap.implementation.aws.redis.install"
+	   inject:
+	     requiredTypeInstances:
+	       - id: <AWS Type Instance ID>
+		 description: "AWS credentials"
+	     additionalParameters:
+	       - name: additional-parameters
+		 value:
+		   vpc_id: <Your VPC ID>
+		   subnet_ids:
+		     - <Your VPC subnet id>
+		   number_cache_clusters: 1
+		   node_type: cache.t3.small
+     ```
 
-1. Create an action with a Terraform implementation
+     Create an action
 
-   ```bash
-   capact act create cap.interface.database.redis.install --name redis --parameters-from-file input.yaml --action-policy-from-file policy.yaml
-
-   ```
+     ```bash
+     capact act create cap.interface.database.redis.install --name redis --parameters-from-file input.yaml --action-policy-from-file policy.yaml
+     ```
 
 ## Summary
 
-That's all. Now you can share you generated manifests :)
+That's all. Now you can share you generated manifests.
+Create a pull request in our [Hub Manifests](https://github.com/capactio/hub-manifests) repository. We are happy to review it :)
