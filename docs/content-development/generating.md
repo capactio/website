@@ -370,22 +370,22 @@ To test generated manifests you need to:
      ```yaml
      rules:
        - interface:
-	   path: cap.interface.database.redis.install
-	 oneOf:
-	 - implementationConstraints:
-	     path: "cap.implementation.aws.redis.install"
-	   inject:
-	     requiredTypeInstances:
-	       - id: <AWS Type Instance ID>
-		 description: "AWS credentials"
-	     additionalParameters:
-	       - name: additional-parameters
-		 value:
-		   vpc_id: <Your VPC ID>
-		   subnet_ids:
-		     - <Your VPC subnet id>
-		   number_cache_clusters: 1
-		   node_type: cache.t3.small
+           path: cap.interface.database.redis.install
+         oneOf:
+         - implementationConstraints:
+             path: "cap.implementation.aws.redis.install"
+           inject:
+             requiredTypeInstances:
+               - id: "<AWS Type Instance ID>"
+                 description: "AWS credentials"
+             additionalParameters:
+               - name: additional-parameters
+                 value:
+                   vpc_id: "<Your VPC ID>"
+                   subnet_ids:
+                     - "<Your VPC subnet id>"
+                   number_cache_clusters: 1
+                   node_type: cache.t3.small
      ```
 
      Create an action
