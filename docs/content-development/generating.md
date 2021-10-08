@@ -23,7 +23,7 @@ It generates four files:
 
 * `generated/interface/database/redis.yaml` with an [InterfaceGroup](https://github.com/capactio/capact/blob/main/ocf-spec/0.0.1/README.md#interfacegroup) definition. As the name suggests, it's grouping interfaces for Redis domain. For example, `install`, `update` etc.
 * `generated/interface/database/redis/install.yaml` with an Interface definition. It defines the Interface signature.
-* `generated/type/database/redis/install-input.yaml` with an input [Type]() definition.
+* `generated/type/database/redis/install-input.yaml` with an input [Type](https://github.com/capactio/capact/blob/main/ocf-spec/0.0.1/README.md#type) definition.
 * `generated/type/database/redis/config.yaml` with an output Type definition.
 
 All the files have a **metadata** property defined with fields like description, maintainer, name, e-mail and so on. Feel free to update them now. For example, metadata in `redis.yaml` file can look like this:
@@ -171,6 +171,18 @@ Modify files according to the following diffs:
                                global:
                                  imagePullSecrets: <@ additionalinput.global.imagePullSecrets | default(None) | tojson @>
                                  imageRegistry: <@ additionalinput.global.imageRegistry | default("") | tojson @>
+@@ -467,7 +467,9 @@ spec:
+
+                             output:
+                               goTemplate: |
+-                                # TODO(ContentDeveloper): Add output template in YAML
++                                host: '{{ template "common.names.fullname" . }}.{{ .Release.Namespace }}'
++                                port: '{{ .Values.master.service.port }}'
++                                password: '{{ .Values.auth.password }}'
+
+               - - name: helm-install
+                   capact-action: helm.install
+
 ```
 
 ```diff
@@ -223,7 +235,22 @@ Now you need to adjust manifests to use input values from the Interface. Modify 
 ```diff
 --- a/generated/type/aws/redis/install-input.yaml
 +++ b/generated/type/aws/redis/install-input.yaml
-@@ -29,11 +28,6 @@ spec:
+@@ -14,10 +14,13 @@ metadata:
+       url: https://example.com
+ spec:
+   jsonSchema:
+-    # TODO(ContentDeveloper): Adjust the JSON schema if needed.
+     value: |-
+       {
+         "properties": {
++          "region": {
++            "type": "string",
++            "title": "AWS region"
++          },
+           "apply_immediately": {
+             "type": "boolean",
+             "title": "apply_immediately",
+@@ -28,11 +31,6 @@ spec:
              "title": "at_rest_encryption_enabled",
              "description": "Whether to enable encryption at rest."
            },
@@ -235,7 +262,7 @@ Now you need to adjust manifests to use input values from the Interface. Modify 
            "auto_minor_version_upgrade": {
              "type": "string",
              "title": "auto_minor_version_upgrade"
-@@ -103,11 +97,6 @@ spec:
+@@ -102,11 +100,6 @@ spec:
              "title": "multi_az_enabled",
              "description": "Specifies whether to enable Multi-AZ Support for the replication group. If true, `automatic_failover_enabled` must also be enabled. Defaults to false."
            },
@@ -269,7 +296,16 @@ Now you need to adjust manifests to use input values from the Interface. Modify 
                              output:
                                goTemplate:
                                  elasticache_auth_token: "{{ .elasticache_auth_token }}"
-@@ -129,9 +130,6 @@ spec:
+@@ -123,15 +124,15 @@ spec:
+                                 security_group_owner_id: "{{ .security_group_owner_id }}"
+                                 security_group_vpc_id: "{{ .security_group_vpc_id }}"
+                             variables: |+
++                              name_prefix = <@ input.name | tojson @>
++                              auth_token = <@ input.password | default(random_word(length=16)) | tojson @>
++
+                               <%- if additionalinput.apply_immediately %>
+                               apply_immediately = <@ additionalinput.apply_immediately | tojson @>
+                               <%- endif %>
                                <%- if additionalinput.at_rest_encryption_enabled %>
                                at_rest_encryption_enabled = <@ additionalinput.at_rest_encryption_enabled | tojson @>
                                <%- endif %>
