@@ -79,7 +79,7 @@ To use the module, you need to prepare Capact manifests - InterfaceGroup, Interf
 In this example, we have them all already defined for PostgreSQL installation. To create your own manifests, you can base on them:
 - [InterfaceGroup](https://github.com/capactio/hub-manifests/tree/main/manifests/interface/database/postgresql.yaml)
 - [Interface](https://github.com/capactio/hub-manifests/tree/main/manifests/interface/database/postgresql/install.yaml)
-- [Implementation](https://github.com/capactio/hub-manifests/tree/main/manifests/implementation/terraform/gcp/cloudsql/postgresql/install.yaml). The manifest uses Terraform Runner.
+- [Implementation](https://github.com/capactio/hub-manifests/blob/main/manifests/implementation/gcp/cloudsql/postgresql/install-0.2.0.yaml). The manifest uses Terraform Runner.
   
   Instead of using GCS as module source, you can use internal MinIO URL, such as `http://argo-minio.argo:9000/terraform/cloudsql/cloudsql.tgz`.
 

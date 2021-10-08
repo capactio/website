@@ -34,7 +34,7 @@ Wait for the command to finish.
 
 ## Next steps
 
-Configure Capact CLI to connect to your fresh local Capact installation. Follow the steps in the [First use](../cli/getting-started#first-use) section of the CLI Getting started guide. Enjoy using Capact!
+Configure Capact CLI to connect to your fresh local Capact installation. Follow the steps in the [First use](../cli/getting-started.mdx#first-use) section of the CLI Getting started guide. Enjoy using Capact!
 
 ## Cleanup
 

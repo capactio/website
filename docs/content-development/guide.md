@@ -266,7 +266,7 @@ You can read more about runners in [this document](../architecture/runner.md).
 
 ## Write the Implementation for the Interface
 
-> The syntax used to describe the workflows in **Implementations** is based on [Argo](https://argoproj.github.io/argo/).
+> The syntax used to describe the workflows in **Implementations** is based on [Argo Workflows](https://argoproj.github.io/workflows).
 > It's highly recommended you read their documentation and understand what is Argo and how to create Argo workflows, before writing OCF Implementations.
 
 After we defined the **Interfaces**, and the **Types**, we can write an **Implementation** of `mattermost.install`. Our **Implementation** will use a PostgreSQL database, which will be provided by another **Interface**, which is already available in Capact. We also allow users to provide his own PostgreSQL instance **TypeInstance**.
@@ -529,7 +529,7 @@ Let's take a look on the **Implementation** YAML. **Implementation** has the fol
 
 > You can notice, that `mattermost-config` (which is the `additional` output TypeInstance from `helm.install`) is defined in the `outputTypeInstanceRelations`, although it was created in `helm.install`. The `additional` from `helm.install` is specially, because `helm.install` does not know the Type of TypeInstances, so it's not defined in `helm.install` Implementation, but must be defined in the caller Implementation. In the future, we will improve the syntax, so it will be more clear, which TypeInstances need a separate entry in `outputTypeInstanceRelations` and which don't.
 
-The workflow syntax is based on [Argo](https://argoproj.github.io/argo/), with a few extensions introduced by Capact. These extensions are:
+The workflow syntax is based on [Argo Workflows](https://argoproj.github.io/workflows), with a few extensions introduced by Capact. These extensions are:
 
 | Property                                         | Description                                                                                                                                                                                                                                                                                                                                            |
 | ------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
@@ -561,7 +561,7 @@ Let's go through the **Implementation** and try to understand, what is happening
 In the next step we are creating a database for the Mattermost server. If you look at the **Interface** definition of [`cap.interface.database.postgresql.create-db`](https://github.com/capactio/hub-manifests/tree/main/manifests/interface/database/postgresql/create-db.yaml), you will see, that it requires a `postgresql` **TypeInstance** of **Type** [`cap.type.database.postgresql.config`](https://github.com/capactio/hub-manifests/tree/main/manifests/type/database/postgresql/config.yaml) and input parameters [`cap.type.database.postgresql.database-input`](https://github.com/capactio/hub-manifests/tree/main/manifests/type/database/postgresql/database-input.yaml), and outputs a `database` **TypeInstance** of **Type** [`cap.type.database.postgresql.database`](https://github.com/capactio/hub-manifests/tree/main/manifests/type/database/postgresql/database.yaml). In the step, we are providing the inputs to the **Interface** via the `.arguments.artifacts` field. We also have to map the output of this step to our output definitions in `additionalOutput` and the implemented **Interface** in the `capact-outputTypeInstances` field.
 
 The `render-helm-args`, `fill-db-params-in-helm-args` and `fill-user-params-in-helm-args` steps are used to prepare the input parameters for the `helm.install` **Interface**. Jinja template engine is used here to render the Helm runner arguments with the required data from the `postgresql` and `database` **TypeInstances**. Those steps don't create any **TypeInstances** and serve only the purpose of creating the input parameters for the Helm runner.
-You can check the schema of the Helm runner args in the [Type manifest](https://github.com/capactio/hub-manifests/tree/main/manifests/type/runner/helm/run-input.yaml).
+You can check the schema of the Helm runner args in the [Type manifest](https://github.com/capactio/hub-manifests/blob/main/manifests/type/runner/helm/install-input.yaml).
 
 > To create the input parameters for `helm.install` we have to use data from two artifacts. As the current `jinja.run` **Interface** consumes only a template and a single variables input, we have to perform this operation twice. To separate the variables substituted in the first, second and third operation, we add prefixes to the variables.
 >
@@ -576,7 +576,7 @@ arguments:
     - name: runner-context
       from: "{{workflow.outputs.artifacts.runner-context}
 ```
-To verify, if a runner needs the context, check the **Interface** of the runner (e.g. [Interface for Helm runner](https://github.com/capactio/hub-manifests/tree/main/manifests/interface/runner/helm/run.yaml)).
+To verify, if a runner needs the context, check the **Interface** of the runner (e.g. [Interface for Helm runner](https://github.com/capactio/hub-manifests/blob/main/manifests/interface/runner/helm/install.yaml)).
 
 ## Validate the manifests using Capact CLI
 
