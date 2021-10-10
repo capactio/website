@@ -4,10 +4,12 @@ This document describes how to generate Manifests from existing Helm Charts and 
 
 ## Prerequisites
 
-- Read [Content development guide](./guide.md) before
-- [git](https://git-scm.com/)
-- [helm](https://helm.sh/)
-- Capact cluster, for example run [locally](../installation/local.md)
+- Read [Content development guide](./guide.md) before.
+- [git](https://git-scm.com/) installed.
+- [Helm v3](https://helm.sh/docs/intro/install/) installed.
+- [Capact CLI](../cli/getting-started.mdx#install) at least v0.5.0 installed.
+    > **NOTE:** Install the latest Capact CLI version from the `main` branch.
+- Capact cluster. For example, [local instance](../installation/local.md).
     
     > **NOTE:** Use `--capact-overrides=hub-public.populator.enabled=false` flag, as you will manually upload your OCF manifests into Hub.
 
@@ -207,11 +209,11 @@ Modify files according to the following diffs:
            },
 ```
 
-Now your Helm manifests are ready to use! See how can you [test it](#testing-manifests)
+Now your Helm manifests are ready to use! See how can you [test it](#testing-manifests).
 
 ## Generating Terraform Implementation
 
-Next step is to generate Implementation for a Terraform module. First step is to clone git repository with the module:
+Next step is to generate Implementation for a Terraform module. First, clone git repository with the module:
 
 ```bash
 git clone --depth 1 https://github.com/umotif-public/terraform-aws-elasticache-redis.git
@@ -220,10 +222,10 @@ git clone --depth 1 https://github.com/umotif-public/terraform-aws-elasticache-r
 Now you can generate a new Implementation manifest. You need to set a path to the module and set which Interface is implemented:
 
 ```bash
-capact alpha manifest-gen implementation terraform cap.implementation.aws.redis.install terraform-aws-elasticache-redis -i cap.interface.database.redis.install -s git::https://github.com/umotif-public/terraform-aws-elasticache-redis
+capact alpha manifest-gen implementation terraform cap.implementation.aws.redis.install terraform-aws-elasticache-redis -i cap.interface.database.redis.install -s git::https://github.com/umotif-public/terraform-aws-elasticache-redis -p aws
 ```
 
-It will generate two new files:
+It generates two new files:
 
 * `generated/type/aws/redis/install-input.yaml` with the Type for Implementation-specific additional input.
 * `generated/implementation/aws/redis/install.yaml` with the Implementation definition for AWS ElastiCache Terraform module.
@@ -340,21 +342,24 @@ Now you need to adjust manifests to use input values from the Interface. Modify 
              inputs:
 ```
 
-Now your Terraform manifests are ready to use!
+Now your Terraform manifests are ready to use! See how can you [test it](#testing-manifests).
 
 ## Testing manifests
 
 To test generated manifests you need to:
 
-1. Clone repository with our [Hub Manifests](https://github.com/capactio/hub-manifests).
+1. Clone repository with [Hub Manifests](https://github.com/capactio/hub-manifests).
 1. Copy content of the `generated` directory into `manifests` directory.
-1. [Populate data](./guide.md#populate-the-manifests-into-hub)
+1. [Populate data](./guide.md#populate-the-manifests-into-hub).
 1. (For AWS only) Create a [Type Instance](../example/typeinstances.md#aws-credentials) with credentials.
 1. Prepare input file `input.yaml`
 
    ```yaml
-   input-parameters:
-     name: redis-test
+    cat > /tmp/install-input.yaml << ENDOFFILE
+    input-parameters:
+      name: redis-test
+    
+    ENDOFFILE
    ```
 
 1. Create an action
@@ -362,12 +367,16 @@ To test generated manifests you need to:
    * For Helm Implementation
 
      ```bash
-     capact act create cap.interface.database.redis.install --name redis --parameters-from-file input.yaml
+     capact act create cap.interface.database.redis.install --name redis --parameters-from-file /tmp/install-input.yaml
      ```
 
    * To choose Terraform implementation create a policy file `policy.yaml`
 
      ```yaml
+     AWS_TI_ID="{AWS Type Instance ID}"
+     AWS_VPC_ID="{Your VPC ID}"
+     AWS_SUBNET_ID="{Your VPC subnet id}"
+     cat > /tmp/aws-policy.yaml << ENDOFFILE
      rules:
        - interface:
            path: cap.interface.database.redis.install
@@ -376,22 +385,23 @@ To test generated manifests you need to:
              path: "cap.implementation.aws.redis.install"
            inject:
              requiredTypeInstances:
-               - id: "<AWS Type Instance ID>"
+               - id: "${AWS_TI_ID}"
                  description: "AWS credentials"
              additionalParameters:
                - name: additional-parameters
                  value:
-                   vpc_id: "<Your VPC ID>"
+                   vpc_id: "${AWS_VPC_ID}"
                    subnet_ids:
-                     - "<Your VPC subnet id>"
+                     - "${AWS_SUBNET_ID}"
                    number_cache_clusters: 1
                    node_type: cache.t3.small
+     ENDOFFILE
      ```
 
      Create an action
 
      ```bash
-     capact act create cap.interface.database.redis.install --name redis --parameters-from-file input.yaml --action-policy-from-file policy.yaml
+     capact act create cap.interface.database.redis.install --name redis --parameters-from-file /tmp/install-input.yaml --action-policy-from-file /tmp/aws-policy.yaml
      ```
 
 ## Summary
