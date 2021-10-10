@@ -334,9 +334,9 @@ Now you need to adjust manifests to use input values from the Interface. Modify 
 -                          # TODO(ContentDeveloper): Fill the properties of the output TypeInstance here
                            data: |
 -                            property: value
-+                            password: "{{ .elasticache_auth_token }}"
-+                            port: "{{ .elasticache_port }}"
-+                            host: "{{ .elasticache_replication_group_arn }}"
++                            password: "<@ elasticache_auth_token @>"
++                            port: "<@ elasticache_port @>"
++                            host: "<@ elasticache_replication_group_primary_endpoint_address @>"
 
            - name: prepare-parameters
              inputs:
