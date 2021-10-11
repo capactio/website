@@ -1,8 +1,8 @@
 name: Periodic Checks on main branch
 on:
   schedule:
-    # Triggers the workflow every day 9:00 UTC
-    - cron: '0 9 * * *'
+    # Triggers the workflow weekdays at 9:00 UTC
+    - cron: '0 9 * * MON-FRI'
   workflow_dispatch:
 
 jobs:
@@ -12,6 +12,9 @@ jobs:
     permissions:
       contents: read
 
+    # To run locally, execute:
+    #  npm install -g markdown-link-check
+    #  npm run check-links
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
