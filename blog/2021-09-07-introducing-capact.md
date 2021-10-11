@@ -101,7 +101,7 @@ Here are other things to do:
 
 👉 **Follow us:** Interesting in Capact updates? Follow us on [Twitter](https://twitter.com/capactio)! Also, check out our [LinkedIn](https://www.linkedin.com/company/72586376) page and [YouTube](https://www.youtube.com/channel/UCajXtDttqVuZ_Bl7M3_qA8w) channel.
 
-📖 **Read our documentation:** If you want to get familiar with other installation options, examples, content development, or contribution guides, check out the [Capact documentation](/docs).
+📖 **Read our documentation:** If you want to get familiar with other installation options, examples, content development, or contribution guides, check out the [Capact documentation](/docs/).
 
 🤔 **Get support:** If you need any help, or you have a question for us, join our [Slack channel](/community/slack) on the CNCF workspace and post a message—we'll do our best to get you sorted!
 
