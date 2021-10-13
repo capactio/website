@@ -8,12 +8,12 @@ sidebar_position: 1
 
 The key Capact feature is dependencies interchangeability. Applications define theirs dependencies by using Interfaces. Policies can be used to control, which dependency Implementation is chosen for an Interface. They allow also to tweak the dependency, by providing additional, Implementation specific parameters. 
 
-There are three ways how to provide policy configuration:
-- [Global policy](./global-policy.md)
-- [Action policy](./action-policy.md)
-- [Workflow step policy](./workflow-step-policy.md)
+There are three different policy types:
+- [Global policy](./global-policy.md),
+- [Action policy](./action-policy.md),
+- [Workflow step policy](./workflow-step-policy.md).
 
-The policies from the three sources above are merged and evaluated during Action rendering.
+The policies are merged and evaluated during Action rendering.
 
 ## Syntax
 
@@ -189,9 +189,17 @@ rules:
             region: us-east-1
 ```
 
+## Modifying policies
+
+There are different ways to set policy, depending on its type.
+
+- To view and modify Global policy, read the [Configuration](./global-policy.md#configuration) section.
+- To set Action policy, read the [Provide Action policy, when creating Action using Capact CLI](./action-policy.md#provide-action-policy-when-creating-action-using-capact-cli) paragraph.
+- To learn how to define Workflow step policy in the Implementation manifest, see the [Workflow step policy](./workflow-step-policy.md) document.
+
 ## Merging of different policies
 
-There are three different policies, which are merged together, when rendering the Action: Global, Action and Workflow step policies. Merging is necessary to calculate the final policy, which is used to select an Implementation and inject TypeInstaces and parameters. The priority order of the policies is configurable by the Capact Admin. The default order is (highest to lowest):
+There are three different policies, which are merged together, when rendering the Action: Global, Action and Workflow step policies. Merging is necessary to calculate the final policy, which is used to select an Implementation and inject TypeInstances and parameters. The priority order of the policies is configurable by the Capact Admin. The default order is (highest to lowest):
 1. Action policy
 2. Global policy
 3. Workflow step policy
