@@ -62,7 +62,10 @@ const generateLegacyDocsRedirectsForVersion = (version, useLatestVersionAsTarget
   const fromPrefix = version != "" ? `/docs/${version}` : "/docs";
   const toPrefix = useLatestVersionAsTarget ? `/docs` : fromPrefix;
 
-  const currentRedirect = generateDocsRedirectsForVersion(version, useLatestVersionAsTarget).splice(0, 1)
+	const currentRedirect = generateDocsRedirectsForVersion(version, useLatestVersionAsTarget).filter( item => {
+		return item.to !== `${toPrefix}/getting-started`;
+	})
+
   return [
     ...currentRedirect,
     {

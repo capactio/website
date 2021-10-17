@@ -29,11 +29,11 @@
       "replacement": "https://capact.io/docs/"
     },
     {
-      "pattern": "^/slack/",
-      "replacement": "https://capact.io/slack/"
+      "pattern": "^/community/slack$",
+      "replacement": "https://capact.io/community/slack"
     },
     {
-      "pattern": "^/blog/",
+      "pattern": "^/blog",
       "replacement": "https://capact.io/blog/"
     }
   ],
