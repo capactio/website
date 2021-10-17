@@ -160,7 +160,7 @@ To check the logs since a given time, use the `--since-time` flag, for example:
 
 ### Checking if Public Hub is populated 
 
-- Check if [Hub Populator logs](#hub-populator-logs) contain a message similar to: `{"level":"info","ts":1620895282.3582015,"caller":"register/ocf_manifests.go:107","msg":"Populated new data","duration (seconds)":235.525841306}`. It means that manifests were populated successfully. If you get an error similar to: `error: container hub-public-populator is not valid for pod capact-hub-public-84cc74bc66-pmkhp` it means that the Public Hub Populator is disabled. You can either [enable automated synchronization with an external source](../example/public-hub-content.mdx#enable-automated-synchronization-with-an-external-source) or [manually populate the manifests into Hub](../example/public-hub-content.md#populate-the-manifests-into-hub).
+- Check if [Hub Populator logs](#hub-populator-logs) contain a message similar to: `{"level":"info","ts":1620895282.3582015,"caller":"register/ocf_manifests.go:107","msg":"Populated new data","duration (seconds)":235.525841306}`. It means that manifests were populated successfully. If you get an error similar to: `error: container hub-public-populator is not valid for pod capact-hub-public-84cc74bc66-pmkhp` it means that the Public Hub Populator is disabled. You can either [enable automated synchronization with an external source](../example/public-hub-content.mdx#enable-automated-synchronization-with-an-external-source) or [manually populate the manifests into Hub](../example/public-hub-content.mdx#populate-the-manifests-into-hub).
 
 - Check if manifests can be fetched from the Public Hub. Install the latest [stable Capact CLI](../cli/getting-started.mdx), and run:
 

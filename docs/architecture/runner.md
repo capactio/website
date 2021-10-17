@@ -199,6 +199,6 @@ The Argo Workflow Runner implementation is defined in the [pkg/runner/argo](http
 
 The implemented dry run functionality only executes the Argo Workflow manifest static validation, and sends a request to the server with the `dry-run` flag, which renders the manifest with the server's representation without creating it.
 
-The Argo Workflow Runner is published to the [ghcr.io/capactio/argo-runner](https://github.com/capactio/capact/pkgs/container/argo-runner) registry.
+The Argo Workflow Runner is published to the [ghcr.io/capactio/argo-runner](https://github.com/orgs/capactio/packages?tab=packages&q=argo-runner) registry.
 
 > **CAUTION:** As the Argo Workflow does not get created, the nested Action Runners are not executed with the `dry-run` flag.
