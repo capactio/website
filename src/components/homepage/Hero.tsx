@@ -22,7 +22,7 @@ const heroData = {
     {
       label: "Get started",
       additionalClassName: "button--primary",
-      url: "/docs/installation/local",
+      url: "/docs/getting-started",
     },
     {
       label: "GitHub",

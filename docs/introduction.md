@@ -1,5 +1,5 @@
 ---
-sidebar_position: 1
+sidebar_position: 2
 ---
 
 # Introduction
@@ -36,7 +36,7 @@ From User perspective, the flow is easy.
 
 ## Components
 
-The following Capact components reside in this repository:
+The following Capact components reside in the [`capact`](https://github.com/capactio/capact) repository:
 
 - [Argo runner](https://github.com/capactio/capact/tree/main/cmd/argo-runner) - Runner, which executes Argo workflows.
 - [CloudSQL runner](https://github.com/capactio/capact/tree/main/cmd/cloudsql-runner) - Runner, which manages Google CloudSQL instances.

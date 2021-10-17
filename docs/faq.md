@@ -1,21 +1,13 @@
 ---
 sidebar_label: "FAQ"
-sidebar_position: 3
+sidebar_position: 4
 ---
 
 # Frequently Asked Questions
 
 ## How do I start using Capact?
 
-To get started with Capact, check out these links:
-
-- **Introduction:** To learn what is Capact, read the [Introduction](./introduction.md) document. See also the [Terminology](./terminology.md) to understand all terms used through the Capact documentation.
-- **Installation:** To learn how to install Capact, follow the [local](./installation/local.md), [AWS](./installation/aws-eks.md) and [GCP](./installation/gcp-gke.md) installation tutorials.
-- **Examples:** To read how to use Capact based on real life examples, see the [Mattermost installation](./example/mattermost-installation.md).
-- **Content Development**: To learn how to create content for Capact, see the [Content development guide](./content-development/guide.md).
-- **Development:** To start contributing to Capact, read the [development guide](/community/development/development-guide).
-
-To read the full documentation, navigate to the [capact.io/docs](https://capact.io/docs) website.
+To learn how to begin your adventure with Capact, check the [Getting Started](./getting-started.mdx) document.
 
 ## How do I troubleshoot Capact installation?
 

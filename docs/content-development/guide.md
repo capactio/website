@@ -593,27 +593,13 @@ You can read more about the Capact CLI [here](https://github.com/capactio/capact
 
 ## Populate the manifests into Hub
 
-After we have the manifests ready, we can start our local Capact environment. Follow the [Local installation](../installation/local.md) guide. During the actual Capact installation step, provide additional flag for `capact install` command:
+After we have the manifests ready, we can start our local Capact environment. Follow the [Local installation](../installation/local.mdx) guide. During the actual Capact installation step, provide additional flag for `capact install` command:
 
 ```bash
 capact install --capact-overrides=hub-public.populator.enabled=false
 ```
 
-This can take a few minutes. We disabled the populator sidecar in Hub public, as we will populate the data from our local repository using the populator.
-
-> You can read more about the populator, how to compile and use it, in this [README](https://github.com/capactio/capact/tree/main/cmd/populator/docs/populator_register-ocf-manifests.md).
-
-To populate the data, you will need to first set up port-forwarding to the Neo4j database service:
-```
-kubectl port-forward -n capact-system svc/neo4j-neo4j 7474 7687
-```
-
-Then populate the data, with the populator:
-```
-APP_JSON_PUBLISH_ADDR=<your-local-docker-ip-address> APP_MANIFESTS_PATH=manifests ./populator register ocf-manifests .
-
-APP_JSON_PUBLISH_ADDR=http://172.17.0.1 APP_MANIFESTS_PATH=manifests populator register ocf-manifests .
-```
+This can take a few minutes. Next, [populate the manifests to Public Hub](../example/public-hub-content.mdx#populate-the-manifests-into-hub). 
 
 ## Create and run your Action
 

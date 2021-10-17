@@ -21,7 +21,7 @@ const generateDocsRedirectsForVersion = (version, useLatestVersionAsTarget) => {
   return [
     {
       from: `${fromPrefix}`,
-      to: `${toPrefix}/introduction`,
+      to: `${toPrefix}/getting-started`,
     },
     {
       from: `${fromPrefix}/installation`,
