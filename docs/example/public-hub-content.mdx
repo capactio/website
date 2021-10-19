@@ -160,7 +160,7 @@ helm upgrade capact --version {VERSION} capactio/capact -n capact-system --reuse
 2. In one terminal window, expose Neo4j:
 
     ```bash
-    kubectl -n neo4j port-forward svc/neo4j-neo4j 7687:7687
+    kubectl -n capact-system port-forward svc/neo4j-neo4j 7687:7687
     ```
 
 3. Execute `populator`:
