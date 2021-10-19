@@ -22,12 +22,12 @@ The diagrams below show possible scenarios:
 
 * [Capact CLI](../cli/getting-started.mdx) installed.
 * [`kubectl`](https://kubernetes.io/docs/tasks/tools/install-kubectl/) installed.
-* Cluster with Capact installation. See the [installation tutorial](../installation/local.md). 
+* Cluster with Capact installation. See the [installation tutorial](../installation/local.mdx). 
 * For the scenario with Cloud SQL, access to Google Cloud Platform.  
 
 ### Install all Mattermost components in a Kubernetes cluster
 
-By default, the Capact Engine [cluster policy](https://github.com/capactio/capact/tree/main/deploy/kubernetes/charts/capact/charts/engine/values.yaml) prefers Kubernetes solutions. 
+By default, the Capact Engine [Global Policy](https://github.com/capactio/capact/tree/main/deploy/kubernetes/charts/capact/charts/engine/values.yaml) prefers Kubernetes solutions. 
 
 ```yaml
 rules: # Configures the following behavior for Engine during rendering Action
@@ -179,7 +179,7 @@ To change the Mattermost installation, we need to adjust our Global policy to pr
     export TI_ID={GCP Service Account TypeInstance ID}
     ```
 
-1. Update the cluster policy:
+1. Update the Global Policy:
 
     ```bash
     cat > /tmp/policy.yaml << ENDOFFILE
@@ -219,9 +219,9 @@ To change the Mattermost installation, we need to adjust our Global policy to pr
     kubectl create namespace $NAMESPACE
     ```
 
-1. Install Mattermost with the new cluster policy:
+1. Install Mattermost with the new Global Policy:
 
-   The cluster policy was updated to prefer GCP solutions for the PostgreSQL Interface. As a result, during the render process, the Capact Engine will select a Cloud SQL Implementation which is available in our Hub server.
+   The Global Policy was updated to prefer GCP solutions for the PostgreSQL Interface. As a result, during the render process, the Capact Engine will select a Cloud SQL Implementation which is available in our Hub server.
    
    Repeat the steps 4–11 from [Install all Mattermost components in a Kubernetes cluster](#install-all-mattermost-components-in-a-kubernetes-cluster) in the `gcp-scenario` Namespace.
 
@@ -256,7 +256,7 @@ To change the Mattermost installation, we need to adjust our Global policy to pr
     export TI_ID={AWS credentials TypeInstance ID}
     ```
 
-1. Update the cluster policy:
+1. Update the Global Policy:
 
     ```bash
     cat > /tmp/policy.yaml << ENDOFFILE
@@ -294,9 +294,9 @@ To change the Mattermost installation, we need to adjust our Global policy to pr
     kubectl create namespace $NAMESPACE
     ```
 
-1. Install Mattermost with the new cluster policy:
+1. Install Mattermost with the new Global Policy:
 
-   The cluster policy was updated to prefer AWS solutions for the PostgreSQL Interface. As a result, during the render process, the Capact Engine will select a Cloud SQL Implementation which is available in our Hub server.
+   The Global Policy was updated to prefer AWS solutions for the PostgreSQL Interface. As a result, during the render process, the Capact Engine will select a Cloud SQL Implementation which is available in our Hub server.
    
    Repeat the steps 4–11 from [Install all Mattermost components in a Kubernetes cluster](#install-all-mattermost-components-in-a-kubernetes-cluster) in the `aws-scenario` Namespace.
 

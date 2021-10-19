@@ -27,6 +27,14 @@
     {
       "pattern": "^/docs/",
       "replacement": "https://capact.io/docs/"
+    },
+    {
+      "pattern": "^/community/slack$",
+      "replacement": "https://capact.io/community/slack"
+    },
+    {
+      "pattern": "^/blog",
+      "replacement": "https://capact.io/blog/"
     }
   ],
   "timeout": "20s",

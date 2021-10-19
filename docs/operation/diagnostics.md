@@ -80,9 +80,9 @@ An Action is executed via Argo Workflows. To check the execution status you can 
   
   ![argo_workflow_ui](./assets/argo_workflow_ui.png)
 
-### Checking cluster Policy
+### Checking Global Policy
 
-To check the cluster Policy definition, run:
+To check the Global Policy definition, run:
 
 ```bash
 kubectl get cm -n capact-system capact-engine-cluster-policy -oyaml
@@ -160,12 +160,7 @@ To check the logs since a given time, use the `--since-time` flag, for example:
 
 ### Checking if Public Hub is populated 
 
-- Check if [Hub Populator logs](#hub-populator-logs) contain a message similar to: `{"level":"info","ts":1620895282.3582015,"caller":"register/ocf_manifests.go:107","msg":"Populated new data","duration (seconds)":235.525841306}`. It means that manifests were populated successfully. If you get an error similar to: `error: container hub-public-populator is not valid for pod capact-hub-public-84cc74bc66-pmkhp` it means that the Public Hub Populator is disabled. To enable it, run:
-
-  ```bash
-  helm repo add capactio https://storage.googleapis.com/capactio-stable-charts
-  helm upgrade capact capactio/capact -n capact-system --reuse-values --set hub-public.populator.enabled=true
-  ```
+- Check if [Hub Populator logs](#hub-populator-logs) contain a message similar to: `{"level":"info","ts":1620895282.3582015,"caller":"register/ocf_manifests.go:107","msg":"Populated new data","duration (seconds)":235.525841306}`. It means that manifests were populated successfully. If you get an error similar to: `error: container hub-public-populator is not valid for pod capact-hub-public-84cc74bc66-pmkhp` it means that the Public Hub Populator is disabled. You can either [enable automated synchronization with an external source](../example/public-hub-content.mdx#enable-automated-synchronization-with-an-external-source) or [manually populate the manifests into Hub](../example/public-hub-content.mdx#populate-the-manifests-into-hub).
 
 - Check if manifests can be fetched from the Public Hub. Install the latest [stable Capact CLI](../cli/getting-started.mdx), and run:
 
@@ -186,13 +181,7 @@ To check the logs since a given time, use the `--since-time` flag, for example:
   ...
   ```
 
-- Check if manifest source is correct, run:
-
-  ```bash
-  kubectl -n capact-system get deploy capact-hub-public -o=jsonpath='{$.spec.template.spec.containers[?(@.name=="hub-public-populator")].env[?(@.name=="MANIFESTS_PATH")].value}'
-  ```
-  
-  Check the [go-getter](https://github.com/hashicorp/go-getter#url-format) project to understand URL format.   
+- [Check if manifest source is correct](../example/public-hub-content.mdx#check-the-hub-manifest-source).   
 
 ## Local Hub
 

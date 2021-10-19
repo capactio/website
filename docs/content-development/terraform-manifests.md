@@ -5,7 +5,7 @@ This document describes how to prepare content which uses Terraform Runner.
 ## Prerequisites
 
 - [MinIO client](https://min.io/download)
-- [Capact local cluster](../installation/local.md)
+- [Capact local cluster](../installation/local.mdx)
     
     > **NOTE:** Use `--capact-overrides=hub-public.populator.enabled=false` flag, as you will manually upload your OCF manifests into Hub.
 
@@ -88,14 +88,14 @@ In this example, we have them all already defined for PostgreSQL installation. T
 
 ## Populating content
 
-To read more how to populate content, see the [Populate the manifests into Hub](./guide.md#populate-the-manifests-into-hub) section in the "Content Development Guide" document.
+To read more how to populate content, see the [Populate the manifests into Hub](../example/public-hub-content.mdx#populate-the-manifests-into-hub) section in the "Manage Public Hub manifests" document.
 
 ## Running Action
 
 If the MinIO is populated with Terraform content and all manifests are ready, trigger the Mattermost installation, which will use CloudSQL provisioned with Terraform Runner.
 
 To read how to do it, see the [Install Mattermost with an external CloudSQL database](../example/mattermost-installation.md#install-mattermost-with-an-external-cloudsql-database) section in Mattermost installation tutorial.
-To make sure the Terraform-based Implementation is selected, you may use additional, Attribute-based `implementationConstraint` in Cluster Policy:
+To make sure the Terraform-based Implementation is selected, you may use additional, Attribute-based `implementationConstraint` in Global Policy:
 
 ```yaml
    # (...)

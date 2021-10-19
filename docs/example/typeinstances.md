@@ -4,7 +4,7 @@ This document lists all TypeInstances, which are commonly used across our exampl
 
 ## Prerequisites
 - [Capact CLI](../cli/getting-started.mdx) installed.
-- Cluster with Capact installation. See the [installation tutorial](../installation/local.md). 
+- Cluster with Capact installation. See the [installation tutorial](../installation/local.mdx). 
 - [`jq`](https://stedolan.github.io/jq/download/) installed.
 
 ## AWS Credentials

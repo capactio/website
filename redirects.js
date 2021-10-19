@@ -21,7 +21,7 @@ const generateDocsRedirectsForVersion = (version, useLatestVersionAsTarget) => {
   return [
     {
       from: `${fromPrefix}`,
-      to: `${toPrefix}/introduction`,
+      to: `${toPrefix}/getting-started`,
     },
     {
       from: `${fromPrefix}/installation`,
@@ -62,8 +62,16 @@ const generateLegacyDocsRedirectsForVersion = (version, useLatestVersionAsTarget
   const fromPrefix = version != "" ? `/docs/${version}` : "/docs";
   const toPrefix = useLatestVersionAsTarget ? `/docs` : fromPrefix;
 
+	const currentRedirect = generateDocsRedirectsForVersion(version, useLatestVersionAsTarget).filter( item => {
+		return item.to !== `${toPrefix}/getting-started`;
+	})
+
   return [
-    ...generateDocsRedirectsForVersion(version, useLatestVersionAsTarget),
+    ...currentRedirect,
+    {
+      from: `${fromPrefix}`,
+      to: `${toPrefix}/introduction`,
+    },
     {
       from: `${fromPrefix}/development`,
       to: `${toPrefix}/development/development-guide`,

@@ -12,13 +12,37 @@ Use Capact CLI to create local Kubernetes cluster and install Capact on it.
 
 ## Create local Kubernetes cluster
 
-To create local [kind](https://kind.sigs.k8s.io/) cluster, run the following command:
+To create local cluster, run the following command:
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+<Tabs
+	groupId="ref"
+	defaultValue="kind"
+	values={[
+		{label: 'Kind', value: 'kind'},
+		{label: 'K3d', value: 'k3d'},
+	]}>
+<TabItem value="kind">
 
 ```bash
 capact environment create kind --wait 5m
 ```
 
 > **NOTE** You can customize the behavior with additional flags. See the all options in the [`capact environment create kind`](../cli/commands/capact_environment_create_kind.md) command documentation.
+
+</TabItem>
+<TabItem value="k3d">
+
+```bash
+capact environment create k3d --wait 5m
+```
+
+> **NOTE** You can customize the behavior with additional flags. See the all options in the [`capact environment create k3d`](../cli/commands/capact_environment_create_k3d.md) command documentation.
+
+</TabItem>
+</Tabs>
 
 ## Install Capact
 

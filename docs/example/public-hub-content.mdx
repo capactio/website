@@ -1,0 +1,180 @@
+# Manage Public Hub manifests
+
+This document describes how to manage manifests in Public Hub.
+
+## Prerequisites
+
+- `populator` installed from a [Capact release](https://github.com/capactio/capact/releases).
+- [Capact CLI](../cli/getting-started.mdx#install) or [Helm v3](https://helm.sh/docs/intro/install/) installed.
+
+## Check the Hub manifest source
+
+To check the Public Hub manifest source, run:
+
+```bash
+kubectl -n capact-system get deploy capact-hub-public -o=jsonpath='{$.spec.template.spec.containers[?(@.name=="hub-public-populator")].env[?(@.name=="MANIFESTS_PATH")].value}'
+```
+
+The empty response means that the `populator` sidecar is not enabled and manifests are not synchronized into Public Hub automatically.
+
+> **NOTE**: Check the [`go-getter`](https://github.com/hashicorp/go-getter#url-format) project to understand the URL format.
+
+## Change the Hub manifest source
+
+By default, the Hub manifests are synchronized with the `manifests` directory from the [`hub-manifests`](https://github.com/capactio/hub-manifests) repository on a specific release branch. To change that, follow one of the alternatives below.
+
+### During Capact installation
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+<Tabs
+	groupId="ref"
+	values={[
+		{label: 'Public git repository', value: 'git-repo'},
+		{label: 'Private git repository', value: 'priv-git-repo'},
+		{label: 'Embedded', value: 'embedded'},
+	]}>
+<TabItem value="git-repo">
+
+```bash
+# The git repository URL
+export SOURCE_REPO_URL="{url}" # e.g. github.com/capactio/hub-manifests
+# The git ref to checkout. It can point to a commit SHA, a branch name, or a tag.
+export SOURCE_REPO_REF="{ref}" # e.g. main
+
+capact install --capact-overrides="hub-public.populator.enabled=true,hub-public.populator.manifestsLocation.repository=${SOURCE_REPO_URL},hub-public.populator.manifestsLocation.branch=${SOURCE_REPO_REF}"
+```
+
+</TabItem>
+<TabItem value="priv-git-repo">
+
+```bash
+# The git repository URL
+export SOURCE_REPO_URL="{url}" # e.g. github.com/capactio/hub-manifests
+# The git ref to checkout. It can point to a commit SHA, a branch name, or a tag.
+export SOURCE_REPO_REF="{ref}" # e.g. main
+# The Base64 encoded private ssh key used by the populator to download manifests. It needs the read-only access.
+export SOURCE_SSH_KEY="{key}"
+
+capact install --capact-overrides="hub-public.populator.enabled=true,hub-public.populator.manifestsLocation.repository=${SOURCE_REPO_URL},hub-public.populator.manifestsLocation.branch=${SOURCE_REPO_REF},hub-public.populator.manifestsLocation.sshKey=${SOURCE_SSH_KEY}"
+```
+
+</TabItem>
+<TabItem value="embedded">
+
+Use embedded Hub manifests for a given release:
+
+```bash
+capact install --capact-overrides="hub-public.populator.manifestsLocation.local=true"
+```
+
+</TabItem>
+</Tabs>
+
+
+### Once you have your Capact cluster set up
+
+<Tabs
+	groupId="ref"
+	values={[
+		{label: 'Public GitHub repository', value: 'git-repo'},
+		{label: 'Private GitHub repository', value: 'priv-git-repo'},
+		{label: 'Embedded', value: 'embedded'},
+	]}>
+<TabItem value="git-repo">
+
+```bash
+# The git repository URL
+export SOURCE_REPO_URL="{url}" # e.g. github.com/capactio/hub-manifests
+# The git ref to checkout. It can point to a commit SHA, a branch name, or a tag.
+export SOURCE_REPO_REF="{ref}" # e.g. main
+
+helm repo add capactio https://storage.googleapis.com/capactio-stable-charts
+helm upgrade capact --version {VERSION} capactio/capact -n capact-system --reuse-values --set hub-public.populator.enabled=true --set hub-public.populator.manifestsLocation.repository=${SOURCE_REPO_URL} --set hub-public.populator.manifestsLocation.branch=${SOURCE_REPO_REF}
+```
+
+</TabItem>
+<TabItem value="priv-git-repo">
+
+```bash
+# The git repository URL
+export SOURCE_REPO_URL="{url}" # e.g. github.com/capactio/hub-manifests
+# The git ref to checkout. It can point to a commit SHA, a branch name, or a tag.
+export SOURCE_REPO_REF="{ref}" # e.g. main
+# The Base64 encoded private ssh key used by the populator to download manifests. It needs the read-only access.
+export SOURCE_SSH_KEY="{key}"
+
+helm repo add capactio https://storage.googleapis.com/capactio-stable-charts
+helm upgrade capact --version {VERSION} capactio/capact -n capact-system --reuse-values --set hub-public.populator.enabled=true --set hub-public.populator.manifestsLocation.repository=${SOURCE_REPO_URL} --set hub-public.populator.manifestsLocation.branch=${SOURCE_REPO_REF} --set hub-public.populator.manifestsLocation.sshKey=${SOURCE_SSH_KEY}
+```
+
+</TabItem>
+<TabItem value="embedded">
+
+Use embedded Hub manifests for a given release:
+
+```bash
+helm repo add capactio https://storage.googleapis.com/capactio-stable-charts
+helm upgrade capact --version {VERSION} capactio/capact -n capact-system --reuse-values --set hub-public.populator.manifestsLocation.local=true
+```
+
+</TabItem>
+</Tabs>
+
+## Disable automated synchronization with an external source
+
+The commands bellow disable the `populator` sidecar in Public Hub. This is useful when you want to populate manifests manually.
+
+### During Capact installation
+
+```bash
+capact install --capact-overrides=hub-public.populator.enabled=false
+```
+
+### Once you have your Capact cluster set up
+
+```bash
+helm repo add capactio https://storage.googleapis.com/capactio-stable-charts
+helm upgrade capact --version {VERSION} capactio/capact -n capact-system --reuse-values --set hub-public.populator.enabled=false
+```
+
+## Enable automated synchronization with an external source
+
+### During Capact installation
+
+```bash
+capact install --capact-overrides=hub-public.populator.enabled=true
+```
+
+### Once you have your Capact cluster set up
+
+```bash
+helm repo add capactio https://storage.googleapis.com/capactio-stable-charts
+helm upgrade capact --version {VERSION} capactio/capact -n capact-system --reuse-values --set hub-public.populator.enabled=true
+```
+
+## Populate the manifests into Hub
+
+1. [Disable automated synchronization with an external source](#disable-automated-synchronization-with-an-external-source).
+2. In one terminal window, expose Neo4j:
+
+    ```bash
+    kubectl -n capact-system port-forward svc/neo4j-neo4j 7687:7687
+    ```
+
+3. Execute `populator`:
+
+   ```bash
+    APP_JSONPUBLISHADDR=http://{your_ip_address} populator register ocf-manifests {PATH_TO_DIR_WITH_MANIFESTS}
+   ```
+
+   >**NOTE**: More information about using `populator`, can be found in [`populator_register-ocf-manifests.md
+   `](https://github.com/capactio/capact/blob/main/cmd/populator/docs/populator_register-ocf-manifests.md).
+
+## Submit manifest to the community repository
+
+Any type of contribution is welcome! To start contributing, follow these steps:
+
+1. [Set up a local `hub-manifests` repository](/community/development/git-workflow).
+2. Create a pull request in our [Hub Manifests](https://github.com/capactio/hub-manifests) repository.

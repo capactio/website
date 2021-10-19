@@ -9,7 +9,7 @@ This document describes how to generate Manifests from existing Helm Charts and 
 - [Helm v3](https://helm.sh/docs/intro/install/) installed.
 - [Capact CLI](../cli/getting-started.mdx#install) at least v0.5.0 installed.
     > **NOTE:** Install the latest Capact CLI version from the `main` branch.
-- Capact cluster. For example, [local instance](../installation/local.md).
+- Capact cluster. For example, [local instance](../installation/local.mdx).
     
     > **NOTE:** Use `--capact-overrides=hub-public.populator.enabled=false` flag, as you will manually upload your OCF manifests into Hub.
 
@@ -350,7 +350,7 @@ To test generated manifests you need to:
 
 1. Clone repository with [Hub Manifests](https://github.com/capactio/hub-manifests).
 1. Copy content of the `generated` directory into `manifests` directory.
-1. [Populate data](./guide.md#populate-the-manifests-into-hub).
+1. [Populate the manifests to Public Hub](../example/public-hub-content.mdx#populate-the-manifests-into-hub).
 1. (For AWS only) Create a [Type Instance](../example/typeinstances.md#aws-credentials) with credentials.
 1. Prepare input file `input.yaml`
 

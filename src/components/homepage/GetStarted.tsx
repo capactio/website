@@ -28,7 +28,7 @@ const getStartedData = {
     },
     {
       text: "Learn more",
-      url: "/docs/introduction",
+      url: "/docs/getting-started",
       additionalClassName: "button--outline",
     },
   ],

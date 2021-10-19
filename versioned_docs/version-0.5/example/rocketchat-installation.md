@@ -183,7 +183,7 @@ helm delete $(helm list -f="rocketchat-*|mongodb-*" -q
 
 ###  Additional resources
 
-See the (Content Development guide](../content-development/guide.md), to understand how to develop OCF content for Capact.
+See the [Content Development guide](../content-development/guide.md), to understand how to develop OCF content for Capact.
 
 If you want to learn more about the project, check the [`capact`](https://github.com/capactio/capact) repository.
 

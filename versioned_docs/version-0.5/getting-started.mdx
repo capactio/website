@@ -1,0 +1,97 @@
+---
+sidebar_position: 1
+---
+
+# Getting Started
+
+Welcome to the Capact guide on how to get started!
+
+This guide walks you through a series of steps to perform based on your [role](/community/user-profiles#profiles).
+
+If you are looking for an introductory overview of Capact and want to learn more about basic Capact terminology, check the [Glossary and Concepts](#glossary-and-concepts).
+
+## Glossary and Concepts
+
+This section guides you through common topics about Capact:
+
+1. [Introducing Capact](/blog/introducing-capact) blog post to learn what problems Capact aims to solve and why it was created in the first place.
+2. [Terminology](./terminology.md) contains an overview of the most common terms you’ll see in the Capact documentation.
+3. [FAQ](./faq.md) dedicated to short questions and answers about common topics, including how Capact differs from other available solutions.
+4. [E2E Architecture](./architecture/e2e-architecture.md) describes the high-level Capact architecture, all components in the system and interactions between them.
+
+## Roles
+
+This section groups resources to get familiar with Capact based on your role.
+
+import clsx from "clsx";
+
+export const Icon = ({_, iconName}) => (
+	<i className={clsx("material-icons")}>{iconName}</i>
+);
+
+## <Icon iconName="people" /> System User
+
+System User operates Capact Actions and manages TypeInstances related to the Actions.
+
+The recommended way to try out Capact quickly is to set up a local development environment:
+
+1. [Install the Capact CLI](./cli/getting-started.mdx).
+2. [Bootstrap a local Capact cluster using k3d or kind](./installation/local.md).
+ >**NOTE:** To access an already provisioned cluster, contact System Administrator for Capact Gateway credentials.
+3. Use the Capact CLI to deploy real life scenarios. For example, [RocketChat](./example/rocketchat-installation.md).
+4. Share feedback via [**Slack**](/community/slack) or [**GitHub**](https://github.com/capactio/capact/issues)!
+
+### Advanced concepts
+
+1. Learn about [Action Policy](./feature/policies/action-policy.md) to find out how to customize Action execution.
+
+## <Icon iconName="admin_panel_settings" /> System Administrator
+
+System Administrator operates Capact installation.
+
+1. [Install the Capact CLI](./cli/getting-started.mdx).
+2. Bootstrap a Capact cluster on [EKS](./installation/aws-eks.md) or [GKE](./installation/gcp-gke.md).
+3. Learn how to create TypeInstances with [AWS](./example/typeinstances.md#aws-credentials) or [GCP](./example/typeinstances.md#gcp-service-account) credentials.
+4. Learn about [Global Policies](./feature/policies/action-policy.md) to find out how to customize all Action executions.
+5. Learn how to [change the source of Public Hub manifests](/docs/next/example/public-hub-content#change-the-hub-manifest-source).
+6. Share feedback via [**Slack**](/community/slack) or [**GitHub**](https://github.com/capactio/capact/issues)!
+
+## <Icon iconName="file_copy" /> Content Developer
+
+Content Developer develops new Hub manifests, such as [Interfaces](https://github.com/capactio/capact/tree/main/ocf-spec/0.0.1/README.md#interface), [Implementations](https://github.com/capactio/capact/tree/main/ocf-spec/0.0.1/README.md#implementation), [Types](https://github.com/capactio/capact/tree/main/ocf-spec/0.0.1/README.md#type), etc.
+
+1. Get familiar with the resources described in the [System User](#system-user) section.
+2. Read the [Content development guide](./content-development/guide.md) to learn more about Hub manifests. As a result, it will be easier to understand and modify generated manifests described in the next step.
+3. Generate manifests for a [Helm chart](/docs/next/content-development/generating#generating-helm-implementation) or a [Terraform module](/docs/next/content-development/generating#generating-terraform-implementation).
+5. Learn how to [manually populate the local manifests](/docs/next/example/public-hub-content#populate-the-manifests-into-hub).
+7. [Share your manifests](/docs/next/example/public-hub-content#submit-manifest-to-the-community-repository)!
+6. Share feedback via [**Slack**](/community/slack) or [**GitHub**](https://github.com/capactio/capact/issues)!
+
+### Advanced concepts
+
+1. Learn about the [Workflow Step Policy](./feature/policies/workflow-step-policy.md) to customize Action execution and try to use it in your workflows.
+2. Learn how to [create a new runner](./architecture/runner.md#development) in the idiomatic way.
+
+## <Icon iconName="memory" /> Capact Developer
+
+Capact Developer is a person who develops Capact themself. We use GitHub to host code, organize our backlog, and accept pull requests. To start your journey, check issues with the [`good first issue` label](https://github.com/capactio/capact/labels/good%20first%20issue).
+
+1. Get familiar with the resources described in the [Glossary and Concepts](#glossary-and-concepts) section.
+2. Get familiar with the resources described in the [System User](#system-user) section.
+3. Make sure an issue related to your change is reported according to our [contributing process](/community/contributing#create-a-pull-request).
+4. Assign yourself to the related GitHub issue.
+3. [Set up a local Capact repository](/community/development/git-workflow).
+4. Get familiar with the guidelines listed in [Development guidelines](/community/development/development-guidelines).
+5. Learn how to [test code, build binaries, create a cluster, and more](/community/development/development-guide).
+9. Create a PR with your changes. Our CI will verify it and notify the reviewers.
+
+### Advanced concepts
+
+1. [Check how the CI pipelines work](/community/development/ci).
+2. [Learn about the Capact release process](/community/release). It's automated but requires a high permission level and synchronizing it between multiple GitHub repositories, which makes it more complex.
+
+## <Icon iconName="notifications_active" /> Staying Informed
+
+Follow the [@capcatio](https://twitter.com/capactio) account on Twitter to get the latest Capact news. You can also subscribe for new [Capact](https://github.com/capactio/capact) releases on GitHub. We post there a detailed changelog for every release.
+
+For more additional content check the [Capact blog](/blog) and our [YouTube](https://www.youtube.com/channel/UCajXtDttqVuZ_Bl7M3_qA8w) channel.
