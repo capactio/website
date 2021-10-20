@@ -61,7 +61,6 @@ Follow the steps to prepare OBS Studio for recording Capact videos.
     1. Verify the audio input configuration on the **Audio Mixer** panel:
     
         - Make sure it points to a proper device that will record your voice.
-        - If you don't see any item on the list, on the **Sources** panel click **+** and select **Audio Input Capture**.
         - You may need to lower the volume of audio input, to avoid sound distortions.
 
     1. Edit title, descriptions and presenter info for some of the scenes.
