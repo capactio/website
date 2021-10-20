@@ -33,11 +33,20 @@ Follow the steps to prepare OBS Studio for recording Capact videos.
     1. Download [Fira Sans](https://fonts.google.com/download?family=Fira%20Sans) and [Barlow](https://fonts.google.com/download?family=Barlow) fonts from Google Fonts website.
     1. Unzip and apply them in your system. For example, on macOS, open Font Book and drag all the files to User or Computer fonts.
     1. Download the [ZIP file with scene collections and assets](./assets/obs-studio-capact.zip).
-    1. Run the following commands:
+    1. Create target directory:
+
+        > **NOTE:** The scene collection refer to assets placed in the `/Users/Shared/obs-studio` directory. The path might not be used on different operating systems. In that case, use different path and, after importing the scene collection into OBS Studio, manually update the paths to assets embedded in the scenes.
 
         ```bash
-        mkdir -p /Users/Shared/obs-studio/capact
-        unzip ~/Downloads/obs-studio-capact.zip -d /Users/Shared/obs-studio
+        mkdir -p /Users/Shared/obs-studio
+        ```
+
+    1. Unzip the ZIP archive into the target directory, created in previous step.
+
+        You can use the following command:
+
+        ```bash
+        unzip {archive_path} -d /Users/Shared/obs-studio
         ```
 
     1. In OBS Studio, from the menu bar, select **Scene Collection** and click **Import**. Import the following scene collections:
@@ -47,20 +56,21 @@ Follow the steps to prepare OBS Studio for recording Capact videos.
 
     1. Switch to the `capact-default` Scene collection. Select again **Scene Collection** and then **`capact-default`**. All assets should be properly loaded.
 
-    1. Set proper sources for Webcam and Display Capture. Edit title, descriptions and presenter info.
+    1. Set proper sources for Webcam and Display Capture.
+
+    1. Verify the audio input configuration on the **Audio Mixer** panel:
+    
+        - Make sure it points to a proper device that will record your voice.
+        - If you don't see any item on the list, on the **Sources** panel click **+** and select **Audio Input Capture**.
+        - You may need to lower the volume of audio input, to avoid sound distortions.
+
+    1. Edit title, descriptions and presenter info for some of the scenes.
 
 1. **(Optional)** Set up hotkeys to switch between different scenes (next / previous scene):
 
-    1. Download script to set hotkeys to switch between scenes:
-
-        ```bash
-        mkdir -p /Users/Shared/obs-studio/capact/scripts/
-        curl https://raw.githubusercontent.com/SimonGZ/OBS-next-scene-hotkey/v1.3/next-scene.lua -o /Users/Shared/obs-studio/capact/scripts/next-scene.lua
-        ```
+    The Capact scene collection automatically installs the [`OBS-next-scene-hotkey`](https://github.com/SimonGZ/OBS-next-scene-hotkey) script. This allows you to switch the scenes back and forth using the same keyboard shortcuts.
     
-    1. In OBS Studio, from the upper menu, select **Tools** and **Scripts**. Load the downloaded script with **+** button and click **Close**.
-    1. Now you can set up the hotkeys. In OBS Studio, from the upper menu, select **OBS**, then **Preferences**. Navigate to the **Hotkeys** tab and set **Next Scene** and **Previous Scene** shortcuts. For example, you can set Control + Command + `,` and Control + Command + `.`
-
+    In OBS Studio, from the upper menu, select **OBS**, then **Preferences**. Navigate to the **Hotkeys** tab and set **Next Scene** and **Previous Scene** shortcuts. For example, on Macs you can use `Control + Command + ,` and `Control + Command + .`.
 
 ### DaVinci Resolve
 
