@@ -27,10 +27,10 @@ If you use AWS SSO on your account, then you can also configure SSO for AWS CLI 
    export CAPACT_NAME={name_of_the_environment}
    export CAPACT_REGION={aws_region_in_which_to_deploy_capact}
    export CAPACT_DOMAIN_NAME={domain_name_used_for_the_capact_environment}
-   export TERRAFORM_STATE_BUCKET={s3_bucket_for_the_remote_statefile}
+   export TERRAFORM_STATE_BUCKET={s3_bucket_for_the_remote_statefile} # bucket needs to exist
    ```
 
-1. Configure optional parameters.
+2. Configure optional parameters.
    - To select a specific Capact version set the following environment variable:
      ```bash
      export CAPACT_VERSION={capact_version} # possible values: @local, @latest, x.y.z e.g. 0.4.0
@@ -56,15 +56,18 @@ If you use AWS SSO on your account, then you can also configure SSO for AWS CLI 
      export CAPACT_TERRAFORM_OPTS="-var worker_group_max_size=4"` 
      ```
 
-1. Run the installation script:
-   
+1. Clone the [`capact`](https://github.com/capactio/capact) repository:
+
    ```bash
-   ./hack/eks/install.sh
+   git clone https://github.com/capactio/capact
+   cd capact
    ```
 
-   - When you see the "Do you want to perform these actions?" question, provide `yes` value in the command line and press enter. 
+1. Run the installation [`./hack/eks/install.sh`](https://github.com/capactio/capact/blob/main/hack/eks/install.sh) script.
+
+   When you see the "Do you want to perform these actions?" question, provide `yes` value in the command line and press enter. 
      
-   This operation can take around to 20 minutes to finish.
+   >**NOTE:** This operation can take around to 20 minutes to finish.
    
 1. Configure the name servers for the Capact Route53 Hosted Zone in your DNS provider. To get the name server for the hosted zone check the generated `hack/eks/config/route53_zone_name_servers` file.
   ```bash
@@ -82,8 +85,8 @@ If you use AWS SSO on your account, then you can also configure SSO for AWS CLI 
   ```
 
 1. Wait for the DNS propagation.
+
 1. Verify if the Cert Manager issued a certificate for Gateway.
-   ./docs//architecture/engine-k8s-api.md
 
   Run:
 
