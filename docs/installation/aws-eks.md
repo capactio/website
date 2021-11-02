@@ -86,6 +86,12 @@ If you use AWS SSO on your account, then you can also configure SSO for AWS CLI 
 
 1. Wait for the DNS propagation.
 
+1. Export the **KUBECONFIG** environment variable pointing to the newly created EKS cluster:
+
+    ```bash
+    export KUBECONFIG=$PWD/hack/eks/config/eks_kubeconfig
+    ```
+
 1. Verify if the Cert Manager issued a certificate for Gateway.
 
   Run:
