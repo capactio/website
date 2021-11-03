@@ -30,7 +30,7 @@ If you use AWS SSO on your account, then you can also configure SSO for AWS CLI 
    export TERRAFORM_STATE_BUCKET={s3_bucket_for_the_remote_statefile} # bucket needs to exist
    ```
 
-2. Configure optional parameters.
+1. Configure optional parameters.
    - To select a specific Capact version set the following environment variable:
      ```bash
      export CAPACT_VERSION={capact_version} # possible values: @local, @latest, x.y.z e.g. 0.4.0
