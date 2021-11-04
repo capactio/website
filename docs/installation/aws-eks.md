@@ -63,7 +63,7 @@ If you use AWS SSO on your account, then you can also configure SSO for AWS CLI 
    cd capact
    ```
 
-1. Run the installation [`./hack/eks/install.sh`](https://github.com/capactio/capact/blob/main/hack/eks/install.sh) script.
+1. Run the [`./hack/eks/install.sh`](https://github.com/capactio/capact/blob/main/hack/eks/install.sh) script.
 
    When you see the "Do you want to perform these actions?" question, provide `yes` value in the command line and press enter. 
      
