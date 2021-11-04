@@ -30,6 +30,7 @@ import TabItem from '@theme/TabItem';
 
 <Tabs
 	groupId="ref"
+	defaultValue="git-repo"
 	values={[
 		{label: 'Public git repository', value: 'git-repo'},
 		{label: 'Private git repository', value: 'priv-git-repo'},
@@ -77,6 +78,7 @@ capact install --capact-overrides="hub-public.populator.manifestsLocation.local=
 
 <Tabs
 	groupId="ref"
+	defaultValue="git-repo"
 	values={[
 		{label: 'Public GitHub repository', value: 'git-repo'},
 		{label: 'Private GitHub repository', value: 'priv-git-repo'},
@@ -169,8 +171,7 @@ helm upgrade capact --version {VERSION} capactio/capact -n capact-system --reuse
     APP_JSONPUBLISHADDR=http://{your_ip_address} populator register ocf-manifests {PATH_TO_DIR_WITH_MANIFESTS}
    ```
 
-   >**NOTE**: More information about using `populator`, can be found in [`populator_register-ocf-manifests.md
-   `](https://github.com/capactio/capact/blob/main/cmd/populator/docs/populator_register-ocf-manifests.md).
+   >**NOTE**: More information about using `populator`, can be found in [`populator_register-ocf-manifests.md`](https://github.com/capactio/capact/blob/main/cmd/populator/docs/populator_register-ocf-manifests.md).
 
 ## Submit manifest to the community repository
 
