@@ -5,7 +5,7 @@
 You need to have the following tools installed on your operating system:
 
 - [`gcloud`](https://cloud.google.com/sdk/docs/install)
-- [`jq`](https://stedolan.github.io/jq/download/) - most distributions have this in repositories
+- [`yq` 4](https://mikefarah.gitbook.io/yq/#install)
 - [`kubectl`](https://kubernetes.io/docs/tasks/tools/)
 
 You need to configure the `gcloud` CLI, so it's able to access `capact` project on GCP. You can follow [this](https://cloud.google.com/sdk/docs/authorizing) guide to configure it.
