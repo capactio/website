@@ -18,11 +18,11 @@ tags:
   - career
 ---
 
-Did you know that it's already been 16 months since the Capact was born?
+Did you know that it's already been 16 months since Capact was born?
 
-In the previous blog post, you learned which problems Capact aims to solve. This time, Capact maintainers took some time to answer questions you might have if you're considering contributing to the project.
+In a previous blog post, we discussed some of the problems Capact aims to solve. This time, Capact maintainers took some time to answer questions you might have if you're considering contributing to the project.
 
-What's it like to build cloud-native platform from scratch? What is it like to work in Capact? What are the biggest challenges? How to start with Go? Read on to get the answers!
+What's it like to build a cloud-native platform from scratch? What is it like to work in Capact? What are the biggest challenges? How to start with Go? Read on to get the answers!
 
 <!--truncate-->
 
@@ -46,11 +46,11 @@ Go, on the other hand, is a great fit for such projects—its simplicity enables
 
 **Mateusz:** It’s worth highlighting that the Go community already created a lot of powerful libraries. You don’t need to solve cloud-specific problems once again, and can focus on solving your domain/business problems instead.
 
-As mentioned, Go is easy in terms of memory consumption, which is important in cloud environments. Of course, it doesn't come without a downside; the abstraction level in Go is quite low, but the upcoming Go 1.18 will be a significant release, e.g. support for generic.
+As mentioned, Go is easy in terms of memory consumption, which is important in cloud environments. Of course, it doesn't come without a downside; the abstraction level in Go is quite low, but the [upcoming Go 1.18](https://tip.golang.org/doc/go1.18) will be a significant release, especially with support for generics.
 
 ## Can you give us more background on what Capact is?
 
-**Paweł:** Capact is an open-source framework for running arbitrary workflows. Initially, we are focused on day-one and day-two workflows for deploying, and managing applications and cloud-native infrastructure.
+**Paweł:** Capact is an open-source framework for running arbitrary workflows. Currently, we are focusing on day-one and day-two workflows for deploying, and managing applications and cloud-native infrastructure.
 
 The main difference between Capact and alternative tools is its interchangeability of dependencies. The workflow may consist of dynamic steps, which are described by the interface. Such steps can resolve different implementations, depending on the user's preferences. It is the same concept taken from programming languages.
 
@@ -62,9 +62,7 @@ The best part of this project is that it's not a competitor to any other project
 
 **Mateusz:** As I said, we try to make Capact as easy as possible.
 
-Here is the thing: it's challenging to make it easy for the end-user, as gluing different tools together requires a lot of flexibility from our platform. It's not possible to gather all use-cases and implement them at once. We need to deliver that iteratively.
-
-Currently, we're in the process of locating the areas that will be worked on first.
+Here is the thing: it's challenging to make it easy for the end-user, as gluing different tools together requires a lot of flexibility from our platform. It's not possible to gather all use-cases and implement them at once. We need to deliver that iteratively. If you have ideas for where we should go next, we'd love to hear them!
 
 Personally, I like that this project is complicated and makes you rack your brain. We want to solve problems that are not trivial. We also try to strike a balance between the productization and the open-source side.
 
@@ -75,7 +73,7 @@ There's also a commercial offering planned, which is based on Capact. And that's
 
 ## What kind of benefits related to career development can a contributor gain in this project?
 
-**Paweł:** Capact consists of many technologies, and you can learn a lot. Even if you know some of them, while working on Capact, you will have an opportunity to dive deeply into some stuff you have never tried. Apart from Go and Kubernetes, we use GraphQL, TypeScript, Terraform, and plenty of projects and tools around Kubernetes, such as Argo workflows, and MinIO.
+**Paweł:** Capact consists of many technologies, and you can learn a lot. Even if you know some of them, while working on Capact, you will have an opportunity to dive deeply into some stuff you have never tried. Apart from [Go](https://go.dev/) and [Kubernetes](https://kubernetes.io/), we use [GraphQL](https://graphql.org/), [TypeScript](https://www.typescriptlang.org/), [Terraform](https://www.terraform.io/), and plenty of projects and tools around Kubernetes, such as [Argo workflows](https://argoproj.github.io/argo-workflows/), and [MinIO](https://min.io/).
 
 You will help design upcoming Capact features—starting from user experience, ending up on architectural challenges. There's also a lot to learn when it comes to soft skills—while building an open-source community, you will practice collaborating with external contributors, improve giving talks on meetups and conferences, etc.
 
@@ -87,12 +85,12 @@ Once you have made several valuable contributions, you will have an opportunity 
 
 On a daily basis, you will implement new functionality, write automated tests, build CI/CD pipelines, and provide documentation for it.
 
-**Paweł:** You will also have an opportunity to design architecture, create a proof of concepts, teach and evangelize the open-source community, and be involved in project roadmap planning.
+**Paweł:** You will also have an opportunity to design architecture, create a proofs of concept, teach and evangelize the open-source community, and be involved in project roadmap planning.
 
 We're looking for solid all-rounders, who are not afraid of new technologies and learn quickly. That's why we think about a true DevOps profile—solid programming skills and love for operations. We require Kubernetes experience, and some experience with Go—it doesn't have to be production-grade experience, but it would be good if you know the basic conventions. Any open-source contributions would be nice to have!
 
 
-## Do you have any advice for beginners in Go? How to broaden one's knowledge in this direction and what possibilities does this language offer?
+## Do you have any advice for beginners in Go? How can developers broaden their knowledge in this area and what benefits does this language offer?
 
 **Paweł:** Go is great for writing lightweight backend applications and CLI tools. If you want to build modern cloud-native, apps, learn Go, as it is the right tool for the job.
 
