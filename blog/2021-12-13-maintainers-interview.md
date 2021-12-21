@@ -30,7 +30,9 @@ What's it like to build a cloud-native platform from scratch? What is it like to
 
 **Mateusz:** In the past, I worked on similar projects that aimed to unify our developer tooling. In my opinion, it is something that awaits us in the future. It’s definitely worth being a part of it.
 
-My journey with IT actually started thanks to my brother. The first program that I wrote was on Commodore 64 when I was about 10 years old. Since then, I have been involved in technology. From the beginning, I felt love for backends, but tolerated frontend 😁 During my studies, I got interested in the cloud. As a result, I started an internship, where from Java I switched to Go. Now it’s been 5.5 years that I’ve been connected with the cloud-native world and I certainly don’t regret that.
+
+
+My journey with IT actually started thanks to my brother. He was really into technology, so besides playing games with me, he started to teach me how it all worked and gave me programming challenges. There was a big age difference between us (10 years), so the first program that I wrote was on Commodore 64 when I was about 8 years old. Since then, I have been involved in technology. From the beginning, I felt love for backends, but tolerated frontend 😁 During my studies, I got interested in the cloud. As a result, I started an internship, where from Java I switched to Go. Now it’s been 5.5 years that I’ve been connected with the cloud-native world and I certainly don’t regret that.
 
 **Paweł:** My adventure with computer science also started pretty early. When I got my first PC, I was 8 years old. Initially, I played games on it, but after a while, I was interested in doing more than that. When I was in primary school, I started to write some basic applications in Delphi and created my first HTML website. Obviously, the websites followed the trends at that time—they were loaded with GIFs and tons of text scrolling in different directions (remember the “MARQUEE” HTML tag?).
 
@@ -100,14 +102,16 @@ You can also contribute to some existing open-source projects written in Go. On 
 
 **Mateusz:** Personally, I can tell that for me the most efficient way to learn any language is by doing reviews and submitting PRs that will be reviewed by more experienced developers. This way, you learn how to solve real problems. It doesn't need to be directly within your current company. Same as Paweł, I'm a huge open-source enthusiast, so I also encourage you to contribute to various open-source projects, or start your own!
 
-Additionally, I like to “spy” on other projects from the CNCF landscape and check their design. I also follow people connected with Go, e.g. [@dmitshur](https://github.com/dmitshur), [@ibuildthecloud](https://github.com/ibuildthecloud), [@mattn](https://github.com/mattn), [@rsc](https://github.com/rsc), [@alexellis](https://github.com/alexellis), [@bep](https://github.com/bep), [@peterbourgon](https://twitter.com/peterbourgon), and others, to learn how they solve a given problem, and to get familiar with different approaches.
+Additionally, I like to “spy” on other projects from the CNCF landscape and check their design. I also follow people connected with Go, e.g. [@dmitshur](https://github.com/dmitshur), [@ibuildthecloud](https://github.com/ibuildthecloud), [@mattn](https://github.com/mattn), [@rsc](https://github.com/rsc), [@alexellis](https://github.com/alexellis), [@bep](https://github.com/bep), [@peterbourgon](https://twitter.com/peterbourgon), and others, to learn how they solve a given problem, and to get familiar with different approaches. 
+
+It’s much harder to recommend a great project, as it depends on what you want to implement. For example, from my perspective, if you are going to write a more future-proof CLI, the [github.com/cli/cli](https://github.com/cli/cli) repository is definitely worth checking. If you want to see some Go patterns in action, e.g. a more generic approach to functional options, see [sigs.k8s.io/controller-runtime](https://github.com/kubernetes-sigs/controller-runtime/blob/v0.11.0/pkg/client/options.go).
 
 In our community, there are a lot of materials. It's good to start with the [golang/wiki](https://github.com/golang/go/wiki/), the [50 Shades of Go: Traps, Gotchas, and Common Mistakes for New Golang Devs](http://devs.cloudimmunity.com/gotchas-and-common-mistakes-in-go-golang), and the [Uber Style Guide](https://github.com/uber-go/guide). The [Ardan Labs](https://www.ardanlabs.com/blog/) is also a good knowledge source.
 
 Others:
-1. Read and follow:[ https://golang.org/doc/effective_go.html](https://golang.org/doc/effective_go.html)
-2. Try:[ https://gobyexample.com/](https://gobyexample.com/)
-3. Subscribe:[ https://golangweekly.com/](https://golangweekly.com/)
+1. Read and follow: [https://golang.org/doc/effective_go.html](https://golang.org/doc/effective_go.html)
+2. Try: [https://gobyexample.com/](https://gobyexample.com/)
+3. Subscribe: [https://golangweekly.com/](https://golangweekly.com/)
 
 ## Get involved!
 
