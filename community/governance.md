@@ -73,9 +73,9 @@ The governance model does not need a formal conflict resolution process, since t
 
 ## Current roles
 
-**Project lead:** Paul Pietkiewicz
-GitHub: [@platten](https://github.com/platten)
-E-mail: [paul@capact.io](mailto:paul@capact.io)
+**Project lead:** Taylor Mitchell
+GitHub: [@tmitchell](https://github.com/tmitchell)
+E-mail: [taylor@capact.io](mailto:taylor@capact.io)
 
 Maintainers are listed in the `CODEOWNERS` file for every repository within the Capact organization.
 
