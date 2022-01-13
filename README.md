@@ -13,7 +13,7 @@ This website is built using [Docusaurus 2](https://docusaurus.io/), a modern sta
 
 To get started with the development, install the following dependencies:
 
-- [Node 16 and NPM 7](https://nodejs.org)
+- [Node 17 and NPM 8](https://nodejs.org)
 
 ### Installation
 
