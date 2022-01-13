@@ -27,7 +27,8 @@ module.exports = {
       respectPrefersColorScheme: true,
     },
     algolia: {
-      apiKey: "43ffd9615b1dd6ac0f6f9987e624d73d",
+      appId: "TS68LPSTRZ",
+      apiKey: "d1d582d9b2ecb80fc268594a6c1b0685",
       indexName: "capact",
       contextualSearch: true,
     },
