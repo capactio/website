@@ -32,7 +32,7 @@ The following tools are required:
 
 1. Make sure to separate workloads
 
-   For a better performance and durability, it is recommended to run MongoDB and Rocket.Chat on separate nodes. MongoDB is by default configured to prefer being run on nodes with label `node.capact.io/type=storage`. We will also configure RocketChat affinity to not schedule pods on such nodes.
+   For a better performance and durability, it is recommended to run MongoDB and Rocket.Chat on separate nodes. MongoDB is by default configured to prefer being run on nodes with label `node.capact.io/type=storage`. We will also configure Rocket.Chat affinity to not schedule pods on such nodes.
 
    Select any worker node and replace the `<NODE NAME>` with the node name and run:
 
@@ -167,7 +167,7 @@ Here we are simulating scenario when Kubernetes lost a connection to one of the 
 
 1.  Open the Rocket.Chat site again using provided host during Rocket.Chat installation. It should be still accessible.
 
-    > **NOTE**: Depending on which node will be deleted and to which Rocket.Chat Pod you are connected, it may take up to 30 seconds for Kubernetes to change configuration. During that time RocketChat may not be available.
+    > **NOTE**: Depending on which node will be deleted and to which Rocket.Chat Pod you are connected, it may take up to 30 seconds for Kubernetes to change configuration. During that time Rocket.Chat may not be available.
 
 
 ### Clean-up
