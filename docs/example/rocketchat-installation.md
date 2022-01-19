@@ -1,12 +1,12 @@
-# RocketChat installation
+# Rocket.Chat installation
 
-This tutorial shows the basic concepts of Capact on the RocketChat installation example.
+This tutorial shows the basic concepts of Capact on the Rocket.Chat installation example.
 
 ### Goal
 
-This instruction will guide you through the installation of RocketChat on a Kubernetes cluster using Capact. 
+This instruction will guide you through the installation of Rocket.Chat on a Kubernetes cluster using Capact.
 
-RocketChat depends on the MongoDB database.
+Rocket.Chat depends on the MongoDB database.
 
 The diagram below shows the scenario:
 
@@ -25,14 +25,14 @@ The following tools are required:
 * [`helm`](https://helm.sh/docs/intro/install/) installed.
 * [`jq`](https://stedolan.github.io/jq/) installed.
 
-### Install all RocketChat components in a Kubernetes cluster
+### Install all Rocket.Chat components in a Kubernetes cluster
 
 
 1. [Setup Capact CLI](../cli/getting-started.mdx#first-use)
 
 1. Make sure to separate workloads
 
-   For a better performance and durability, it is recommended to run MongoDB and RocketChat on separate nodes. MongoDB is by default configured to prefer being run on nodes with label `node.capact.io/type=storage`. We will also configure RocketChat affinity to not schedule pods on such nodes.
+   For a better performance and durability, it is recommended to run MongoDB and Rocket.Chat on separate nodes. MongoDB is by default configured to prefer being run on nodes with label `node.capact.io/type=storage`. We will also configure RocketChat affinity to not schedule pods on such nodes.
 
    Select any worker node and replace the `<NODE NAME>` with the node name and run:
 
@@ -44,7 +44,7 @@ The following tools are required:
 
    ```bash
    export CAPACT_DOMAIN_NAME={domain_name} # e.g. demo.cluster.capact.dev
-   ``` 
+   ```
 
 1. Create a file with installation parameters:
 
@@ -72,7 +72,7 @@ The following tools are required:
    Wait until the Action is in `READY_TO_RUN` state. It means that the Action was processed by the Engine, and the Interface was resolved to a specific Implementation. As a user, you can verify that the rendered Action is what you expected. If the rendering is taking more time, you will see the `BEING_RENDERED` phase.
 
 1. Run the Action.
-   
+
    In the previous step, the Action was in the `READY_TO_RUN` phase. It is not executed automatically, as the Engine waits for the user's approval. To execute it, execute:
 
    ```bash
@@ -93,27 +93,27 @@ The following tools are required:
    capact action status rocketchat
    ```
 
-1. Open the RocketChat UI using the **host** value from the previous step.
+1. Open the Rocket.Chat UI using the **host** value from the previous step.
 
     ![rocketchat](./assets/rocket-chat.png)
 
-🎉 Hooray! You now have your own RocketChat instance installed. Be productive!
+🎉 Hooray! You now have your own Rocket.Chat instance installed. Be productive!
 
-### Validate RocketChat high availability setup
+### Validate Rocket.Chat high availability setup
 
 > **NOTE**: The following steps are optional. In this tutorial we used AWS EKS Capact installation and all instructions will be based on this setup.
 
-Now, let's validate the high-availability setup for the RocketChat.
+Now, let's validate the high-availability setup for the Rocket.Chat.
 
 #### Non-disruptive tests
 
-Here we are simulating maintenance actions which should not disrupt RocketChat. Non-disruptive actions for example are:
+Here we are simulating maintenance actions which should not disrupt Rocket.Chat. Non-disruptive actions for example are:
 
-* Rolling update of RocketChat.
+* Rolling update of Rocket.Chat.
 * Scheduled Node maintenance where pods are evicted from the node.
 * Rescheduling pod to another node.
 
-1. List RocketChat pods
+1. List Rocket.Chat pods
 
    ```bash
    kubectl get pod -l app.kubernetes.io/name=rocketchat
@@ -122,20 +122,20 @@ Here we are simulating maintenance actions which should not disrupt RocketChat. 
 1. Select two random pods from the list above and delete them.
 
   Use `kubectl delete` command. For example:
-  
+
   ```bash
    kubectl delete pod rocketchat-1617956008-rocketchat-5b45b74f77-pncck
    ```
 
    > **NOTE:** Make sure that at least one pod is in *Ready* state.
 
-1. Verify if RocketChat is still running without any disruption.
+1. Verify if Rocket.Chat is still running without any disruption.
 
 #### Disruptive tests
 
 Here we are simulating scenario when Kubernetes lost a connection to one of the worker nodes.
 
-1. Make sure that MongoDB and RocketChat pods are running on different nodes.
+1. Make sure that MongoDB and Rocket.Chat pods are running on different nodes.
 
    To list pods and assigned nodes run:
 
@@ -143,13 +143,13 @@ Here we are simulating scenario when Kubernetes lost a connection to one of the 
    kubectl get pod -o wide
    ```
 
-1. Make sure that the pod with `public-ingress-nginx` prefix is not running on the same nodes as RocketChat.
+1. Make sure that the pod with `public-ingress-nginx` prefix is not running on the same nodes as Rocket.Chat.
 
    ```bash
    kubectl -n capact-system get pod -o wide
    ```
 
-1. Get a list of nodes where RocketChat pods are running:
+1. Get a list of nodes where Rocket.Chat pods are running:
 
    ```bash
    kubectl get pod -o go-template --template='{{ range .items}}{{.metadata.name}} - {{ .spec.nodeName }}{{"\n"}}{{end}}'
@@ -164,13 +164,13 @@ Here we are simulating scenario when Kubernetes lost a connection to one of the 
    ![AWS Dashborad - nodes](./assets/nodes.png)
    ![AWS Dashboard - worker](./assets/worker.png)
    ![AWS Dashboard - instance](./assets/instance.png)
-   
-1.  Open the RocketChat site again using provided host during RocketChat installation. It should be still accessible.
 
-    > **NOTE**: Depending on which node will be deleted and to which RocketChat Pod you are connected, it may take up to 30 seconds for Kubernetes to change configuration. During that time RocketChat may not be available.
+1.  Open the Rocket.Chat site again using provided host during Rocket.Chat installation. It should be still accessible.
+
+    > **NOTE**: Depending on which node will be deleted and to which Rocket.Chat Pod you are connected, it may take up to 30 seconds for Kubernetes to change configuration. During that time RocketChat may not be available.
 
 
-### Clean-up 
+### Clean-up
 
 >⚠️ **CAUTION:** This removes all resources that you created.
 
