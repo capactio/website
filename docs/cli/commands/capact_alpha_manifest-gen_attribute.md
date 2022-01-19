@@ -1,31 +1,27 @@
 ---
-title: capact alpha manifest-gen interface
+title: capact alpha manifest-gen attribute
 ---
 
-## capact alpha manifest-gen interface
+## capact alpha manifest-gen attribute
 
-Generate new Interface-related manifests
-
-### Synopsis
-
-Generate new InterfaceGroup, Interface and associated Type manifests
+Generate new Attribute manifests
 
 ```
-capact alpha manifest-gen interface [PATH] [flags]
+capact alpha manifest-gen attribute [PATH] [flags]
 ```
 
 ### Examples
 
 ```
-# Generate manifests for the cap.interface.database.postgresql.install Interface
-capact alpha manifest-gen interface cap.interface.database.postgresql.install
+# Generate manifests for the cap.attribute.cloud.provider.aws Attribute
+capact alpha manifest-gen attribute cap.attribute.cloud.provider.aws
 ```
 
 ### Options
 
 ```
-  -h, --help              help for interface
-  -r, --revision string   Revision of the Interface manifest (default "0.1.0")
+  -h, --help              help for attribute
+  -r, --revision string   Revision of the Attribute manifest (default "0.1.0")
 ```
 
 ### Options inherited from parent commands
