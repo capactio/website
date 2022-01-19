@@ -16,12 +16,12 @@ rules: # Configures the following behavior for Engine during rendering Action
   - interface: # Rules for Interface with exact path
       path: cap.interface.productivity.rocketchat.install
     oneOf:
-      - implementationConstraints: # Enforces the Helm RocketChat Implementation
+      - implementationConstraints: # Enforces the Helm Rocket.Chat Implementation
           path: "cap.implementation.rocketchat.helm.install"
         inject:
           additionalParameters: # Injects additional parameters for the Implementation
             - name: additional-parameters # Name must match one of the parameter defined under `additionalInput.parameters` in the Implementation
-              value: 
+              value:
                 replicaCount: 3
           additionalTypeInstances: # Injects additional TypeInstances for the Implementation
             - name: sample # Name must match one of the parameter defined under `additionalInput.typeInstances` in the Implementation
@@ -35,7 +35,7 @@ rules: # Configures the following behavior for Engine during rendering Action
         inject:
           additionalParameters: # Injects additional parameters for the Implementation
             - name: additional-parameters # Name must match one of the parameter defined under `additionalInput.parameters` in the Implementation
-              value: 
+              value:
                 image:
                   registry: docker.io
                   pullPolicy: Always
@@ -55,7 +55,7 @@ rules:
         inject:
           additionalParameters: # Injects additional parameters for the Implementation
             - name: additional-parameters # Name must match one of the parameter defined under `additionalInput.parameters` in the Implementation
-              value: 
+              value:
                 replicaCount: 3
 ```
 To know how to define the policy rules, see the [Policy syntax](./overview.md#syntax) section.
