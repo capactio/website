@@ -3,21 +3,48 @@
 //
 // https://docusaurus.io/docs/api/plugins/@docusaurus/plugin-client-redirects
 
+const versions = [
+  // Append new version here
+  "0.5",
+  "0.4",
+  "", // latest
+  "next", // unreleased
+];
+
+const latestVersion = findLatestVersion(versions);
+
 module.exports = () => {
-  return [
-    ...generateDocsRedirectsForVersion(""), // latest version
-    ...generateDocsRedirectsForVersion("next"), // unreleased version
-    ...generateDocsRedirectsForVersion("0.4"),
-    ...generateDocsRedirectsForVersion("0.5"),
-  ];
+  return generateDocsRedirectsForVersions(versions);
 };
 
-const latestVersion = "0.5";
+function generateDocsRedirectsForVersions(versions) {
+  const redirects = [];
+  for (let version of versions) {
+    redirects.push(...generateDocsRedirectsForVersion(version));
+  }
 
-const generateDocsRedirectsForVersion = (version) => {
+  return redirects;
+}
+
+function findLatestVersion(versions) {
+  if (!versions) {
+    throw new Error("versions cannot be empty");
+  }
+
+  return (
+    versions
+      .filter((item) => item != "" && item != "next")
+      // source for this one-line semver comparison: https://stackoverflow.com/a/65687141
+      .sort((a, b) =>
+        b.localeCompare(a, undefined, { numeric: true, sensitivity: "base" })
+      )[0]
+  );
+}
+
+function generateDocsRedirectsForVersion(version) {
   const fromPrefix = version != "" ? `/docs/${version}` : "/docs";
-
   let toPrefix = fromPrefix;
+
   if (version === latestVersion) {
     // for latest version redirect to URL without version number
     toPrefix = "/docs";
@@ -131,5 +158,5 @@ const generateDocsRedirectsForVersion = (version) => {
   const versionToCheck = version != "" ? version : latestVersion;
   return mapping
     .filter((item) => item.versions[versionToCheck])
-    .map(({from, to}) => ({from, to}));
-};
+    .map(({ from, to }) => ({ from, to }));
+}
