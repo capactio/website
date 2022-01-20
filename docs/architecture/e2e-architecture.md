@@ -19,11 +19,17 @@ OCF manifests are stored in [Hub](#hub).
 
 ### CLI
 
-CLI is command line tool which makes easier with working the [OCF](#ocf) manifests and Actions.
+CLI is command line tool which makes easier to manage [OCF](#ocf) manifests and Actions.
 
 To read the documentation about CLI tool, see the [Getting started](../cli/getting-started.mdx) document.
 
 CLI utilizes [SDK](#sdk).
+
+### Dashboard
+
+Dashboard is a web-based user interface for managing Capact resources, such as Actions.
+
+To read more about Dashboard, see the [Overview](../dashboard-ui/overview.md) document.
 
 ### Gateway
 
