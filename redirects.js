@@ -1,14 +1,14 @@
-// Remove the custom redirects until the issue is resolved: https://github.com/facebook/docusaurus/issues/3407
+// We need to maintain the custom redirects as the issue won't be resolved: https://github.com/facebook/docusaurus/issues/3407
 // NOTE: Redirects don't work in development mode. Use `npm run build` and `npm run serve` to see them in action.
 //
 // https://docusaurus.io/docs/api/plugins/@docusaurus/plugin-client-redirects
 
 module.exports = () => {
   const redirects = [
-    ...generateDocsRedirectsForVersion(""), // latest version
+    ...generateLegacy05DocsRedirectsForVersion(""), // latest version
     ...generateDocsRedirectsForVersion("next"), // unreleased version
-    ...generateLegacyDocsRedirectsForVersion("0.4"),
-    ...generateDocsRedirectsForVersion("0.5", true), // redirect from x.y version to latest
+    ...generateLegacy04DocsRedirectsForVersion("0.4"),
+    ...generateLegacy05DocsRedirectsForVersion("0.5", true), // redirect from x.y version to latest
   ];
 
   return redirects;
@@ -55,15 +55,19 @@ const generateDocsRedirectsForVersion = (version, useLatestVersionAsTarget) => {
       from: `${fromPrefix}/cli`,
       to: `${toPrefix}/cli/getting-started`,
     },
+    {
+      from: `${fromPrefix}/dashboard-ui`,
+      to: `${toPrefix}/dashboard-ui/overview`,
+    },
   ];
 };
 
-const generateLegacyDocsRedirectsForVersion = (version, useLatestVersionAsTarget) => {
+const generateLegacy04DocsRedirectsForVersion = (version, useLatestVersionAsTarget) => {
   const fromPrefix = version != "" ? `/docs/${version}` : "/docs";
   const toPrefix = useLatestVersionAsTarget ? `/docs` : fromPrefix;
 
 	const currentRedirect = generateDocsRedirectsForVersion(version, useLatestVersionAsTarget).filter( item => {
-		return item.to !== `${toPrefix}/getting-started`;
+		return item.to !== `${toPrefix}/getting-started` && item.to !== `${toPrefix}/dashboard-ui/overview`;
 	})
 
   return [
@@ -77,4 +81,14 @@ const generateLegacyDocsRedirectsForVersion = (version, useLatestVersionAsTarget
       to: `${toPrefix}/development/development-guide`,
     },
   ];
+};
+
+
+const generateLegacy05DocsRedirectsForVersion = (version, useLatestVersionAsTarget) => {
+  const fromPrefix = version != "" ? `/docs/${version}` : "/docs";
+  const toPrefix = useLatestVersionAsTarget ? `/docs` : fromPrefix;
+
+	return generateDocsRedirectsForVersion(version, useLatestVersionAsTarget).filter( item => {
+		return item.to !== `${toPrefix}/dashboard-ui/overview`;
+	})
 };
