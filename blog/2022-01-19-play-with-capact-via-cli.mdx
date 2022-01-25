@@ -12,94 +12,92 @@ tags:
 - kubernetes
 - cloud-native
 - dry
-
 ---
-<!---
-experiment with Capact
-Your first night with Capact
--->
 
-Our first blog post, focused strongly on **_why_**. Now it's time for **_how to_**. But we need to be aware that there
-are many ways to [get started with Capact](https://capact.io/docs/next/getting-started). Today we will focus on you as a
+Our first blog post focused strongly on **_why_**. Now it's time for **_how_**. There are many ways to [get started with Capact](/docs/next/getting-started). Today we will focus on your perspective as a
 Capact User.
 
-The recommended way to try out Capact quickly is to set up a local environment. It is already nicely described in
-our [local installation](https://capact.io/docs/next/installation/local) tutorial. Once you have Capact up and running
-we can start!
+The recommended way to try out Capact quickly is to set up a local environment.
 
-<!---
-We will use CLI not UI..
-CLI - ale moge zdradzić że UI też jest.
--->
+import { GetStartedTerminal } from '@site/src/components/homepage/GetStartedTerminal';
+
+<GetStartedTerminal latest="true"/>
+<br />
+
+Detailed instructions are already nicely described in our [local installation](/docs/next/installation/local) tutorial. Once you have Capact up and running, we can start!
 
 <!--truncate-->
 
 ### What you will learn
 
-Running examples from this blog post, you will learn about the following Capact concepts:
+:::info
+For this blog post, we will use Capact CLI. However, the described scenario can also be executed with our [brand-new UI](/docs/next/dashboard-ui/overview)! 😎
+:::
 
-- [Interface](https://github.com/capactio/capact/blob/main/ocf-spec/0.0.1/README.md#interface) - provides an option to
-	abstract Implementations.
-- [Implementation](https://github.com/capactio/capact/blob/main/ocf-spec/0.0.1/README.md#implementation) - defines
-	actual workflow that is executed.
-- [Attributes](https://github.com/capactio/capact/blob/main/ocf-spec/0.0.1/README.md#attribute) - provides an option to _tag_ manifests. Today we wil use it to
-	select a specific Implementation.
-- [Types and TypeInstances](https://github.com/capactio/capact/blob/main/ocf-spec/0.0.1/README.md#type) - defines Type schema and Type instance itself.
-- [Action](https://capact.io/docs/next/terminology#action) - triggers Engine to render and run a given Interface.
-- [Policies](https://capact.io/docs/next/feature/policies/overview) - impacts render process to select wanted
-	Implementations.
+In 5 minutes, by running examples from this blog post, you will learn about the following Capact concepts:
+
+- [Interface](https://github.com/capactio/capact/blob/main/ocf-spec/0.0.1/README.md#interface)—provides an option to abstract Implementations.
+- [Implementation](https://github.com/capactio/capact/blob/main/ocf-spec/0.0.1/README.md#implementation)—defines the actual workflow that is executed.
+- [Attribute](https://github.com/capactio/capact/blob/main/ocf-spec/0.0.1/README.md#attribute)—provides an option to _tag_ manifests. Today we will use it to select a specific Implementation.
+- [Type and TypeInstance](https://github.com/capactio/capact/blob/main/ocf-spec/0.0.1/README.md#type)—provide a combined feature, where Type holds the schema and TypeInstance the _instance_ for the Type.
+- [Action](/docs/next/terminology#action)—triggers Engine to render and run a given Interface.
+- [Policy](/docs/next/feature/policies/overview)—impacts the render process to select desired Implementations.
 
 Creating new workflows will be a story for other blog posts.
 
-We briefly described each part, but I encourage you to take a deeper look on
-our [Terminology](https://capact.io/docs/next/terminology) section after all.
-
-:::info
-For this blog post we will use Capact CLI. But describe scenario can be also execute with our [brand-new UI](/dashboard-ui/overview)! 😎
-:::
+Here we only briefly describe each part, but I encourage you to take a deeper look at our [Terminology](/docs/next/terminology) section later.
 
 ### Scenario
 
-The key concepts where described
-in [introducing Capact blog post](https://capact.io/blog/introducing-capact#capact-concept-in-one-minute). There as an
-example we used Mattermost. It was a real life scenario but at the same time more resource and time-consuming.
+The key concepts were described in the [Introducing Capact](https://capact.io/blog/introducing-capact#capact-concept-in-one-minute) blog post. There, we used Mattermost as an example. It was a real life scenario but at the same time more resource and time-consuming.
 
 For the purpose of this blog post, we created an extremely simple Hello World example.
 
-![greet-manifests](./assets/greet-manifests.svg)
+import ThemedImage from '@theme/ThemedImage';
+import useBaseUrl from '@docusaurus/useBaseUrl';
 
-There are two Implementations for `cap.interface.capactio.examples.say` Interface. Depending on the Policy, a different
-Implementation is selected. By default, Engine select Implementation which is first on the list and doesn't have any
-requirements to be executed, e.g. requires AWS credentials.
+<ThemedImage
+alt="Simplified architecture"
+sources={{
+light: useBaseUrl('/blog/2022-01-19/greet-manifests.svg'),
+dark: useBaseUrl('/blog/2022-01-19/greet-manifests-dark.svg'),
+}}
+/>
+
+There are two Implementations for the `cap.interface.capactio.examples.say` Interface. Depending on the Policy, a different Implementation is selected. By default, Engine selects the Implementation which is first on the list (alphabetical order) and doesn't have any requirements regarding executions, such as requiring AWS credentials.
 
 ## Camera, Lights, Action!
 
-Action is the entrypoint for executing any Interface. It allows you to define which Interface should be executed and
-with which parameters. This is later consumed by Capact Engine and appropriate workflow is rendered. You can review it
-and approve for execution.
+Action is the entry point for executing any Interface. It allows you to define which Interface should be executed and with which parameters. This is later consumed by Capact Engine and the appropriate workflow is rendered. You can review it and approve it for execution.
 
-![capact-simplified-arch](./assets/capact-simplified-arch-v2.svg)
+<ThemedImage
+alt="Simplified architecture"
+sources={{
+light: useBaseUrl('/blog/2022-01-19/capact-simplified-arch.svg'),
+dark: useBaseUrl('/blog/2022-01-19/capact-simplified-arch-dark.svg'),
+}}
+/>
 
 ### Steps
 
-1. [Ensure you are logged into local cluster](https://capact.io/docs/next/cli/getting-started#first-use)
+1. [Make sure that you are logged into local cluster](/docs/cli/getting-started#first-use).
 2. List available Interfaces:
 
   ```bash
   capact hub interfaces get
   ```
 
-  We are interested in:
+  We are interested in this part:
 
     ```text {5,7,8}
                                PATH                LATEST REVISION              IMPLEMENTATIONS
     ---------------------------------------------+-----------------+-----------------------------------------------
-    	# ... trimmed ...
+     # ... trimmed ...
     ---------------------------------------------+-----------------+-----------------------------------------------
-    	cap.interface.capactio.examples.greet          0.1.0          cap.implementation.capactio.examples.greet
+     cap.interface.capactio.examples.greet          0.1.0          cap.implementation.capactio.examples.greet
     ---------------------------------------------+-----------------+-----------------------------------------------
-    	cap.interface.capactio.examples.say            0.1.0          cap.implementation.capactio.examples.scream
-                                                                      cap.implementation.capactio.examples.say
+     cap.interface.capactio.examples.say            0.1.0          cap.implementation.capactio.examples.ricky
+                                                                      cap.implementation.capactio.examples.hello
     ```
 
 3. Create a new Action:
@@ -113,11 +111,13 @@ groupId="ref"
 defaultValue="def"
 values={[
 {label: 'Default Execution', value: 'def'},
-{label: 'Policy Adjusted Execution', value: 'policy'},
+{label: 'Policy-Adjusted Execution', value: 'policy'},
 ]}>
 <TabItem value="def">
 
-> **NOTE:** Policy not needed - will use default one.
+:::note
+A Policy is not needed as we use the default behavior here.
+:::
 
 ```bash
 capact act create --name hello cap.interface.capactio.examples.greet
@@ -126,21 +126,22 @@ capact act create --name hello cap.interface.capactio.examples.greet
 </TabItem>
 <TabItem value="policy">
 
-First, save Policy to `/tmp/policy.yaml` file:
+First, save the Policy to the `/tmp/policy.yaml` file:
 
-```yaml
+```yaml title="/tmp/policy.yaml"
 cat <<EOF > /tmp/policy.yaml
 rules:
- - interface:
-	 path: cap.interface.capactio.examples.say
-   oneOf:
-   - implementationConstraints:
-	   attributes:
-		 - path: cap.attribute.capactio.examples.be-positive
+  - interface:
+      path: cap.interface.capactio.examples.say
+    oneOf:
+    - implementationConstraints:
+        attributes:
+          - path: cap.attribute.capactio.examples.be-positive
+            revision: 0.1.0
 EOF
 ```
 
-Execute Action with Policy:
+Execute the Action with the Policy:
 
 ```bash
 capact act create --name hello cap.interface.capactio.examples.greet --action-policy-from-file /tmp/policy.yaml
@@ -151,124 +152,179 @@ capact act create --name hello cap.interface.capactio.examples.greet --action-po
 </div>
 
 2. Wait for the Action to have the `READY_TO_RUN` status:
+
 	```bash
 	capact act get hello
 	```
 3. When the status is `READY_TO_RUN`, run the Action:
+
 	```bash
 	capact act run hello
 	```
 4. Watch the progress:
+
 	```bash
 	capact act watch hello
 	```
-5. **(Optional)** Once the Action is finished, note the name of the Pod for the `print` workflow step (column `PODNAME`). To read its logs, run:
+5. **(Optional)** Once the Action is finished, copy the name of the Pod for the `print` workflow step (column `PODNAME`). To read its logs, run:
+
 	```bash
 	kubectl logs {PODNAME} main
 	```
+  Example output:
 
-6. Get the Action output (TypeInstances). Note the `id` filed value:
+<div className="tab-container-nested">
+<Tabs
+className="disable-tabs"
+groupId="ref"
+defaultValue="def"
+values={[
+{label: 'Default Execution', value: 'def'},
+{label: 'Policy-Adjusted Execution', value: 'policy'},
+]}>
+<TabItem value="def">
+
+```bash
+ ____________________________
+< message: Hello from Capact >
+ ----------------------------
+    \
+     \
+      \
+                    ##        .
+              ## ## ##       ==
+           ## ## ## ##      ===
+       /""""""""""""""""___/ ===
+  ~~~ {~~ ~~~~ ~~~ ~~~~ ~~ ~ /  ===- ~~~
+       \______ o          __/
+        \    \        __/
+          \____\______/
+```
+
+</TabItem>
+<TabItem value="policy">
+
+```bash
+ __________________________________
+< message: Never gonna give you up >
+ ----------------------------------
+    \
+     \
+      \
+                    ##        .
+              ## ## ##       ==
+           ## ## ## ##      ===
+       /""""""""""""""""___/ ===
+  ~~~ {~~ ~~~~ ~~~ ~~~~ ~~ ~ /  ===- ~~~
+       \______ o          __/
+        \    \        __/
+          \____\______/
+```
+
+</TabItem>
+</Tabs>
+</div>
+
+6. Get the Action output (TypeInstance). Copy the `id` field value:
+
 	```bash
 	capact act get hello -ojson | jq '.Actions[0].output.typeInstances'
 	```
 
 	Example output:
 	```bash {3}
-	[
-	  {
-	    "id": "08fcaa07-7846-47af-b6a7-7c3818c69656",
-	    "typeRef": {
-	      "path": "cap.type.capactio.examples.message",
-	      "revision": "0.1.0"
-	    }
+  [
+    {
+      "id": "08fcaa07-7846-47af-b6a7-7c3818c69656",
+      "typeRef": {
+        "path": "cap.type.capactio.examples.message",
+        "revision": "0.1.0"
       }
-	]
+    }
+  ]
 	```
 
-7. Get the TypeInstance `value.greeting` field value:
+7. Get the TypeInstance `value.message` field value:
 
-	 ```bash
-	 capact ti get {TI_ID} | jq -r '.[0].latestResourceVersion.spec.value.greeting'
-	 ```
+   ```bash
+   capact ti get {ID} -ojson | jq -r '.[0].latestResourceVersion.spec.value.message'
+   ```
 
 8. Delete the Action:
 
-	 ```bash
-	 capact act delete hello
-	 ```
+   ```bash
+   capact act delete hello
+   ```
 
-Let's consider another example, as life isn’t all sunshine and rainbows. Sometimes we need more positively colored
-message. Capact allows you to do it with an easy ✨
+Let's consider another example, as life isn’t all sunshine and rainbows. Sometimes we need a more positively-colored message. Capact allows you to do it with ease ✨
 
-To choose a different Implementation for the `say` Interface we need to prepare a dedicated Policy. The power of it is that you don't have to change the main workflow. You just change the
-building blocks in already created one. Execute [steps](#steps) once again, but now select the **Policy Adjusted Execution** tab.
+To choose a different Implementation for the `say` Interface, we need to prepare a dedicated Policy. The power of it is that you don't have to change the main workflow. You treat the step as a building block and just swap it for another existing one.
+
+To test it, execute [steps](#steps) once again, but now select the **Policy-Adjusted Execution** tab.
+
+## What is so special about it?
+
+Our example was simplified to a minimum, but you could see that you can:
+
+- chain different steps together,
+- and more importantly, write once and swap implementation details with ease.
+
+Capact is also great if you want to chain different tools together and keep the same entry point (UX) but that requires more complex examples. For now, we recommend you to take a look at our other examples described in the **How can I get involved and learn more?** section.
 
 ## Behind the wall
 
-As you could learn, using CLI you can browse Hub manifests and create specifc Action for a given Interface. CLI
-communicates with our Gateway via GraphQL calls. More about it you can learn
-in [E2E Achitecture](/architecture/e2e-architecture) document.
+As you saw, you can use CLI to browse Hub manifests, create a specific Action for a given Interface and retrieve the output. CLI communicates with our Gateway via GraphQL calls, same as the UI (Capact Dashboard). You can read more in the [E2E Architecture](/docs/next/architecture/e2e-architecture) document.
 
-```yaml {4}
-# ... trimmed ...
-steps:
-  - - name: get-message
-      capact-action: examples.say # dynamic step, rendered by Engine based on Policy.
-  - - name: print
-      template: print
-      arguments:
+However, a more important question is, how did we change the output message?
+
+```yaml {4-7,12} title="Implementation Manifest"
+spec:
+  # ... trimmed ...
+  imports:
+    - interfaceGroupPath: cap.interface.capactio.examples
+      alias: examples
+      methods:
+        - name: say
+
+  # ... trimmed ...
+  steps:
+    - - name: get-message
+        capact-action: examples.say # dynamic step, rendered by Engine based on the Policy.
+    - - name: print
+        template: print
+        arguments:
+          artifacts:
+            - name: message
+            from: "{{steps.get-message.outputs.artifacts.message}}"
+    # ... trimmed ...
+    - name: print
+      inputs:
         artifacts:
           - name: message
-          from: "{{steps.get-message.outputs.artifacts.message}}"
-# ... trimmed ...
-- name: print
-  inputs:
-    artifacts:
-      - name: message
-      path: /tmp/message.yaml
-  container:
-    image: docker/whalesay:latest
-    command: [ sh, -c ]
-    args: [ "cowsay < /tmp/message.yaml" ]
+          path: /tmp/message.yaml
+      container:
+        image: docker/whalesay:latest
+        command: [ sh, -c ]
+        args: [ "cowsay < /tmp/message.yaml" ]
 ```
+
+The snippet above shows the most important parts of the Implementation manifest. In lines **4-7**, we declare the import, which is later used in steps. In line **12**, we use **capact-action** to make a dynamic step with a given Interface.
+
+:::tip
+Instead of providing the full Interface path, we use **alias** assigned to the imported Interface.
+:::
+
+As a result, our Engine and, in particular, Argo Renderer has an option to put there an Implementation that fulfills the specified Interface. Thanks to that, this step is swappable based on the defined Policy.
 
 ## How can I get involved and learn more?
 
-The [Getting Started](/docs/getting-started) goes into more detail about how to start with Capact and use its more advanced features.
-There are also [Rocket.Chat](https://github.com/google/wire/tree/master/_tutorial)
-and [Mattermost] tutorials that we keep up-to-date for you, to that walk you through using Capact with real cases.
+The [Getting Started](/docs/next/getting-started) goes into more detail about how to start with Capact and use its more-advanced features. There are also [Rocket.Chat](/docs/next/example/rocketchat-installation) and [Mattermost](/docs/next/example/mattermost-installation) tutorials that we keep up-to-date for you to walk you through using Capact in real cases.
 
-We appreciate any input you have about your experience with Capact! There are plany of option to contact us:
+We appreciate any input you have about your experience with Capact!
+
+There are plenty of options to contact us:
 - [GitHub issues](https://github.com/capactio/capact/issues)
-- [Slack workspace](/slack)
+- [Slack](/community/slack)
 - Email us at [contact@capact.io](mailto:contact@capact.io)
 
 Thank you for taking the time to learn about Capact 🙌
-
----
-
-
-same as UI. Regarding UI, Spoiler with UI window? - the newest UI leaks?
-
-3. Mention the TypeInstances (output) - check the dev guide.
-3. Refer to blog post about changing dependency - default policy
-7. Argo UI?
-
-## What is so special about this example?
-
-Our example was simplified to a minimum, but you could see that:
-
-- You have a single entrypoint (same UX) for different tools
-- Write once, swap implementation details as you want (with an easy.)
-- Chain different steps one after another, with an easy.
-
-# Description
-
-## Prerequisite
-
-1. Capact CLI at least v0.5.0
-2. Capact cluster at least v0.5.0
-3. Kubectl
-4. `jq`
-
-However, most importantly it can help reduce risk in a new way – by going fast but small.

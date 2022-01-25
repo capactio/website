@@ -226,3 +226,7 @@ html[data-theme="dark"] .table-of-contents__link--active code {
   margin: 0 0 var(--ifm-list-margin);
   padding-left: var(--ifm-list-left-padding);
 }
+
+.disable-tabs {
+	display: none
+}
