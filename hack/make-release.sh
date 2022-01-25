@@ -5,7 +5,8 @@ release::generate_docs() {
   local -r version="$1"
 
   npm run docusaurus docs:version "${version}"
-  sed -i.bak -E "s|...generateDocsRedirectsForVersion\(\"(.+)\", true\)|...generateDocsRedirectsForVersion(\"\1\"),\n    ...generateDocsRedirectsForVersion(\"${version}\", true)|" "./redirects.js"
+  sed -i.bak -E "s|const versions = \[|const versions = \[\n  \"${version}\",|" "./redirects.js"
+  sed -i.bak -E "s|next: true,|${version}: true,\n        next: true,|" "./redirects.js"
 }
 
 release::update_binary_links() {
