@@ -1,10 +1,13 @@
-// We need to maintain the custom redirects as the issue won't be resolved: https://github.com/facebook/docusaurus/issues/3407
+// WARNING: This file is modified automatically when the `hack/make-release.sh` script is executed:
+//  - New version is appended to the `versions` array
+//  - Wherever there is a redirect with the `next: true` version rule, the new release is appended
+//
+// We need to maintain custom redirects as it's not handled automatically by Docusaurus: https://github.com/facebook/docusaurus/issues/3407
 // NOTE: Redirects don't work in development mode. Use `npm run build` and `npm run serve` to see them in action.
 //
 // https://docusaurus.io/docs/api/plugins/@docusaurus/plugin-client-redirects
 
 const versions = [
-  // Append new version here
   "0.5",
   "0.4",
   "", // latest
@@ -12,10 +15,6 @@ const versions = [
 ];
 
 const latestVersion = findLatestVersion(versions);
-
-module.exports = () => {
-  return generateDocsRedirectsForVersions(versions);
-};
 
 function generateDocsRedirectsForVersions(versions) {
   const redirects = [];
@@ -34,7 +33,7 @@ function findLatestVersion(versions) {
   return (
     versions
       .filter((item) => item != "" && item != "next")
-      // source for this one-line semver comparison: https://stackoverflow.com/a/65687141
+      // source for this basic one-line semver comparison: https://stackoverflow.com/a/65687141
       .sort((a, b) =>
         b.localeCompare(a, undefined, { numeric: true, sensitivity: "base" })
       )[0]
@@ -46,7 +45,7 @@ function generateDocsRedirectsForVersion(version) {
   let toPrefix = fromPrefix;
 
   if (version === latestVersion) {
-    // for latest version redirect to URL without version number
+    // for the latest version, redirect to URL without version number
     toPrefix = "/docs";
   }
 
@@ -160,3 +159,7 @@ function generateDocsRedirectsForVersion(version) {
     .filter((item) => item.versions[versionToCheck])
     .map(({ from, to }) => ({ from, to }));
 }
+
+module.exports = () => {
+  return generateDocsRedirectsForVersions(versions);
+};

@@ -5,7 +5,7 @@ release::generate_docs() {
   local -r version="$1"
 
   npm run docusaurus docs:version "${version}"
-  sed -i.bak -E "s|// Append new version here|// Append new version here\n  \"${version}\",|" "./redirects.js"
+  sed -i.bak -E "s|const versions = \[|const versions = \[\n  \"${version}\",|" "./redirects.js"
   sed -i.bak -E "s|next: true,|${version}: true,\n        next: true,|" "./redirects.js"
 }
 
