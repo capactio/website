@@ -230,3 +230,19 @@ html[data-theme="dark"] .table-of-contents__link--active code {
 .disable-tabs {
 	display: none
 }
+
+.line-numbers .prism-code {
+	counter-reset: line-number;
+}
+
+.line-numbers .prism-code .token-line::marker {
+	color: var(--ifm-color-gray-700);
+	content: counter(line-number);
+}
+
+.line-numbers .prism-code .token-line {
+	counter-increment: line-number;
+	display: list-item;
+	padding-left: var(--ifm-pre-padding);
+	margin-left: var(--ifm-global-spacing);
+}

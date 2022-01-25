@@ -14,7 +14,7 @@ tags:
 - dry
 ---
 
-Our first blog post focused strongly on **_why_**. Now it's time for **_how_**. There are many ways to [get started with Capact](/docs/next/getting-started). Today we will focus on your perspective as a
+Our first blog post focused strongly on **_why_**. Now it's time for **_how_**. Although, there are many ways to [get started with Capact](/docs/next/getting-started), today we will focus on your perspective as a
 Capact User.
 
 The recommended way to try out Capact quickly is to set up a local environment.
@@ -68,7 +68,7 @@ There are two Implementations for the `cap.interface.capactio.examples.say` Inte
 
 ## Camera, Lights, Action!
 
-Action is the entry point for executing any Interface. It allows you to define which Interface should be executed and with which parameters. This is later consumed by Capact Engine and the appropriate workflow is rendered. You can review it and approve it for execution.
+Action is the entry point for executing any Interface. It allows you to define which Interface should be executed and with which parameters. This is later consumed by Capact Engine and the appropriate workflow is rendered. Later, you can review it and approve it for the execution.
 
 <ThemedImage
 alt="Simplified architecture"
@@ -90,14 +90,14 @@ dark: useBaseUrl('/blog/2022-01-19/capact-simplified-arch-dark.svg'),
   We are interested in this part:
 
     ```text {5,7,8}
-                               PATH                LATEST REVISION              IMPLEMENTATIONS
-    ---------------------------------------------+-----------------+-----------------------------------------------
-     # ... trimmed ...
-    ---------------------------------------------+-----------------+-----------------------------------------------
-     cap.interface.capactio.examples.greet          0.1.0          cap.implementation.capactio.examples.greet
-    ---------------------------------------------+-----------------+-----------------------------------------------
-     cap.interface.capactio.examples.say            0.1.0          cap.implementation.capactio.examples.ricky
-                                                                      cap.implementation.capactio.examples.hello
+                               PATH          LATEST REVISION                  IMPLEMENTATIONS
+    ---------------------------------------+-----------------+-----------------------------------------------
+    # ... trimmed ...
+    ---------------------------------------+-----------------+-----------------------------------------------
+    cap.interface.capactio.examples.greet        0.1.0             cap.implementation.capactio.examples.greet
+    ---------------------------------------+-----------------+-----------------------------------------------
+    cap.interface.capactio.examples.say          0.1.0             cap.implementation.capactio.examples.hello
+                                                                   cap.implementation.capactio.examples.ricky
     ```
 
 3. Create a new Action:
@@ -111,7 +111,7 @@ groupId="ref"
 defaultValue="def"
 values={[
 {label: 'Default Execution', value: 'def'},
-{label: 'Policy-Adjusted Execution', value: 'policy'},
+{label: 'Policy-Changed Execution', value: 'policy'},
 ]}>
 <TabItem value="def">
 
@@ -141,7 +141,7 @@ rules:
 EOF
 ```
 
-Execute the Action with the Policy:
+Next, create the Action with the Policy:
 
 ```bash
 capact act create --name hello cap.interface.capactio.examples.greet --action-policy-from-file /tmp/policy.yaml
@@ -180,7 +180,7 @@ groupId="ref"
 defaultValue="def"
 values={[
 {label: 'Default Execution', value: 'def'},
-{label: 'Policy-Adjusted Execution', value: 'policy'},
+{label: 'Policy-Changed Execution', value: 'policy'},
 ]}>
 <TabItem value="def">
 
@@ -260,7 +260,7 @@ Let's consider another example, as life isn’t all sunshine and rainbows. Somet
 
 To choose a different Implementation for the `say` Interface, we need to prepare a dedicated Policy. The power of it is that you don't have to change the main workflow. You treat the step as a building block and just swap it for another existing one.
 
-To test it, execute [steps](#steps) once again, but now select the **Policy-Adjusted Execution** tab.
+To test it, execute [steps](#steps) once again, but now select the **Policy-Changed Execution** tab.
 
 ## What is so special about it?
 
@@ -269,13 +269,15 @@ Our example was simplified to a minimum, but you could see that you can:
 - chain different steps together,
 - and more importantly, write once and swap implementation details with ease.
 
-Capact is also great if you want to chain different tools together and keep the same entry point (UX) but that requires more complex examples. For now, we recommend you to take a look at our other examples described in the **How can I get involved and learn more?** section.
+Capact is also great if you want to chain different tools together and keep the same entry point (UX) but that requires more complex examples. For now, we recommend you to take a look at our other examples described in the [**How can I get involved and learn more?**](#how-can-i-get-involved-and-learn-more) section.
 
 ## Behind the wall
 
 As you saw, you can use CLI to browse Hub manifests, create a specific Action for a given Interface and retrieve the output. CLI communicates with our Gateway via GraphQL calls, same as the UI (Capact Dashboard). You can read more in the [E2E Architecture](/docs/next/architecture/e2e-architecture) document.
 
 However, a more important question is, how did we change the output message?
+
+<div className="line-numbers">
 
 ```yaml {4-7,12} title="Implementation Manifest"
 spec:
@@ -307,6 +309,8 @@ spec:
         command: [ sh, -c ]
         args: [ "cowsay < /tmp/message.yaml" ]
 ```
+
+</div>
 
 The snippet above shows the most important parts of the Implementation manifest. In lines **4-7**, we declare the import, which is later used in steps. In line **12**, we use **capact-action** to make a dynamic step with a given Interface.
 
