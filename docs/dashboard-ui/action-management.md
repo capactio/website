@@ -21,22 +21,22 @@ This document describes how to manage Actions from the Capact Dashboard UI.
 
     ![Interfaces](./assets/hub-interfaces.png)
 
-    - You can toggle list/card view using the icons (1) in right top side.
+    - You can toggle list/card view using the icons (1) on the right top side.
     - Create Action for a given Interface using the **Create Action** link (2).
 
-1. If the selected Interface require input parameters, you will be asked to provide them.
+1. If the selected Interface requires input parameters, you will be asked to provide them.
 
     ![InputParameters](./assets/action-create-params.png)
     
     Fill the form with input parameters for Interface, and click **Next**.
 
-1. Some Interfaces require input TypeInstances.
+1. If the selected Interface requires input TypeInstances, you will be asked to provide them.
 
     ![TypeInstances](./assets/action-create-tis.png)
 
     Provide all required input TypeInstances and click **Next**.
 
-1. See the Action summary before creating it.
+1. Verify the Action details on the Action Summary.
 
     ![Summary](./assets/action-create-summary.png)
 
@@ -63,7 +63,7 @@ Then you will be navigated to the Action details view, where you can display all
 
 ### Run Action
 
-To run a given Action, click the **Run** button shown. The button is enabled only if Action is runnable, that is, in the "Ready to Run" state.
+To run a given Action, click the **Run** button. The button is enabled only if Action is runnable, that is, in the "Ready to Run" state.
 
 ![Action run](./assets/action-details-buttons.png)
 

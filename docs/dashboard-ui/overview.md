@@ -6,7 +6,7 @@ sidebar_position: 1
 
 Dashboard is a convenient, web-based UI for managing Capact resources. It comes as a built-in Capact component, enabled by default.
 
-> **NOTE:** Capact Dashboard is still at an early stage of development and have a basic set of features. Over time it will become more powerful, and our documentation will be updated to describe how it can be used as a replacement for CLI.
+> **NOTE:** Capact Dashboard is still at an early stage of development and has a basic set of features. Over time it will become more powerful, and our documentation will be updated to describe how it can be used as an alternative for CLI.
 
 ## Prerequisites
 
