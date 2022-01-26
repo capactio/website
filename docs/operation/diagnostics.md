@@ -181,7 +181,7 @@ To check the logs since a given time, use the `--since-time` flag, for example:
   ...
   ```
 
-- [Check if manifest source is correct](../example/public-hub-content.mdx#check-the-hub-manifest-source).   
+- [Check if manifests sources are correct](../example/public-hub-content.mdx#check-the-hub-manifests-sources).
 
 ## Local Hub
 

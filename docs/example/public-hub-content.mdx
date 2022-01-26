@@ -7,12 +7,12 @@ This document describes how to manage manifests in Public Hub.
 - `populator` installed from a [Capact release](https://github.com/capactio/capact/releases).
 - [Capact CLI](../cli/getting-started.mdx#install) or [Helm v3](https://helm.sh/docs/intro/install/) installed.
 
-## Check the Hub manifest source
+## Check the Hub manifests sources
 
-To check the Public Hub manifest source, run:
+To check the Public Hub manifests sources, run:
 
 ```bash
-kubectl -n capact-system get deploy capact-hub-public -o=jsonpath='{$.spec.template.spec.containers[?(@.name=="hub-public-populator")].env[?(@.name=="MANIFESTS_PATH")].value}'
+kubectl -n capact-system get deploy capact-hub-public -o=jsonpath='{$.spec.template.spec.containers[?(@.name=="hub-public-populator")].env[?(@.name=="MANIFESTS_SOURCES")].value}'
 ```
 
 The empty response means that the `populator` sidecar is not enabled and manifests are not synchronized into Public Hub automatically.
@@ -44,7 +44,7 @@ export SOURCE_REPO_URL="{url}" # e.g. github.com/capactio/hub-manifests
 # The git ref to checkout. It can point to a commit SHA, a branch name, or a tag.
 export SOURCE_REPO_REF="{ref}" # e.g. main
 
-capact install --capact-overrides="hub-public.populator.enabled=true,hub-public.populator.manifestsLocation.repository=${SOURCE_REPO_URL},hub-public.populator.manifestsLocation.branch=${SOURCE_REPO_REF}"
+capact install --capact-overrides="hub-public.populator.enabled=true,hub-public.populator.manifestsLocations[0].repository=${SOURCE_REPO_URL},hub-public.populator.manifestsLocations[0].branch=${SOURCE_REPO_REF}"
 ```
 
 </TabItem>
@@ -58,7 +58,7 @@ export SOURCE_REPO_REF="{ref}" # e.g. main
 # The Base64 encoded private ssh key used by the populator to download manifests. It needs the read-only access.
 export SOURCE_SSH_KEY="{key}"
 
-capact install --capact-overrides="hub-public.populator.enabled=true,hub-public.populator.manifestsLocation.repository=${SOURCE_REPO_URL},hub-public.populator.manifestsLocation.branch=${SOURCE_REPO_REF},hub-public.populator.manifestsLocation.sshKey=${SOURCE_SSH_KEY}"
+capact install --capact-overrides="hub-public.populator.enabled=true,hub-public.populator.manifestsLocations[0].repository=${SOURCE_REPO_URL},hub-public.populator.manifestsLocations[0].branch=${SOURCE_REPO_REF},hub-public.populator.manifestsLocations[0].sshKey=${SOURCE_SSH_KEY}"
 ```
 
 </TabItem>
@@ -67,7 +67,7 @@ capact install --capact-overrides="hub-public.populator.enabled=true,hub-public.
 Use embedded Hub manifests for a given release:
 
 ```bash
-capact install --capact-overrides="hub-public.populator.manifestsLocation.local=true"
+capact install --capact-overrides="hub-public.populator.useEmbeddedSourceOnly=true"
 ```
 
 </TabItem>
@@ -93,7 +93,7 @@ export SOURCE_REPO_URL="{url}" # e.g. github.com/capactio/hub-manifests
 export SOURCE_REPO_REF="{ref}" # e.g. main
 
 helm repo add capactio https://storage.googleapis.com/capactio-stable-charts
-helm upgrade capact --version {VERSION} capactio/capact -n capact-system --reuse-values --set hub-public.populator.enabled=true --set hub-public.populator.manifestsLocation.repository=${SOURCE_REPO_URL} --set hub-public.populator.manifestsLocation.branch=${SOURCE_REPO_REF}
+helm upgrade capact --version {VERSION} capactio/capact -n capact-system --reuse-values --set hub-public.populator.enabled=true --set hub-public.populator.manifestsLocations[0].repository=${SOURCE_REPO_URL} --set hub-public.populator.manifestsLocations[0].branch=${SOURCE_REPO_REF}
 ```
 
 </TabItem>
@@ -108,7 +108,7 @@ export SOURCE_REPO_REF="{ref}" # e.g. main
 export SOURCE_SSH_KEY="{key}"
 
 helm repo add capactio https://storage.googleapis.com/capactio-stable-charts
-helm upgrade capact --version {VERSION} capactio/capact -n capact-system --reuse-values --set hub-public.populator.enabled=true --set hub-public.populator.manifestsLocation.repository=${SOURCE_REPO_URL} --set hub-public.populator.manifestsLocation.branch=${SOURCE_REPO_REF} --set hub-public.populator.manifestsLocation.sshKey=${SOURCE_SSH_KEY}
+helm upgrade capact --version {VERSION} capactio/capact -n capact-system --reuse-values --set hub-public.populator.enabled=true --set hub-public.populator.manifestsLocations[0].repository=${SOURCE_REPO_URL} --set hub-public.populator.manifestsLocations[0].branch=${SOURCE_REPO_REF} --set hub-public.populator.manifestsLocations[0].sshKey=${SOURCE_SSH_KEY}
 ```
 
 </TabItem>
@@ -118,7 +118,7 @@ Use embedded Hub manifests for a given release:
 
 ```bash
 helm repo add capactio https://storage.googleapis.com/capactio-stable-charts
-helm upgrade capact --version {VERSION} capactio/capact -n capact-system --reuse-values --set hub-public.populator.manifestsLocation.local=true
+helm upgrade capact --version {VERSION} capactio/capact -n capact-system --reuse-values --set hub-public.populator.useEmbeddedSourceOnly=true
 ```
 
 </TabItem>
@@ -168,10 +168,30 @@ helm upgrade capact --version {VERSION} capactio/capact -n capact-system --reuse
 3. Execute `populator`:
 
    ```bash
-    APP_JSONPUBLISHADDR=http://{your_ip_address} populator register ocf-manifests {PATH_TO_DIR_WITH_MANIFESTS}
+    APP_JSON_PUBLISH_ADDR=http://{your_ip_address} populator register ocf-manifests --source {PATH_TO_DIR_WITH_MANIFESTS}
    ```
 
    >**NOTE**: More information about using `populator`, can be found in [`populator_register-ocf-manifests.md`](https://github.com/capactio/capact/blob/main/cmd/populator/docs/populator_register-ocf-manifests.md).
+
+## Using multiple manifest sources
+
+You can provide multiple manifest sources by setting overrides using different indexes of the `hub-public.populator.manifestsLocations`.
+For example, for a fresh Capact installation, provide these values as the  `--capact-overrides` flag value:
+
+>**NOTE**: All manifest source locations must contain manifests with unique paths. In case of a path conflict, the Populator will fail before populating the Public Hub database.
+
+```bash
+# First git repository URL
+export SOURCE_REPO_1_URL="{url}" # e.g. github.com/capactio/hub-manifests
+# The git ref to checkout. It can point to a commit SHA, a branch name, or a tag.
+export SOURCE_REPO_1_REF="{ref}" # e.g. main
+
+# Second git repository URL
+export SOURCE_REPO_2_URL="{url}" # e.g. git@example.com/extra-manifests-repo.git
+export SOURCE_REPO_2_REF="{ref}" # e.g. main
+
+capact install --capact-overrides="hub-public.populator.enabled=true,hub-public.populator.manifestsLocations[0].repository=${SOURCE_REPO_1_URL},hub-public.populator.manifestsLocations[0].branch=${SOURCE_REPO_1_REF},hub-public.populator.manifestsLocations[1].repository=${SOURCE_REPO_2_URL},hub-public.populator.manifestsLocations[1].branch=${SOURCE_REPO_2_REF}"
+```
 
 ## Submit manifest to the community repository
 

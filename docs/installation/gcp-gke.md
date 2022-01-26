@@ -230,19 +230,3 @@ terraform -chdir=hack/ci/terraform/ destroy
 ```
 
 Additionally, you can remove the Google DNS Zone if not needed. In the **Network** section navigate to **Network Services**, click **Cloud DNS**, select your zoned and click trash icon.
-
-
-### Change the source of Hub manifests
-
-By default, the Hub manifests are synchronized with the `manifests` directory from the `capact` repository on a specific release branch. You can change that by overriding **MANIFEST_PATH** environment variable for **hub-public** Deployment.
-     
-For example, to use the `main` branch as a source of Hub manifests, run:
-   
-```bash
-export SSH_KEY="LS0tLS1CRUdJTiBPUEVOU1NIIFBSSVZBVEUgS0VZLS0tLS0KYjNCbGJuTnphQzFyWlhrdGRqRUFBQUFBQkc1dmJtVUFBQUFFYm05dVpRQUFBQUFBQUFBQkFBQUFNd0FBQUF0emMyZ3RaVwpReU5UVXhPUUFBQUNEUXhvRUVSTUx0K2E2Ym9yUXdhTTJuak4vL2hqMDZSQTMyRDBuVmlNSnEzd0FBQUpnd2ZrS1hNSDVDCmx3QUFBQXR6YzJndFpXUXlOVFV4T1FBQUFDRFF4b0VFUk1MdCthNmJvclF3YU0ybmpOLy9oajA2UkEzMkQwblZpTUpxM3cKQUFBRUIybEFhUDVzNG9qRWw0UzlTSU5xbTk0YU1OaXdZWWhpdTJtaHpqS3hUVmE5REdnUVJFd3UzNXJwdWl0REJvemFlTQozLytHUFRwRURmWVBTZFdJd21yZkFBQUFFblJsWVcwdFpHVjJRR05oY0dGamRDNXBid0VDQXc9PQotLS0tLUVORCBPUEVOU1NIIFBSSVZBVEUgS0VZLS0tLS0K"
-export BRANCH_NAME=main
-kubectl set env deployment/capact-hub-public -n capact-system --containers="hub-public-populator" MANIFESTS_PATH="git@github.com:capactio/hub-manifests.git?sshkey=${SSH_KEY}&ref=${BRANCH_NAME}"
-```
-
-> **NOTE:** The `sshkey` parameter is a Base64 encoded private key used by populator to download manifests. It has read only access.
-> **NOTE:** Populator uses [go-getter](https://github.com/hashicorp/go-getter) so different sources are supported e.g. S3, GCS, etc.

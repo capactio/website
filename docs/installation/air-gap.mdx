@@ -140,7 +140,7 @@ curl -Lo core.capact.io_actions.yaml https://raw.githubusercontent.com/capactio/
 2. Once you have your local Kubernetes cluster set up, install Capact with the following command:
 
 	 ```bash
-	 capact install --version ${CAPACT_VERSION} --helm-repo local-charts --crd ./core.capact.io_actions.yaml --capact-overrides="hub-public.populator.manifestsLocation.local=true"
+	 capact install --version ${CAPACT_VERSION} --helm-repo local-charts --crd ./core.capact.io_actions.yaml --capact-overrides="hub-public.populator.useEmbeddedSourceOnly=true"
 	 ```
 
    Wait for the command execution to finish.
