@@ -8,19 +8,38 @@ This document describes Capact release process.
 
 ## Prerequisites
 
-- Admin role on the `capact`, `hub-manifests` and `website` repositories.
-- Disabled branch protection rules for all repositories. This allows the release jobs to commit directly to `main` and release branches.
+1. For **all** of the following repositories:
 
-    > **NOTE:** Do not forget to re-enable them after creating a release.
+    - [`capactio/capact`](https://github.com/capactio/capact)
+    - [`capactio/hub-manifests`](https://github.com/capactio/hub-manifests)
+    - [`capactio/dashboard`](https://github.com/capactio/dashboard)
+    - [`capactio/website`](https://github.com/capactio/website)
 
-- An GitHub Environment named `Release` in [`capactio/capact`](https://github.com/capactio/capact), [`capactio/hub-manifests`](https://github.com/capactio/hub-manifests) and [`capactio/website`](https://github.com/capactio/website) repositories with the following secret set:
-    - `GH_PAT` — GitHub personal access token. Make sure that it has selected `repo` and `write:packages` scopes. Must be in format: `"<username>:<PAT>"`
-- In GitHub Environment named `Release` in [`capactio/capact`](https://github.com/capactio/capact) repository add the following secret:
-    - `GCS_CREDS` — Base64-encoded Google Cloud Platform credentials in JSON format to access Google Cloud Storage for binary and chart releases. Make sure that it has `storage.objects.create` permission.
+    make sure all of the following prerequisites are met:
+
+    - Admin role for a given repository.
+    - Disabled branch protection rules. This allows the release jobs to commit directly to `main` and release branches.
+    - An GitHub Environment named `Release` in a given repository with the following secret set:
+        - `GH_PAT` — GitHub personal access token. Make sure that it has selected `repo` and `write:packages` scopes. Must be in format: `<username>:<PAT>`
+
+1. Moreover, there are additional prerequisites for the [`capactio/capact`](https://github.com/capactio/capact) repository:
+
+    - In GitHub Environment named `Release`, add the following secret:
+        - `GCS_CREDS` — Google Cloud Platform credentials in JSON format to access Google Cloud Storage for binary and chart releases. Make sure that it has `storage.objects.create` permission.
 
 ## Steps
 
 Use [Semantic Versioning 2.0.0](https://semver.org/spec/v2.0.0.html) to specify the next Capact release.
+
+### Release Dashboard
+
+The release of Dashboard is automated and done using a GitHub Action workflow.
+
+1. Open the [Make release](https://github.com/capactio/dashboard/actions/workflows/make-release.yaml) workflow.
+1. Click `Run workflow` and depending on your scenario:
+   - if making a major/minor release from `main`, select the `main` branch and put the version in SemVer, e.g. `0.5.0`,
+   - if making a patch release from a release branch, select the given release branch and put the version in SemVer, e.g. `0.5.1`.
+1. Click `Run workflow` to start the release workflow.
 
 ### Release Capact container images and binaries
 
@@ -30,19 +49,24 @@ The release of Capact container images and binaries is automated and done using 
 1. Click `Run workflow` and depending on your scenario:
    - if making a major/minor release from `main`, select the `main` branch and put the version in SemVer, e.g. `0.5.0`,
    - if making a patch release from a release branch, select the given release branch and put the version in SemVer, e.g. `0.5.1`.
+   - provide Dashboard image tag from a [`capactio/dashboard`](https://github.com/capactio/dashboard) release build.
 1. Click `Run workflow` to start the release workflow.
 
 The workflow will prepare the release branch, tag the appropriate commit and create a GitHub Release. [`gren`](https://github.com/github-tools/github-release-notes) is used to create the release notes from merged pull requests.
 
-> *NOTE:* After the release is complete consider removing the `GH_PAT` from the Release environment.
-
-### Prepare Hub for release 
+### Release Hub manifests 
 
 The release of Hub Manifests is automated and done using a GitHub Action workflow.
 
 1. Open the [Make release](https://github.com/capactio/hub-manifests/actions/workflows/make-release.yaml) workflow.
-1. Click `Run workflow` and put the version parameter and the runner image tag from a [`capactio/capact`](https://github.com/capactio/capact) build.
+1. Click `Run workflow` and put the version parameter and the runner image tag from a [`capactio/capact`](https://github.com/capactio/capact) release build.
 1. Click `Run workflow` to start the release workflow.
+
+### Validate the release
+
+1. Install Capact locally from the version you've just released.
+1. Run one of our manifests, such as Mattermost installation. Make sure it passes.
+1. Edit the draft release with key highlights and publish it on [`capact` Releases](https://github.com/capactio/capact/releases) page.
 
 ### Release documentation
 
@@ -54,3 +78,21 @@ If you release a new major or minor Capact version, follow these steps:
 1. Click `Run workflow` to start the release workflow.
 
 To read more about documentation versioning, see the [Versioning](https://docusaurus.io/docs/versioning) page on the Docusaurus website.
+
+### Cleanup
+
+1. For **all** of the following repositories:
+
+    - [`capactio/capact`](https://github.com/capactio/capact)
+    - [`capactio/hub-manifests`](https://github.com/capactio/hub-manifests)
+    - [`capactio/dashboard`](https://github.com/capactio/dashboard)
+    - [`capactio/website`](https://github.com/capactio/website)
+
+    perform the following steps:
+
+    - Reenable `main` and `release-*` branch protection rules
+    - Remove `GH_PAT` secret from Release environments
+
+1. Additionally, for the [`capactio/capact`](https://github.com/capactio/capact) repository, perform the following steps:
+
+    - Remove `GCS_CREDS` secret from Release environments    
