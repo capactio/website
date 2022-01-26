@@ -13,19 +13,18 @@ Use Capact CLI to create a local Kubernetes cluster and install Capact on it.
 
 ### CPU and memory requirements
 
-Capact consists of multiple components, which you can find in [`deploy/kubernetes/charts`](https://github.com/capactio/capact/tree/main/deploy/kubernetes/charts).
+Capact consists of multiple components, which you can find in [`deploy/kubernetes/charts`](https://github.com/capactio/capact/tree/main/deploy/kubernetes/charts). Make sure that Docker has enough resources to install Capact properly.
 
-One of the components is Neo4j. Unfortunately, its usage, significantly increases CPU and memory consumption. Due to this fact, you need to make sure that Docker has enough resource to install Capact properly.
+#### Minimal:
+- 2CPUs
+- 4GB
 
-Our recommendation is:
-- Minimal:
-  - 2CPUs
-  - 4GB
-- Recommended:
-  - 4CPUs
-  - 8GB
+#### Recommended:
+- 4CPUs
+- 8GB
 
-### Docker configuration
+:::note
+While on Linux Docker runs natively, being able to use all CPU and memory if needed, on macOS you need to configure resources manually for Docker virtual machine.
 
 Please check the [Docker manual](https://docs.docker.com/desktop/mac/#resources) in order to learn how to configure CPU and memory.
 
@@ -34,8 +33,7 @@ Please check the [Docker manual](https://docs.docker.com/desktop/mac/#resources)
 ![docker-settings](./assets/docker-settings.png)
 
 </div>
-
-
+:::
 
 ## Create local Kubernetes cluster
 
@@ -77,10 +75,10 @@ You can customize the behavior with additional flags. See all the options in the
 
 ## Install Capact
 
-Once you have your local Kubernetes cluster set up, install Capact. You can choose from two types of release channels: **Stable** and **Latest**:
+Once you have your local Kubernetes cluster set up, install Capact. You can choose from two types of release channels:
 
-- The **Stable** channel refers to the official [Capact releases](https://github.com/capactio/capact/releases).
-- The **Latest** channel refers to the latest successful build from the commit on the [Capact repository `main` branch](https://github.com/capactio/capact/commits/main).
+- **Stable** - refers to the official [Capact releases](https://github.com/capactio/capact/releases).
+- **Latest** - refers to the latest successful build from the commit on the [Capact repository `main` branch](https://github.com/capactio/capact/commits/main).
 
 :::tip
 By default all Capact components are installed. You can disable monitoring installation to reduce time and resource consumption.
@@ -128,6 +126,9 @@ Configure Capact CLI to connect to your fresh local Capact installation. Follow 
 
 To remove your local Kubernetes cluster created in the [Create local Kubernetes cluster](#create-local-kubernetes-cluster) section, run the following command:
 
+:::danger
+This command deletes the local cluster with all data, including history of executed Actions and created TypeInstances. Before running it, make sure you cleaned up all external resources (e.g. managed PostgreSQL databases) based on the TypeInstance data.
+:::
 
 <Tabs
 groupId="ref"
@@ -151,7 +152,3 @@ capact environment delete k3d
 
 </TabItem>
 </Tabs>
-
-:::note
-This command deletes the local cluster with all data, including history of executed Actions and created TypeInstances. Make sure you cleaned up all external resources (e.g. managed PostgreSQL databases) based on the TypeInstance data.
-:::
