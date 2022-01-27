@@ -8,6 +8,7 @@
 // https://docusaurus.io/docs/api/plugins/@docusaurus/plugin-client-redirects
 
 const versions = [
+  "0.6",
   "0.5",
   "0.4",
   "", // latest
@@ -55,6 +56,7 @@ function generateDocsRedirectsForVersion(version) {
       to: `${toPrefix}/getting-started`,
       versions: {
         0.5: true,
+        0.6: true,
         next: true,
       },
     },
@@ -64,6 +66,7 @@ function generateDocsRedirectsForVersion(version) {
       versions: {
         0.4: true,
         0.5: true,
+        0.6: true,
         next: true,
       },
     },
@@ -73,6 +76,7 @@ function generateDocsRedirectsForVersion(version) {
       versions: {
         0.4: true,
         0.5: true,
+        0.6: true,
         next: true,
       },
     },
@@ -82,6 +86,7 @@ function generateDocsRedirectsForVersion(version) {
       versions: {
         0.4: true,
         0.5: true,
+        0.6: true,
         next: true,
       },
     },
@@ -91,6 +96,7 @@ function generateDocsRedirectsForVersion(version) {
       versions: {
         0.4: true,
         0.5: true,
+        0.6: true,
         next: true,
       },
     },
@@ -100,6 +106,7 @@ function generateDocsRedirectsForVersion(version) {
       versions: {
         0.4: true,
         0.5: true,
+        0.6: true,
         next: true,
       },
     },
@@ -109,6 +116,7 @@ function generateDocsRedirectsForVersion(version) {
       versions: {
         0.4: true,
         0.5: true,
+        0.6: true,
         next: true,
       },
     },
@@ -118,6 +126,7 @@ function generateDocsRedirectsForVersion(version) {
       versions: {
         0.4: true,
         0.5: true,
+        0.6: true,
         next: true,
       },
     },
@@ -127,6 +136,7 @@ function generateDocsRedirectsForVersion(version) {
       versions: {
         0.4: true,
         0.5: true,
+        0.6: true,
         next: true,
       },
     },
@@ -134,6 +144,7 @@ function generateDocsRedirectsForVersion(version) {
       from: `${fromPrefix}/dashboard-ui`,
       to: `${toPrefix}/dashboard-ui/overview`,
       versions: {
+        0.6: true,
         next: true,
       },
     },
