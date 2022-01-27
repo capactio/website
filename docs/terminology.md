@@ -6,7 +6,7 @@ sidebar_position: 3
 This document lists and explains all terms used through the Capact documentation.
 
 > There are only two hard things in Computer Science: cache invalidation and naming things.
-> 
+>
 > -- Phil Karlton
 
 ## Common terms
@@ -21,7 +21,7 @@ Task that the Engine schedules, and the Runner executes. Action is usually in a 
 
 ### Runner
 
-Action, which handles execution of other Action. Runner is usually defined in form of Interface and Implementation. 
+Action, which handles execution of other Action. Runner is usually defined in form of Interface and Implementation.
 
 There is also a built-in Runner, which is built-in into platform-specific Engine implementation. It is defined with only abstract Interface and doesn't have Implementation manifest.
 
@@ -47,5 +47,13 @@ There are the following entities in the system:
 - [Interface](https://github.com/capactio/capact/tree/main/ocf-spec/0.0.1/README.md#interface)
 - [RepoMetadata](https://github.com/capactio/capact/tree/main/ocf-spec/0.0.1/README.md#repo-metadata)
 - [Type](https://github.com/capactio/capact/tree/main/ocf-spec/0.0.1/README.md#type)
+- [TypeInstance](#typeinstance)
 - [Vendor](https://github.com/capactio/capact/tree/main/ocf-spec/0.0.1/README.md#vendor)
 
+### TypeInstance
+
+Capact is strongly typed, and all objects must be described with JSON Schema. An actual object of a **Type** is called a **TypeInstance**. Data stored in an object MUST be valid against JSON Schema from referenced Type.
+
+:::note
+In the future, details about health and metrics of a given TypeInstance will be attached to it. Currently, this functionality is not implemented. To learn more, see the [**"Extend TypeInstance with instrumentation and metrics"**](https://github.com/capactio/capact/issues/513) issue.
+:::
