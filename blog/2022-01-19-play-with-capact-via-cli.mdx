@@ -39,10 +39,10 @@ For this blog post, we will use Capact CLI. However, the described scenario can 
 
 In 5 minutes, by running examples from this blog post, you will learn about the following Capact concepts:
 
-- [Interface](https://github.com/capactio/capact/blob/main/ocf-spec/0.0.1/README.md#interface)—provides an option to abstract Implementations.
-- [Implementation](https://github.com/capactio/capact/blob/main/ocf-spec/0.0.1/README.md#implementation)—defines the actual workflow that is executed.
-- [Attribute](https://github.com/capactio/capact/blob/main/ocf-spec/0.0.1/README.md#attribute)—provides an option to _tag_ manifests. Today we will use it to select a specific Implementation.
-- [Type and TypeInstance](https://github.com/capactio/capact/blob/main/ocf-spec/0.0.1/README.md#type)—provide a combined feature, where Type holds the schema and TypeInstance the _instance_ for the Type.
+- [Interface](/docs/terminology#interface)—provides an option to abstract Implementations.
+- [Implementation](/docs/terminology#implementation)—defines the actual workflow that is executed.
+- [Attribute](/docs/terminology#attribute)—provides an option to _tag_ manifests. Today we will use it to select a specific Implementation.
+- [Type](/docs/terminology#type) and [TypeInstance](/docs/terminology#typeinstance)—provide a combined feature, where Type holds the schema and TypeInstance the _instance_ for the Type.
 - [Action](/docs/terminology#action)—triggers Engine to render and run a given Interface.
 - [Policy](/docs/feature/policies/overview)—impacts the render process to select desired Implementations.
 
@@ -52,7 +52,7 @@ Here we only briefly describe each part, but I encourage you to take a deeper lo
 
 ### Prerequisites
 
-* [Capact CLI](docs/cli/getting-started#install) at least v0.6.0
+* [Capact CLI](/docs/cli/getting-started#install) at least v0.6.0
 * [Capact cluster](/docs/installation/) at least v0.6.0
 * **(Optional)** [`kubectl`](https://kubernetes.io/docs/tasks/tools/install-kubectl/)
 * [`jq`](https://stedolan.github.io/jq/download/)
