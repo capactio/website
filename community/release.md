@@ -66,7 +66,7 @@ The release of Hub Manifests is automated and done using a GitHub Action workflo
 
 1. Install Capact locally from the version you've just released.
 1. Run one of our manifests, such as Mattermost installation. Make sure it passes.
-1. Edit the draft release with key highlights and publish it on [`capact` Releases](https://github.com/capactio/capact/releases) page.
+1. Edit the draft release with key highlights and publish it on the [`capact` Releases](https://github.com/capactio/capact/releases) page.
 
 ### Release documentation
 
@@ -78,6 +78,23 @@ If you release a new major or minor Capact version, follow these steps:
 1. Click `Run workflow` to start the release workflow.
 
 To read more about documentation versioning, see the [Versioning](https://docusaurus.io/docs/versioning) page on the Docusaurus website.
+
+### Further manual steps
+
+1. For the [`capactio/website`](https://github.com/capactio/website) repository: Update announcement bar.
+    1. Create pull request with announcement banner update (`themeConfig.announcementBar` in the [`docusaurus.config.js`](https://github.com/capactio/website/blob/main/docusaurus.config.js) file).
+    1. Get review from any code owner and merge it.
+1. For the [`capactio/capact`](https://github.com/capactio/capact) repository: Archive images from Helm charts and add to the GitHub release.
+    1. Check out the release branch for the release you created.
+    1. Make sure you track `upstream` release branch and you are on the latest commit.
+    1. Run the following command:
+        ```bash
+        CAPACT_VERSION={version} # e.g. 0.5.0
+        capact alpha archive-images helm -v --version ${CAPACT_VERSION} -o ./capact-images-amd64.tar.gz --compress gzip
+        ```
+    1. Once the archive is ready to upload, navigate to the [`capact` Releases](https://github.com/capactio/capact/releases) page and edit your release.
+    1. Upload the archive as another attachment to the release and click **Update release** button.
+1. Share the news on our Slack and social media.
 
 ### Cleanup
 
