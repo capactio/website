@@ -12,26 +12,29 @@ tags:
 - kubernetes
 - cloud-native
 - dry
+- getting-started
+- cli
 ---
 
-Our first blog post focused strongly on **_why_**. Now it's time for **_how_**. Although, there are many ways to [get started with Capact](/docs/next/getting-started), today we will focus on your perspective as a
-Capact User.
+Our first blog post focused strongly on **_why_**—why we created Capact, what's the general concept behind it. Now it's time for showing **_how_**—how you can use it.
+
+Although, there are many ways to [get started with Capact](/docs/getting-started), today we will focus on your perspective as a Capact User.
 
 The recommended way to try out Capact quickly is to set up a local environment.
 
 import { GetStartedTerminal } from '@site/src/components/homepage/GetStartedTerminal';
 
-<GetStartedTerminal latest="true"/>
+<GetStartedTerminal />
 <br />
 
-Detailed instructions are already nicely described in our [local installation](/docs/next/installation/local) tutorial. Once you have Capact up and running, we can start!
+Detailed instructions are already nicely described in our [local installation](/docs/installation/local) tutorial. Once you have Capact up and running, we can start!
 
 <!--truncate-->
 
 ### What you will learn
 
 :::info
-For this blog post, we will use Capact CLI. However, the described scenario can also be executed with our [brand-new UI](/docs/next/dashboard-ui/overview)! 😎
+For this blog post, we will use Capact CLI. However, the described scenario can also be executed with our [brand-new UI](/docs/dashboard-ui/overview)! 😎
 :::
 
 In 5 minutes, by running examples from this blog post, you will learn about the following Capact concepts:
@@ -40,12 +43,19 @@ In 5 minutes, by running examples from this blog post, you will learn about the 
 - [Implementation](https://github.com/capactio/capact/blob/main/ocf-spec/0.0.1/README.md#implementation)—defines the actual workflow that is executed.
 - [Attribute](https://github.com/capactio/capact/blob/main/ocf-spec/0.0.1/README.md#attribute)—provides an option to _tag_ manifests. Today we will use it to select a specific Implementation.
 - [Type and TypeInstance](https://github.com/capactio/capact/blob/main/ocf-spec/0.0.1/README.md#type)—provide a combined feature, where Type holds the schema and TypeInstance the _instance_ for the Type.
-- [Action](/docs/next/terminology#action)—triggers Engine to render and run a given Interface.
-- [Policy](/docs/next/feature/policies/overview)—impacts the render process to select desired Implementations.
+- [Action](/docs/terminology#action)—triggers Engine to render and run a given Interface.
+- [Policy](/docs/feature/policies/overview)—impacts the render process to select desired Implementations.
 
-Creating new workflows will be a story for other blog posts.
+Creating new workflows is not the concern of this article, and it will be covered in future blog posts.
 
-Here we only briefly describe each part, but I encourage you to take a deeper look at our [Terminology](/docs/next/terminology) section later.
+Here we only briefly describe each part, but I encourage you to take a deeper look at our [Terminology](/docs/terminology) section later.
+
+### Prerequisites
+
+* [Capact CLI](docs/cli/getting-started#install) at least v0.6.0
+* [Capact cluster](/docs/installation/) at least v0.6.0
+* **(Optional)** [`kubectl`](https://kubernetes.io/docs/tasks/tools/install-kubectl/)
+* [`jq`](https://stedolan.github.io/jq/download/)
 
 ### Scenario
 
@@ -271,11 +281,11 @@ Our example was simplified to a minimum, but you could see that you can:
 
 Capact is also great if you want to chain different tools together and keep the same entry point (UX) but that requires more complex examples. For now, we recommend you to take a look at our other examples described in the [**How can I get involved and learn more?**](#how-can-i-get-involved-and-learn-more) section.
 
-## Behind the wall
+## Behind the CLI
 
-As you saw, you can use CLI to browse Hub manifests, create a specific Action for a given Interface and retrieve the output. CLI communicates with our Gateway via GraphQL calls, same as the UI (Capact Dashboard). You can read more in the [E2E Architecture](/docs/next/architecture/e2e-architecture) document.
+As you saw, you can use CLI to browse Hub manifests, create a specific Action for a given Interface and retrieve the output. CLI communicates with our Gateway via GraphQL calls, same as the UI (Capact Dashboard). You can read more in the [E2E Architecture](/docs/architecture/e2e-architecture) document.
 
-However, a more important question is, how did we change the output message?
+However, a more important question is, how did it happen?
 
 <div className="line-numbers">
 
@@ -322,7 +332,7 @@ As a result, our Engine and, in particular, Argo Renderer has an option to put t
 
 ## How can I get involved and learn more?
 
-The [Getting Started](/docs/next/getting-started) goes into more detail about how to start with Capact and use its more-advanced features. There are also [Rocket.Chat](/docs/next/example/rocketchat-installation) and [Mattermost](/docs/next/example/mattermost-installation) tutorials that we keep up-to-date for you to walk you through using Capact in real cases.
+The [Getting Started](/docs/getting-started) goes into more detail about how to start with Capact and use its more-advanced features. There are also [Rocket.Chat](/docs/example/rocketchat-installation) and [Mattermost](/docs/example/mattermost-installation) tutorials that we keep up-to-date for you to walk you through using Capact in real cases.
 
 We appreciate any input you have about your experience with Capact!
 
