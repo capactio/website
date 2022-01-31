@@ -4,10 +4,6 @@ The following document describes Type entity features.
 
 ## Additional references to parent nodes
 
-:::info
-In the future, this feature will be also available for Attribute.
-:::
-
 Type can contain additional references to other parent nodes. The connection means that the Type becomes a child of the referenced parent nodes. In a result, the Type has multiple parents.
 
 ![Additional references to parent nodes](./assets/type-additional-refs.svg)
@@ -20,13 +16,13 @@ Currently, the feature brings the following benefits:
 
 ### Find Types based on prefix of parent nodes
 
-1. `cap.type.platform.cloud-foundry` references `cap.core.type.platform` parent node:
+1. `cap.type.platform.nomad` references `cap.core.type.platform` parent node:
 
    ```yaml
    # Type manifest
    kind: Type
    metadata:
-      name: cloud-foundry
+      name: nomad
       # (...)
    spec:
       additionalRefs:
@@ -39,18 +35,18 @@ Currently, the feature brings the following benefits:
 
    ```yaml
    - name: "cap.core.type.platform.kubernetes"
-   - name: "cap.type.platform.cloud-foundry"
+   - name: "cap.type.platform.nomad"
    ```
 
 ### Requirements section in Implementation manifest
 
-Type `cap.type.platform.cloud-foundry` can specify additional reference to `cap.core.type.platform` parent node.
+Type `cap.type.platform.nomad` can specify additional reference to `cap.core.type.platform` parent node.
 
 ```yaml
 # Type manifest
 kind: Type
 metadata:
-   name: cloud-foundry
+   name: nomad
    # (...)
 spec:
    additionalRefs:
@@ -58,7 +54,7 @@ spec:
 # (...)
 ```
 
-In that way, the Type `cap.type.platform.cloud-foundry` can be used in the context of any Type with prefix `cap.core.type.platform.*`, such as **requires** property:
+In that way, the Type `cap.type.platform.nomad` can be used in the context of any Type with prefix `cap.core.type.platform.*`, such as **requires** property:
 
 ```yaml
 # Implementation manifest
@@ -70,7 +66,7 @@ spec:
       oneOf:
         - name: kubernetes
           revision: 0.1.0
-        - name: cap.type.platform.cloud-foundry
+        - name: cap.type.platform.nomad
           revision: 0.1.1
 ```
 
