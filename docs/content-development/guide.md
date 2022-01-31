@@ -115,14 +115,14 @@ metadata:
 spec:
   input:
     parameters: # the Interface requires `input-parameters` of Type "cap.type.productivity.mattermost.install-input"
-      input-parameters: 
+      input-parameters:
         typeRef:
           name: cap.type.productivity.mattermost.install-input
           revision: 0.1.0
 
   output:
     typeInstances: # the Interface outputs TypeInstance of Type "cap.type.productivity.mattermost.config"
-      mattermost-config: 
+      mattermost-config:
         typeRef:
           path: cap.type.productivity.mattermost.config
           revision: 0.1.0
@@ -442,7 +442,7 @@ spec:
                                 path: "/"
                                 annotations:
                                   "cert-manager.io/cluster-issuer": letsencrypt
-                                hosts: 
+                                hosts:
                                   - <@ host | default("mattermost.example.com") @>
                                 tls:
                                   - hosts:
@@ -549,13 +549,14 @@ Let's go through the **Implementation** and try to understand, what is happening
 >     name: install-db
 >     capact-when: postgresql == nil
 >     capact-policy:
->       rules:
->         - interface:
->             path: cap.interface.database.postgresql.install
->           oneOf:
->             - implementationConstraints:
->                 path: "cap.implementation.bitnami.postgresql.install
-> ``` 
+>       interface:
+>         rules:
+>           - interface:
+>               path: cap.interface.database.postgresql.install
+>             oneOf:
+>               - implementationConstraints:
+>                   path: "cap.implementation.bitnami.postgresql.install
+> ```
 > You can read more about policies on the [Policy overview](../feature/policies/overview.md) page.
 
 In the next step we are creating a database for the Mattermost server. If you look at the **Interface** definition of [`cap.interface.database.postgresql.create-db`](https://github.com/capactio/hub-manifests/tree/main/manifests/interface/database/postgresql/create-db.yaml), you will see, that it requires a `postgresql` **TypeInstance** of **Type** [`cap.type.database.postgresql.config`](https://github.com/capactio/hub-manifests/tree/main/manifests/type/database/postgresql/config.yaml) and input parameters [`cap.type.database.postgresql.database-input`](https://github.com/capactio/hub-manifests/tree/main/manifests/type/database/postgresql/database-input.yaml), and outputs a `database` **TypeInstance** of **Type** [`cap.type.database.postgresql.database`](https://github.com/capactio/hub-manifests/tree/main/manifests/type/database/postgresql/database.yaml). In the step, we are providing the inputs to the **Interface** via the `.arguments.artifacts` field. We also have to map the output of this step to our output definitions in `additionalOutput` and the implemented **Interface** in the `capact-outputTypeInstances` field.
@@ -599,7 +600,7 @@ After we have the manifests ready, we can start our local Capact environment. Fo
 capact install --capact-overrides=hub-public.populator.enabled=false
 ```
 
-This can take a few minutes. Next, [populate the manifests to Public Hub](../example/public-hub-content.mdx#populate-the-manifests-into-hub). 
+This can take a few minutes. Next, [populate the manifests to Public Hub](../example/public-hub-content.mdx#populate-the-manifests-into-hub).
 
 ## Create and run your Action
 
@@ -609,7 +610,7 @@ Use the Capact CLI to run your Action.
 
    ```bash
    export CAPACT_DOMAIN_NAME={domain_name} # e.g. capact.local
-   ``` 
+   ```
 
 1. Create a file with installation parameters:
 

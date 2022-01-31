@@ -6,7 +6,7 @@ This document describes how to prepare content which uses Terraform Runner.
 
 - [MinIO client](https://min.io/download)
 - [Capact local cluster](../installation/local.mdx)
-    
+
     > **NOTE:** Use `--capact-overrides=hub-public.populator.enabled=false` flag, as you will manually upload your OCF manifests into Hub.
 
 ## MinIO access configuration
@@ -80,7 +80,7 @@ In this example, we have them all already defined for PostgreSQL installation. T
 - [InterfaceGroup](https://github.com/capactio/hub-manifests/tree/main/manifests/interface/database/postgresql.yaml)
 - [Interface](https://github.com/capactio/hub-manifests/tree/main/manifests/interface/database/postgresql/install.yaml)
 - [Implementation](https://github.com/capactio/hub-manifests/blob/main/manifests/implementation/gcp/cloudsql/postgresql/install-0.2.0.yaml). The manifest uses Terraform Runner.
-  
+
   Instead of using GCS as module source, you can use internal MinIO URL, such as `http://argo-minio.argo:9000/terraform/cloudsql/cloudsql.tgz`.
 
 - [Input Type](https://github.com/capactio/hub-manifests/tree/main/manifests/type/database/postgresql/install-input.yaml)
@@ -99,16 +99,17 @@ To make sure the Terraform-based Implementation is selected, you may use additio
 
 ```yaml
    # (...)
-   rules:
-     cap.interface.database.postgresql.install:
-       oneOf:
-         - implementationConstraints:
-             attributes:
-               - path: "cap.attribute.cloud.provider.gcp"
-               - path: "cap.attribute.infra.iac.terraform" # Add this line
-             requires:
-               - path: "cap.type.gcp.auth.service-account"
-           inject:
-            requiredTypeInstances:
-             # (...)
+   interface:
+     rules:
+       cap.interface.database.postgresql.install:
+         oneOf:
+           - implementationConstraints:
+               attributes:
+                 - path: "cap.attribute.cloud.provider.gcp"
+                 - path: "cap.attribute.infra.iac.terraform" # Add this line
+               requires:
+                 - path: "cap.type.gcp.auth.service-account"
+             inject:
+              requiredTypeInstances:
+               # (...)
 ```

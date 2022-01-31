@@ -6,7 +6,7 @@ sidebar_position: 1
 
 ## Introduction
 
-The key Capact feature is dependencies interchangeability. Applications define theirs dependencies by using Interfaces. Policies can be used to control, which dependency Implementation is chosen for an Interface. They allow also to tweak the dependency, by providing additional, Implementation specific parameters. 
+The key Capact feature is dependencies interchangeability. Applications define theirs dependencies by using Interfaces. Policies can be used to control, which dependency Implementation is chosen for an Interface. They allow also to tweak the dependency, by providing additional, Implementation specific parameters.
 
 There are three different policy types:
 - [Global policy](./global-policy.md),
@@ -28,35 +28,38 @@ To specify the Interface, for which the rule is defined, use the `interface` pro
 - Interface with exact revision:
 
     ```yaml
-    rules:
-    - interface:
-        path: cap.interface.database.postgresql.install
-        revision: 0.1.0 # exact revision
-      oneOf:
-        - implementationConstraints:
-            # (...)
+    interface:
+      rules:
+      - interface:
+          path: cap.interface.database.postgresql.install
+          revision: 0.1.0 # exact revision
+        oneOf:
+          - implementationConstraints:
+              # (...)
     ```
 
 - Interface with any revision:
 
     ```yaml
-    rules:
-    - interface:
-        path: cap.interface.database.postgresql.install
-        # any revision
-      oneOf:
-        - implementationConstraints:
-            # (...)
+    interface:
+      rules:
+      - interface:
+          path: cap.interface.database.postgresql.install
+          # any revision
+        oneOf:
+          - implementationConstraints:
+              # (...)
     ```
 - any Interface, using `cap.*` as an Interface path:
-    
+
     ```yaml
-    rules:
-    - interface:
-        path: cap.* # any Interface
-      oneOf:
-        - implementationConstraints:
-            # (...)
+    interface:
+      rules:
+      - interface:
+          path: cap.* # any Interface
+        oneOf:
+          - implementationConstraints:
+              # (...)
     ```
 
 Engine will search for rules for a given Interface in the same order as specified in the list above. If an entry for a given Interface is found, then Engine uses it to fetch Implementations from Hub.
@@ -67,7 +70,7 @@ For every Interface, Cluster Admin can set the order of selected Implementations
 
 You can select Implementations based on the following Implementation constraints:
 
-- `path`, which specifies the exact path for the Implementation. If the Implementation is found, then **any** revision of the Implementation is used. 
+- `path`, which specifies the exact path for the Implementation. If the Implementation is found, then **any** revision of the Implementation is used.
 
     ```yaml
     - interface:
@@ -102,11 +105,11 @@ You can select Implementations based on the following Implementation constraints
             requires:
               - path: "cap.core.type.platform.kubernetes" # any revision
               - path: "cap.type.gcp.auth.service-account"
-                revision: "0.1.0" # exact revision 
+                revision: "0.1.0" # exact revision
     ```
 
 - Empty constraints, which means any Implementation for a given Interface.
-    
+
     ```yaml
     - interface:
         path: cap.interface.database.postgresql.install
@@ -129,17 +132,18 @@ Along with Implementation constraints, Cluster Admin may configure TypeInstances
 This can be helpful, for example, in case you are using Implementations, which are deploying infrastructure on a public cloud (like AWS or GCP) and you want to ensure that everything is deployed in the same account. For example:
 
 ```yaml
-rules:
-  - interface:
-      path: cap.interface.database.postgresql.install 
-    oneOf:
-      - implementationConstraints:
-          requires:
-           - path: "cap.type.gcp.auth.service-account"
-        inject:
-          requiredTypeInstances:
-            - id: 9038dcdc-e959-41c4-a690-d8ebf929ac0c
-              description: "GCP Service Account" # optional
+interface:
+  rules:
+    - interface:
+        path: cap.interface.database.postgresql.install
+      oneOf:
+        - implementationConstraints:
+            requires:
+             - path: "cap.type.gcp.auth.service-account"
+          inject:
+            requiredTypeInstances:
+              - id: 9038dcdc-e959-41c4-a690-d8ebf929ac0c
+                description: "GCP Service Account" # optional
 ```
 
 > **NOTE:** Instructions how to create a TypeInstance using the Capact CLI can be found [here](./../../cli/commands/capact_typeinstance_create.md).
@@ -179,17 +183,18 @@ spec:
 For example, to change the AWS region to `us-east-1` for the AWS RDS for PostgreSQL Implementation, you can provide the following policy:
 
 ```yaml
-rules:
-  - interface:
-      path: cap.interface.database.postgresql.install 
-    oneOf:
-      - implementationConstraints:
-          path: "cap.implementation.aws.rds.postgresql.install"
-        inject:
-          additionalParameters: # Injects additional parameters for the Implementation
-            - name: additional-parameters # Name must match one of the parameter defined under `additionalInput.parameters` in the Implementation
-              value: 
-                region: us-east-1
+interface:
+  rules:
+    - interface:
+        path: cap.interface.database.postgresql.install
+      oneOf:
+        - implementationConstraints:
+            path: "cap.implementation.aws.rds.postgresql.install"
+          inject:
+            additionalParameters: # Injects additional parameters for the Implementation
+              - name: additional-parameters # Name must match one of the parameter defined under `additionalInput.parameters` in the Implementation
+                value:
+                  region: us-east-1
 ```
 
 ### Additional TypeInstance injection
@@ -213,16 +218,17 @@ spec:
 For example, for Mattermost installation, you can provide existing PostgreSQL database using this feature:
 
 ```yaml
-rules:
-  - interface:
-      path: cap.interface.productivity.mattermost.install 
-    oneOf:
-      - implementationConstraints:
-          path: "cap.implementation.mattermost.mattermost-team-edition.install"
-        inject:
-          additionalTypeInstances: # Injects additional parameters for the Implementation
-            - name: postgresql # Name must match one of the parameter defined under `additionalInput.parameters` in the Implementation
-              id: 5077d0e2-95d3-495f-b7b3-f59c99a547fa
+interface:
+  rules:
+    - interface:
+        path: cap.interface.productivity.mattermost.install
+      oneOf:
+        - implementationConstraints:
+            path: "cap.implementation.mattermost.mattermost-team-edition.install"
+          inject:
+            additionalTypeInstances: # Injects additional parameters for the Implementation
+              - name: postgresql # Name must match one of the parameter defined under `additionalInput.parameters` in the Implementation
+                id: 5077d0e2-95d3-495f-b7b3-f59c99a547fa
 ```
 
 ## Modifying policies
