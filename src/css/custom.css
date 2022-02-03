@@ -227,10 +227,6 @@ html[data-theme="dark"] .table-of-contents__link--active code {
   padding-left: var(--ifm-list-left-padding);
 }
 
-.disable-tabs {
-	display: none
-}
-
 .line-numbers .prism-code {
 	counter-reset: line-number;
 }
