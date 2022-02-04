@@ -10,7 +10,7 @@ This document describes how to generate Manifests from existing Helm Charts and 
 - [Capact CLI](../cli/getting-started.mdx#install) at least v0.5.0 installed.
     > **NOTE:** Install the latest Capact CLI version from the `main` branch.
 - Capact cluster. For example, [local instance](../installation/local.mdx).
-    
+
     > **NOTE:** Use `--capact-overrides=hub-public.populator.enabled=false` flag, as you will manually upload your OCF manifests into Hub.
 
 ## Generating Interface
@@ -358,7 +358,7 @@ To test generated manifests you need to:
     cat > /tmp/install-input.yaml << ENDOFFILE
     input-parameters:
       name: redis-test
-    
+
     ENDOFFILE
    ```
 
@@ -377,24 +377,25 @@ To test generated manifests you need to:
      AWS_VPC_ID="{Your VPC ID}"
      AWS_SUBNET_ID="{Your VPC subnet id}"
      cat > /tmp/aws-policy.yaml << ENDOFFILE
-     rules:
-       - interface:
-           path: cap.interface.database.redis.install
-         oneOf:
-         - implementationConstraints:
-             path: "cap.implementation.aws.redis.install"
-           inject:
-             requiredTypeInstances:
-               - id: "${AWS_TI_ID}"
-                 description: "AWS credentials"
-             additionalParameters:
-               - name: additional-parameters
-                 value:
-                   vpc_id: "${AWS_VPC_ID}"
-                   subnet_ids:
-                     - "${AWS_SUBNET_ID}"
-                   number_cache_clusters: 1
-                   node_type: cache.t3.small
+     interface:
+       rules:
+         - interface:
+             path: cap.interface.database.redis.install
+           oneOf:
+           - implementationConstraints:
+               path: "cap.implementation.aws.redis.install"
+             inject:
+               requiredTypeInstances:
+                 - id: "${AWS_TI_ID}"
+                   description: "AWS credentials"
+               additionalParameters:
+                 - name: additional-parameters
+                   value:
+                     vpc_id: "${AWS_VPC_ID}"
+                     subnet_ids:
+                       - "${AWS_SUBNET_ID}"
+                     number_cache_clusters: 1
+                     node_type: cache.t3.small
      ENDOFFILE
      ```
 

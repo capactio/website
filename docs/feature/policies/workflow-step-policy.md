@@ -18,12 +18,13 @@ The following YAML snippet presents an Action step in the Implementation with a 
     name: install-db
     capact-when: postgresql == nil
     capact-policy:
-      rules: # Configures the following behavior for Engine during rendering Action for this step
-        - interface: # Rules for Interface with exact path
-            path: cap.interface.database.postgresql.install
-          oneOf:
-            - implementationConstraints: # Enforces that the cap.implementation.bitnami.postgresql.install is selected
-                path: "cap.implementation.bitnami.postgresql.install"
+      interface:
+        rules: # Configures the following behavior for Engine during rendering Action for this step
+          - interface: # Rules for Interface with exact path
+              path: cap.interface.database.postgresql.install
+            oneOf:
+              - implementationConstraints: # Enforces that the cap.implementation.bitnami.postgresql.install is selected
+                  path: "cap.implementation.bitnami.postgresql.install"
 ```
 
 > **NOTE:** Instead of providing the full Interface path you can use the alias from the Interfaces imported in the Implementation:
@@ -39,8 +40,9 @@ The following YAML snippet presents an Action step in the Implementation with a 
 > ```yaml
 > - - capact-action: postgresql.install
 >     capact-policy:
->       rules:
->         - interface: postgresql.install
+>       interface:
+>         rules:
+>           - interface: postgresql.install
 > ```
 
 > **NOTE:** You cannot inject TypeInstances in the Workflow step policy. Manifests can be used by any Capact installation, and it is not possible to predict the ID a TypeInstance will have in a given Capact environment.
