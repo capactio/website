@@ -20,7 +20,7 @@ The policies are merged and evaluated during Action rendering.
 Policy is defined in a form of YAML. It contains three main features:
 - selecting Implementations based on their constraints,
 - injecting given TypeInstance or additional parameters for Implementation with a set of constraints,
-- selecting TypeInstance backends storage: default backend storage for TypeInstances of a given Type, and TypeInstance injection.
+- selecting TypeInstance backends storage: default backend storage for TypeInstances of a given Type, and backend TypeInstance injection.
 
 ### Definition of rules for TypeInstance
 
@@ -68,7 +68,7 @@ To specify default TypeInstance backend storage, use the `typeInstance` property
   ```
 
 
-- Default backend for all TypeInstances of a Type with a given pattern with specific revision.
+- Default backend for all TypeInstances of a Type with a given path prefix and specific revision.
 
   ```yaml
   interface:
@@ -85,7 +85,7 @@ To specify default TypeInstance backend storage, use the `typeInstance` property
 
   ```
 
-- Default backend for all TypeInstances of a Type with a given pattern in any revision.
+- Default backend for all TypeInstances of a Type with a given path prefix in any revision.
 	:::tip
 	Such rule has a lower priority than the same entry for TypeRef but with `revision` field.
 	:::
@@ -190,6 +190,8 @@ You can select Implementations based on the following Implementation constraints
               - path: "cap.core.type.platform.kubernetes" # any revision
               - path: "cap.type.gcp.auth.service-account"
                 revision: "0.1.0" # exact revision
+              - path: "cap.type.helm.storage" # TypeInstance backend storage
+                revision: "0.1.0" # exact revision
     ```
 
 - Empty constraints, which means any Implementation for a given Interface.
@@ -211,26 +213,40 @@ You can also deny all Implementations for a given Interface with the following s
 
 ### Required TypeInstance injection
 
-Along with Implementation constraints, Cluster Admin may configure TypeInstances, which are downloaded and injected in the Implementation workflow. The prerequisite is that the Implementation must contain matching Type Reference in `spec.requires` property, along with defined `alias` for such requirement.
+Along with Implementation constraints, Cluster Admin or System User may configure TypeInstances, which are downloaded and injected in the Implementation workflow. The prerequisite is that the Implementation must contain matching Type Reference in `spec.requires` property, along with defined `alias` for such requirement.
 
-This can be helpful, for example, in case you are using Implementations, which are deploying infrastructure on a public cloud (like AWS or GCP) and you want to ensure that everything is deployed in the same account. For example:
+This can be helpful at least in two cases:
+- You use Implementations, which are deploying infrastructure on a public cloud (like AWS or GCP) and you want to ensure that everything is deployed in the same account. For example:
+  ```yaml
+  interface:
+    rules:
+      - interface:
+          path: cap.interface.database.postgresql.install
+        oneOf:
+          - implementationConstraints:
+              requires:
+               - path: "cap.type.gcp.auth.service-account"
+            inject:
+              requiredTypeInstances:
+                - id: 9038dcdc-e959-41c4-a690-d8ebf929ac0c
+                  description: "GCP Service Account" # optional
+  ```
 
-```yaml
-interface:
-  rules:
-    - interface:
+- You use Implementations, which requires storing data in delegated storage. For example:
+	```yaml
+  interface:
+    rules:
+      - interface:
         path: cap.interface.database.postgresql.install
       oneOf:
         - implementationConstraints:
-            requires:
-             - path: "cap.type.gcp.auth.service-account"
-          inject:
-            requiredTypeInstances:
-              - id: 9038dcdc-e959-41c4-a690-d8ebf929ac0c
-                description: "GCP Service Account" # optional
-```
-
-> **NOTE:** Instructions how to create a TypeInstance using the Capact CLI can be found [here](./../../cli/commands/capact_typeinstance_create.md).
+          requires:
+            - path: "cap.type.helm.storage"
+        inject:
+          requiredTypeInstances:
+            - id: "31bb8355-10d7-49ce-a739-4554d8a40b63"
+            description: "Helm storage backend"
+	```
 
 The rule defines that Engine should select Implementation, which requires GCP Service Account TypeInstance. To inject the TypeInstance in a proper place, the Implementation must define `alias` for a given requirement:
 
@@ -241,11 +257,20 @@ The rule defines that Engine should select Implementation, which requires GCP Se
         - name: service-account
           alias: gcp-sa # required for TypeInstance injection based on Policy
           revision: 0.1.0
+    cap.core.type.hub.storage:
+      allOf:
+        - name: cap.type.helm.storage
+          alias: helm-storage # required for TypeInstance injection based on Policy
+          revision: 0.1.0
 ```
 
-If the `alias` property is defined for an item from `requires` section, Engine injects a workflow step which downloads a given TypeInstance by ID and outputs it under the `alias`. For this example, in the Implementation workflow, the TypeInstance value is available under `{{workflow.outputs.artifacts.gcp-sa}}`.
+:::info
+Instructions how to create a TypeInstance using the Capact CLI can be found [here](./../../cli/commands/capact_typeinstance_create.md).
+:::
 
-Even if the Implementation satisfies the constraints, and the `alias` is not defined or `inject.typeInstances[].typeRef` cannot be found in the `requires` section, the TypeInstance is not injected in workflow. In this case Engine doesn't return an error.
+If the `alias` property is defined for an item from `requires` section, Engine injects a workflow step which downloads a given TypeInstance by ID and outputs it under the `alias`. For this example, in the Implementation workflow, the TypeInstance value is available under `{{workflow.outputs.artifacts.gcp-sa}}`. Injected storage TypeInstance is also available under `{{workflow.outputs.artifacts.helm-storage}}`, but for `capact-outputTypeInstances[].backend` you must use alias name, in this case `helm-storage`.
+
+Even if the Implementation satisfies the constraints, and the `alias` is not defined or `inject.typeInstances[].typeRef`, the TypeInstance is not injected in workflow. In this case Engine doesn't return an error.
 
 ### Additional parameter injection
 
@@ -338,12 +363,12 @@ The following rules apply, when the Engine merges the policy rules:
 
 ## TypeInstance storage backend priority order
 
-Engine Renderer selects TypeInstance backend in a given order:
+Engine selects TypeInstance backend in a given order:
 
 1. If backend is enforced by Implementation via `spec.requires` section.
    1. Uses backend specified under `inject.requiredTypeInstances` for a given Interface rule. _If not found:_
    2. Uses default specified under `default.inject.requiredTypeInstances` for all Interface Policy. _If not found:_
-   3. Such Implementation is ignored by Engine Renderer as its requirements are not satisfied.
+   3. Such Implementation is ignored by Engine as its requirements are not satisfied.
 2. If not, checks default storage backend for TypeInstance of a given Type specified under `typeInstance` property. Engine tries to find:
    1. Exact match based on Type path and Type revision. _If not found:_
    2. Exact match based only on Type path. _If not found:_
