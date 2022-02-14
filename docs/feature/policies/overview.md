@@ -17,9 +17,93 @@ The policies are merged and evaluated during Action rendering.
 
 ## Syntax
 
-Policy is defined in a form of YAML. It contains two main features:
+Policy is defined in a form of YAML. It contains three main features:
 - selecting Implementations based on their constraints,
-- injecting given TypeInstance or additional parameters for Implementation with a set of constraints.
+- injecting given TypeInstance or additional parameters for Implementation with a set of constraints,
+- selecting TypeInstance backends storage: default backend storage for TypeInstances of a given Type, and TypeInstance injection.
+
+### Definition of rules for TypeInstance
+
+:::info
+This cannot be specified for [Workflow step policy](./workflow-step-policy.md).
+:::
+
+This Policy configures a default backend for TypeInstances of a given Type. This configuration is ignored, when Implementation uses `requires` mechanism to inject a specific backend and uses it directly for uploaded TypeInstance via `capact-outputTypeInstance[].backend` property.
+
+To specify default TypeInstance backend storage, use the `typeInstance` property. There are four different options:
+
+- Default backend for all TypeInstances of a given Type in a specific revision:
+
+    ```yaml
+    interface:
+      rules: [...] # rules for Interfaces
+
+    typeInstance:
+      rules:
+        - typeRef:
+            path: "cap.type.aws.auth.credentials"
+            revision: "0.1.0"
+          backend:
+            id: "31bb8355-10d7-49ce-a739-4554d8a40b63"
+            description: "AWS Secret Manager" # optional
+    ```
+
+- Default backend for all TypeInstances of a given Type in any revision.
+	:::tip
+	Such rule has a lower priority than the same entry for TypeRef but with `revision` field.
+	:::
+
+  ```yaml
+  interface:
+    rules: [...] # rules for Interfaces
+
+  typeInstance:
+    rules:
+      - typeRef:
+          path: "cap.type.aws.auth.credentials"
+          # Property `revision` is not specified, so this rules applies to any revision.
+        backend:
+          id: "00fd161c-01bd-47a6-9872-47490e11f996"
+          description: "Vault" # optional
+  ```
+
+
+- Default backend for all TypeInstances of a Type with a given pattern with specific revision.
+
+  ```yaml
+  interface:
+    rules: [...] # rules for Interfaces
+
+  typeInstance:
+    rules:
+      - typeRef:
+          path: "cap.type.aws.*" # For any Type reference starting with such prefix.
+          revision: "0.1.0"
+        backend:
+          id: "31bb8355-10d7-49ce-a739-4554d8a40b63"
+          description: "AWS Secret Manager" # optional
+
+  ```
+
+- Default backend for all TypeInstances of a Type with a given pattern in any revision.
+	:::tip
+	Such rule has a lower priority than the same entry for TypeRef but with `revision` field.
+	:::
+
+  ```yaml
+  interface:
+    rules: [...] # rules for Interfaces
+
+  typeInstance:
+    rules:
+      - typeRef:
+          path: "cap.type.aws.*" # For any Type reference starting with such prefix.
+          # Property `revision` is not specified, so this rules applies to any revision.
+        backend:
+          id: "31bb8355-10d7-49ce-a739-4554d8a40b63"
+          description: "AWS Secret Manager" # optional
+
+  ```
 
 ### Definition of rules for Interface
 
@@ -251,6 +335,21 @@ The following rules apply, when the Engine merges the policy rules:
 2. If in the merged policy rules, there are two elements in `oneOf`, with the same `implementationConstraints`, then we merge them into a single element:
    - `additionalInput` of the elements are deep merged based on the priority order
    - for both `requiredTypeInstances` and `additionalTypeInstances`, the elements are joined together. If there are two TypeInstances with the same Type Reference, then the one from the higher priority order policy is chosen.
+
+## TypeInstance storage backend priority order
+
+Engine Renderer selects TypeInstance backend in a given order:
+
+1. If backend is enforced by Implementation via `spec.requires` section.
+   1. Uses backend specified under `inject.requiredTypeInstances` for a given Interface rule. _If not found:_
+   2. Uses default specified under `default.inject.requiredTypeInstances` for all Interface Policy. _If not found:_
+   3. Such Implementation is ignored by Engine Renderer as its requirements are not satisfied.
+2. If not, checks default storage backend for TypeInstance of a given Type specified under `typeInstance` property. Engine tries to find:
+   1. Exact match based on Type path and Type revision. _If not found:_
+   2. Exact match based only on Type path. _If not found:_
+   3. Pattern match based on Type path and Type revision. _If not found:_
+   4. Pattern match based only on Type path. _If not found:_
+   5. Such TypeInstances is created without explicit storage backend **ID**. As a result, it is stored in built-in Local Hub storage.
 
 ## Change priority order of the policies
 
