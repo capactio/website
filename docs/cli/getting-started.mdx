@@ -113,7 +113,7 @@ Install Capact CLI binary with `curl`:
 <TabItem value="macos">
 
 ```shell
-curl -Lo capact https://storage.googleapis.com/capactio-binaries/latest/capact-darwin-amd64
+curl -Lo capact https://storage.googleapis.com/capactio-binaries/latest/capact_darwin_amd64/capact
 ```
 
 Copy to binary directory:
@@ -126,7 +126,7 @@ chmod +x capact && mv capact /usr/local/bin/capact
 <TabItem value="linux">
 
 ```shell
-curl -Lo capact https://storage.googleapis.com/capactio-binaries/latest/capact-linux-amd64
+curl -Lo capact https://storage.googleapis.com/capactio-binaries/latest/capact_linux_amd64/capact
 ```
 
 
@@ -140,9 +140,8 @@ chmod +x capact && mv capact /usr/local/bin/capact
 <TabItem value="windows">
 
 ```shell
-curl -Lo capact https://storage.googleapis.com/capactio-binaries/latest/capact-windows-amd64.exe
+curl -Lo capact https://storage.googleapis.com/capactio-binaries/latest/capact_windows_amd64/capact.exe
 ```
-
 </TabItem>
 <TabItem value="docker">
 
@@ -168,7 +167,7 @@ docker run --rm \
 To install a different release version, change the path to point to the desired version and architecture:
 
 ```shell
-curl -Lo capact https://storage.googleapis.com/capactio-binaries/latest/capact-$OS-$ARCH
+curl -Lo capact https://storage.googleapis.com/capactio-binaries/latest/capact_$OS_$ARCH/capact
 ```
 
 </TabItem>
