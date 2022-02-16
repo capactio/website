@@ -49,9 +49,9 @@ To specify default TypeInstance backend storage, use the `typeInstance` property
     ```
 
 - Default backend for all TypeInstances of a given Type in any revision.
-	:::tip
-	Such rule has a lower priority than the same entry for TypeRef but with `revision` field.
-	:::
+  :::tip
+  Such rule has a lower priority than the same entry for TypeRef but with `revision` field.
+  :::
 
   ```yaml
   interface:
@@ -232,7 +232,7 @@ This can be helpful at least in two cases:
                   description: "GCP Service Account" # optional
   ```
 
-- You use Implementations, which requires storing data in delegated storage. For example:
+- You use Implementations, which requires storing data in a given storage backend. For example:
 	```yaml
   interface:
     rules:
@@ -365,16 +365,16 @@ The following rules apply, when the Engine merges the policy rules:
 
 Engine selects TypeInstance backend in a given order:
 
-1. If backend is enforced by Implementation via `spec.requires` section.
-   1. Uses backend specified under `inject.requiredTypeInstances` for a given Interface rule. _If not found:_
-   2. Uses default specified under `default.inject.requiredTypeInstances` for all Interface Policy. _If not found:_
-   3. Such Implementation is ignored by Engine as its requirements are not satisfied.
+1. If backend is enforced by Implementation via `spec.requires` section:
+    1. Uses backend specified under `inject.requiredTypeInstances` for a given Interface rule. _If not found:_
+    2. Uses default specified under `default.inject.requiredTypeInstances` for all Interface Policy. _If not found:_
+    3. Such Implementation is ignored by Engine as its requirements are not satisfied.
 2. If not, checks default storage backend for TypeInstance of a given Type specified under `typeInstance` property. Engine tries to find:
-   1. Exact match based on Type path and Type revision. _If not found:_
-   2. Exact match based only on Type path. _If not found:_
-   3. Pattern match based on Type path and Type revision. _If not found:_
-   4. Pattern match based only on Type path. _If not found:_
-   5. Such TypeInstances is created without explicit storage backend **ID**. As a result, it is stored in built-in Local Hub storage.
+    1. Exact match based on Type path and revision. _If not found:_
+    2. Exact match based only on Type path. _If not found:_
+    3. Pattern match based on Type path and revision. _If not found:_
+    4. Pattern match based only on Type path. _If not found:_
+    5. Such TypeInstances is created without explicit storage backend **ID**. As a result, it is stored in built-in Local Hub storage.
 
 ## Change priority order of the policies
 
