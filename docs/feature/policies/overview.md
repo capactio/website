@@ -17,9 +17,93 @@ The policies are merged and evaluated during Action rendering.
 
 ## Syntax
 
-Policy is defined in a form of YAML. It contains two main features:
+Policy is defined in a form of YAML. It contains three main features:
 - selecting Implementations based on their constraints,
-- injecting given TypeInstance or additional parameters for Implementation with a set of constraints.
+- injecting given TypeInstance or additional parameters for Implementation with a set of constraints,
+- selecting TypeInstance backends storage: default backend storage for TypeInstances of a given Type, and backend TypeInstance injection.
+
+### Definition of rules for TypeInstance
+
+:::info
+This cannot be specified for [Workflow step policy](./workflow-step-policy.md).
+:::
+
+This Policy configures a default backend for TypeInstances of a given Type. This configuration is ignored, when Implementation uses `requires` mechanism to inject a specific backend and uses it directly for uploaded TypeInstance via `capact-outputTypeInstance[].backend` property.
+
+To specify default TypeInstance backend storage, use the `typeInstance` property. There are four different options:
+
+- Default backend for all TypeInstances of a given Type in a specific revision:
+
+    ```yaml
+    interface:
+      rules: [...] # rules for Interfaces
+
+    typeInstance:
+      rules:
+        - typeRef:
+            path: "cap.type.aws.auth.credentials"
+            revision: "0.1.0"
+          backend:
+            id: "31bb8355-10d7-49ce-a739-4554d8a40b63"
+            description: "AWS Secret Manager" # optional
+    ```
+
+- Default backend for all TypeInstances of a given Type in any revision.
+  :::tip
+  Such rule has a lower priority than the same entry for TypeRef but with `revision` field.
+  :::
+
+  ```yaml
+  interface:
+    rules: [...] # rules for Interfaces
+
+  typeInstance:
+    rules:
+      - typeRef:
+          path: "cap.type.aws.auth.credentials"
+          # Property `revision` is not specified, so this rules applies to any revision.
+        backend:
+          id: "00fd161c-01bd-47a6-9872-47490e11f996"
+          description: "Vault" # optional
+  ```
+
+
+- Default backend for all TypeInstances of a Type with a given path prefix and specific revision.
+
+  ```yaml
+  interface:
+    rules: [...] # rules for Interfaces
+
+  typeInstance:
+    rules:
+      - typeRef:
+          path: "cap.type.aws.*" # For any Type reference starting with such prefix.
+          revision: "0.1.0"
+        backend:
+          id: "31bb8355-10d7-49ce-a739-4554d8a40b63"
+          description: "AWS Secret Manager" # optional
+
+  ```
+
+- Default backend for all TypeInstances of a Type with a given path prefix in any revision.
+	:::tip
+	Such rule has a lower priority than the same entry for TypeRef but with `revision` field.
+	:::
+
+  ```yaml
+  interface:
+    rules: [...] # rules for Interfaces
+
+  typeInstance:
+    rules:
+      - typeRef:
+          path: "cap.type.aws.*" # For any Type reference starting with such prefix.
+          # Property `revision` is not specified, so this rules applies to any revision.
+        backend:
+          id: "31bb8355-10d7-49ce-a739-4554d8a40b63"
+          description: "AWS Secret Manager" # optional
+
+  ```
 
 ### Definition of rules for Interface
 
@@ -106,6 +190,8 @@ You can select Implementations based on the following Implementation constraints
               - path: "cap.core.type.platform.kubernetes" # any revision
               - path: "cap.type.gcp.auth.service-account"
                 revision: "0.1.0" # exact revision
+              - path: "cap.type.helm.storage" # TypeInstance backend storage
+                revision: "0.1.0" # exact revision
     ```
 
 - Empty constraints, which means any Implementation for a given Interface.
@@ -127,26 +213,40 @@ You can also deny all Implementations for a given Interface with the following s
 
 ### Required TypeInstance injection
 
-Along with Implementation constraints, Cluster Admin may configure TypeInstances, which are downloaded and injected in the Implementation workflow. The prerequisite is that the Implementation must contain matching Type Reference in `spec.requires` property, along with defined `alias` for such requirement.
+Along with Implementation constraints, Cluster Admin or System User may configure TypeInstances, which are downloaded and injected in the Implementation workflow. The prerequisite is that the Implementation must contain matching Type Reference in `spec.requires` property, along with defined `alias` for such requirement.
 
-This can be helpful, for example, in case you are using Implementations, which are deploying infrastructure on a public cloud (like AWS or GCP) and you want to ensure that everything is deployed in the same account. For example:
+This can be helpful at least in two cases:
+- You use Implementations, which are deploying infrastructure on a public cloud (like AWS or GCP) and you want to ensure that everything is deployed in the same account. For example:
+  ```yaml
+  interface:
+    rules:
+      - interface:
+          path: cap.interface.database.postgresql.install
+        oneOf:
+          - implementationConstraints:
+              requires:
+               - path: "cap.type.gcp.auth.service-account"
+            inject:
+              requiredTypeInstances:
+                - id: 9038dcdc-e959-41c4-a690-d8ebf929ac0c
+                  description: "GCP Service Account" # optional
+  ```
 
-```yaml
-interface:
-  rules:
-    - interface:
+- You use Implementations, which requires storing data in a given storage backend. For example:
+	```yaml
+  interface:
+    rules:
+      - interface:
         path: cap.interface.database.postgresql.install
       oneOf:
         - implementationConstraints:
-            requires:
-             - path: "cap.type.gcp.auth.service-account"
-          inject:
-            requiredTypeInstances:
-              - id: 9038dcdc-e959-41c4-a690-d8ebf929ac0c
-                description: "GCP Service Account" # optional
-```
-
-> **NOTE:** Instructions how to create a TypeInstance using the Capact CLI can be found [here](./../../cli/commands/capact_typeinstance_create.md).
+          requires:
+            - path: "cap.type.helm.storage"
+        inject:
+          requiredTypeInstances:
+            - id: "31bb8355-10d7-49ce-a739-4554d8a40b63"
+            description: "Helm storage backend"
+	```
 
 The rule defines that Engine should select Implementation, which requires GCP Service Account TypeInstance. To inject the TypeInstance in a proper place, the Implementation must define `alias` for a given requirement:
 
@@ -157,11 +257,20 @@ The rule defines that Engine should select Implementation, which requires GCP Se
         - name: service-account
           alias: gcp-sa # required for TypeInstance injection based on Policy
           revision: 0.1.0
+    cap.core.type.hub.storage:
+      allOf:
+        - name: cap.type.helm.storage
+          alias: helm-storage # required for TypeInstance injection based on Policy
+          revision: 0.1.0
 ```
 
-If the `alias` property is defined for an item from `requires` section, Engine injects a workflow step which downloads a given TypeInstance by ID and outputs it under the `alias`. For this example, in the Implementation workflow, the TypeInstance value is available under `{{workflow.outputs.artifacts.gcp-sa}}`.
+:::info
+Instructions how to create a TypeInstance using the Capact CLI can be found [here](./../../cli/commands/capact_typeinstance_create.md).
+:::
 
-Even if the Implementation satisfies the constraints, and the `alias` is not defined or `inject.typeInstances[].typeRef` cannot be found in the `requires` section, the TypeInstance is not injected in workflow. In this case Engine doesn't return an error.
+If the `alias` property is defined for an item from `requires` section, Engine injects a workflow step which downloads a given TypeInstance by ID and outputs it under the `alias`. For this example, in the Implementation workflow, the TypeInstance value is available under `{{workflow.outputs.artifacts.gcp-sa}}`. Injected storage TypeInstance is also available under `{{workflow.outputs.artifacts.helm-storage}}`, but for `capact-outputTypeInstances[].backend` you must use alias name, in this case `helm-storage`.
+
+Even if the Implementation satisfies the constraints, and the `alias` is not defined or `inject.typeInstances[].typeRef`, the TypeInstance is not injected in workflow. In this case Engine doesn't return an error.
 
 ### Additional parameter injection
 
@@ -251,6 +360,21 @@ The following rules apply, when the Engine merges the policy rules:
 2. If in the merged policy rules, there are two elements in `oneOf`, with the same `implementationConstraints`, then we merge them into a single element:
    - `additionalInput` of the elements are deep merged based on the priority order
    - for both `requiredTypeInstances` and `additionalTypeInstances`, the elements are joined together. If there are two TypeInstances with the same Type Reference, then the one from the higher priority order policy is chosen.
+
+## TypeInstance storage backend priority order
+
+Engine selects TypeInstance backend in a given order:
+
+1. If backend is enforced by Implementation via `spec.requires` section:
+    1. Uses backend specified under `inject.requiredTypeInstances` for a given Interface rule. _If not found:_
+    2. Uses default specified under `default.inject.requiredTypeInstances` for all Interface Policy. _If not found:_
+    3. Such Implementation is ignored by Engine as its requirements are not satisfied.
+2. If not, checks default storage backend for TypeInstance of a given Type specified under `typeInstance` property. Engine tries to find:
+    1. Exact match based on Type path and revision. _If not found:_
+    2. Exact match based only on Type path. _If not found:_
+    3. Pattern match based on Type path and revision. _If not found:_
+    4. Pattern match based only on Type path. _If not found:_
+    5. Such TypeInstances is created without explicit storage backend **ID**. As a result, it is stored in built-in Local Hub storage.
 
 ## Change priority order of the policies
 
