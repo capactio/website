@@ -289,6 +289,18 @@ Each time the GraphQL schema changes, you need to update generated resources. To
 make gen-graphql-resources
 ```
 
+### Generate code from Protocol Buffers schema
+
+This project uses the [`protoc`](https://github.com/protocolbuffers/protobuf) compiler, which generates Go code both for gRPC server and client, based on Protocol Buffers schema.
+
+In Capact project we have one Protocol Buffers schema for [Storage Backend](https://github.com/capactio/capact/tree/main/pkg/hub/api/grpc/storage_backend.proto) Hub extension.
+
+Each time the Protocol Buffers schema changes, you need to regenerate Go code. To do this, execute:
+
+```bash
+make gen-grpc-resources
+```
+
 ### Generate documentation
 
 For the Capact CLI development we use [Cobra](https://github.com/spf13/cobra) library. The documentation for the CLI is generated automatically based on CLI commands code.
