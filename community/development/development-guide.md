@@ -293,6 +293,10 @@ make gen-graphql-resources
 
 This project uses the [`protoc`](https://github.com/protocolbuffers/protobuf) compiler, which generates Go code both for gRPC server and client, based on Protocol Buffers schema.
 
+The `protoc` compiler uses the following plugins:
+- [`protoc-gen-go`](https://pkg.go.dev/google.golang.org/protobuf/cmd/protoc-gen-go)
+- [`protoc-gen-go-grpc`](https://pkg.go.dev/google.golang.org/grpc/cmd/protoc-gen-go-grpc)
+
 In Capact project we have one Protocol Buffers schema for [Storage Backend](https://github.com/capactio/capact/tree/main/pkg/hub/api/grpc/storage_backend.proto) Hub extension.
 
 Each time the Protocol Buffers schema changes, you need to regenerate Go code. To do this, execute:
