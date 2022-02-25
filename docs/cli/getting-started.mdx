@@ -15,7 +15,7 @@ Capact has two types of release channels: **Stable** and **Latest**:
 
 ### Stable - from the latest release
 
-Install Capact CLI binary with `curl`:
+Depending on the system, install Capact CLI binary with `homebrew` or `curl`:
 
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
@@ -33,26 +33,14 @@ import TabItem from '@theme/TabItem';
 <TabItem value="macos">
 
 ```shell
-curl -Lo capact https://github.com/capactio/capact/releases/download/v0.6.0/capact-darwin-amd64
-```
-
-Copy to binary directory:
-
-```shell
-chmod +x capact && mv capact /usr/local/bin/capact
+brew install capactio/tap/capact
 ```
 
 </TabItem>
 <TabItem value="linux">
 
 ```shell
-curl -Lo capact https://github.com/capactio/capact/releases/download/v0.6.0/capact-linux-amd64
-```
-
-Copy to binary directory:
-
-```shell
-chmod +x capact && mv capact /usr/local/bin/capact
+brew install capactio/tap/capact
 ```
 
 </TabItem>
@@ -60,6 +48,11 @@ chmod +x capact && mv capact /usr/local/bin/capact
 
 ```shell
 curl -Lo capact.exe https://github.com/capactio/capact/releases/download/v0.6.0/capact-windows-amd64.exe
+```
+
+For Windows 10 or newer with Windows Subsystem for Linux (WSL):
+```shell
+brew install capactio/tap/capact
 ```
 
 </TabItem>
