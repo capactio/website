@@ -272,6 +272,22 @@ If the `alias` property is defined for an item from `requires` section, Engine i
 
 Even if the Implementation satisfies the constraints, and the `alias` is not defined or `inject.typeInstances[].typeRef`, the TypeInstance is not injected in workflow. In this case Engine doesn't return an error.
 
+### Definition of defaults for Interface
+
+Using the `default.inject.requiredTypeInstances`, you can configure common TypeInstances, which are injected in the Implementation workflow for all Interface rules. For example, to ensure that everything is deployed using the same backend, you can use: 
+```yaml
+  interface:
+    rules: [...] # rules for Interfaces
+
+    default: # properties applied to all rules above
+      inject:
+        requiredTypeInstances:
+          - id: 9038dcdc-e959-41c4-a690-d8ebf929ac0c
+            description: "Helm storage (cap.type.helm.storage:0.1.0)"
+```
+
+TypeInstances defined in the `interface.rules[].inject` are preferred than TypeInstance `defaults`. That means, that in case of TypeInstance for the same Type defined in the both places, Engine would inject TypeInstance from `interface.rules[].inject`.
+
 ### Additional parameter injection
 
 You can also provide additional parameters to tweak the Implementation. The Implementation parameters Type is specified in the Implementation manifest in `.spec.additionalInput.parameters`. For example, for AWS RDS for PostgreSQL Implementation you can provide `additional-parameters` of Type `cap.type.aws.rds.postgresql.install-input`:
