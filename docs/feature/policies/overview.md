@@ -274,7 +274,12 @@ Even if the Implementation satisfies the constraints, and the `alias` is not def
 
 ### Definition of defaults for Interface
 
-Using the `default.inject.requiredTypeInstances`, you can configure common TypeInstances, which are injected in the Implementation workflow for all Interface rules. For example, to ensure that everything is deployed using the same backend, you can use: 
+The `interface.default` property contains all default configuration that are applicable for every rule in the `interface.rules` array.
+
+Currently, it allows you to configure common required TypeInstance injections, so that you don't need to define `inject` for each rule from the `interface.rules` array. To read more how the required TypeInstance injection works, see the [Required TypeInstance injection](#required-typeinstance-injection) paragraph.
+
+For example, to ensure that the same Helm storage backend is used for all Interface rules, you can specify:
+ 
 ```yaml
   interface:
     rules: [...] # rules for Interfaces
@@ -286,7 +291,7 @@ Using the `default.inject.requiredTypeInstances`, you can configure common TypeI
             description: "Helm storage (cap.type.helm.storage:0.1.0)"
 ```
 
-TypeInstances defined in the `interface.rules[].inject` are preferred than TypeInstance `defaults`. That means, that in case of TypeInstance for the same Type defined in the both places, Engine would inject TypeInstance from `interface.rules[].inject`.
+Required TypeInstances defined on `interface.rules[].inject` are preferred over the `interface.defaults.requiredTypeInstances`. In case of a different TypeInstance with the same Type reference (equal path and revision) defined in both of the places, Engine prefers TypeInstance injection from  `interface.rules[].inject`.
 
 ### Additional parameter injection
 
