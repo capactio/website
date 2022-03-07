@@ -14,6 +14,12 @@ The following YAML snippet presents a full Global policy example with additional
 
 ```yaml
 interface: # Defines Policy for Interface rendering
+  default: # Groups the list of defaults for Interface
+    inject: # Engine injects listed TypeInstance in the Implementation workflow for all Interface rules
+            # They can be overwritten in in in interface.rules[].inject
+      requiredTypeInstances:
+        - id: 2016dcdc-e922-22c4-a690-d8ebf929da2d
+          description: "AWS Service Account" # optional        
   rules:
     - interface: # Rules for Interface with exact path in exact revision
         path: "cap.interface.database.postgresql.install"

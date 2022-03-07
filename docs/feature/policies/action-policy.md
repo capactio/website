@@ -13,6 +13,13 @@ The following YAML snippet presents an Action policy example with additional com
 
 ```yaml
 interface:
+  default: # Groups the list of defaults for Interface
+  default: # Groups the list of defaults for Interface
+    inject: # Engine injects listed TypeInstance in the Implementation workflow for all Interface rules
+            # They can be overwritten in in in interface.rules[].inject
+      requiredTypeInstances:
+        - id: 2016dcdc-e922-22c4-a690-d8ebf929da2d
+          description: "AWS Service Account" # optional  
   rules: # Configures the following behavior for Engine during rendering Action
     - interface: # Rules for Interface with exact path
         path: cap.interface.productivity.rocketchat.install
