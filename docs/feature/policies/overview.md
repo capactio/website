@@ -272,6 +272,27 @@ If the `alias` property is defined for an item from `requires` section, Engine i
 
 Even if the Implementation satisfies the constraints, and the `alias` is not defined or `inject.typeInstances[].typeRef`, the TypeInstance is not injected in workflow. In this case Engine doesn't return an error.
 
+### Definition of defaults for Interface
+
+The `interface.default` property contains all default configuration that are applicable for every rule in the `interface.rules` array.
+
+Currently, it allows you to configure common required TypeInstance injections, so that you don't need to define `inject` for each rule from the `interface.rules` array. To read more how the required TypeInstance injection works, see the [Required TypeInstance injection](#required-typeinstance-injection) paragraph.
+
+For example, to ensure that the same Helm storage backend is used for all Interface rules, you can specify:
+ 
+```yaml
+  interface:
+    rules: [...] # rules for Interfaces
+
+    default: # properties applied to all rules above
+      inject:
+        requiredTypeInstances:
+          - id: 9038dcdc-e959-41c4-a690-d8ebf929ac0c
+            description: "Helm storage (cap.type.helm.storage:0.1.0)"
+```
+
+Required TypeInstances defined on `interface.rules[].inject` are preferred over the `interface.defaults.requiredTypeInstances`. In case of a different TypeInstance with the same Type reference (equal path and revision) defined in both of the places, Engine prefers TypeInstance injection from  `interface.rules[].inject`.
+
 ### Additional parameter injection
 
 You can also provide additional parameters to tweak the Implementation. The Implementation parameters Type is specified in the Implementation manifest in `.spec.additionalInput.parameters`. For example, for AWS RDS for PostgreSQL Implementation you can provide `additional-parameters` of Type `cap.type.aws.rds.postgresql.install-input`:
