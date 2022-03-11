@@ -8,7 +8,7 @@ To learn more about Capact Local Hub storage backends, see the [Introduction](./
 
 AWS Secrets Manager storage backend is feature-complete. It supports full lifecycle of TypeInstance: create, get, update, delete, lock, unlock.
 
-It can be used as a default storage. For more information, see the [Use the storage backend](#use-the-storage-backend) paragraph.
+It can be used as a default storage for all TypeInstances.
 
 ## Prerequisites
 
