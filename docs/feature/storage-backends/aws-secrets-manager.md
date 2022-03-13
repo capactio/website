@@ -26,7 +26,7 @@ Create AWS security credentials with `SecretsManagerReadWrite` policy.
 1. Select **Access key** AWS credential type.
 1. On **Set permissions** step, select **Attach existing policies directly***.
 1. Find **SecretsManagerReadWrite** policy.
-1. Go to next step until you see the **Create user** step. Click on it.
+1. Go to the next step until you see the **Create user** step. Click on it.
 1. Copy the credentials and follow the [Installation](#installation) guide.
 
 ## Installation
@@ -46,7 +46,7 @@ Create AWS security credentials with `SecretsManagerReadWrite` policy.
   export TI_ID="{id}"
   ```
 
-1. Update Capact Global policy to inject the AWS credentials when necessary:
+1. Update the [Global policy](../policies/global-policy.md) to inject the AWS credentials for the storage backend installation:
 
    ```bash
    cat > /tmp/aws-storage-policy.yaml << ENDOFFILE
@@ -152,14 +152,14 @@ To read more about TypeInstance backend configuration, see the [Definition of ru
 
 ## Next steps
 
-Now, you can run any Capact manifest and utilize the newly installed AWS Secrets Manager storage backend. For example, [install Mattermost](../../example/mattermost-installation.md). Once it's installed, verify the output TypeInstance values are created in AWS Secrets Manager. You can do it in two ways:
+Now, you can run any Capact manifest and utilize the newly installed AWS Secrets Manager storage backend. For example, [install Mattermost](../../example/mattermost-installation.md). Once it is installed, verify the output TypeInstance values are created in AWS Secrets Manager. You can do it in the following ways:
 
-- verify the `backend.id` for output TypeInstances of a given Action:
+  - verify the `backend.id` for output TypeInstances of a given Action:
 
-    ```bash
-    capact act get {action Name} -ojson | jq '.Actions[0].output.typeInstances'`
-    ```
+      ```bash
+      capact act get {action Name} -ojson | jq '.Actions[0].output.typeInstances'`
+      ```
 
-- see the AWS Secrets Manager UI to verify the TypeInstance value is stored externally.
+  - see the AWS Secrets Manager UI to verify the TypeInstance value is stored externally.
 
 To clean up the secrets stored externally, just delete a given TypeInstance.

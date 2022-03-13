@@ -28,4 +28,4 @@ To develop your own storage backend, create a gRPC service which implements the 
 You can use the generated server code for the following languages:
 - [Go](https://github.com/capactio/capact/tree/main/pkg/hub/api/grpc/storage_backend),
 - [TypeScript (Node.js)](https://github.com/capactio/capact/tree/main/hub-js/src/generated/grpc),
-- or, generate your own.
+- or generate your own based on the Protocol Buffers schema.
