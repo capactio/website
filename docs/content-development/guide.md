@@ -117,7 +117,7 @@ spec:
     parameters: # the Interface requires `input-parameters` of Type "cap.type.productivity.mattermost.install-input"
       input-parameters:
         typeRef:
-          name: cap.type.productivity.mattermost.install-input
+          path: cap.type.productivity.mattermost.install-input
           revision: 0.1.0
 
   output:
@@ -166,23 +166,1258 @@ spec:
       {
         "$schema": "http://json-schema.org/draft-07/schema",
         "type": "object",
-        "title": "The schema for Mattermost configuration",
-        "required": [
-            "host"
+        "title": "Mattermost installation parameters",
+         "required": [
+           "host"
         ],
-        "definitions": {
-          "hostname": {
-            "type": "string",
-            "format": "hostname",
-            "title": "Hostname"
-          }
-        },
         "properties": {
           "host": {
-            "$ref": "#/definitions/hostname"
+            "$id": "#/properties/host",
+            "type": "string",
+            "title": "Host of the Mattermost Instance"
+          },
+          "configJSON": {
+            "$id": "#/properties/configJSON",
+            "type": "object",
+            "title": "Configuration",
+            "properties": {
+              "ServiceSettings": {
+                "title": "Service Settings",
+                "$id": "#/properties/configJSON/properties/ServiceSettings",
+                "type": "object",
+                "properties": {
+                  "LicenseFileLocation": {
+                    "title": "License File Location",
+                    "$id": "#/properties/configJSON/properties/ServiceSettings/properties/LicenseFileLocation",
+                    "type": "string",
+                    "default": ""
+                  },
+                  "ListenAddress": {
+                    "title": "Listen Address",
+                    "$id": "#/properties/configJSON/properties/ServiceSettings/properties/ListenAddress",
+                    "type": "string",
+                    "default": ":8065"
+                  },
+                  "ConnectionSecurity": {
+                    "title": "Connection Security",
+                    "$id": "#/properties/configJSON/properties/ServiceSettings/properties/ConnectionSecurity",
+                    "type": "string",
+                    "default": ""
+                  },
+                  "TLSCertFile": {
+                    "title": "TLS Cert File",
+                    "$id": "#/properties/configJSON/properties/ServiceSettings/properties/TLSCertFile",
+                    "type": "string",
+                    "default": ""
+                  },
+                  "TLSKeyFile": {
+                    "title": "TLS Key File",
+                    "$id": "#/properties/configJSON/properties/ServiceSettings/properties/TLSKeyFile",
+                    "type": "string",
+                    "default": ""
+                  },
+                  "UseLetsEncrypt": {
+                    "title": "Use Lets Encrypt",
+                    "$id": "#/properties/configJSON/properties/ServiceSettings/properties/UseLetsEncrypt",
+                    "type": "boolean",
+                    "default": false
+                  },
+                  "LetsEncryptCertificateCacheFile": {
+                    "title": "Lets Encrypt Certificate Cache File",
+                    "$id": "#/properties/configJSON/properties/ServiceSettings/properties/LetsEncryptCertificateCacheFile",
+                    "type": "string",
+                    "default": "./config/letsencrypt.cache"
+                  },
+                  "Forward80To443": {
+                    "title": "Forward 80 To 443",
+                    "$id": "#/properties/configJSON/properties/ServiceSettings/properties/Forward80To443",
+                    "type": "boolean",
+                    "default": false
+                  },
+                  "ReadTimeout": {
+                    "title": "Read Timeout",
+                    "$id": "#/properties/configJSON/properties/ServiceSettings/properties/ReadTimeout",
+                    "type": "number",
+                    "default": 300
+                  },
+                  "WriteTimeout": {
+                    "title": "Write Timeout",
+                    "$id": "#/properties/configJSON/properties/ServiceSettings/properties/WriteTimeout",
+                    "type": "number",
+                    "default": 300
+                  },
+                  "MaximumLoginAttempts": {
+                    "title": "Maximum Login Attempts",
+                    "$id": "#/properties/configJSON/properties/ServiceSettings/properties/MaximumLoginAttempts",
+                    "type": "number",
+                    "default": 10
+                  },
+                  "GoroutineHealthThreshold": {
+                    "title": "Goroutine Health Threshold",
+                    "$id": "#/properties/configJSON/properties/ServiceSettings/properties/GoroutineHealthThreshold",
+                    "type": "number",
+                    "default": -1
+                  },
+                  "GoogleDeveloperKey": {
+                    "title": "Google Developer Key",
+                    "$id": "#/properties/configJSON/properties/ServiceSettings/properties/GoogleDeveloperKey",
+                    "type": "string",
+                    "default": ""
+                  },
+                  "EnableOAuthServiceProvider": {
+                    "title": "Enable OAuth Service Provider",
+                    "$id": "#/properties/configJSON/properties/ServiceSettings/properties/EnableOAuthServiceProvider",
+                    "type": "boolean",
+                    "default": false
+                  },
+                  "EnableIncomingWebhooks": {
+                    "title": "Enable Incoming Webhooks",
+                    "$id": "#/properties/configJSON/properties/ServiceSettings/properties/EnableIncomingWebhooks",
+                    "type": "boolean",
+                    "default": true
+                  },
+                  "EnableOutgoingWebhooks": {
+                    "title": "Enable Outgoing Webhooks",
+                    "$id": "#/properties/configJSON/properties/ServiceSettings/properties/EnableOutgoingWebhooks",
+                    "type": "boolean",
+                    "default": true
+                  },
+                  "EnableCommands": {
+                    "title": "Enable Commands",
+                    "$id": "#/properties/configJSON/properties/ServiceSettings/properties/EnableCommands",
+                    "type": "boolean",
+                    "default": true
+                  },
+                  "EnableOnlyAdminIntegrations": {
+                    "title": "Enable Only Admin Integrations",
+                    "$id": "#/properties/configJSON/properties/ServiceSettings/properties/EnableOnlyAdminIntegrations",
+                    "type": "boolean",
+                    "default": false
+                  },
+                  "EnablePostUsernameOverride": {
+                    "title": "Enable Post Username Override",
+                    "$id": "#/properties/configJSON/properties/ServiceSettings/properties/EnablePostUsernameOverride",
+                    "type": "boolean",
+                    "default": false
+                  },
+                  "EnablePostIconOverride": {
+                    "title": "Enable Post Icon Override",
+                    "$id": "#/properties/configJSON/properties/ServiceSettings/properties/EnablePostIconOverride",
+                    "type": "boolean",
+                    "default": false
+                  },
+                  "EnableBotAccountCreation": {
+                    "title": "Enable Bot Account Creation",
+                    "$id": "#/properties/configJSON/properties/ServiceSettings/properties/EnableBotAccountCreation",
+                    "type": "boolean",
+                    "default": false
+                  },
+                  "EnableUserAccessTokens": {
+                    "title": "Enable User Access Tokens",
+                    "$id": "#/properties/configJSON/properties/ServiceSettings/properties/EnableUserAccessTokens",
+                    "type": "boolean",
+                    "default": false
+                  },
+                  "EnableLinkPreviews": {
+                    "title": "Enable Link Previews",
+                    "$id": "#/properties/configJSON/properties/ServiceSettings/properties/EnableLinkPreviews",
+                    "type": "boolean",
+                    "default": false
+                  },
+                  "EnableTesting": {
+                    "title": "Enable Testing",
+                    "$id": "#/properties/configJSON/properties/ServiceSettings/properties/EnableTesting",
+                    "type": "boolean",
+                    "default": false
+                  },
+                  "EnableDeveloper": {
+                    "title": "Enable Developer",
+                    "$id": "#/properties/configJSON/properties/ServiceSettings/properties/EnableDeveloper",
+                    "type": "boolean",
+                    "default": false
+                  },
+                  "EnableSecurityFixAlert": {
+                    "title": "Enable Security Fix Alert",
+                    "$id": "#/properties/configJSON/properties/ServiceSettings/properties/EnableSecurityFixAlert",
+                    "type": "boolean",
+                    "default": true
+                  },
+                  "EnableInsecureOutgoingConnections": {
+                    "title": "Enable Insecure Outgoing Connections",
+                    "$id": "#/properties/configJSON/properties/ServiceSettings/properties/EnableInsecureOutgoingConnections",
+                    "type": "boolean",
+                    "default": false
+                  },
+                  "EnableMultifactorAuthentication": {
+                    "title": "Enable Multifactor Authentication",
+                    "$id": "#/properties/configJSON/properties/ServiceSettings/properties/EnableMultifactorAuthentication",
+                    "type": "boolean",
+                    "default": false
+                  },
+                  "EnforceMultifactorAuthentication": {
+                    "title": "Enforce Multifactor Authentication",
+                    "$id": "#/properties/configJSON/properties/ServiceSettings/properties/EnforceMultifactorAuthentication",
+                    "type": "boolean",
+                    "default": false
+                  },
+                  "AllowCorsFrom": {
+                    "title": "Allow Cors From",
+                    "$id": "#/properties/configJSON/properties/ServiceSettings/properties/AllowCorsFrom",
+                    "type": "string",
+                    "default": ""
+                  },
+                  "SessionLengthWebInDays": {
+                    "title": "Session Length Web In Days",
+                    "$id": "#/properties/configJSON/properties/ServiceSettings/properties/SessionLengthWebInDays",
+                    "type": "number",
+                    "default": 30
+                  },
+                  "SessionLengthMobileInDays": {
+                    "title": "Session Length Mobile In Days",
+                    "$id": "#/properties/configJSON/properties/ServiceSettings/properties/SessionLengthMobileInDays",
+                    "type": "number",
+                    "default": 30
+                  },
+                  "SessionLengthSSOInDays": {
+                    "title": "Session Length SSO In Days",
+                    "$id": "#/properties/configJSON/properties/ServiceSettings/properties/SessionLengthSSOInDays",
+                    "type": "number",
+                    "default": 30
+                  },
+                  "SessionCacheInMinutes": {
+                    "title": "Session Cache In Minutes",
+                    "$id": "#/properties/configJSON/properties/ServiceSettings/properties/SessionCacheInMinutes",
+                    "type": "number",
+                    "default": 10
+                  },
+                  "WebsocketSecurePort": {
+                    "title": "Websocket Secure Port",
+                    "$id": "#/properties/configJSON/properties/ServiceSettings/properties/WebsocketSecurePort",
+                    "type": "number",
+                    "default": 443
+                  },
+                  "WebsocketPort": {
+                    "title": "Websocket Port",
+                    "$id": "#/properties/configJSON/properties/ServiceSettings/properties/WebsocketPort",
+                    "type": "number",
+                    "default": 80
+                  },
+                  "WebserverMode": {
+                    "title": "Webserver Mode",
+                    "$id": "#/properties/configJSON/properties/ServiceSettings/properties/WebserverMode",
+                    "type": "string",
+                    "default": "gzip"
+                  },
+                  "EnableCustomEmoji": {
+                    "title": "Enable Custom Emoji",
+                    "$id": "#/properties/configJSON/properties/ServiceSettings/properties/EnableCustomEmoji",
+                    "type": "boolean",
+                    "default": false
+                  },
+                  "RestrictCustomEmojiCreation": {
+                    "title": "Restrict Custom Emoji Creation",
+                    "$id": "#/properties/configJSON/properties/ServiceSettings/properties/RestrictCustomEmojiCreation",
+                    "type": "string",
+                    "default": "all"
+                  },
+                  "RestrictPostDelete": {
+                    "title": "Restrict Post Delete",
+                    "$id": "#/properties/configJSON/properties/ServiceSettings/properties/RestrictPostDelete",
+                    "type": "string",
+                    "default": "all"
+                  },
+                  "AllowEditPost": {
+                    "title": "Allow Edit Post",
+                    "$id": "#/properties/configJSON/properties/ServiceSettings/properties/AllowEditPost",
+                    "type": "string",
+                    "default": "always"
+                  },
+                  "PostEditTimeLimit": {
+                    "title": "Post Edit Time Limit",
+                    "$id": "#/properties/configJSON/properties/ServiceSettings/properties/PostEditTimeLimit",
+                    "type": "number",
+                    "default": 300
+                  },
+                  "TimeBetweenUserTypingUpdatesMilliseconds": {
+                    "title": "Time Between User Typing Updates Milliseconds",
+                    "$id": "#/properties/configJSON/properties/ServiceSettings/properties/TimeBetweenUserTypingUpdatesMilliseconds",
+                    "type": "number",
+                    "default": 5000
+                  },
+                  "EnablePostSearch": {
+                    "title": "Enable Post Search",
+                    "$id": "#/properties/configJSON/properties/ServiceSettings/properties/EnablePostSearch",
+                    "type": "boolean",
+                    "default": true
+                  },
+                  "EnableUserTypingMessages": {
+                    "title": "Enable User Typing Messages",
+                    "$id": "#/properties/configJSON/properties/ServiceSettings/properties/EnableUserTypingMessages",
+                    "type": "boolean",
+                    "default": true
+                  },
+                  "EnableUserStatuses": {
+                    "title": "Enable User Statuses",
+                    "$id": "#/properties/configJSON/properties/ServiceSettings/properties/EnableUserStatuses",
+                    "type": "boolean",
+                    "default": true
+                  },
+                  "ClusterLogTimeoutMilliseconds": {
+                    "title": "Cluster Log Timeout Milliseconds",
+                    "$id": "#/properties/configJSON/properties/ServiceSettings/properties/ClusterLogTimeoutMilliseconds",
+                    "type": "number",
+                    "default": 2000
+                  }
+                }
+              },
+              "TeamSettings": {
+                "title": "Team Settings",
+                "$id": "#/properties/configJSON/properties/TeamSettings",
+                "type": "object",
+                "properties": {
+                  "SiteName": {
+                    "title": "Site Name",
+                    "$id": "#/properties/configJSON/properties/TeamSettings/properties/SiteName",
+                    "type": "string",
+                    "default": "Mattermost"
+                  },
+                  "MaxUsersPerTeam": {
+                    "title": "Max Users Per Team",
+                    "$id": "#/properties/configJSON/properties/TeamSettings/properties/MaxUsersPerTeam",
+                    "type": "number",
+                    "default": 50000
+                  },
+                  "EnableTeamCreation": {
+                    "title": "Enable Team Creation",
+                    "$id": "#/properties/configJSON/properties/TeamSettings/properties/EnableTeamCreation",
+                    "type": "boolean",
+                    "default": true
+                  },
+                  "EnableUserCreation": {
+                    "title": "Enable User Creation",
+                    "$id": "#/properties/configJSON/properties/TeamSettings/properties/EnableUserCreation",
+                    "type": "boolean",
+                    "default": true
+                  },
+                  "EnableOpenServer": {
+                    "title": "Enable Open Server",
+                    "$id": "#/properties/configJSON/properties/TeamSettings/properties/EnableOpenServer",
+                    "type": "boolean",
+                    "default": true
+                  },
+                  "RestrictCreationToDomains": {
+                    "title": "Restrict Creation To Domains",
+                    "$id": "#/properties/configJSON/properties/TeamSettings/properties/RestrictCreationToDomains",
+                    "type": "string",
+                    "default": ""
+                  },
+                  "EnableCustomBrand": {
+                    "title": "Enable Custom Brand",
+                    "$id": "#/properties/configJSON/properties/TeamSettings/properties/EnableCustomBrand",
+                    "type": "boolean",
+                    "default": false
+                  },
+                  "CustomBrandText": {
+                    "title": "Custom Brand Text",
+                    "$id": "#/properties/configJSON/properties/TeamSettings/properties/CustomBrandText",
+                    "type": "string",
+                    "default": ""
+                  },
+                  "CustomDescriptionText": {
+                    "title": "Custom Description Text",
+                    "$id": "#/properties/configJSON/properties/TeamSettings/properties/CustomDescriptionText",
+                    "type": "string",
+                    "default": ""
+                  },
+                  "RestrictDirectMessage": {
+                    "title": "Restrict Direct Message",
+                    "$id": "#/properties/configJSON/properties/TeamSettings/properties/RestrictDirectMessage",
+                    "type": "string",
+                    "default": "any"
+                  },
+                  "RestrictTeamInvite": {
+                    "title": "Restrict Team Invite",
+                    "$id": "#/properties/configJSON/properties/TeamSettings/properties/RestrictTeamInvite",
+                    "type": "string",
+                    "default": "all"
+                  },
+                  "RestrictPublicChannelManagement": {
+                    "title": "Restrict Public Channel Management",
+                    "$id": "#/properties/configJSON/properties/TeamSettings/properties/RestrictPublicChannelManagement",
+                    "type": "string",
+                    "default": "all"
+                  },
+                  "RestrictPrivateChannelManagement": {
+                    "title": "Restrict Private Channel Management",
+                    "$id": "#/properties/configJSON/properties/TeamSettings/properties/RestrictPrivateChannelManagement",
+                    "type": "string",
+                    "default": "all"
+                  },
+                  "RestrictPublicChannelCreation": {
+                    "title": "Restrict Public Channel Creation",
+                    "$id": "#/properties/configJSON/properties/TeamSettings/properties/RestrictPublicChannelCreation",
+                    "type": "string",
+                    "default": "all"
+                  },
+                  "RestrictPrivateChannelCreation": {
+                    "title": "Restrict Private Channel Creation",
+                    "$id": "#/properties/configJSON/properties/TeamSettings/properties/RestrictPrivateChannelCreation",
+                    "type": "string",
+                    "default": "all"
+                  },
+                  "RestrictPublicChannelDeletion": {
+                    "title": "Restrict Public Channel Deletion",
+                    "$id": "#/properties/configJSON/properties/TeamSettings/properties/RestrictPublicChannelDeletion",
+                    "type": "string",
+                    "default": "all"
+                  },
+                  "RestrictPrivateChannelDeletion": {
+                    "title": "Restrict Private Channel Deletion",
+                    "$id": "#/properties/configJSON/properties/TeamSettings/properties/RestrictPrivateChannelDeletion",
+                    "type": "string",
+                    "default": "all"
+                  },
+                  "RestrictPrivateChannelManageMembers": {
+                    "title": "Restrict Private Channel Manage Members",
+                    "$id": "#/properties/configJSON/properties/TeamSettings/properties/RestrictPrivateChannelManageMembers",
+                    "type": "string",
+                    "default": "all"
+                  },
+                  "UserStatusAwayTimeout": {
+                    "title": "User Status Away Timeout",
+                    "$id": "#/properties/configJSON/properties/TeamSettings/properties/UserStatusAwayTimeout",
+                    "type": "number",
+                    "default": 300
+                  },
+                  "MaxChannelsPerTeam": {
+                    "title": "Max Channels Per Team",
+                    "$id": "#/properties/configJSON/properties/TeamSettings/properties/MaxChannelsPerTeam",
+                    "type": "number",
+                    "default": 50000
+                  },
+                  "MaxNotificationsPerChannel": {
+                    "title": "Max Notifications Per Channel",
+                    "$id": "#/properties/configJSON/properties/TeamSettings/properties/MaxNotificationsPerChannel",
+                    "type": "number",
+                    "default": 1000
+                  }
+                }
+              },
+              "SqlSettings": {
+                "title": "Sql Settings",
+                "$id": "#/properties/configJSON/properties/SqlSettings",
+                "type": "object",
+                "properties": {
+                  "DriverName": {
+                    "title": "Driver Name",
+                    "$id": "#/properties/configJSON/properties/SqlSettings/properties/DriverName",
+                    "type": "string",
+                    "default": ""
+                  },
+                  "DataSource": {
+                    "title": "Data Source",
+                    "$id": "#/properties/configJSON/properties/SqlSettings/properties/DataSource",
+                    "type": "string",
+                    "default": ""
+                  },
+                  "DataSourceReplicas": {
+                    "title": "Data Source Replicas",
+                    "$id": "#/properties/configJSON/properties/SqlSettings/properties/DataSourceReplicas",
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    },
+                    "default": []
+                  },
+                  "DataSourceSearchReplicas": {
+                    "title": "Data Source Search Replicas",
+                    "$id": "#/properties/configJSON/properties/SqlSettings/properties/DataSourceSearchReplicas",
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    },                    
+                    "default": []
+                  },
+                  "MaxIdleConns": {
+                    "title": "Max Idle Conns",
+                    "$id": "#/properties/configJSON/properties/SqlSettings/properties/MaxIdleConns",
+                    "type": "number",
+                    "default": 20
+                  },
+                  "MaxOpenConns": {
+                    "title": "Max Open Conns",
+                    "$id": "#/properties/configJSON/properties/SqlSettings/properties/MaxOpenConns",
+                    "type": "number",
+                    "default": 35
+                  },
+                  "Trace": {
+                    "title": "trace",
+                    "$id": "#/properties/configJSON/properties/SqlSettings/properties/Trace",
+                    "type": "boolean",
+                    "default": false
+                  },
+                  "AtRestEncryptKey": {
+                    "title": "At Rest Encrypt Key",
+                    "$id": "#/properties/configJSON/properties/SqlSettings/properties/AtRestEncryptKey",
+                    "type": "string",
+                    "default": ""
+                  },
+                  "QueryTimeout": {
+                    "title": "Query Timeout",
+                    "$id": "#/properties/configJSON/properties/SqlSettings/properties/QueryTimeout",
+                    "type": "number",
+                    "default": 30
+                  }
+                }
+              },
+              "LogSettings": {
+                "title": "Log Settings",
+                "$id": "#/properties/configJSON/properties/LogSettings",
+                "type": "object",
+                "properties": {
+                  "EnableConsole": {
+                    "title": "Enable Console",
+                    "$id": "#/properties/configJSON/properties/LogSettings/properties/EnableConsole",
+                    "type": "boolean",
+                    "default": true
+                  },
+                  "ConsoleLevel": {
+                    "title": "Console Level",
+                    "$id": "#/properties/configJSON/properties/LogSettings/properties/ConsoleLevel",
+                    "type": "string",
+                    "default": "INFO"
+                  },
+                  "EnableFile": {
+                    "title": "Enable File",
+                    "$id": "#/properties/configJSON/properties/LogSettings/properties/EnableFile",
+                    "type": "boolean",
+                    "default": true
+                  },
+                  "FileLevel": {
+                    "title": "File Level",
+                    "$id": "#/properties/configJSON/properties/LogSettings/properties/FileLevel",
+                    "type": "string",
+                    "default": "INFO"
+                  },
+                  "FileFormat": {
+                    "title": "File Format",
+                    "$id": "#/properties/configJSON/properties/LogSettings/properties/FileFormat",
+                    "type": "string",
+                    "default": ""
+                  },
+                  "FileLocation": {
+                    "title": "File Location",
+                    "$id": "#/properties/configJSON/properties/LogSettings/properties/FileLocation",
+                    "type": "string",
+                    "default": ""
+                  },
+                  "EnableWebhookDebugging": {
+                    "title": "Enable Webhook Debugging",
+                    "$id": "#/properties/configJSON/properties/LogSettings/properties/EnableWebhookDebugging",
+                    "type": "boolean",
+                    "default": true
+                  },
+                  "EnableDiagnostics": {
+                    "title": "Enable Diagnostics",
+                    "$id": "#/properties/configJSON/properties/LogSettings/properties/EnableDiagnostics",
+                    "type": "boolean",
+                    "default": true
+                  }
+                }
+              },
+              "PasswordSettings": {
+                "title": "Password Settings",
+                "$id": "#/properties/configJSON/properties/PasswordSettings",
+                "type": "object",
+                "properties": {
+                  "MinimumLength": {
+                    "title": "Minimum Length",
+                    "$id": "#/properties/configJSON/properties/PasswordSettings/properties/MinimumLength",
+                    "type": "number",
+                    "default": 5
+                  },
+                  "Lowercase": {
+                    "title": "Lowercase",
+                    "$id": "#/properties/configJSON/properties/PasswordSettings/properties/Lowercase",
+                    "type": "boolean",
+                    "default": false
+                  },
+                  "Number": {
+                    "title": "Number",
+                    "$id": "#/properties/configJSON/properties/PasswordSettings/properties/Number",
+                    "type": "boolean",
+                    "default": false
+                  },
+                  "Uppercase": {
+                    "title": "Uppercase",
+                    "$id": "#/properties/configJSON/properties/PasswordSettings/properties/Uppercase",
+                    "type": "boolean",
+                    "default": false
+                  },
+                  "Symbol": {
+                    "title": "Symbol",
+                    "$id": "#/properties/configJSON/properties/PasswordSettings/properties/Symbol",
+                    "type": "boolean",
+                    "default": false
+                  }
+                }
+              },
+              "FileSettings": {
+                "title": "File Settings",
+                "$id": "#/properties/configJSON/properties/FileSettings",
+                "type": "object",
+                "properties": {
+                  "EnableFileAttachments": {
+                    "title": "Enable File Attachments",
+                    "$id": "#/properties/configJSON/properties/FileSettings/properties/EnableFileAttachments",
+                    "type": "boolean",
+                    "default": true
+                  },
+                  "MaxFileSize": {
+                    "title": "Max File Size",
+                    "$id": "#/properties/configJSON/properties/FileSettings/properties/MaxFileSize",
+                    "type": "number",
+                    "default": 52428800
+                  },
+                  "DriverName": {
+                    "title": "Driver Name",
+                    "$id": "#/properties/configJSON/properties/FileSettings/properties/DriverName",
+                    "type": "string",
+                    "default": "local"
+                  },
+                  "Directory": {
+                    "title": "directory",
+                    "$id": "#/properties/configJSON/properties/FileSettings/properties/Directory",
+                    "type": "string",
+                    "default": "./data/"
+                  },
+                  "EnablePublicLink": {
+                    "title": "Enable Public Link",
+                    "$id": "#/properties/configJSON/properties/FileSettings/properties/EnablePublicLink",
+                    "type": "boolean",
+                    "default": false
+                  },
+                  "PublicLinkSalt": {
+                    "title": "Public Link Salt",
+                    "$id": "#/properties/configJSON/properties/FileSettings/properties/PublicLinkSalt",
+                    "type": "string",
+                    "default": ""
+                  },
+                  "ThumbnailWidth": {
+                    "title": "Thumbnail Width",
+                    "$id": "#/properties/configJSON/properties/FileSettings/properties/ThumbnailWidth",
+                    "type": "number",
+                    "default": 120
+                  },
+                  "ThumbnailHeight": {
+                    "title": "Thumbnail Height",
+                    "$id": "#/properties/configJSON/properties/FileSettings/properties/ThumbnailHeight",
+                    "type": "number",
+                    "default": 100
+                  },
+                  "PreviewWidth": {
+                    "title": "Preview Width",
+                    "$id": "#/properties/configJSON/properties/FileSettings/properties/PreviewWidth",
+                    "type": "number",
+                    "default": 1024
+                  },
+                  "PreviewHeight": {
+                    "title": "Preview Height",
+                    "$id": "#/properties/configJSON/properties/FileSettings/properties/PreviewHeight",
+                    "type": "number",
+                    "default": 0
+                  },
+                  "ProfileWidth": {
+                    "title": "Profile Width",
+                    "$id": "#/properties/configJSON/properties/FileSettings/properties/ProfileWidth",
+                    "type": "number",
+                    "default": 128
+                  },
+                  "ProfileHeight": {
+                    "title": "Profile Height",
+                    "$id": "#/properties/configJSON/properties/FileSettings/properties/ProfileHeight",
+                    "type": "number",
+                    "default": 128
+                  },
+                  "InitialFont": {
+                    "title": "Initial Font",
+                    "$id": "#/properties/configJSON/properties/FileSettings/properties/InitialFont",
+                    "type": "string",
+                    "default": "luximbi.ttf"
+                  },
+                  "AmazonS3AccessKeyId": {
+                    "title": "Amazon S3 Access Key ID",
+                    "$id": "#/properties/configJSON/properties/FileSettings/properties/AmazonS3AccessKeyId",
+                    "type": "string",
+                    "default": ""
+                  },
+                  "AmazonS3SecretAccessKey": {
+                    "title": "Amazon S3 Secret Access Key",
+                    "$id": "#/properties/configJSON/properties/FileSettings/properties/AmazonS3SecretAccessKey",
+                    "type": "string",
+                    "default": ""
+                  },
+                  "AmazonS3Bucket": {
+                    "title": "Amazon S3 Bucket",
+                    "$id": "#/properties/configJSON/properties/FileSettings/properties/AmazonS3Bucket",
+                    "type": "string",
+                    "default": ""
+                  },
+                  "AmazonS3Region": {
+                    "title": "Amazon S3 Region",
+                    "$id": "#/properties/configJSON/properties/FileSettings/properties/AmazonS3Region",
+                    "type": "string",
+                    "default": ""
+                  },
+                  "AmazonS3Endpoint": {
+                    "title": "Amazon S3 Endpoint",
+                    "$id": "#/properties/configJSON/properties/FileSettings/properties/AmazonS3Endpoint",
+                    "type": "string",
+                    "default": "s3.amazonaws.com"
+                  },
+                  "AmazonS3SSL": {
+                    "title": "Amazon S3 S S L",
+                    "$id": "#/properties/configJSON/properties/FileSettings/properties/AmazonS3SSL",
+                    "type": "boolean",
+                    "default": false
+                  },
+                  "AmazonS3SignV2": {
+                    "title": "Amazon S3 Sign V2",
+                    "$id": "#/properties/configJSON/properties/FileSettings/properties/AmazonS3SignV2",
+                    "type": "boolean",
+                    "default": false
+                  }
+                }
+              },
+              "EmailSettings": {
+                "title": "Email Settings",
+                "$id": "#/properties/configJSON/properties/EmailSettings",
+                "type": "object",
+                "properties": {
+                  "EnableSignUpWithEmail": {
+                    "title": "Enable Sign Up With Email",
+                    "$id": "#/properties/configJSON/properties/EmailSettings/properties/EnableSignUpWithEmail",
+                    "type": "boolean",
+                    "default": true
+                  },
+                  "EnableSignInWithEmail": {
+                    "title": "Enable Sign In With Email",
+                    "$id": "#/properties/configJSON/properties/EmailSettings/properties/EnableSignInWithEmail",
+                    "type": "boolean",
+                    "default": true
+                  },
+                  "EnableSignInWithUsername": {
+                    "title": "Enable Sign In With Username",
+                    "$id": "#/properties/configJSON/properties/EmailSettings/properties/EnableSignInWithUsername",
+                    "type": "boolean",
+                    "default": true
+                  },
+                  "SendEmailNotifications": {
+                    "title": "Send Email Notifications",
+                    "$id": "#/properties/configJSON/properties/EmailSettings/properties/SendEmailNotifications",
+                    "type": "boolean",
+                    "default": false
+                  },
+                  "RequireEmailVerification": {
+                    "title": "Require Email Verification",
+                    "$id": "#/properties/configJSON/properties/EmailSettings/properties/RequireEmailVerification",
+                    "type": "boolean",
+                    "default": false
+                  },
+                  "FeedbackName": {
+                    "title": "Feedback Name",
+                    "$id": "#/properties/configJSON/properties/EmailSettings/properties/FeedbackName",
+                    "type": "string",
+                    "default": ""
+                  },
+                  "FeedbackEmail": {
+                    "title": "Feedback Email",
+                    "$id": "#/properties/configJSON/properties/EmailSettings/properties/FeedbackEmail",
+                    "type": "string",
+                    "default": ""
+                  },
+                  "FeedbackOrganization": {
+                    "title": "Feedback Organization",
+                    "$id": "#/properties/configJSON/properties/EmailSettings/properties/FeedbackOrganization",
+                    "type": "string",
+                    "default": ""
+                  },
+                  "SMTPUsername": {
+                    "title": "SMTP Username",
+                    "$id": "#/properties/configJSON/properties/EmailSettings/properties/SMTPUsername",
+                    "type": "string",
+                    "default": ""
+                  },
+                  "SMTPPassword": {
+                    "title": "SMTP Password",
+                    "$id": "#/properties/configJSON/properties/EmailSettings/properties/SMTPPassword",
+                    "type": "string",
+                    "default": ""
+                  },
+                  "EnableSMTPAuth": {
+                    "title": "Enable SMTP Auth",
+                    "$id": "#/properties/configJSON/properties/EmailSettings/properties/EnableSMTPAuth",
+                    "type": "string",
+                    "default": ""
+                  },
+                  "SMTPServer": {
+                    "title": "SMTP Server",
+                    "$id": "#/properties/configJSON/properties/EmailSettings/properties/SMTPServer",
+                    "type": "string",
+                    "default": ""
+                  },
+                  "SMTPPort": {
+                    "title": "SMTP Port",
+                    "$id": "#/properties/configJSON/properties/EmailSettings/properties/SMTPPort",
+                    "type": "string",
+                    "default": ""
+                  },
+                  "ConnectionSecurity": {
+                    "title": "Connection Security",
+                    "$id": "#/properties/configJSON/properties/EmailSettings/properties/ConnectionSecurity",
+                    "type": "string",
+                    "default": ""
+                  },
+                  "InviteSalt": {
+                    "title": "Invite Salt",
+                    "$id": "#/properties/configJSON/properties/EmailSettings/properties/InviteSalt",
+                    "type": "string",
+                    "default": ""
+                  },
+                  "SendPushNotifications": {
+                    "title": "Send Push Notifications",
+                    "$id": "#/properties/configJSON/properties/EmailSettings/properties/SendPushNotifications",
+                    "type": "boolean",
+                    "default": true
+                  },
+                  "PushNotificationServer": {
+                    "title": "Push Notification Server",
+                    "$id": "#/properties/configJSON/properties/EmailSettings/properties/PushNotificationServer",
+                    "type": "string",
+                    "default": "https://push-test.mattermost.com"
+                  },
+                  "PushNotificationContents": {
+                    "title": "Push Notification Contents",
+                    "$id": "#/properties/configJSON/properties/EmailSettings/properties/PushNotificationContents",
+                    "type": "string",
+                    "default": "generic"
+                  },
+                  "EnableEmailBatching": {
+                    "title": "Enable Email Batching",
+                    "$id": "#/properties/configJSON/properties/EmailSettings/properties/EnableEmailBatching",
+                    "type": "boolean",
+                    "default": false
+                  },
+                  "EmailBatchingBufferSize": {
+                    "title": "Email Batching Buffer Size",
+                    "$id": "#/properties/configJSON/properties/EmailSettings/properties/EmailBatchingBufferSize",
+                    "type": "number",
+                    "default": 256
+                  },
+                  "EmailBatchingInterval": {
+                    "title": "Email Batching Interval",
+                    "$id": "#/properties/configJSON/properties/EmailSettings/properties/EmailBatchingInterval",
+                    "type": "number",
+                    "default": 30
+                  },
+                  "SkipServerCertificateVerification": {
+                    "title": "Skip Server Certificate Verification",
+                    "$id": "#/properties/configJSON/properties/EmailSettings/properties/SkipServerCertificateVerification",
+                    "type": "boolean",
+                    "default": false
+                  }
+                }
+              },
+              "RateLimitSettings": {
+                "title": "Rate Limit Settings",
+                "$id": "#/properties/configJSON/properties/RateLimitSettings",
+                "type": "object",
+                "properties": {
+                  "Enable": {
+                    "title": "enable",
+                    "$id": "#/properties/configJSON/properties/RateLimitSettings/properties/Enable",
+                    "type": "boolean",
+                    "default": false
+                  },
+                  "PerSec": {
+                    "title": "Per Sec",
+                    "$id": "#/properties/configJSON/properties/RateLimitSettings/properties/PerSec",
+                    "type": "number",
+                    "default": 10
+                  },
+                  "MaxBurst": {
+                    "title": "Max Burst",
+                    "$id": "#/properties/configJSON/properties/RateLimitSettings/properties/MaxBurst",
+                    "type": "number",
+                    "default": 100
+                  },
+                  "MemoryStoreSize": {
+                    "title": "Memory Store Size",
+                    "$id": "#/properties/configJSON/properties/RateLimitSettings/properties/MemoryStoreSize",
+                    "type": "number",
+                    "default": 10000
+                  },
+                  "VaryByRemoteAddr": {
+                    "title": "Vary By Remote Addr",
+                    "$id": "#/properties/configJSON/properties/RateLimitSettings/properties/VaryByRemoteAddr",
+                    "type": "boolean",
+                    "default": true
+                  },
+                  "VaryByHeader": {
+                    "title": "Vary By Header",
+                    "$id": "#/properties/configJSON/properties/RateLimitSettings/properties/VaryByHeader",
+                    "type": "string",
+                    "default": ""
+                  }
+                }
+              },
+              "PrivacySettings": {
+                "title": "Privacy Settings",
+                "$id": "#/properties/configJSON/properties/PrivacySettings",
+                "type": "object",
+                "properties": {
+                  "ShowEmailAddress": {
+                    "title": "Show Email Address",
+                    "$id": "#/properties/configJSON/properties/PrivacySettings/properties/ShowEmailAddress",
+                    "type": "boolean",
+                    "default": true
+                  },
+                  "ShowFullName": {
+                    "title": "Show Full Name",
+                    "$id": "#/properties/configJSON/properties/PrivacySettings/properties/ShowFullName",
+                    "type": "boolean",
+                    "default": true
+                  }
+                }
+              },
+              "SupportSettings": {
+                "title": "Support Settings",
+                "$id": "#/properties/configJSON/properties/SupportSettings",
+                "type": "object",
+                "properties": {
+                  "TermsOfServiceLink": {
+                    "title": "Terms Of Service Link",
+                    "$id": "#/properties/configJSON/properties/SupportSettings/properties/TermsOfServiceLink",
+                    "type": "string",
+                    "default": "https://about.mattermost.com/default-terms/"
+                  },
+                  "PrivacyPolicyLink": {
+                    "title": "Privacy Policy Link",
+                    "$id": "#/properties/configJSON/properties/SupportSettings/properties/PrivacyPolicyLink",
+                    "type": "string",
+                    "default": "https://about.mattermost.com/default-privacy-policy/"
+                  },
+                  "AboutLink": {
+                    "title": "About Link",
+                    "$id": "#/properties/configJSON/properties/SupportSettings/properties/AboutLink",
+                    "type": "string",
+                    "default": "https://about.mattermost.com/default-about/"
+                  },
+                  "HelpLink": {
+                    "title": "Help Link",
+                    "$id": "#/properties/configJSON/properties/SupportSettings/properties/HelpLink",
+                    "type": "string",
+                    "default": "https://about.mattermost.com/default-help/"
+                  },
+                  "ReportAProblemLink": {
+                    "title": "Report A Problem Link",
+                    "$id": "#/properties/configJSON/properties/SupportSettings/properties/ReportAProblemLink",
+                    "type": "string",
+                    "default": "https://about.mattermost.com/default-report-a-problem/"
+                  },
+                  "SupportEmail": {
+                    "title": "Support Email",
+                    "$id": "#/properties/configJSON/properties/SupportSettings/properties/SupportEmail",
+                    "type": "string",
+                    "default": "feedback@mattermost.com"
+                  }
+                }
+              },
+              "AnnouncementSettings": {
+                "title": "Announcement Settings",
+                "$id": "#/properties/configJSON/properties/AnnouncementSettings",
+                "type": "object",
+                "properties": {
+                  "EnableBanner": {
+                    "title": "Enable Banner",
+                    "$id": "#/properties/configJSON/properties/AnnouncementSettings/properties/EnableBanner",
+                    "type": "boolean",
+                    "default": false
+                  },
+                  "BannerText": {
+                    "title": "Banner Text",
+                    "$id": "#/properties/configJSON/properties/AnnouncementSettings/properties/BannerText",
+                    "type": "string",
+                    "default": ""
+                  },
+                  "BannerColor": {
+                    "title": "Banner Color",
+                    "$id": "#/properties/configJSON/properties/AnnouncementSettings/properties/BannerColor",
+                    "type": "string",
+                    "default": "#f2a93b"
+                  },
+                  "BannerTextColor": {
+                    "title": "Banner Text Color",
+                    "$id": "#/properties/configJSON/properties/AnnouncementSettings/properties/BannerTextColor",
+                    "type": "string",
+                    "default": "#333333"
+                  },
+                  "AllowBannerDismissal": {
+                    "title": "Allow Banner Dismissal",
+                    "$id": "#/properties/configJSON/properties/AnnouncementSettings/properties/AllowBannerDismissal",
+                    "type": "boolean",
+                    "default": true
+                  }
+                }
+              },
+              "GitLabSettings": {
+                "title": "Git Lab Settings",
+                "$id": "#/properties/configJSON/properties/GitLabSettings",
+                "type": "object",
+                "properties": {
+                  "Enable": {
+                    "title": "Enable",
+                    "$id": "#/properties/configJSON/properties/GitLabSettings/properties/Enable",
+                    "type": "boolean",
+                    "default": false
+                  },
+                  "Secret": {
+                    "title": "Secret",
+                    "$id": "#/properties/configJSON/properties/GitLabSettings/properties/Secret",
+                    "type": "string",
+                    "default": ""
+                  },
+                  "Id": {
+                    "title": "ID",
+                    "$id": "#/properties/configJSON/properties/GitLabSettings/properties/Id",
+                    "type": "string",
+                    "default": ""
+                  },
+                  "Scope": {
+                    "title": "Scope",
+                    "$id": "#/properties/configJSON/properties/GitLabSettings/properties/Scope",
+                    "type": "string",
+                    "default": ""
+                  },
+                  "AuthEndpoint": {
+                    "title": "Auth Endpoint",
+                    "$id": "#/properties/configJSON/properties/GitLabSettings/properties/AuthEndpoint",
+                    "type": "string",
+                    "default": ""
+                  },
+                  "TokenEndpoint": {
+                    "title": "Token Endpoint",
+                    "$id": "#/properties/configJSON/properties/GitLabSettings/properties/TokenEndpoint",
+                    "type": "string",
+                    "default": ""
+                  },
+                  "UserApiEndpoint": {
+                    "title": "User API Endpoint",
+                    "$id": "#/properties/configJSON/properties/GitLabSettings/properties/UserApiEndpoint",
+                    "type": "string",
+                    "default": ""
+                  }
+                }
+              },
+              "LocalizationSettings": {
+                "title": "Localization Settings",
+                "$id": "#/properties/configJSON/properties/LocalizationSettings",
+                "type": "object",
+                "properties": {
+                  "DefaultServerLocale": {
+                    "title": "Default Server Locale",
+                    "$id": "#/properties/configJSON/properties/LocalizationSettings/properties/DefaultServerLocale",
+                    "type": "string",
+                    "default": "en"
+                  },
+                  "DefaultClientLocale": {
+                    "title": "Default Client Locale",
+                    "$id": "#/properties/configJSON/properties/LocalizationSettings/properties/DefaultClientLocale",
+                    "type": "string",
+                    "default": "en"
+                  },
+                  "AvailableLocales": {
+                    "title": "Available Locales",
+                    "$id": "#/properties/configJSON/properties/LocalizationSettings/properties/AvailableLocales",
+                    "type": "string",
+                    "default": ""
+                  }
+                }
+              },
+              "NativeAppSettings": {
+                "title": "Native App Settings",
+                "$id": "#/properties/configJSON/properties/NativeAppSettings",
+                "type": "object",
+                "properties": {
+                  "AppDownloadLink": {
+                    "title": "App Download Link",
+                    "$id": "#/properties/configJSON/properties/NativeAppSettings/properties/AppDownloadLink",
+                    "type": "string",
+                    "default": "https://about.mattermost.com/downloads/"
+                  },
+                  "AndroidAppDownloadLink": {
+                    "title": "Android App Download Link",
+                    "$id": "#/properties/configJSON/properties/NativeAppSettings/properties/AndroidAppDownloadLink",
+                    "type": "string",
+                    "default": "https://about.mattermost.com/mattermost-android-app/"
+                  },
+                  "IosAppDownloadLink": {
+                    "title": "Ios App Download Link",
+                    "$id": "#/properties/configJSON/properties/NativeAppSettings/properties/IosAppDownloadLink",
+                    "type": "string",
+                    "default": "https://about.mattermost.com/mattermost-ios-app/"
+                  }
+                }
+              },
+              "AnalyticsSettings": {
+                "title": "Analytics Settings",
+                "$id": "#/properties/configJSON/properties/AnalyticsSettings",
+                "type": "object",
+                "properties": {
+                  "MaxUsersForStatistics": {
+                    "title": "Max Users For Statistics",
+                    "$id": "#/properties/configJSON/properties/AnalyticsSettings/properties/MaxUsersForStatistics",
+                    "type": "number",
+                    "default": 2500
+                  }
+                }
+              },
+              "WebrtcSettings": {
+                "title": "Webrtc Settings",
+                "$id": "#/properties/configJSON/properties/WebrtcSettings",
+                "type": "object",
+                "properties": {
+                  "Enable": {
+                    "title": "Enable",
+                    "$id": "#/properties/configJSON/properties/WebrtcSettings/properties/Enable",
+                    "type": "boolean",
+                    "default": false
+                  },
+                  "GatewayWebsocketUrl": {
+                    "title": "Gateway Websocket URL",
+                    "$id": "#/properties/configJSON/properties/WebrtcSettings/properties/GatewayWebsocketUrl",
+                    "type": "string",
+                    "default": ""
+                  },
+                  "GatewayAdminUrl": {
+                    "title": "Gateway Admin URL",
+                    "$id": "#/properties/configJSON/properties/WebrtcSettings/properties/GatewayAdminUrl",
+                    "type": "string",
+                    "default": ""
+                  },
+                  "GatewayAdminSecret": {
+                    "title": "Gateway Admin Secret",
+                    "$id": "#/properties/configJSON/properties/WebrtcSettings/properties/GatewayAdminSecret",
+                    "type": "string",
+                    "default": ""
+                  },
+                  "StunURI": {
+                    "title": "Stun URI",
+                    "$id": "#/properties/configJSON/properties/WebrtcSettings/properties/StunURI",
+                    "type": "string",
+                    "default": ""
+                  },
+                  "TurnURI": {
+                    "title": "Turn URI",
+                    "$id": "#/properties/configJSON/properties/WebrtcSettings/properties/TurnURI",
+                    "type": "string",
+                    "default": ""
+                  },
+                  "TurnUsername": {
+                    "title": "Turn Username",
+                    "$id": "#/properties/configJSON/properties/WebrtcSettings/properties/TurnUsername",
+                    "type": "string",
+                    "default": ""
+                  },
+                  "TurnSharedKey": {
+                    "title": "Turn Shared Key",
+                    "$id": "#/properties/configJSON/properties/WebrtcSettings/properties/TurnSharedKey",
+                    "type": "string",
+                    "default": ""
+                  }
+                }
+              },
+              "DisplaySettings": {
+                "title": "Display Settings",
+                "$id": "#/properties/configJSON/properties/DisplaySettings",
+                "type": "object",
+                "properties": {
+                  "CustomUrlSchemes": {
+                    "title": "Custom URL Schemes",
+                    "$id": "#/properties/configJSON/properties/DisplaySettings/properties/CustomUrlSchemes",
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    },
+                    "default": []
+                  },
+                  "ExperimentalTimezone": {
+                    "title": "Experimental Timezone",
+                    "$id": "#/properties/configJSON/properties/DisplaySettings/properties/ExperimentalTimezone",
+                    "type": "boolean",
+                    "default": true
+                  }
+                }
+              },
+              "TimezoneSettings": {
+                "title": "Timezone Settings",
+                "$id": "#/properties/configJSON/properties/TimezoneSettings",
+                "type": "object",
+                "properties": {
+                  "SupportedTimezonesPath": {
+                    "title": "Supported Timezones Path",
+                    "$id": "#/properties/configJSON/properties/TimezoneSettings/properties/SupportedTimezonesPath",
+                    "type": "string",
+                    "default": "timezones.json"
+                  }
+                }
+              },
+              "PluginSettings": {
+                "title": "Plugin Settings",
+                "$id": "#/properties/configJSON/properties/PluginSettings",
+                "type": "object",
+                "properties": {
+                  "Enable": {
+                    "title": "Enable",
+                    "$id": "#/properties/configJSON/properties/PluginSettings/properties/Enable",
+                    "type": "boolean",
+                    "default": true
+                  },
+                  "EnableUploads": {
+                    "title": "Enable Uploads",
+                    "$id": "#/properties/configJSON/properties/PluginSettings/properties/EnableUploads",
+                    "type": "boolean",
+                    "default": true
+                  },
+                  "Directory": {
+                    "title": "Directory",
+                    "$id": "#/properties/configJSON/properties/PluginSettings/properties/Directory",
+                    "type": "string",
+                    "default": "./plugins"
+                  },
+                  "ClientDirectory": {
+                    "title": "Client Directory",
+                    "$id": "#/properties/configJSON/properties/PluginSettings/properties/ClientDirectory",
+                    "type": "string",
+                    "default": "./client/plugins"
+                  },
+                  "Plugins": {
+                    "title": "Plugins",
+                    "$id": "#/properties/configJSON/properties/PluginSettings/properties/Plugins",
+                    "type": "object",
+                    "properties": {}
+                  },
+                  "PluginStates": {
+                    "title": "Plugin States",
+                    "$id": "#/properties/configJSON/properties/PluginSettings/properties/PluginStates",
+                    "type": "object",
+                    "properties": {}
+                  }
+                }
+              }
+            }
           }
-        },
-        "additionalProperties": true
+        }
       }
 ```
 </details>
@@ -215,19 +1450,19 @@ spec:
         "type": "object",
         "title": "The schema for Mattermost configuration",
         "required": [
-            "version"
+          "version"
         ],
         "definitions": {
           "semVer": {
             "type": "string",
             "minLength": 5,
-            "pattern": "^(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)(?:-((?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*)(?:\.(?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*))*))?(?:\+([0-9a-zA-Z-]+(?:\.[0-9a-zA-Z-]+)*))?$",
+            "pattern": "^(0|[1-9]\\d*)\\.(0|[1-9]\\d*)\\.(0|[1-9]\\d*)(?:-((?:0|[1-9]\\d*|\\d*[a-zA-Z-][0-9a-zA-Z-]*)(?:\\.(?:0|[1-9]\\d*|\\d*[a-zA-Z-][0-9a-zA-Z-]*))*))?(?:\\+([0-9a-zA-Z-]+(?:\\.[0-9a-zA-Z-]+)*))?$",
             "title": "Semantic Versioning version",
             "examples": [
-                "1.19.0"
-                "2.0.1-alpha1"
+              "1.19.0",
+              "2.0.1-alpha1"
             ]
-          }
+          },
           "hostname": {
             "type": "string",
             "format": "hostname",
@@ -237,7 +1472,7 @@ spec:
         "properties": {
           "version": {
             "$ref": "#/definitions/semVer"
-          }
+          },
           "host": {
             "$ref": "#/definitions/hostname"
           }
@@ -247,10 +1482,7 @@ spec:
 ```
 </details>
 
-The **Type** values are described using [JSON Schema](https://json-schema.org/).
-
-> Currently the **Type** manifests are not used in Capact to validate the data of the inputs and outputs. Validation of the data will be added later on, although
-> it is still useful to define the **Types** to document the schema of the data.
+The **Type** values are described using [JSON Schema](https://json-schema.org/) and are used to validate the data of the inputs and outputs.
 
 ## Runners
 
@@ -312,6 +1544,11 @@ spec:
           path: cap.type.database.postgresql.config
           revision: 0.1.0
         verbs: ["get"]
+    parameters:
+      additional-parameters:
+        typeRef:
+          path: cap.type.mattermost.helm.install-input
+          revision: 0.1.0
 
   implements:
     - path: cap.interface.productivity.mattermost.install
@@ -361,6 +1598,8 @@ spec:
                 - name: input-parameters
                 - name: postgresql
                   optional: true
+                - name: additional-parameters
+                  optional: true
             outputs:
               artifacts:
                 - name: mattermost-config
@@ -391,7 +1630,7 @@ spec:
                     artifacts:
                       - name: postgresql
                         from: "{{steps.install-db.outputs.artifacts.postgresql}}"
-                      - name: user-input
+                      - name: input-parameters
                         raw:
                           data: |
                             name: mattermost
@@ -420,8 +1659,24 @@ spec:
                     artifacts:
                       - name: postgresql
                         from: "{{steps.install-db.outputs.artifacts.postgresql}}"
-                      - name: database-input
+                      - name: input-parameters
                         from: "{{steps.render-create-db-args.outputs.artifacts.render}}"
+
+              - - name: prepare-parameters
+                  template: prepare-parameters
+                  arguments:
+                    artifacts:
+                      - name: input-parameters
+                        from: "{{inputs.artifacts.input-parameters}}"
+                      - name: additional-parameters
+                        from: "{{inputs.artifacts.additional-parameters}}"
+                        optional: true
+                      - name: psql
+                        from: "{{steps.install-db.outputs.artifacts.postgresql}}"
+                      - name: db
+                        from: "{{steps.create-db.outputs.artifacts.database}}"
+                      - name: user
+                        from: "{{steps.create-user.outputs.artifacts.user}}"
 
               # Install Mattermost
               - - name: create-helm-args
@@ -437,66 +1692,273 @@ spec:
                               repo: "https://helm.mattermost.com"
                               version: "4.0.0"
                             values:
+                              image:
+                                repository: <@ additionalinput.image.repository | default('mattermost/mattermost-team-edition') @>
+                                tag: <@ additionalinput.image.tag | default('5.29.0') @>
+                                imagePullPolicy: <@ additionalinput.image.imagePullPolicy | default('IfNotPresent') @>
+                              initContainerImage:
+                                repository: <@ additionalinput.initContainerImage.repository | default('appropriate/curl') @>
+                                tag: <@ additionalinput.initContainerImage.tag | default('latest') @>
+                                imagePullPolicy: <@ additionalinput.initContainerImage.imagePullPolicy | default('IfNotPresent') @>
+                              revisionHistoryLimit: <@ additionalinput.revisionHistoryLimit | default(1) @>
+                              persistence:
+                                data:
+                                  enabled: <@ additionalinput.persistence.data.enabled | default(true) | tojson @>
+                                  size: <@ additionalinput.persistence.data.size | default('10Gi') @>
+                                  accessMode: <@ additionalinput.persistence.data.accessMode | default('ReadWriteOnce') @>
+                                  storageClass: <@ additionalinput.persistence.data.storageClass | default('') @>
+                                plugins:
+                                  enabled: <@ additionalinput.persistence.plugins.enabled | default(true) | tojson @>
+                                  size: <@ additionalinput.persistence.plugins.size | default('1Gi') @>
+                                  accessMode: <@ additionalinput.persistence.plugins.accessMode | default('ReadWriteOnce') @>
+                                  storageClass: <@ additionalinput.persistence.plugins.storageClass | default('') @>
+                              service:
+                                type: <@ additionalinput.service.type | default('ClusterIP') @>
+                                externalPort: <@ additionalinput.service.externalPort | default(8065) @>
+                                internalPort: <@ additionalinput.service.internalPort | default(8065) @>
+                                annotations: <@ additionalinput.service.annotations | default({}) @>
+                                loadBalancerSourceRanges: <@ additionalinput.service.loadBalancerSourceRanges | default([]) @>
                               ingress:
-                                enabled: true
-                                path: "/"
+                                enabled: <@ additionalinput.ingress.enabled | default(true) | tojson @>
+                                path: <@ additionalinput.ingress.path | default('/') @>
                                 annotations:
                                   "cert-manager.io/cluster-issuer": letsencrypt
                                 hosts:
-                                  - <@ host | default("mattermost.example.com") @>
+                                  - <@ input.host @>
                                 tls:
                                   - hosts:
-                                      - <@ host | default("mattermost.example.com") @>
+                                      - <@ input.host @>
                                     secretName: mattermost-team-edition-tls-<@ random_word(length=5) @>
+                              route:
+                                enabled: <@ additionalinput.route.enabled | default(false) | tojson @>
+                              externalDB:
+                                enabled: true
+                                externalDriverType: "postgres"
+                                externalConnectionString: "postgres://<@ user.name @>:<@ user.password @>@<@ psql.host @>:<@ psql.port @>/<@ db.name @>?sslmode=disable"
+                              mysql:
+                                enabled: false
+                              extraPodAnnotations: <@ additionalinput.extraPodAnnotations | default({}) @>
+                              extraEnvVars: <@ additionalinput.extraEnvVars | default([]) @>
+                              extraInitContainers: <@ additionalinput.extraInitContainers | default([]) @>
+                              extraVolumes: <@ additionalinput.extraVolumes | default([]) @>
+                              extraVolumeMounts: <@ additionalinput.extraVolumeMounts | default([]) @>
+                              nodeSelector: <@ additionalinput.nodeSelector | default({}) @>
+                              affinity: <@ additionalinput.affinity | default({}) @>
+                              affinity: <@ additionalinput.resources | default({}) @>
+                              tolerations: <@ additionalinput.tolerations | default([]) @>
+
+                              configJSON:
+                                ServiceSettings:
+                                  SiteURL: "https://<@ input.host @>"
+                                  LicenseFileLocation: "<@ input.configJSON.ServiceSettings.LicenseFileLocation | default('') @>"
+                                  ListenAddress: "<@ input.configJSON.ServiceSettings.ListenAddress | default(':8065') @>"
+                                  ConnectionSecurity: "<@ input.configJSON.ServiceSettings.ConnectionSecurity | default('') @>"
+                                  TLSCertFile: "<@ input.configJSON.ServiceSettings.TLSCertFile | default('') @>"
+                                  TLSKeyFile: "<@ input.configJSON.ServiceSettings.TLSKeyFile | default('') @>"
+                                  UseLetsEncrypt: <@ input.configJSON.ServiceSettings.UseLetsEncrypt | default(false) | tojson @>
+                                  LetsEncryptCertificateCacheFile: "<@ input.configJSON.ServiceSettings.LetsEncryptCertificateCacheFile | default('./config/letsencrypt.cache') @>"
+                                  Forward80To443: <@ input.configJSON.ServiceSettings.Forward80To443 | default(false) | tojson @>
+                                  ReadTimeout: <@ input.configJSON.ServiceSettings.ReadTimeout | default(300) @>
+                                  WriteTimeout: <@ input.configJSON.ServiceSettings.WriteTimeout | default(300) @>
+                                  MaximumLoginAttempts: <@ input.configJSON.ServiceSettings.MaximumLoginAttempts | default(10) @>
+                                  GoroutineHealthThreshold: <@ input.configJSON.ServiceSettings.GoroutineHealthThreshold | default(-1) @>
+                                  GoogleDeveloperKey: "<@ input.configJSON.ServiceSettings.GoogleDeveloperKey | default('') @>"
+                                  EnableOAuthServiceProvider: <@ input.configJSON.ServiceSettings.EnableOAuthServiceProvider | default(false) | tojson @>
+                                  EnableIncomingWebhooks: <@ input.configJSON.ServiceSettings.EnableIncomingWebhooks | default(true) | tojson @>
+                                  EnableOutgoingWebhooks: <@ input.configJSON.ServiceSettings.EnableOutgoingWebhooks | default(true) | tojson @>
+                                  EnableCommands: <@ input.configJSON.ServiceSettings.EnableCommands | default(true) | tojson @>
+                                  EnableOnlyAdminIntegrations: <@ input.configJSON.ServiceSettings.EnableOnlyAdminIntegrations | default(false) | tojson @>
+                                  EnablePostUsernameOverride: <@ input.configJSON.ServiceSettings.EnablePostUsernameOverride | default(false) | tojson @>
+                                  EnablePostIconOverride: <@ input.configJSON.ServiceSettings.EnablePostIconOverride | default(false) | tojson @>
+                                  EnableBotAccountCreation: <@ input.configJSON.ServiceSettings.EnableBotAccountCreation | default(false) | tojson @>
+                                  EnableUserAccessTokens: <@ input.configJSON.ServiceSettings.EnableUserAccessTokens | default(false) | tojson @>
+                                  EnableLinkPreviews: <@ input.configJSON.ServiceSettings.EnableLinkPreviews | default(false) | tojson @>
+                                  EnableTesting: <@ input.configJSON.ServiceSettings.EnableTesting | default(false) | tojson @>
+                                  EnableDeveloper: <@ input.configJSON.ServiceSettings.EnableDeveloper | default(false) | tojson @>
+                                  EnableSecurityFixAlert: <@ input.configJSON.ServiceSettings.EnableSecurityFixAlert | default(true) | tojson @>
+                                  EnableInsecureOutgoingConnections: <@ input.configJSON.ServiceSettings.EnableInsecureOutgoingConnections | default(false) | tojson @>
+                                  EnableMultifactorAuthentication: <@ input.configJSON.ServiceSettings.EnableMultifactorAuthentication | default(false) | tojson @>
+                                  EnforceMultifactorAuthentication: <@ input.configJSON.ServiceSettings.EnforceMultifactorAuthentication | default(false) | tojson @>
+                                  AllowCorsFrom: "<@ input.configJSON.ServiceSettings.AllowCorsFrom | default('') @>"
+                                  SessionLengthWebInDays: <@ input.configJSON.ServiceSettings.SessionLengthWebInDays | default(30) @>
+                                  SessionLengthMobileInDays: <@ input.configJSON.ServiceSettings.SessionLengthMobileInDays | default(30) @>
+                                  SessionLengthSSOInDays: <@ input.configJSON.ServiceSettings.SessionLengthSSOInDays | default(30) @>
+                                  SessionCacheInMinutes: <@ input.configJSON.ServiceSettings.SessionCacheInMinutes | default(10) @>
+                                  WebsocketSecurePort: <@ input.configJSON.ServiceSettings.WebsocketSecurePort | default(443) @>
+                                  WebsocketPort: <@ input.configJSON.ServiceSettings.WebsocketPort | default(80) @>
+                                  WebserverMode: "<@ input.configJSON.ServiceSettings.WebserverMode | default('gzip') @>"
+                                  EnableCustomEmoji: <@ input.configJSON.ServiceSettings.EnableCustomEmoji | default(false) @>
+                                  RestrictCustomEmojiCreation: "<@ input.configJSON.ServiceSettings.RestrictCustomEmojiCreation | default('all') @>"
+                                  RestrictPostDelete: "<@ input.configJSON.ServiceSettings.RestrictPostDelete | default('all') @>"
+                                  AllowEditPost: "<@ input.configJSON.ServiceSettings.AllowEditPost | default('always') @>"
+                                  PostEditTimeLimit: <@ input.configJSON.ServiceSettings.PostEditTimeLimit | default(300) @>
+                                  TimeBetweenUserTypingUpdatesMilliseconds: <@ input.configJSON.ServiceSettings.TimeBetweenUserTypingUpdatesMilliseconds | default(5000) @>
+                                  EnablePostSearch: <@ input.configJSON.ServiceSettings.EnablePostSearch | default(true) | tojson @>
+                                  EnableUserTypingMessages: <@ input.configJSON.ServiceSettings.EnableUserTypingMessages | default(true) | tojson @>
+                                  EnableUserStatuses: <@ input.configJSON.ServiceSettings.EnableUserStatuses | default(true) | tojson @>
+                                  ClusterLogTimeoutMilliseconds: <@ input.configJSON.ServiceSettings.ClusterLogTimeoutMilliseconds | default(2000) @>
+                                TeamSettings:
+                                  SiteName: "<@ input.configJSON.TeamSettings.SiteName | default('Mattermost') @>"
+                                  MaxUsersPerTeam: <@ input.configJSON.TeamSettings.MaxUsersPerTeam | default(50000) @>
+                                  EnableTeamCreation: <@ input.configJSON.TeamSettings.EnableTeamCreation | default(true) | tojson @>
+                                  EnableUserCreation: <@ input.configJSON.TeamSettings.EnableUserCreation | default(true) | tojson @>
+                                  EnableOpenServer: <@ input.configJSON.TeamSettings.EnableOpenServer | default(true) | tojson @>
+                                  RestrictCreationToDomains: "<@ input.configJSON.TeamSettings.RestrictCreationToDomains | default('') @>"
+                                  EnableCustomBrand: <@ input.configJSON.TeamSettings.EnableCustomBrand | default(false) | tojson @>
+                                  CustomBrandText: "<@ input.configJSON.TeamSettings.CustomBrandText | default('') @>"
+                                  CustomDescriptionText: "<@ input.configJSON.TeamSettings.CustomDescriptionText | default('') @>"
+                                  RestrictDirectMessage: "<@ input.configJSON.TeamSettings.RestrictDirectMessage | default('any') @>"
+                                  RestrictTeamInvite: "<@ input.configJSON.TeamSettings.RestrictTeamInvite | default('all') @>"
+                                  RestrictPublicChannelManagement: "<@ input.configJSON.TeamSettings.RestrictPublicChannelManagement | default('all') @>"
+                                  RestrictPrivateChannelManagement: "<@ input.configJSON.TeamSettings.RestrictPrivateChannelManagement | default('all') @>"
+                                  RestrictPublicChannelCreation: "<@ input.configJSON.TeamSettings.RestrictPublicChannelCreation | default('all') @>"
+                                  RestrictPrivateChannelCreation: "<@ input.configJSON.TeamSettings.RestrictPrivateChannelCreation | default('all') @>"
+                                  RestrictPublicChannelDeletion: "<@ input.configJSON.TeamSettings.RestrictPublicChannelDeletion | default('all') @>"
+                                  RestrictPrivateChannelDeletion: "<@ input.configJSON.TeamSettings.RestrictPrivateChannelDeletion | default('all') @>"
+                                  RestrictPrivateChannelManageMembers: "<@ input.configJSON.TeamSettings.RestrictPrivateChannelManageMembers | default('all') @>"
+                                  UserStatusAwayTimeout: <@ input.configJSON.TeamSettings.UserStatusAwayTimeout | default(300) @>
+                                  MaxChannelsPerTeam: <@ input.configJSON.TeamSettings.MaxChannelsPerTeam | default(50000) @>
+                                  MaxNotificationsPerChannel: <@ input.configJSON.TeamSettings.MaxNotificationsPerChannel | default(1000) @>
+                                SqlSettings:
+                                  DriverName: "<@ input.configJSON.SqlSettings.DriverName | default('') @>"
+                                  DataSource: "<@ input.configJSON.SqlSettings.DataSource | default('') @>"
+                                  DataSourceReplicas: <@ input.configJSON.SqlSettings.DataSourceReplicas | default([]) @>
+                                  DataSourceSearchReplicas: <@ input.configJSON.SqlSettings.DataSourceSearchReplicas | default([]) @>
+                                  MaxIdleConns: <@ input.configJSON.SqlSettings.MaxIdleConns | default(20) @>
+                                  MaxOpenConns: <@ input.configJSON.SqlSettings.MaxOpenConns | default(35) @>
+                                  Trace: <@ input.configJSON.SqlSettings.Trace | default(false) | tojson @>
+                                  AtRestEncryptKey: "<@ input.configJSON.SqlSettings.AtRestEncryptKey | default('') @>"
+                                  QueryTimeout: <@ input.configJSON.SqlSettings.QueryTimeout | default(30) @>
+                                LogSettings:
+                                  EnableConsole: <@ input.configJSON.LogSettings.EnableConsole | default(true) | tojson @>
+                                  ConsoleLevel: "<@ input.configJSON.LogSettings.ConsoleLevel | default('INFO') @>"
+                                  EnableFile: <@ input.configJSON.LogSettings.EnableFile | default(true) | tojson @>
+                                  FileLevel: "<@ input.configJSON.LogSettings.FileLevel | default('INFO') @>"
+                                  FileFormat: "<@ input.configJSON.LogSettings.FileFormat | default('') @>"
+                                  FileLocation: "<@ input.configJSON.LogSettings.FileLocation | default('') @>"
+                                  EnableWebhookDebugging: <@ input.configJSON.LogSettings.EnableWebhookDebugging | default(true) | tojson @>
+                                  EnableDiagnostics: <@ input.configJSON.LogSettings.EnableDiagnostics | default(true) | tojson @>
+                                PasswordSettings:
+                                  MinimumLength: <@ input.configJSON.PasswordSettings.MinimumLength | default(5) @>
+                                  Lowercase: <@ input.configJSON.PasswordSettings.Lowercase | default(false) | tojson @>
+                                  Number: <@ input.configJSON.PasswordSettings.Number | default(false) | tojson @>
+                                  Uppercase: <@ input.configJSON.PasswordSettings.Uppercase | default(false) | tojson @>
+                                  Symbol: <@ input.configJSON.PasswordSettings.Symbol | default(false) | tojson @>
+                                FileSettings:
+                                  EnableFileAttachments: <@ input.configJSON.FileSettings.EnableFileAttachments | default(true) | tojson @>
+                                  MaxFileSize: <@ input.configJSON.FileSettings.MaxFileSize | default(52428800) @>
+                                  DriverName: "<@ input.configJSON.FileSettings.DriverName | default('local') @>"
+                                  Directory: "<@ input.configJSON.FileSettings.Directory | default('./data/') @>"
+                                  EnablePublicLink: <@ input.configJSON.FileSettings.EnablePublicLink | default(false) | tojson @>
+                                  PublicLinkSalt: "<@ input.configJSON.FileSettings.PublicLinkSalt | default('') @>"
+                                  ThumbnailWidth: <@ input.configJSON.FileSettings.ThumbnailWidth | default(120) @>
+                                  ThumbnailHeight: <@ input.configJSON.FileSettings.ThumbnailHeight | default(100) @>
+                                  PreviewWidth: <@ input.configJSON.FileSettings.PreviewWidth | default(1024) @>
+                                  PreviewHeight: <@ input.configJSON.FileSettings.PreviewHeight | default(0) @>
+                                  ProfileWidth: <@ input.configJSON.FileSettings.ProfileWidth | default(128) @>
+                                  ProfileHeight: <@ input.configJSON.FileSettings.ProfileHeight | default(128) @>
+                                  InitialFont: "<@ input.configJSON.FileSettings.InitialFont | default('luximbi.ttf') @>"
+                                  AmazonS3AccessKeyId: "<@ input.configJSON.FileSettings.AmazonS3AccessKeyId | default('') @>"
+                                  AmazonS3SecretAccessKey: "<@ input.configJSON.FileSettings.AmazonS3SecretAccessKey | default('') @>"
+                                  AmazonS3Bucket: "<@ input.configJSON.FileSettings.AmazonS3Bucket | default('') @>"
+                                  AmazonS3Region: "<@ input.configJSON.FileSettings.AmazonS3Region | default('') @>"
+                                  AmazonS3Endpoint: "<@ input.configJSON.FileSettings.AmazonS3Endpoint | default('s3.amazonaws.com') @>"
+                                  AmazonS3SSL: <@ input.configJSON.FileSettings.AmazonS3SSL | default(false) | tojson @>
+                                  AmazonS3SignV2: <@ input.configJSON.FileSettings.AmazonS3SignV2 | default(false) | tojson @>
+                                EmailSettings:
+                                  EnableSignUpWithEmail: <@ input.configJSON.EmailSettings.EnableSignUpWithEmail | default(true) | tojson @>
+                                  EnableSignInWithEmail: <@ input.configJSON.EmailSettings.EnableSignInWithEmail | default(true) | tojson @>
+                                  EnableSignInWithUsername: <@ input.configJSON.EmailSettings.EnableSignInWithUsername | default(true) | tojson @>
+                                  SendEmailNotifications: <@ input.configJSON.EmailSettings.SendEmailNotifications | default(false) | tojson @>
+                                  RequireEmailVerification: <@ input.configJSON.EmailSettings.RequireEmailVerification | default(false) | tojson @>
+                                  FeedbackName: "<@ input.configJSON.EmailSettings.FeedbackName | default('') @>"
+                                  FeedbackEmail: "<@ input.configJSON.EmailSettings.FeedbackEmail | default('') @>"
+                                  FeedbackOrganization: "<@ input.configJSON.EmailSettings.FeedbackOrganization | default('') @>"
+                                  SMTPUsername: "<@ input.configJSON.EmailSettings.SMTPUsername | default('') @>"
+                                  SMTPPassword: "<@ input.configJSON.EmailSettings.SMTPPassword | default('') @>"
+                                  EnableSMTPAuth: "<@ input.configJSON.EmailSettings.EnableSMTPAuth | default('') @>"
+                                  SMTPServer: "<@ input.configJSON.EmailSettings.SMTPServer | default('') @>"
+                                  SMTPPort: "<@ input.configJSON.EmailSettings.SMTPPort | default('') @>"
+                                  ConnectionSecurity: "<@ input.configJSON.EmailSettings.ConnectionSecurity | default('') @>"
+                                  InviteSalt: "<@ input.configJSON.EmailSettings.InviteSalt | default('') @>"
+                                  SendPushNotifications: <@ input.configJSON.EmailSettings.SendPushNotifications | default(true) | tojson @>
+                                  PushNotificationServer: "<@ input.configJSON.EmailSettings.PushNotificationServer | default('https://push-test.mattermost.com') @>"
+                                  PushNotificationContents: "<@ input.configJSON.EmailSettings.PushNotificationContents | default('generic') @>"
+                                  EnableEmailBatching: <@ input.configJSON.EmailSettings.EnableEmailBatching | default(false) | tojson @>
+                                  EmailBatchingBufferSize: <@ input.configJSON.EmailSettings.EmailBatchingBufferSize | default(256) @>
+                                  EmailBatchingInterval: <@ input.configJSON.EmailSettings.EmailBatchingInterval | default(30) @>
+                                  SkipServerCertificateVerification: <@ input.configJSON.EmailSettings.SkipServerCertificateVerification | default(false) | tojson @>
+                                RateLimitSettings:
+                                  Enable: <@ input.configJSON.RateLimitSettings.Enable | default(false) | tojson @>
+                                  PerSec: <@ input.configJSON.RateLimitSettings.PerSec | default(10) @>
+                                  MaxBurst: <@ input.configJSON.RateLimitSettings.MaxBurst | default(100) @>
+                                  MemoryStoreSize: <@ input.configJSON.RateLimitSettings.MemoryStoreSize | default(10000) @>
+                                  VaryByRemoteAddr: <@ input.configJSON.RateLimitSettings.VaryByRemoteAddr | default(true) | tojson @>
+                                  VaryByHeader: "<@ input.configJSON.RateLimitSettings.VaryByHeader | default('') @>"
+                                PrivacySettings:
+                                  ShowEmailAddress: <@ input.configJSON.PrivacySettings.ShowEmailAddress | default(true) | tojson @>
+                                  ShowFullName: <@ input.configJSON.PrivacySettings.ShowFullName | default(true) | tojson @>
+                                SupportSettings:
+                                  TermsOfServiceLink: "<@ input.configJSON.SupportSettings.TermsOfServiceLink | default('https://about.mattermost.com/default-terms/') @>"
+                                  PrivacyPolicyLink: "<@ input.configJSON.SupportSettings.PrivacyPolicyLink | default('https://about.mattermost.com/default-privacy-policy/') @>"
+                                  AboutLink: "<@ input.configJSON.SupportSettings.AboutLink | default('https://about.mattermost.com/default-about/') @>"
+                                  HelpLink: "<@ input.configJSON.SupportSettings.HelpLink | default('https://about.mattermost.com/default-help/') @>"
+                                  ReportAProblemLink: "<@ input.configJSON.SupportSettings.ReportAProblemLink | default('https://about.mattermost.com/default-report-a-problem/') @>"
+                                  SupportEmail: "<@ input.configJSON.SupportSettings.SupportEmail | default('feedback@mattermost.com') @>"
+                                AnnouncementSettings:
+                                  EnableBanner: <@ input.configJSON.AnnouncementSettings.EnableBanner | default(false) | tojson @>
+                                  BannerText: "<@ input.configJSON.AnnouncementSettings.BannerText | default('') @>"
+                                  BannerColor: "<@ input.configJSON.AnnouncementSettings.BannerColor | default('#f2a93b') @>"
+                                  BannerTextColor: "<@ input.configJSON.AnnouncementSettings.BannerTextColor | default('#333333') @>"
+                                  AllowBannerDismissal: <@ input.configJSON.AnnouncementSettings.AllowBannerDismissal | default(true) | tojson @>
+                                GitLabSettings:
+                                  Enable: <@ input.configJSON.GitLabSettings.Enable | default(false) | tojson @>
+                                  Secret: "<@ input.configJSON.GitLabSettings.Secret | default('') @>"
+                                  Id: "<@ input.configJSON.GitLabSettings.Id | default('') @>"
+                                  Scope: "<@ input.configJSON.GitLabSettings.Scope | default('') @>"
+                                  AuthEndpoint: "<@ input.configJSON.GitLabSettings.AuthEndpoint | default('') @>"
+                                  TokenEndpoint: "<@ input.configJSON.GitLabSettings.TokenEndpoint | default('') @>"
+                                  UserApiEndpoint: "<@ input.configJSON.GitLabSettings.UserApiEndpoint | default('') @>"
+                                LocalizationSettings:
+                                  DefaultServerLocale: "<@ input.configJSON.LocalizationSettings.DefaultServerLocale | default('en') @>"
+                                  DefaultClientLocale: "<@ input.configJSON.LocalizationSettings.DefaultClientLocale | default('en') @>"
+                                  AvailableLocales: "<@ input.configJSON.LocalizationSettings.AvailableLocales | default('') @>"
+                                NativeAppSettings:
+                                  AppDownloadLink: "<@ input.configJSON.NativeAppSettings.AppDownloadLink | default('https://about.mattermost.com/downloads/') @>"
+                                  AndroidAppDownloadLink: "<@ input.configJSON.NativeAppSettings.AndroidAppDownloadLink | default('https://about.mattermost.com/mattermost-android-app/') @>"
+                                  IosAppDownloadLink: "<@ input.configJSON.NativeAppSettings.IosAppDownloadLink | default('https://about.mattermost.com/mattermost-ios-app/') @>"
+                                AnalyticsSettings:
+                                  MaxUsersForStatistics: <@ input.configJSON.AnalyticsSettings.MaxUsersForStatistics | default(2500) @>
+                                WebrtcSettings:
+                                  Enable: <@ input.configJSON.WebrtcSettings.Enable | default(false) | tojson @>
+                                  GatewayWebsocketUrl: "<@ input.configJSON.WebrtcSettings.GatewayWebsocketUrl | default('') @>"
+                                  GatewayAdminUrl: "<@ input.configJSON.WebrtcSettings.GatewayAdminUrl | default('') @>"
+                                  GatewayAdminSecret: "<@ input.configJSON.WebrtcSettings.GatewayAdminSecret | default('') @>"
+                                  StunURI: "<@ input.configJSON.WebrtcSettings.StunURI | default('') @>"
+                                  TurnURI: "<@ input.configJSON.WebrtcSettings.TurnURI | default('') @>"
+                                  TurnUsername: "<@ input.configJSON.WebrtcSettings.TurnUsername | default('') @>"
+                                  TurnSharedKey: "<@ input.configJSON.WebrtcSettings.TurnSharedKey | default('') @>"
+                                DisplaySettings:
+                                  CustomUrlSchemes: <@ input.configJSON.DisplaySettings.CustomUrlSchemes | default([]) @>
+                                  ExperimentalTimezone: <@ input.configJSON.DisplaySettings.ExperimentalTimezone | default(true) | tojson @>
+                                TimezoneSettings:
+                                  SupportedTimezonesPath: "<@ input.configJSON.TimezoneSettings.SupportedTimezonesPath | default('timezones.json') @>"
+                                PluginSettings:
+                                  Enable: <@ input.configJSON.PluginSettings.Enable | default(true) @>
+                                  EnableUploads: <@ input.configJSON.PluginSettings.EnableUploads | default(true) | tojson @>
+                                  Directory: "<@ input.configJSON.PluginSettings.Directory | default('./plugins') @>"
+                                  ClientDirectory: "<@ input.configJSON.PluginSettings.ClientDirectory | default('./client/plugins') @>"
+                                  Plugins: <@ input.configJSON.PluginSettings.Plugins | default({}) @>
+                                  PluginStates: <@ input.configJSON.PluginSettings.PluginStates | default({}) @>
                             output:
                               goTemplate: |
                                 host: "{{ index .Values.ingress.hosts 0 }}"
                                 version: "{{ .Values.image.tag }}"
                       - name: input-parameters
-                        from: "{{inputs.artifacts.input-parameters}}"
+                        from: "{{steps.prepare-parameters.outputs.artifacts.merged}}"
                       - name: configuration
                         raw:
                           data: |
-                            prefix: input
-
-              - - name: fill-psql
-                  capact-action: jinja2.template
-                  arguments:
-                    artifacts:
-                      - name: template
-                        from: "{{steps.create-helm-args.outputs.artifacts.render}}"
-                      - name: input-parameters
-                        from: "{{steps.install-db.outputs.artifacts.postgresql}}"
-                      - name: configuration
-                        raw:
-                          data: |
-                            prefix: psql
-
-              - - name: fill-user
-                  capact-action: jinja2.template
-                  arguments:
-                    artifacts:
-                      - name: template
-                        from: "{{steps.fill-psql.outputs.artifacts.render}}"
-                      - name: input-parameters
-                        from: "{{steps.create-user.outputs.artifacts.user}}"
-                      - name: configuration
-                        raw:
-                          data: |
-                            prefix: user
-
-              - - name: fill-db
-                  capact-action: jinja2.template
-                  arguments:
-                    artifacts:
-                      - name: template
-                        from: "{{steps.fill-user.outputs.artifacts.render}}"
-                      - name: input-parameters
-                        from: "{{steps.create-db.outputs.artifacts.database}}"
-                      - name: configuration
-                        raw:
-                          data: |
-                            prefix: db
 
               - - name: helm-install
                   capact-action: helm.install
@@ -508,9 +1970,30 @@ spec:
                   arguments:
                     artifacts:
                       - name: input-parameters
-                        from: "{{steps.fill-db.outputs.artifacts.render}}"
+                        from: "{{steps.create-helm-args.outputs.artifacts.render}}"
                       - name: runner-context
                         from: "{{workflow.outputs.artifacts.runner-context}}"
+
+          - name: prepare-parameters
+            inputs:
+              artifacts:
+                - name: input-parameters
+                  path: /yamls/input.yaml
+                - name: additional-parameters
+                  path: /yamls/additionalinput.yaml
+                  optional: true
+                - name: psql
+                  path: /yamls/psql.yaml
+                - name: db
+                  path: /yamls/db.yaml
+                - name: user
+                  path: /yamls/user.yaml
+            container:
+              image: ghcr.io/capactio/pr/infra/merger:PR-657
+            outputs:
+              artifacts:
+              - name: merged
+                path: /merged.yaml
 ```
 </details>
 
@@ -519,9 +2002,8 @@ Let's take a look on the **Implementation** YAML. **Implementation** has the fol
 | Property                      | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  |
 | ----------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `appVersion`                  | Application versions, which this **Implementation** supports.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                |
-| `additionalInput`             | Additional input for the **Implementation**, compared to the **Interface**. In our case, here we define the `postgresql.config`, as our **Implementation** uses a PostgreSQL instance for Mattermost.                                                                                                                                                                                                                                                                                                                                                                                                                                        |
-| `additionalOutput`            | This section defines any additional **TypeInstances**, which are created in this **Implementation**, compared to the **Interface**. In our **Implementation**, we create a database in the database instance with the `postgresql.create-db` **Interface**, which outputs an `postgresql.database` **TypeInstance**. We have to write this down in `additionalOutput`, so Capact will resolve this **TypeInstance** metadata for uploading it to Hub.                                                                                                                                                                                        |
 | `outputTypeInstanceRelations` | Specifies all output TypeInstances to upload to Hub with theirs relationships between them. Only the TypeInstances created in this Implementation have to be mentioned here. If a TypeInstances in created in another action and brought into the context with `capact-outputTypeInstances`, then it should not be defined here.                                                                                                                                                                                                                                                                                                             |
+| `additionalInput`             | Additional input for the **Implementation**, compared to the **Interface**. In our case, here we define the `postgresql.config`, as our **Implementation** uses a PostgreSQL instance for Mattermost. The additional parameter `helm.install-input` is used to specify parameters for Helm Chart used by this implementation.                                                                                                                                                                                                                                                                                                                                                                                                                                        |
 | `implements`                  | Defines which **Interfaces** are implemented by this **Implementation**.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     |
 | `requires`                    | List of system prerequisites that need to be present in the environment managed by Capact to use this **Implementation**. In our example, we will deploy Mattermost as a Helm chart on Kubernetes, which means we need a Kubernetes cluster. Requirement items can specify `alias` and be used inside workflow under `{{workflow.outputs.artifacts.{alias}}}`, where `{alias-name}` is the alias. A TypeInstance with alias is injected into the workflow based on Policy configuration. To learn more, see the [TypeInstance Injection](../feature/policies/overview.md#typeinstance-injection) paragraph in Policy Configuration document. |
 | `imports`                     | Here we define all other **Interfaces**, we use in our **Implementation**. We can then refer to them as `'<alias>.<method-name>'`.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           |
@@ -536,8 +2018,8 @@ The workflow syntax is based on [Argo Workflows](https://argoproj.github.io/work
 | `.templates.steps[][].capact-when`               | Allows for conditional execution of a step, based on an expression with an input workflow artifacts arguments. You can make assertions on artifacts defined under `inputs.arguments.artifacts` for a given template. It supports the syntax defined here: [antonmedv/expr](https://github.com/antonmedv/expr/blob/master/docs/Language-Definition.md). |
 | `.templates.steps[][].capact-action`             | Allows to import another **Interface**. In our example, we use this to provision PostgreSQL with `postgresql.install` **Interface**.                                                                                                                                                                                                                   |
 | `.templates.steps[][].capact-policy`             | Allows defining Workflow step policy.                                                                                                                                                                                                                                                                                                                  |  |
-| `.templates.steps[][].capact-outputTypeInstance` | A list of **TypeInstances**, from the called action, which are brought into the context of this **Implementations**. The `from` property must match the name of the output from the called Action. You can then use it in the Implementations `outputTypeInstanceRelations`, when defining relations between TypeInstances.                            |
-| `.templates.steps[][].capact-updateTypeInstance` | A list of **TypeInstances**, from the called action, which are brought into the context of this **Implementations** and will be used to update existing TypeInstance. The `from` property must match the name of the output from the called Action.                                                                                                    |
+| `.templates.steps[][].capact-outputTypeInstance` | A list of **TypeInstances**, from the called action, which are brought into the context of this **Implementations**. The `from` property must match the name of the output from the called Action. You can then use it in the Implementations `outputTypeInstanceRelations`, when defining relations between TypeInstances. The `backend` property you can choose where to store the data of TypeInstance. If it is not provided, then the default storage backend is used.                             |
+| `.templates.steps[][].capact-updateTypeInstance` | A list of **TypeInstances**, from the called action, which are brought into the context of this **Implementations** and will be used to update existing TypeInstance. The `from` property must match the name of the output from the called Action. The `backend` property you can choose where to store the data of TypeInstance. If it is not provided, then the default storage backend is used.                                                                                                    |
 
 Let's go through the **Implementation** and try to understand, what is happening in each step of the action. Our Mattermost installation uses a PostgreSQL database. We defined an additional input `postgresql` of type `cap.type.database.postgresql.config`. Additional inputs are optional, so we need to handle the scenario, where no **TypeInstance** for `postgresql`  was provided. The first workflow step `install-db` is conditionally using the `postgresql.install` **Interface** to create an PostgreSQL instance.
 
@@ -559,14 +2041,14 @@ Let's go through the **Implementation** and try to understand, what is happening
 > ```
 > You can read more about policies on the [Policy overview](../feature/policies/overview.md) page.
 
+> In this example, the default backend storage is used. If you would like to use for instance AWS Secrets Manager, you can read how to do this [here](../feature/storage-backends/aws-secrets-manager.md#use-the-storage-backend). 
+
 In the next step we are creating a database for the Mattermost server. If you look at the **Interface** definition of [`cap.interface.database.postgresql.create-db`](https://github.com/capactio/hub-manifests/tree/main/manifests/interface/database/postgresql/create-db.yaml), you will see, that it requires a `postgresql` **TypeInstance** of **Type** [`cap.type.database.postgresql.config`](https://github.com/capactio/hub-manifests/tree/main/manifests/type/database/postgresql/config.yaml) and input parameters [`cap.type.database.postgresql.database-input`](https://github.com/capactio/hub-manifests/tree/main/manifests/type/database/postgresql/database-input.yaml), and outputs a `database` **TypeInstance** of **Type** [`cap.type.database.postgresql.database`](https://github.com/capactio/hub-manifests/tree/main/manifests/type/database/postgresql/database.yaml). In the step, we are providing the inputs to the **Interface** via the `.arguments.artifacts` field. We also have to map the output of this step to our output definitions in `additionalOutput` and the implemented **Interface** in the `capact-outputTypeInstances` field.
 
-The `render-helm-args`, `fill-db-params-in-helm-args` and `fill-user-params-in-helm-args` steps are used to prepare the input parameters for the `helm.install` **Interface**. Jinja template engine is used here to render the Helm runner arguments with the required data from the `postgresql` and `database` **TypeInstances**. Those steps don't create any **TypeInstances** and serve only the purpose of creating the input parameters for the Helm runner.
+The `render-create-db-args`, `create-helm-args` steps are used to prepare the input parameters for the `helm.install` **Interface**. Jinja template engine is used here to render the Helm runner arguments with the required data from the `postgresql` and `database` **TypeInstances**. Those steps don't create any **TypeInstances** and serve only the purpose of creating the input parameters for the Helm runner.
 You can check the schema of the Helm runner args in the [Type manifest](https://github.com/capactio/hub-manifests/blob/main/manifests/type/runner/helm/install-input.yaml).
 
-> To create the input parameters for `helm.install` we have to use data from two artifacts. As the current `jinja.run` **Interface** consumes only a template and a single variables input, we have to perform this operation twice. To separate the variables substituted in the first, second and third operation, we add prefixes to the variables.
->
-> In the future we might improve the ways, on how to process artifacts in the workflow.
+> To create the input parameters for `helm.install` we have to use data from two artifacts. As the current `jinja.template` **Interface** consumes only a template and a single variables input, we add merger step `prepare-parameters` that merge various inputs to a single output. You can read more about merger [here](https://github.com/capactio/capact/blob/main/hack/images/merger/README.md).
 
 The last step launches the Helm runner, deploys the Mattermost server and creates the `mattermost-config` and `mattermost-helm-release` **TypeInstances**. The `mattermost-config` **TypeInstance** data was provided by the Helm runner in the `additional` output artifacts from this step. Check the Helm runner documentation, on how the `additional` output is created.
 
@@ -581,13 +2063,13 @@ To verify, if a runner needs the context, check the **Interface** of the runner 
 
 ## Validate the manifests using Capact CLI
 
-You can use the Capact CLI to validate the manifests you created. The `capact validate` command checks the manifests against JSON schemas and can tell you, if your manifests are correct.
+You can use the Capact CLI to validate the manifests you created. The `capact manifests validate` command checks the manifests against JSON schemas and can tell you, if your manifests are correct.
 
 > For now the Capact CLI does not verify the content of the `action` property in **Implementations**. It will not verify, that your workflow is correct and will execute properly.
 
 To verify all your manifests in `manifests` directory, execute:
 ```
-capact validate manifests/**/*.yaml
+capact manifests validate -r manifests
 ```
 
 You can read more about the Capact CLI [here](https://github.com/capactio/capact/tree/main/cmd/cli/README.md).
@@ -632,7 +2114,7 @@ Use the Capact CLI to run your Action.
 1. Get the status of the Action from the previous step:
 
    ```bash
-   capact action get mattermost
+   capact action get mattermost-install
    ```
 
    Wait until the Action is in `READY_TO_RUN` state. It means that the Action was processed by the Engine, and the Interface was resolved to a specific Implementation. As a user, you can verify that the rendered Action is what you expected. If the rendering is taking more time, you will see the `BEING_RENDERED` phase.
@@ -642,13 +2124,13 @@ Use the Capact CLI to run your Action.
    In the previous step, the Action was in the `READY_TO_RUN` phase. It is not executed automatically, as the Engine waits for the user's approval. To execute it, execute:
 
    ```bash
-   capact action run mattermost
+   capact action run mattermost-install
    ```
 
 1. Watch the Action:
 
    ```bash
-   capact action watch mattermost
+   capact action watch mattermost-install
    ```
 
    Wait until the Action is finished.
@@ -656,8 +2138,10 @@ Use the Capact CLI to run your Action.
 1. Once the Action is succeeded, view output TypeInstances:
 
    ```bash
-   capact action status mattermost
+   capact action get mattermost-install -ojson | yq e '.Actions[0].output.typeInstances' -
    ```
+
+In the output, there are visible the ids of created TypeInstances and their [storage backend](../feature/storage-backends/introduction.md).
 
 ### View the Action workflow in Argo UI
 
@@ -676,13 +2160,13 @@ Now you can access the Argo UI with your browser by opening [http://127.0.0.1:27
 You can also get useful information about your Action using `kubectl`. You can check the `actions.core.capact.io` Custom Resource to get information about your Action:
 
 ```bash
-kubectl describe actions.core.capact.io mattermost
+kubectl describe actions.core.capact.io mattermost-install
 ```
 
 The output is:
 
 ```bash
-Name:         mattermost
+Name:         mattermost-install
 Namespace:    default
 Labels:       <none>
 Annotations:  <none>
@@ -727,9 +2211,9 @@ metadata:
   documentationURL: https://capact.io
   supportURL: https://capact.io
   maintainers:
-    - email: team-dev@capact.io
-      name: Capact Dev Team
-      url: https://capact.io
+    - email: your.email@example.com
+      name: your-name
+      url: your-website
 spec:
   jsonSchema:
     value: |-
@@ -749,7 +2233,7 @@ spec:
           "password": {
             "$id": "#/properties/password",
             "type": "string",
-            "title": "User password"
+            "title": "New user password"
           }
         },
         "additionalProperties": false
@@ -781,9 +2265,9 @@ metadata:
   supportURL: https://www.postgresql.org/
   iconURL: https://www.postgresql.org/media/img/about/press/elephant.png
   maintainers:
-    - email: team-dev@capact.io
-      name: Capact Dev Team
-      url: https://capact.io
+    - email: your.email@example.com
+      name: your-name
+      url: your-website
 
 spec:
   input:
@@ -801,7 +2285,7 @@ spec:
     parameters:
       input-parameters:
         typeRef:
-          name: cap.type.database.postgresql.change-password-input
+          path: cap.type.database.postgresql.change-password-input
           revision: 0.1.0
 
   output:
@@ -832,9 +2316,9 @@ metadata:
   license:
     name: "Apache 2.0"
   maintainers:
-    - email: team-dev@capact.io
-      name: Capact Dev Team
-      url: https://capact.io
+    - email: your.email@example.com
+      name: your-name
+      url: your-website
 
 spec:
   appVersion: "8.x.x"
@@ -878,6 +2362,17 @@ spec:
                 - name: user
                   from: "{{steps.change-password.outputs.artifacts.user}}"
             steps:
+              - - name: prepare-parameters
+                  template: prepare-parameters
+                  arguments:
+                    artifacts:
+                      - name: input-parameters
+                        from: "{{inputs.artifacts.input-parameters}}"
+                      - name: user
+                        from: "{{workflow.outputs.artifacts.user}}"
+                      - name: postgresql
+                        from: "{{workflow.outputs.artifacts.postgresql}}"
+
               - - name: render-change-password-script
                   capact-action: jinja2.template
                   arguments:
@@ -885,11 +2380,8 @@ spec:
                       - name: template
                         raw:
                           # Here we prepare a simple script to run the SQL statements to change the user password.
-                          # The sleep at the beginning is required, so the container does not exit too quickly.
-                          # This a limitation of the PNS executor, used for executing the Argo workflows in Capact.
                           data: |
                             set -e
-                            sleep 1
                             export PGPASSWORD=<@user.password@>
                             PSQL_CMD="psql -h <@postgresql.host@> -U <@user.name@> <@postgresql.defaultDBName@> -c"
                             ${PSQL_CMD} "ALTER USER <@user.name@> WITH PASSWORD '<@input.password@>'"
@@ -900,43 +2392,20 @@ spec:
                             EOF
                             sync
                       - name: input-parameters
-                        from: "{{workflow.outputs.artifacts.postgresql}}"
+                        from: "{{steps.prepare-parameters.outputs.artifacts.merged}}"
                       - name: configuration
                         raw:
-                          data: "prefix: postgresql"
-
-              - - name: fill-params-from-user
-                  capact-action: jinja2.template
-                  arguments:
-                    artifacts:
-                      - name: template
-                        from: "{{steps.render-change-password-script.outputs.artifacts.render}}"
-                      - name: input-parameters
-                        from: "{{workflow.outputs.artifacts.user}}"
-                      - name: configuration
-                        raw:
-                          data: "prefix: user"
-
-              - - name: fill-params-from-user-input
-                  capact-action: jinja2.template
-                  arguments:
-                    artifacts:
-                      - name: template
-                        from: "{{steps.fill-params-from-user.outputs.artifacts.render}}"
-                      - name: input-parameters
-                        from: "{{inputs.artifacts.input-parameters}}"
-                      - name: configuration
-                        raw:
-                          data: "prefix: input"
+                          data: ""
 
               - - name: change-password
                   template: change-password
-                  capact-updateTypeInstances: # here you define that artifact from template `change-password` will
-                    - name: user               # be used to update TypeInstance
+                  capact-updateTypeInstances: # here you define that artifact from template `change-password` will be used to update TypeInstance
+                    - name: user 
+                      from: user
                   arguments:
                     artifacts:
                       - name: script
-                        from: "{{steps.fill-params-from-user-input.outputs.artifacts.render}}"
+                        from: "{{steps.render-change-password-script.outputs.artifacts.render}}"
 
           - name: change-password
             inputs:
@@ -951,12 +2420,24 @@ spec:
               artifacts:
                 - name: user
                   path: /user.yml
+
+          - name: prepare-parameters
+            inputs:
+              artifacts:
+                - name: input-parameters
+                  path: /yamls/input.yaml
+                - name: user
+                  path: /yamls/user.yaml
+                - name: postgresql
+                  path: /yamls/postgresql.yaml
+            container:
+              image: ghcr.io/capactio/pr/infra/merger:PR-657
+            outputs:
+              artifacts:
+              - name: merged
+                path: /merged.yaml
 ```
 </details>
-
-> **NOTE:** When you have a step in your Implementation, which has a short-living container (exits in less than a second), it is required to add `sleep 1` to the script
-> to ensure Argo will be able to get the output artifacts from the container.
-> It's [a known issue](https://github.com/argoproj/argo-workflows/issues/1256) with the PNS executor, which Capact uses for executing Argo workflows.
 
 We only updated the user password. Now you need to update the Mattermost settings. At this point you should know how to do this.
 
