@@ -8,7 +8,7 @@ By default, Capact stores the state in a form of TypeInstances, that contain sta
 
 However, there are many cases, where static, unencrypted data is not enough. For example, some sensitive data should be stored in a secure way. Or, Helm chart details may quickly become outdated in case of any external change (e.g. upgrade with `helm` CLI).
 
-That's why Capact introduced storage backends functionality. Storage backend is a service which manages external TypeInstance's `value` for every resource version, as well as the `lockedBy` piece of information. 
+That's why Capact introduced storage backends functionality. Storage backend is a service which manages external TypeInstance's `value` for every resource version, as well as the `lockedBy` piece of information.
 
 It supports full TypeInstance lifecycle, that is: create, get, update, delete, lock, unlock operations.
 
@@ -18,6 +18,7 @@ It supports full TypeInstance lifecycle, that is: create, get, update, delete, l
 Currently, we have the following storage backends available:
 
 - [AWS Secrets Manager](./aws-secrets-manager.md)
+- [Helm](./helm.mdx)
 
 Each storage backend is installed separately using Capact Actions. See corresponding documents for each storage to learn how to install and configure them.
 
