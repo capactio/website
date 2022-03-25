@@ -539,8 +539,8 @@ The workflow syntax is based on [Argo Workflows](https://argoproj.github.io/work
 | `.templates.steps[][].capact-when`               | Allows for conditional execution of a step, based on an expression with an input workflow artifacts arguments. You can make assertions on artifacts defined under `inputs.arguments.artifacts` for a given template. It supports the syntax defined here: [antonmedv/expr](https://github.com/antonmedv/expr/blob/master/docs/Language-Definition.md). |
 | `.templates.steps[][].capact-action`             | Allows to import another **Interface**. In our example, we use this to provision PostgreSQL with `postgresql.install` **Interface**.                                                                                                                                                                                                                   |
 | `.templates.steps[][].capact-policy`             | Allows defining Workflow step policy.                                                                                                                                                                                                                                                                                                                  |  |
-| `.templates.steps[][].capact-outputTypeInstance` | A list of **TypeInstances**, from the called action, which are brought into the context of this **Implementations**. The `from` property must match the name of the output from the called Action. You can then use it in the Implementations `outputTypeInstanceRelations`, when defining relations between TypeInstances. The optional `backend` property specifies where to store the TypeInstance data. Read more about storage backend in the [using custom backend storage](#using-custom-backend-storage).                             |
-| `.templates.steps[][].capact-updateTypeInstance` | A list of **TypeInstances**, from the called action, which are brought into the context of this **Implementations** and will be used to update existing TypeInstance. The `from` property must match the name of the output from the called Action. The optional `backend` property specifies where to store the TypeInstance data. Read more about storage backend in the [using custom backend storage](#using-custom-backend-storage).                                                                                                   |
+| `.templates.steps[][].capact-outputTypeInstance` | A list of **TypeInstances**, from the called action, which are brought into the context of this **Implementations**. The `from` property must match the name of the output from the called Action. You can then use it in the Implementations `outputTypeInstanceRelations`, when defining relations between TypeInstances. The optional `backend` property specifies where to store the TypeInstance data. Read more about storage backend in the [Using custom backend storage](#using-custom-backend-storage) section.                             |
+| `.templates.steps[][].capact-updateTypeInstance` | A list of **TypeInstances**, from the called action, which are brought into the context of this **Implementations** and will be used to update existing TypeInstance. The `from` property must match the name of the output from the called Action. The optional `backend` property specifies where to store the TypeInstance data. Read more about storage backend in the [Using custom backend storage](#using-custom-backend-storage) section.                                                                                                   |
 
 Let's go through the **Implementation** and try to understand, what is happening in each step of the action. Our Mattermost installation uses a PostgreSQL database. We defined an additional input `postgresql` of type `cap.type.database.postgresql.config`. Additional inputs are optional, so we need to handle the scenario, where no **TypeInstance** for `postgresql`  was provided. The first workflow step `install-db` is conditionally using the `postgresql.install` **Interface** to create an PostgreSQL instance.
 
@@ -582,9 +582,9 @@ To verify, if a runner needs the context, check the **Interface** of the runner 
 
 ## Using custom storage backend
 
-In the Mattermost installation example, we used the default storage backend but you can use a custom backend. The available storage backends are listed [here](../feature/storage-backends/introduction.md#available-storage-backends). 
+In the Mattermost installation example, we used the default storage backend which stores static TypeInstance values inside Local Hub database. However, you can use a custom backend - for example, to store and manage TypeInstance values externally. The available storage backends are listed [here](../feature/storage-backends/introduction.md#available-storage-backends). 
 
-In order to add storage backend as a prerequisite in the  **Implementation**, you can use the `requires` section.
+To enforce using a given storage backend for Implementation, use the **Implementation.requires** property:
 
 ```yaml
 requires:
@@ -596,33 +596,50 @@ requires:
           alias: aws-storage
 ```
 
-The **Implementation** which uses that section cannot be run unless the `cap.type.aws.secrets-manager.storage` is installed, where the `aws-storage` is an alias for that backend storage.  
+The **Implementation** which uses that section cannot be run unless the `cap.type.aws.secrets-manager.storage` is installed and injected into the Implementation workflow. The `aws-storage` is an alias for the injected backend storage, and you can refer it inside the workflow.
+To read how to inject such TypeInstance while running Capact Action, see the [Policy Overview](../feature/policies/overview.md) document.
 
-Then, you can store the TypeInstance data using the `backend` property in the `capact-outputTypeInstance` or `capact-updateTypeInstances`:
+Then, refer the storage backend in the `capact-outputTypeInstance` or `capact-updateTypeInstances` properties, to upload such artifacts:
 
 ```yaml
 capact-outputTypeInstances:
   - name: example-artifact
     from: example-artifact
-    backend: aws-storage
+    backend: aws-storage # use TypeInstance injected from the `requires` property
 ```
-
 
 You can read more about the storage backends feature [here](../feature/storage-backends/introduction.md).
 
-## Look into the artifact content
+## Workflow artifacts data shape
 
-Defining the artifact, you can have multiple options of how you want to store the data. Let's consider them:
+While building Implementation workflows, you need to make sure the Argo artifacts specified under the `capact-outputTypeInstances` property, have a proper shape, to be able to upload them as output TypeInstances.
 
-1. To store a given value on default storage backend or backend without any required additional parameters, which also accepts TypeInstance value:
+The shape of the artifact depends on used storage backend:
 
-    ```yaml
-    value: foo
-    ```
+- If a given storage backend accepts a static value (for example, the default one), the artifact must contain `value` property, which holds the static data:
 
-1. To save a specific value with additional parameters in a given storage backend:
+  ```yaml
+  value: # anything - object, number, string, array...
+    foo: bar
+  ```
 
-    ```yaml
+  Example storage backends:
+  - default (Local Hub database)
+  - [AWS Secrets Manager](../feature/storage-backends/aws-secrets-manager.md)
+
+- If a given storage backend accepts just `context`, that is, the backend-specific metadata, the artifact must contain the `backend.context` property:
+
+  ```yaml
+  backend:
+    context:
+      foo: bar
+  ```
+
+  The context is validated against the Storage backend context schema while creating TypeInstance at the end of the Capact Action run.
+
+- If a given storage backend accept both static value and additional context, then you can specify both `value` and `backend.context` properties:
+
+   ```yaml
     value: foo
     backend:
       context:
@@ -630,9 +647,7 @@ Defining the artifact, you can have multiple options of how you want to store th
         value: baz
     ```
   
-  The `context` is backend-specific properties that allow the backend to obtain additional context about the saved value.
-
-> **NOTE:** The syntax has been changed since the backend storage support. Before, the whole artifact content was treated as a value.
+You can read more about the storage backends feature [here](../feature/storage-backends/introduction.md).
 
 ## Validate the manifests using Capact CLI
 
@@ -645,7 +660,7 @@ To verify all your manifests in `manifests` directory, execute:
 capact manifest validate -r manifests
 ```
 
-You can use add an optional flag `--server-side` flag which will execute additional manifests checks against Capact Hub. As this flag requires connection to the Hub (Gateway) server, ensure that you are [logged in](../cli/commands/capact_login.md).
+You can specify an optional flag `--server-side` flag which will execute additional manifests checks against Capact Hub. As this flag requires connection to an existing Capact installation, ensure that you followed the [First use](../cli/getting-started.mdx#first-use) tutorial for CLI.
 
 You can read more about the Capact CLI [here](https://github.com/capactio/capact/tree/main/cmd/cli/README.md).
 
