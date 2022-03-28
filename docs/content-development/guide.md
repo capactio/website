@@ -169,16 +169,22 @@ spec:
         "$schema": "http://json-schema.org/draft-07/schema",
         "type": "object",
         "title": "Mattermost installation parameters",
-         "required": [
-           "host"
+        "required": [
+            "host"
         ],
+        "definitions": {
+          "hostname": {
+            "type": "string",
+            "format": "hostname",
+            "title": "Hostname"
+          }
+        },
         "properties": {
           "host": {
-            "$id": "#/properties/host",
-            "type": "string",
-            "title": "Host of the Mattermost Instance"
+            "$ref": "#/definitions/hostname"
           }
-        }
+        },
+        "additionalProperties": true
       }
 ```
 </details>
@@ -320,6 +326,14 @@ spec:
       oneOf:
         - name: kubernetes
           revision: 0.1.0
+    cap.core.type.hub.storage:
+      allOf:
+        - name: cap.type.helm.release.storage
+          revision: 0.1.0
+          alias: helm-release-storage
+        - name: cap.type.helm.template.storage
+          revision: 0.1.0
+          alias: helm-template-storage
 
   imports:
     - interfaceGroupPath: cap.interface.runner.helm
@@ -409,7 +423,7 @@ spec:
                         from: "{{steps.create-user.outputs.artifacts.user}}"
                       - name: configuration
                         raw:
-                          data: |
+                          data: "unpackValue: true"
 
               - - name: create-db
                   capact-action: postgresql.create-db
@@ -471,22 +485,28 @@ spec:
                               mysql:
                                 enabled: false
                             output:
-                              goTemplate: |
-                                host: "{{ index .Values.ingress.hosts 0 }}"
-                                version: "{{ .Values.image.tag }}"
+                              helmRelease:
+                                useHelmReleaseStorage: true
+                              additional:
+                                useHelmTemplateStorage: true  
+                                goTemplate: |
+                                  host: "{{ index .Values.ingress.hosts 0 }}"
+                                  version: "{{ .Values.image.tag }}                          
                       - name: input-parameters
                         from: "{{steps.prepare-parameters.outputs.artifacts.merged}}"
                       - name: configuration
                         raw:
-                          data: |
+                          data: "unpackValue: true"
 
               - - name: helm-install
                   capact-action: helm.install
                   capact-outputTypeInstances:
                     - name: mattermost-config
                       from: additional
+                      backend: helm-template-storage
                     - name: mattermost-helm-release
                       from: helm-release
+                      backend: helm-release-storage
                   arguments:
                     artifacts:
                       - name: input-parameters
@@ -509,7 +529,7 @@ spec:
                 - name: user
                   path: /yamls/user.yaml
             container:
-              image: ghcr.io/capactio/pr/infra/merger:PR-657
+              image: ghcr.io/capactio/infra/merger:a6e226e
             outputs:
               artifacts:
               - name: merged
@@ -1021,7 +1041,7 @@ spec:
                 - name: postgresql
                   path: /yamls/postgresql.yaml
             container:
-              image: ghcr.io/capactio/pr/infra/merger:PR-657
+              image: ghcr.io/capactio/infra/merger:a6e226e
             outputs:
               artifacts:
               - name: merged
