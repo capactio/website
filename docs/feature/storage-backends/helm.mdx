@@ -1,6 +1,6 @@
 # Helm
 
-The Helm backend storage gives you an option to map the TypeInstance's value to a given Helm release. This solves problems with outdated static data about Helm release that are stored in built-in database. The functionality in a form of a dedicated storage backend is installed using Capact Action. This guide describes how to install and configure the Helm storage backends for Capact Local Hub.
+The Helm backend storage gives you an option to map the TypeInstance's value to a given Helm release installed in a cluster. This solves problems with outdated static data about Helm release that is stored in the built-in database. The functionality in a form of a dedicated storage backend is installed using Capact Action. This guide describes how to install and configure the Helm storage backends for Capact Local Hub.
 
 To learn more about Capact Local Hub storage backends, see the [Introduction](./introduction.md) document.
 
@@ -41,6 +41,8 @@ Helm Template backend doesn't store any data. Thus, it works only on the Helm re
 * Cluster with Capact installation. See the [installation tutorial](../../installation/local.mdx).
 
 ## Installation
+
+In the default mode, both Helm storage backends are installed. To change it, copy the snippets from the “Customized” tab and change either **helmReleaseBackend.enabled** or **helmTemplateBackend.enabled** to `false` before creating input files.
 
 1. Create parameters:
 
