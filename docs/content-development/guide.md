@@ -327,7 +327,7 @@ spec:
       oneOf:
         - name: kubernetes
           revision: 0.1.0
-    cap.core.type.hub.storage:
+    cap.core.type.hub.storage: # Helm storage needs to be present as a prerequisite for this Implementation
       allOf:
         - name: cap.type.helm.release.storage
           revision: 0.1.0
