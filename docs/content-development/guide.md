@@ -19,6 +19,7 @@ To develop and test the created content, you will need to have a Capact environm
 * [kubectl](https://kubernetes.io/docs/tasks/tools/install-kubectl/)
 * [Capact CLI](../cli/getting-started.mdx)
 * [Populator](https://github.com/capactio/capact/blob/main/cmd/populator/docs/populator.md) - download the binary from the [latest Capact release](https://github.com/capactio/capact/releases/latest)
+* [Helm storage backend](../feature/storage-backends/helm.mdx#installation)
 
 Also, clone the repository with the Capact manifests:
 
@@ -79,7 +80,7 @@ metadata:
   description: "Mattermost is an open source collaboration tool for developers."
   documentationURL: https://docs.mattermost.com/
   supportURL: https://docs.mattermost.com/
-  iconURL: https://docs.mattermost.com/_static/images/Mattermost-Logo-Blue.svg
+  iconURL: https://storage.googleapis.com/dashboard-icons/mattermost.svg
   maintainers:
     - email: your.email@example.com
       name: your-name
@@ -602,7 +603,7 @@ To verify, if a runner needs the context, check the **Interface** of the runner 
 
 ## Using custom storage backend
 
-In the Mattermost installation example, we used the default storage backend which stores static TypeInstance values inside Local Hub database. However, you can use a custom backend - for example, to store and manage TypeInstance values externally. The available storage backends are listed [here](../feature/storage-backends/introduction.md#available-storage-backends). 
+By default, Capact used the default storage backend which stores static TypeInstance values inside Local Hub database. However, you can use a custom backend - for example, to store and manage TypeInstance values externally. The available storage backends are listed [here](../feature/storage-backends/introduction.md#available-storage-backends).
 
 To enforce using a given storage backend for Implementation, use the **Implementation.requires** property:
 
