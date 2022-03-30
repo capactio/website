@@ -19,7 +19,15 @@ To develop and test the created content, you will need to have a Capact environm
 * [kubectl](https://kubernetes.io/docs/tasks/tools/install-kubectl/)
 * [Capact CLI](../cli/getting-started.mdx)
 * [Populator](https://github.com/capactio/capact/blob/main/cmd/populator/docs/populator.md) - download the binary from the [latest Capact release](https://github.com/capactio/capact/releases/latest)
-* [Helm storage backend](../feature/storage-backends/helm.mdx#installation)
+* [Local Capact installation](../installation/local.mdx)
+
+  During the actual Capact installation step, provide additional flag for `capact install` command:
+
+  ```bash
+  capact install --capact-overrides=hub-public.populator.enabled=false
+  ```
+
+* [Helm storage backend](../feature/storage-backends/helm.mdx#installation) installed on the Capact cluster
 
 Also, clone the repository with the Capact manifests:
 
@@ -687,13 +695,7 @@ You can read more about the Capact CLI [here](https://github.com/capactio/capact
 
 ## Populate the manifests into Hub
 
-After we have the manifests ready, we can start our local Capact environment. Follow the [Local installation](../installation/local.mdx) guide. During the actual Capact installation step, provide additional flag for `capact install` command:
-
-```bash
-capact install --capact-overrides=hub-public.populator.enabled=false
-```
-
-This can take a few minutes. Next, [populate the manifests to Public Hub](../example/public-hub-content.mdx#populate-the-manifests-into-hub).
+After we have the manifests ready, [populate the manifests to Public Hub](../example/public-hub-content.mdx#populate-the-manifests-into-hub).
 
 ## Create and run your Action
 
