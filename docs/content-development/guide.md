@@ -18,7 +18,16 @@ To develop and test the created content, you will need to have a Capact environm
 * [kind](https://kind.sigs.k8s.io/docs/user/quick-start/#installation)
 * [kubectl](https://kubernetes.io/docs/tasks/tools/install-kubectl/)
 * [Capact CLI](../cli/getting-started.mdx)
-* [populator](https://github.com/capactio/capact/tree/main/cmd/populator/docs/populator_register-ocf-manifests.md) - For now, you need to compile it from source
+* [Populator](https://github.com/capactio/capact/blob/main/cmd/populator/docs/populator.md) - download the binary from the [latest Capact release](https://github.com/capactio/capact/releases/latest)
+* [Local Capact installation](../installation/local.mdx)
+
+  During the actual Capact installation step, provide additional flag for `capact install` command:
+
+  ```bash
+  capact install --capact-overrides=hub-public.populator.enabled=false
+  ```
+
+* [Helm storage backend](../feature/storage-backends/helm.mdx#installation) installed on the Capact cluster
 
 Also, clone the repository with the Capact manifests:
 
@@ -56,6 +65,8 @@ Let's try to create manifests required to define a capability to install [Matter
   mattermost.install(mattermost.install-input) -> mattermost.config
   ```
 
+> **NOTE:** To simplify and speed up the process of creating the manifests, you can use Capact Manifest Generator in the Capact CLI. You can read more about it in [this document](generating.md).
+
 ### Create the Interface Group manifest
 
 First, we need to create an **InterfaceGroup** manifest, which groups **Interfaces** corresponding to some application.
@@ -77,7 +88,7 @@ metadata:
   description: "Mattermost is an open source collaboration tool for developers."
   documentationURL: https://docs.mattermost.com/
   supportURL: https://docs.mattermost.com/
-  iconURL: https://docs.mattermost.com/_static/images/Mattermost-Logo-Blue.svg
+  iconURL: https://storage.googleapis.com/dashboard-icons/mattermost.svg
   maintainers:
     - email: your.email@example.com
       name: your-name
@@ -117,7 +128,7 @@ spec:
     parameters: # the Interface requires `input-parameters` of Type "cap.type.productivity.mattermost.install-input"
       input-parameters:
         typeRef:
-          name: cap.type.productivity.mattermost.install-input
+          path: cap.type.productivity.mattermost.install-input
           revision: 0.1.0
 
   output:
@@ -166,7 +177,7 @@ spec:
       {
         "$schema": "http://json-schema.org/draft-07/schema",
         "type": "object",
-        "title": "The schema for Mattermost configuration",
+        "title": "Mattermost installation parameters",
         "required": [
             "host"
         ],
@@ -215,19 +226,19 @@ spec:
         "type": "object",
         "title": "The schema for Mattermost configuration",
         "required": [
-            "version"
+          "version"
         ],
         "definitions": {
           "semVer": {
             "type": "string",
             "minLength": 5,
-            "pattern": "^(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)(?:-((?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*)(?:\.(?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*))*))?(?:\+([0-9a-zA-Z-]+(?:\.[0-9a-zA-Z-]+)*))?$",
+            "pattern": "^(0|[1-9]\\d*)\\.(0|[1-9]\\d*)\\.(0|[1-9]\\d*)(?:-((?:0|[1-9]\\d*|\\d*[a-zA-Z-][0-9a-zA-Z-]*)(?:\\.(?:0|[1-9]\\d*|\\d*[a-zA-Z-][0-9a-zA-Z-]*))*))?(?:\\+([0-9a-zA-Z-]+(?:\\.[0-9a-zA-Z-]+)*))?$",
             "title": "Semantic Versioning version",
             "examples": [
-                "1.19.0"
-                "2.0.1-alpha1"
+              "1.19.0",
+              "2.0.1-alpha1"
             ]
-          }
+          },
           "hostname": {
             "type": "string",
             "format": "hostname",
@@ -237,7 +248,7 @@ spec:
         "properties": {
           "version": {
             "$ref": "#/definitions/semVer"
-          }
+          },
           "host": {
             "$ref": "#/definitions/hostname"
           }
@@ -247,10 +258,7 @@ spec:
 ```
 </details>
 
-The **Type** values are described using [JSON Schema](https://json-schema.org/).
-
-> Currently the **Type** manifests are not used in Capact to validate the data of the inputs and outputs. Validation of the data will be added later on, although
-> it is still useful to define the **Types** to document the schema of the data.
+The **Type** values are described using [JSON Schema](https://json-schema.org/) and are used to validate the data of the inputs and outputs.
 
 ## Runners
 
@@ -312,6 +320,11 @@ spec:
           path: cap.type.database.postgresql.config
           revision: 0.1.0
         verbs: ["get"]
+    parameters:
+      additional-parameters:
+        typeRef:
+          path: cap.type.mattermost.helm.install-input
+          revision: 0.1.0
 
   implements:
     - path: cap.interface.productivity.mattermost.install
@@ -322,6 +335,14 @@ spec:
       oneOf:
         - name: kubernetes
           revision: 0.1.0
+    cap.core.type.hub.storage: # Helm storage needs to be present as a prerequisite for this Implementation
+      allOf:
+        - name: cap.type.helm.release.storage
+          revision: 0.1.0
+          alias: helm-release-storage
+        - name: cap.type.helm.template.storage
+          revision: 0.1.0
+          alias: helm-template-storage
 
   imports:
     - interfaceGroupPath: cap.interface.runner.helm
@@ -361,6 +382,8 @@ spec:
                 - name: input-parameters
                 - name: postgresql
                   optional: true
+                - name: additional-parameters
+                  optional: true
             outputs:
               artifacts:
                 - name: mattermost-config
@@ -391,7 +414,7 @@ spec:
                     artifacts:
                       - name: postgresql
                         from: "{{steps.install-db.outputs.artifacts.postgresql}}"
-                      - name: user-input
+                      - name: input-parameters
                         raw:
                           data: |
                             name: mattermost
@@ -409,7 +432,7 @@ spec:
                         from: "{{steps.create-user.outputs.artifacts.user}}"
                       - name: configuration
                         raw:
-                          data: |
+                          data: "unpackValue: true"
 
               - - name: create-db
                   capact-action: postgresql.create-db
@@ -420,8 +443,24 @@ spec:
                     artifacts:
                       - name: postgresql
                         from: "{{steps.install-db.outputs.artifacts.postgresql}}"
-                      - name: database-input
+                      - name: input-parameters
                         from: "{{steps.render-create-db-args.outputs.artifacts.render}}"
+
+              - - name: prepare-parameters
+                  template: prepare-parameters
+                  arguments:
+                    artifacts:
+                      - name: input-parameters
+                        from: "{{inputs.artifacts.input-parameters}}"
+                      - name: additional-parameters
+                        from: "{{inputs.artifacts.additional-parameters}}"
+                        optional: true
+                      - name: psql
+                        from: "{{steps.install-db.outputs.artifacts.postgresql}}"
+                      - name: db
+                        from: "{{steps.create-db.outputs.artifacts.database}}"
+                      - name: user
+                        from: "{{steps.create-user.outputs.artifacts.user}}"
 
               # Install Mattermost
               - - name: create-helm-args
@@ -443,74 +482,67 @@ spec:
                                 annotations:
                                   "cert-manager.io/cluster-issuer": letsencrypt
                                 hosts:
-                                  - <@ host | default("mattermost.example.com") @>
+                                  - <@ input.host | default("mattermost.example.com") @>
                                 tls:
                                   - hosts:
-                                      - <@ host | default("mattermost.example.com") @>
+                                      - <@ input.host | default("mattermost.example.com") @>
                                     secretName: mattermost-team-edition-tls-<@ random_word(length=5) @>
+                              externalDB:
+                                enabled: true
+                                externalDriverType: "postgres"
+                                externalConnectionString: "postgres://<@ user.name @>:<@ user.password @>@<@ psql.host @>:<@ psql.port @>/<@ db.name @>?sslmode=disable"
+                              mysql:
+                                enabled: false
                             output:
-                              goTemplate: |
-                                host: "{{ index .Values.ingress.hosts 0 }}"
-                                version: "{{ .Values.image.tag }}"
+                              helmRelease:
+                                useHelmReleaseStorage: true
+                              additional:
+                                useHelmTemplateStorage: true  
+                                goTemplate: |
+                                  host: "{{ index .Values.ingress.hosts 0 }}"
+                                  version: "{{ .Values.image.tag }}                          
                       - name: input-parameters
-                        from: "{{inputs.artifacts.input-parameters}}"
+                        from: "{{steps.prepare-parameters.outputs.artifacts.merged}}"
                       - name: configuration
                         raw:
-                          data: |
-                            prefix: input
-
-              - - name: fill-psql
-                  capact-action: jinja2.template
-                  arguments:
-                    artifacts:
-                      - name: template
-                        from: "{{steps.create-helm-args.outputs.artifacts.render}}"
-                      - name: input-parameters
-                        from: "{{steps.install-db.outputs.artifacts.postgresql}}"
-                      - name: configuration
-                        raw:
-                          data: |
-                            prefix: psql
-
-              - - name: fill-user
-                  capact-action: jinja2.template
-                  arguments:
-                    artifacts:
-                      - name: template
-                        from: "{{steps.fill-psql.outputs.artifacts.render}}"
-                      - name: input-parameters
-                        from: "{{steps.create-user.outputs.artifacts.user}}"
-                      - name: configuration
-                        raw:
-                          data: |
-                            prefix: user
-
-              - - name: fill-db
-                  capact-action: jinja2.template
-                  arguments:
-                    artifacts:
-                      - name: template
-                        from: "{{steps.fill-user.outputs.artifacts.render}}"
-                      - name: input-parameters
-                        from: "{{steps.create-db.outputs.artifacts.database}}"
-                      - name: configuration
-                        raw:
-                          data: |
-                            prefix: db
+                          data: "unpackValue: true"
 
               - - name: helm-install
                   capact-action: helm.install
                   capact-outputTypeInstances:
                     - name: mattermost-config
                       from: additional
+                      backend: helm-template-storage
                     - name: mattermost-helm-release
                       from: helm-release
+                      backend: helm-release-storage
                   arguments:
                     artifacts:
                       - name: input-parameters
-                        from: "{{steps.fill-db.outputs.artifacts.render}}"
+                        from: "{{steps.create-helm-args.outputs.artifacts.render}}"
                       - name: runner-context
                         from: "{{workflow.outputs.artifacts.runner-context}}"
+
+          - name: prepare-parameters
+            inputs:
+              artifacts:
+                - name: input-parameters
+                  path: /yamls/input.yaml
+                - name: additional-parameters
+                  path: /yamls/additionalinput.yaml
+                  optional: true
+                - name: psql
+                  path: /yamls/psql.yaml
+                - name: db
+                  path: /yamls/db.yaml
+                - name: user
+                  path: /yamls/user.yaml
+            container:
+              image: ghcr.io/capactio/infra/merger:a6e226e
+            outputs:
+              artifacts:
+              - name: merged
+                path: /merged.yaml
 ```
 </details>
 
@@ -519,9 +551,9 @@ Let's take a look on the **Implementation** YAML. **Implementation** has the fol
 | Property                      | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  |
 | ----------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `appVersion`                  | Application versions, which this **Implementation** supports.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                |
-| `additionalInput`             | Additional input for the **Implementation**, compared to the **Interface**. In our case, here we define the `postgresql.config`, as our **Implementation** uses a PostgreSQL instance for Mattermost.                                                                                                                                                                                                                                                                                                                                                                                                                                        |
-| `additionalOutput`            | This section defines any additional **TypeInstances**, which are created in this **Implementation**, compared to the **Interface**. In our **Implementation**, we create a database in the database instance with the `postgresql.create-db` **Interface**, which outputs an `postgresql.database` **TypeInstance**. We have to write this down in `additionalOutput`, so Capact will resolve this **TypeInstance** metadata for uploading it to Hub.                                                                                                                                                                                        |
 | `outputTypeInstanceRelations` | Specifies all output TypeInstances to upload to Hub with theirs relationships between them. Only the TypeInstances created in this Implementation have to be mentioned here. If a TypeInstances in created in another action and brought into the context with `capact-outputTypeInstances`, then it should not be defined here.                                                                                                                                                                                                                                                                                                             |
+| `additionalInput`             | Additional input for the **Implementation**, compared to the **Interface**. In our case, here we define the `postgresql.config`, as our **Implementation** uses a PostgreSQL instance for Mattermost. The additional parameter `helm.install-input` is used to specify optional overrides for Helm Chart values used by this implementation.                                                                                                                                                                                                                                                                                                         |
+| `additionalOutput`            | This section defines any additional **TypeInstances**, which are created in the **Implementation**, compared to the **Interface**. We don't make use of that in our example.                                                                                                                                                                                                                                                                                                               |
 | `implements`                  | Defines which **Interfaces** are implemented by this **Implementation**.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     |
 | `requires`                    | List of system prerequisites that need to be present in the environment managed by Capact to use this **Implementation**. In our example, we will deploy Mattermost as a Helm chart on Kubernetes, which means we need a Kubernetes cluster. Requirement items can specify `alias` and be used inside workflow under `{{workflow.outputs.artifacts.{alias}}}`, where `{alias-name}` is the alias. A TypeInstance with alias is injected into the workflow based on Policy configuration. To learn more, see the [TypeInstance Injection](../feature/policies/overview.md#typeinstance-injection) paragraph in Policy Configuration document. |
 | `imports`                     | Here we define all other **Interfaces**, we use in our **Implementation**. We can then refer to them as `'<alias>.<method-name>'`.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           |
@@ -536,8 +568,8 @@ The workflow syntax is based on [Argo Workflows](https://argoproj.github.io/work
 | `.templates.steps[][].capact-when`               | Allows for conditional execution of a step, based on an expression with an input workflow artifacts arguments. You can make assertions on artifacts defined under `inputs.arguments.artifacts` for a given template. It supports the syntax defined here: [antonmedv/expr](https://github.com/antonmedv/expr/blob/master/docs/Language-Definition.md). |
 | `.templates.steps[][].capact-action`             | Allows to import another **Interface**. In our example, we use this to provision PostgreSQL with `postgresql.install` **Interface**.                                                                                                                                                                                                                   |
 | `.templates.steps[][].capact-policy`             | Allows defining Workflow step policy.                                                                                                                                                                                                                                                                                                                  |  |
-| `.templates.steps[][].capact-outputTypeInstance` | A list of **TypeInstances**, from the called action, which are brought into the context of this **Implementations**. The `from` property must match the name of the output from the called Action. You can then use it in the Implementations `outputTypeInstanceRelations`, when defining relations between TypeInstances.                            |
-| `.templates.steps[][].capact-updateTypeInstance` | A list of **TypeInstances**, from the called action, which are brought into the context of this **Implementations** and will be used to update existing TypeInstance. The `from` property must match the name of the output from the called Action.                                                                                                    |
+| `.templates.steps[][].capact-outputTypeInstance` | A list of **TypeInstances**, from the called action, which are brought into the context of this **Implementations**. The `from` property must match the name of the output from the called Action. You can then use it in the Implementations `outputTypeInstanceRelations`, when defining relations between TypeInstances. The optional `backend` property specifies where to store the TypeInstance data. Read more about storage backend in the [Using custom backend storage](#using-custom-backend-storage) section.                             |
+| `.templates.steps[][].capact-updateTypeInstance` | A list of **TypeInstances**, from the called action, which are brought into the context of this **Implementations** and will be used to update existing TypeInstance. The `from` property must match the name of the output from the called Action. The optional `backend` property specifies where to store the TypeInstance data. Read more about storage backend in the [Using custom backend storage](#using-custom-backend-storage) section.                                                                                                   |
 
 Let's go through the **Implementation** and try to understand, what is happening in each step of the action. Our Mattermost installation uses a PostgreSQL database. We defined an additional input `postgresql` of type `cap.type.database.postgresql.config`. Additional inputs are optional, so we need to handle the scenario, where no **TypeInstance** for `postgresql`  was provided. The first workflow step `install-db` is conditionally using the `postgresql.install` **Interface** to create an PostgreSQL instance.
 
@@ -559,14 +591,12 @@ Let's go through the **Implementation** and try to understand, what is happening
 > ```
 > You can read more about policies on the [Policy overview](../feature/policies/overview.md) page.
 
-In the next step we are creating a database for the Mattermost server. If you look at the **Interface** definition of [`cap.interface.database.postgresql.create-db`](https://github.com/capactio/hub-manifests/tree/main/manifests/interface/database/postgresql/create-db.yaml), you will see, that it requires a `postgresql` **TypeInstance** of **Type** [`cap.type.database.postgresql.config`](https://github.com/capactio/hub-manifests/tree/main/manifests/type/database/postgresql/config.yaml) and input parameters [`cap.type.database.postgresql.database-input`](https://github.com/capactio/hub-manifests/tree/main/manifests/type/database/postgresql/database-input.yaml), and outputs a `database` **TypeInstance** of **Type** [`cap.type.database.postgresql.database`](https://github.com/capactio/hub-manifests/tree/main/manifests/type/database/postgresql/database.yaml). In the step, we are providing the inputs to the **Interface** via the `.arguments.artifacts` field. We also have to map the output of this step to our output definitions in `additionalOutput` and the implemented **Interface** in the `capact-outputTypeInstances` field.
+ In the next step we are creating a database for the Mattermost server. If you look at the **Interface** definition of [`cap.interface.database.postgresql.create-db`](https://github.com/capactio/hub-manifests/tree/main/manifests/interface/database/postgresql/create-db.yaml), you will see, that it requires a `postgresql` **TypeInstance** of **Type** [`cap.type.database.postgresql.config`](https://github.com/capactio/hub-manifests/tree/main/manifests/type/database/postgresql/config.yaml) and input parameters [`cap.type.database.postgresql.database-input`](https://github.com/capactio/hub-manifests/tree/main/manifests/type/database/postgresql/database-input.yaml), and outputs a `database` **TypeInstance** of **Type** [`cap.type.database.postgresql.database`](https://github.com/capactio/hub-manifests/tree/main/manifests/type/database/postgresql/database.yaml). The `render-create-db-args` renders input parameters for `postgresql.install` **Interface**. In the `create-db` step, we are providing the inputs to the **Interface** via the `.arguments.artifacts` field. We also have to map the output of this step to our output definitions in `additionalOutput` and the implemented **Interface** in the `capact-outputTypeInstances` field.
 
-The `render-helm-args`, `fill-db-params-in-helm-args` and `fill-user-params-in-helm-args` steps are used to prepare the input parameters for the `helm.install` **Interface**. Jinja template engine is used here to render the Helm runner arguments with the required data from the `postgresql` and `database` **TypeInstances**. Those steps don't create any **TypeInstances** and serve only the purpose of creating the input parameters for the Helm runner.
+The `create-helm-args` step is used to prepare the input parameters for the `helm.install` **Interface**. Jinja template engine is used here to render the Helm runner arguments with the required data from the `postgresql` and `database` **TypeInstances**. This step doesn't create any **TypeInstances** and serves only the purpose of creating the input parameters for the Helm runner.
 You can check the schema of the Helm runner args in the [Type manifest](https://github.com/capactio/hub-manifests/blob/main/manifests/type/runner/helm/install-input.yaml).
 
-> To create the input parameters for `helm.install` we have to use data from two artifacts. As the current `jinja.run` **Interface** consumes only a template and a single variables input, we have to perform this operation twice. To separate the variables substituted in the first, second and third operation, we add prefixes to the variables.
->
-> In the future we might improve the ways, on how to process artifacts in the workflow.
+> **NOTE:** To create the input parameters for `helm.install` we have to use data from two artifacts. As the `jinja.template` **Interface** consumes a Jinja2 template and a single variable input, we introduced merger container. that merges multiple inputs to a single artifact. It is used in the `prepare-parameters` step. You can read more about merger [here](https://github.com/capactio/capact/blob/main/hack/images/merger/README.md).
 
 The last step launches the Helm runner, deploys the Mattermost server and creates the `mattermost-config` and `mattermost-helm-release` **TypeInstances**. The `mattermost-config` **TypeInstance** data was provided by the Helm runner in the `additional` output artifacts from this step. Check the Helm runner documentation, on how the `additional` output is created.
 
@@ -579,28 +609,93 @@ arguments:
 ```
 To verify, if a runner needs the context, check the **Interface** of the runner (e.g. [Interface for Helm runner](https://github.com/capactio/hub-manifests/blob/main/manifests/interface/runner/helm/install.yaml)).
 
+## Using custom storage backend
+
+By default, Capact used the default storage backend which stores static TypeInstance values inside Local Hub database. However, you can use a custom backend - for example, to store and manage TypeInstance values externally. The available storage backends are listed [here](../feature/storage-backends/introduction.md#available-storage-backends).
+
+To enforce using a given storage backend for Implementation, use the **Implementation.requires** property:
+
+```yaml
+requires:
+  cap.type.aws.secrets-manager:
+    allOf:
+      - typeRef:
+          path: storage
+          revision: 0.1.0
+          alias: aws-storage
+```
+
+The **Implementation** which uses that section cannot be run unless the `cap.type.aws.secrets-manager.storage` is installed and injected into the Implementation workflow. The `aws-storage` is an alias for the injected backend storage, and you can refer it inside the workflow.
+To read how to inject such TypeInstance while running Capact Action, see the [Policy Overview](../feature/policies/overview.md) document.
+
+Then, refer the storage backend in the `capact-outputTypeInstance` or `capact-updateTypeInstances` properties, to upload such artifacts:
+
+```yaml
+capact-outputTypeInstances:
+  - name: example-artifact
+    from: example-artifact
+    backend: aws-storage # use TypeInstance injected from the `requires` property
+```
+
+You can read more about the storage backends feature [here](../feature/storage-backends/introduction.md).
+
+## Workflow artifacts data shape
+
+While building Implementation workflows, you need to make sure the Argo artifacts specified under the `capact-outputTypeInstances` property, have a proper shape, to be able to upload them as output TypeInstances.
+
+The shape of the artifact depends on used storage backend:
+
+- If a given storage backend accepts a static value (for example, the default one), the artifact must contain `value` property, which holds the static data:
+
+  ```yaml
+  value: # anything - object, number, string, array...
+    foo: bar
+  ```
+
+  Example storage backends:
+  - default (Local Hub database)
+  - [AWS Secrets Manager](../feature/storage-backends/aws-secrets-manager.md)
+
+- If a given storage backend accepts just `context`, that is, the backend-specific metadata, the artifact must contain the `backend.context` property:
+
+  ```yaml
+  backend:
+    context:
+      foo: bar
+  ```
+
+  The context is validated against the Storage backend context schema while creating TypeInstance at the end of the Capact Action run.
+
+- If a given storage backend accept both static value and additional context, then you can specify both `value` and `backend.context` properties:
+
+   ```yaml
+    value: foo
+    backend:
+      context:
+        key: bar
+        value: baz
+    ```
+  
+You can read more about the storage backends feature [here](../feature/storage-backends/introduction.md).
+
 ## Validate the manifests using Capact CLI
 
-You can use the Capact CLI to validate the manifests you created. The `capact validate` command checks the manifests against JSON schemas and can tell you, if your manifests are correct.
+You can use the Capact CLI to validate the manifests you created. The `capact manifest validate` command checks the manifests against JSON schemas and can tell you if your manifests are valid.
 
 > For now the Capact CLI does not verify the content of the `action` property in **Implementations**. It will not verify, that your workflow is correct and will execute properly.
 
 To verify all your manifests in `manifests` directory, execute:
 ```
-capact validate manifests/**/*.yaml
+capact manifest validate -r manifests
 ```
+
+You can specify an optional flag `--server-side` flag which will execute additional manifests checks against Capact Hub. As this flag requires connection to an existing Capact installation, ensure that you followed the [First use](../cli/getting-started.mdx#first-use) tutorial for CLI.
 
 You can read more about the Capact CLI [here](https://github.com/capactio/capact/tree/main/cmd/cli/README.md).
 
 ## Populate the manifests into Hub
 
-After we have the manifests ready, we can start our local Capact environment. Follow the [Local installation](../installation/local.mdx) guide. During the actual Capact installation step, provide additional flag for `capact install` command:
-
-```bash
-capact install --capact-overrides=hub-public.populator.enabled=false
-```
-
-This can take a few minutes. Next, [populate the manifests to Public Hub](../example/public-hub-content.mdx#populate-the-manifests-into-hub).
+After we have the manifests ready, [populate the manifests to Public Hub](../example/public-hub-content.mdx#populate-the-manifests-into-hub).
 
 ## Create and run your Action
 
@@ -632,7 +727,7 @@ Use the Capact CLI to run your Action.
 1. Get the status of the Action from the previous step:
 
    ```bash
-   capact action get mattermost
+   capact action get mattermost-install
    ```
 
    Wait until the Action is in `READY_TO_RUN` state. It means that the Action was processed by the Engine, and the Interface was resolved to a specific Implementation. As a user, you can verify that the rendered Action is what you expected. If the rendering is taking more time, you will see the `BEING_RENDERED` phase.
@@ -642,13 +737,13 @@ Use the Capact CLI to run your Action.
    In the previous step, the Action was in the `READY_TO_RUN` phase. It is not executed automatically, as the Engine waits for the user's approval. To execute it, execute:
 
    ```bash
-   capact action run mattermost
+   capact action run mattermost-install
    ```
 
 1. Watch the Action:
 
    ```bash
-   capact action watch mattermost
+   capact action watch mattermost-install
    ```
 
    Wait until the Action is finished.
@@ -656,8 +751,10 @@ Use the Capact CLI to run your Action.
 1. Once the Action is succeeded, view output TypeInstances:
 
    ```bash
-   capact action status mattermost
+   capact action get mattermost-install -ojson | yq e '.Actions[0].output.typeInstances' -
    ```
+
+Every output TypeInstance contains the ID of the [storage backend](../feature/storage-backends/introduction.md) used to store its value. You can query the storage backend details with the command `capact typeinstance get {id} -oyaml`.
 
 ### View the Action workflow in Argo UI
 
@@ -676,13 +773,13 @@ Now you can access the Argo UI with your browser by opening [http://127.0.0.1:27
 You can also get useful information about your Action using `kubectl`. You can check the `actions.core.capact.io` Custom Resource to get information about your Action:
 
 ```bash
-kubectl describe actions.core.capact.io mattermost
+kubectl describe actions.core.capact.io mattermost-install
 ```
 
 The output is:
 
 ```bash
-Name:         mattermost
+Name:         mattermost-install
 Namespace:    default
 Labels:       <none>
 Annotations:  <none>
@@ -727,9 +824,9 @@ metadata:
   documentationURL: https://capact.io
   supportURL: https://capact.io
   maintainers:
-    - email: team-dev@capact.io
-      name: Capact Dev Team
-      url: https://capact.io
+    - email: your.email@example.com
+      name: your-name
+      url: your-website
 spec:
   jsonSchema:
     value: |-
@@ -749,7 +846,7 @@ spec:
           "password": {
             "$id": "#/properties/password",
             "type": "string",
-            "title": "User password"
+            "title": "New user password"
           }
         },
         "additionalProperties": false
@@ -781,9 +878,9 @@ metadata:
   supportURL: https://www.postgresql.org/
   iconURL: https://www.postgresql.org/media/img/about/press/elephant.png
   maintainers:
-    - email: team-dev@capact.io
-      name: Capact Dev Team
-      url: https://capact.io
+    - email: your.email@example.com
+      name: your-name
+      url: your-website
 
 spec:
   input:
@@ -801,7 +898,7 @@ spec:
     parameters:
       input-parameters:
         typeRef:
-          name: cap.type.database.postgresql.change-password-input
+          path: cap.type.database.postgresql.change-password-input
           revision: 0.1.0
 
   output:
@@ -832,9 +929,9 @@ metadata:
   license:
     name: "Apache 2.0"
   maintainers:
-    - email: team-dev@capact.io
-      name: Capact Dev Team
-      url: https://capact.io
+    - email: your.email@example.com
+      name: your-name
+      url: your-website
 
 spec:
   appVersion: "8.x.x"
@@ -878,6 +975,17 @@ spec:
                 - name: user
                   from: "{{steps.change-password.outputs.artifacts.user}}"
             steps:
+              - - name: prepare-parameters
+                  template: prepare-parameters
+                  arguments:
+                    artifacts:
+                      - name: input-parameters
+                        from: "{{inputs.artifacts.input-parameters}}"
+                      - name: user
+                        from: "{{workflow.outputs.artifacts.user}}"
+                      - name: postgresql
+                        from: "{{workflow.outputs.artifacts.postgresql}}"
+
               - - name: render-change-password-script
                   capact-action: jinja2.template
                   arguments:
@@ -885,11 +993,8 @@ spec:
                       - name: template
                         raw:
                           # Here we prepare a simple script to run the SQL statements to change the user password.
-                          # The sleep at the beginning is required, so the container does not exit too quickly.
-                          # This a limitation of the PNS executor, used for executing the Argo workflows in Capact.
                           data: |
                             set -e
-                            sleep 1
                             export PGPASSWORD=<@user.password@>
                             PSQL_CMD="psql -h <@postgresql.host@> -U <@user.name@> <@postgresql.defaultDBName@> -c"
                             ${PSQL_CMD} "ALTER USER <@user.name@> WITH PASSWORD '<@input.password@>'"
@@ -900,43 +1005,20 @@ spec:
                             EOF
                             sync
                       - name: input-parameters
-                        from: "{{workflow.outputs.artifacts.postgresql}}"
+                        from: "{{steps.prepare-parameters.outputs.artifacts.merged}}"
                       - name: configuration
                         raw:
-                          data: "prefix: postgresql"
-
-              - - name: fill-params-from-user
-                  capact-action: jinja2.template
-                  arguments:
-                    artifacts:
-                      - name: template
-                        from: "{{steps.render-change-password-script.outputs.artifacts.render}}"
-                      - name: input-parameters
-                        from: "{{workflow.outputs.artifacts.user}}"
-                      - name: configuration
-                        raw:
-                          data: "prefix: user"
-
-              - - name: fill-params-from-user-input
-                  capact-action: jinja2.template
-                  arguments:
-                    artifacts:
-                      - name: template
-                        from: "{{steps.fill-params-from-user.outputs.artifacts.render}}"
-                      - name: input-parameters
-                        from: "{{inputs.artifacts.input-parameters}}"
-                      - name: configuration
-                        raw:
-                          data: "prefix: input"
+                          data: ""
 
               - - name: change-password
                   template: change-password
-                  capact-updateTypeInstances: # here you define that artifact from template `change-password` will
-                    - name: user               # be used to update TypeInstance
+                  capact-updateTypeInstances: # here you define that artifact from template `change-password` will be used to update TypeInstance
+                    - name: user 
+                      from: user
                   arguments:
                     artifacts:
                       - name: script
-                        from: "{{steps.fill-params-from-user-input.outputs.artifacts.render}}"
+                        from: "{{steps.render-change-password-script.outputs.artifacts.render}}"
 
           - name: change-password
             inputs:
@@ -951,12 +1033,24 @@ spec:
               artifacts:
                 - name: user
                   path: /user.yml
+
+          - name: prepare-parameters
+            inputs:
+              artifacts:
+                - name: input-parameters
+                  path: /yamls/input.yaml
+                - name: user
+                  path: /yamls/user.yaml
+                - name: postgresql
+                  path: /yamls/postgresql.yaml
+            container:
+              image: ghcr.io/capactio/infra/merger:a6e226e
+            outputs:
+              artifacts:
+              - name: merged
+                path: /merged.yaml
 ```
 </details>
-
-> **NOTE:** When you have a step in your Implementation, which has a short-living container (exits in less than a second), it is required to add `sleep 1` to the script
-> to ensure Argo will be able to get the output artifacts from the container.
-> It's [a known issue](https://github.com/argoproj/argo-workflows/issues/1256) with the PNS executor, which Capact uses for executing Argo workflows.
 
 We only updated the user password. Now you need to update the Mattermost settings. At this point you should know how to do this.
 
