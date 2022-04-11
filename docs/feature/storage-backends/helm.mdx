@@ -27,13 +27,13 @@ chart:
   repo: repo-url
 ```
 
-Helm Release backend doesn't store any data. Thus, it works only on the Helm release fetched from the cluster. The **create** and **update** methods check only if a given Helm release is accessible. The **delete**, **lock**, and **unlock** methods don't execute any operation.
+Helm Release backend doesn't store any data. Thus, it works only on the Helm release fetched from the cluster. The **create** and **update** methods check only if a given Helm release is accessible. The **delete revision**, **delete the whole object**, **lock**, and **unlock** methods don't execute any operation.
 
 ### Helm Template
 
 Renders a given Go template against an installed Helm release. The output depends on the given **goTemplate** context property.
 
-Helm Template backend doesn't store any data. Thus, it works only on the Helm release fetched from the cluster. The **create** and **update** methods check only if a given Helm release is accessible and if provided Go template can be rendered. The **delete**, **lock**, and **unlock** methods don't execute any operation.
+Helm Template backend doesn't store any data. Thus, it works only on the Helm release fetched from the cluster. The **create** and **update** methods check only if a given Helm release is accessible and if provided Go template can be rendered. The **delete revision**, **delete the whole object**, **lock**, and **unlock** methods don't execute any operation.
 
 ## Prerequisites
 

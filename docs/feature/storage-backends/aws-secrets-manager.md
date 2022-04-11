@@ -6,7 +6,14 @@ To learn more about Capact Local Hub storage backends, see the [Introduction](./
 
 ## Features
 
-AWS Secrets Manager storage backend is feature-complete. It supports full lifecycle of TypeInstance: create, get, update, delete, lock, unlock.
+AWS Secrets Manager storage backend is feature-complete. It supports full lifecycle of TypeInstance:
+- create (create first revision),
+- get a given revision,
+- update (create a new revision),
+- delete a given revision,
+- delete the whole object,
+- lock the whole object,
+- and unlock the whole object.
 
 It can be used as a default storage for all TypeInstances.
 
@@ -62,7 +69,7 @@ Create AWS security credentials with `SecretsManagerReadWrite` policy.
               requiredTypeInstances:
               - id: ${TI_ID}
                 description: "AWS credentials"
-       - interface: 
+       - interface:
            path: cap.*
          oneOf:
          - implementationConstraints:
@@ -70,7 +77,7 @@ Create AWS security credentials with `SecretsManagerReadWrite` policy.
              - path: cap.core.type.platform.kubernetes
          - implementationConstraints: {}
    typeInstance:
-     rules: [] 
+     rules: []
    ENDOFFILE
    capact policy apply -f /tmp/aws-storage-policy.yaml
    ```
