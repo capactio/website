@@ -10,8 +10,14 @@ However, there are many cases, where static, unencrypted data is not enough. For
 
 That's why Capact introduced storage backends functionality. Storage backend is a service which manages external TypeInstance's `value` for every resource version, as well as the `lockedBy` piece of information.
 
-It supports full TypeInstance lifecycle, that is: create, get, update, delete, lock, unlock operations.
-
+It supports full TypeInstance lifecycle, that is:
+- create (create first revision),
+- get a given revision,
+- update (create a new revision),
+- delete a given revision,
+- delete the whole object,
+- lock the whole object,
+- and unlock the whole object.
 
 ## Available storage backends
 
