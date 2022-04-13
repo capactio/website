@@ -30,7 +30,9 @@ Each storage backend is installed separately using Capact Actions. See correspon
 
 ## Development
 
-To develop your own storage backend, create a gRPC service which implements the [storage backend Protocol Buffers schema](https://github.com/capactio/capact/blob/main/hub-js/proto/storage_backend.proto).
+To develop your own storage backend, create a gRPC service which implements the [storage backend Protocol Buffers schema](https://github.com/capactio/capact/blob/main/hub-js/proto/storage_backend.proto). Depending on the use case, choose one of the following service interfaces to implement your storage backend:
+- `ValueAndContextStorageBackend`: handles the full lifecycle of the TypeInstance. TypeInstance value is always provided as a part of request. Context may be provided but it is not required.
+- `ContextStorageBackend`: it handles TypeInstance lifecycle based on the context, which is required. TypeInstance value is never passed in input arguments.
 
 You can use the generated server code for the following languages:
 - [Go](https://github.com/capactio/capact/tree/main/pkg/hub/api/grpc/storage_backend),
