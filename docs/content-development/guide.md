@@ -387,7 +387,7 @@ spec:
             outputs:
               artifacts:
                 - name: mattermost-config
-                  from: "{{steps.helm-install.outputs.artifacts.additional}}"
+                  from: "{{steps.resolve-ti-value.outputs.artifacts.ti-artifact}}"
             steps:
               # Install DB
               - - name: install-db
@@ -396,6 +396,7 @@ spec:
                   capact-outputTypeInstances:
                     - name: postgresql
                       from: postgresql
+                      backend: helm-template-storage
                   arguments:
                     artifacts:
                       - name: input-parameters
@@ -510,9 +511,6 @@ spec:
               - - name: helm-install
                   capact-action: helm.install
                   capact-outputTypeInstances:
-                    - name: mattermost-config
-                      from: additional
-                      backend: helm-template-storage
                     - name: mattermost-helm-release
                       from: helm-release
                       backend: helm-release-storage
@@ -522,6 +520,20 @@ spec:
                         from: "{{steps.create-helm-args.outputs.artifacts.render}}"
                       - name: runner-context
                         from: "{{workflow.outputs.artifacts.runner-context}}"
+
+              # allows reusing this workflow as a part of other umbrella workflows and read the artifact value
+              - - name: resolve-ti-value
+                  template: resolve-ti-art-value
+                  capact-outputTypeInstances:
+                    - name: mattermost-config
+                      from: ti-artifact
+                      backend: helm-template-storage
+                  arguments:
+                    artifacts:
+                      - name: ti-artifact
+                        from: "{{steps.helm-install.outputs.artifacts.additional}}"
+                      - name: backend
+                        from: "{{workflow.outputs.artifacts.helm-template-storage}}"
 
           - name: prepare-parameters
             inputs:
@@ -538,11 +550,34 @@ spec:
                 - name: user
                   path: /yamls/user.yaml
             container:
-              image: ghcr.io/capactio/infra/merger:a6e226e
+              image: ghcr.io/capactio/infra/merger:2ada6f8
             outputs:
               artifacts:
               - name: merged
                 path: /merged.yaml
+
+          - name: resolve-ti-art-value
+            inputs:
+              artifacts:
+                - name: ti-artifact
+                  path: /tmp/input-ti.yaml
+                - name: backend
+                  path: /tmp/storage-backend.yaml
+            outputs:
+              artifacts:
+                - name: ti-artifact
+                  path: /tmp/output.yaml
+            container:
+              image: ghcr.io/capactio/ti-value-fetcher:2ada6f8
+              env:
+                - name: APP_LOGGER_DEV_MODE
+                  value: "true"
+                - name: APP_INPUT_TI_FILE_PATH
+                  value: "{{inputs.artifacts.ti-artifact.path}}"
+                - name: APP_INPUT_BACKEND_TI_FILE_PATH
+                  value: "{{inputs.artifacts.backend.path}}"
+                - name: APP_OUTPUT_FILE_PATH
+                  value: "{{outputs.artifacts.ti-artifact.path}}"
 ```
 </details>
 
