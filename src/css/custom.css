@@ -85,6 +85,7 @@ html[data-theme="dark"] {
   --announcement-bar-text: var(--capact-white);
 
   --section-border-color: var(--capact-gray-dark);
+  --ifm-breadcrumb-color-active: var(--capact-orange-lighter);
 }
 
 /* Navbar */
