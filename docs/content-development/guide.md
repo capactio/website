@@ -387,7 +387,7 @@ spec:
             outputs:
               artifacts:
                 - name: mattermost-config
-                  from: "{{steps.helm-install.outputs.artifacts.additional}}"
+                  from: "{{steps.resolve-ti-value.outputs.artifacts.ti-artifact}}"
             steps:
               # Install DB
               - - name: install-db
@@ -396,6 +396,7 @@ spec:
                   capact-outputTypeInstances:
                     - name: postgresql
                       from: postgresql
+                      backend: helm-template-storage
                   arguments:
                     artifacts:
                       - name: input-parameters
@@ -510,9 +511,6 @@ spec:
               - - name: helm-install
                   capact-action: helm.install
                   capact-outputTypeInstances:
-                    - name: mattermost-config
-                      from: additional
-                      backend: helm-template-storage
                     - name: mattermost-helm-release
                       from: helm-release
                       backend: helm-release-storage
@@ -522,6 +520,20 @@ spec:
                         from: "{{steps.create-helm-args.outputs.artifacts.render}}"
                       - name: runner-context
                         from: "{{workflow.outputs.artifacts.runner-context}}"
+
+              # allows reusing this workflow as a part of other umbrella workflows and read the artifact value
+              - - name: resolve-ti-value
+                  template: resolve-ti-art-value
+                  capact-outputTypeInstances:
+                    - name: mattermost-config
+                      from: ti-artifact
+                      backend: helm-template-storage
+                  arguments:
+                    artifacts:
+                      - name: ti-artifact
+                        from: "{{steps.helm-install.outputs.artifacts.additional}}"
+                      - name: backend
+                        from: "{{workflow.outputs.artifacts.helm-template-storage}}"
 
           - name: prepare-parameters
             inputs:
@@ -538,11 +550,34 @@ spec:
                 - name: user
                   path: /yamls/user.yaml
             container:
-              image: ghcr.io/capactio/infra/merger:a6e226e
+              image: ghcr.io/capactio/infra/merger:2ada6f8
             outputs:
               artifacts:
               - name: merged
                 path: /merged.yaml
+
+          - name: resolve-ti-art-value
+            inputs:
+              artifacts:
+                - name: ti-artifact
+                  path: /tmp/input-ti.yaml
+                - name: backend
+                  path: /tmp/storage-backend.yaml
+            outputs:
+              artifacts:
+                - name: ti-artifact
+                  path: /tmp/output.yaml
+            container:
+              image: ghcr.io/capactio/ti-value-fetcher:2ada6f8
+              env:
+                - name: APP_LOGGER_DEV_MODE
+                  value: "true"
+                - name: APP_INPUT_TI_FILE_PATH
+                  value: "{{inputs.artifacts.ti-artifact.path}}"
+                - name: APP_INPUT_BACKEND_TI_FILE_PATH
+                  value: "{{inputs.artifacts.backend.path}}"
+                - name: APP_OUTPUT_FILE_PATH
+                  value: "{{outputs.artifacts.ti-artifact.path}}"
 ```
 </details>
 
@@ -665,6 +700,80 @@ The shape of the artifact depends on used storage backend:
   ```
 
   The context is validated against the Storage backend context schema while creating TypeInstance at the end of the Capact Action run.
+
+  Some upper-level workflows may require data fetched from such backend within the same workflow which produces such TypeInstance. To enable that, Content Developer should use TypeInstance Value Fetcher container to resolve value based on the context data:
+
+  <details>
+    <summary>TypeInstance Value Fetcher example usage</summary>
+
+    ```yaml
+    # (...)
+        # produce helm-release TypeInstance with just `backend.context`
+        - - name: helm-install
+            template: helm-install
+            arguments:
+              artifacts:
+                - name: input-parameters
+                  from: "{{inputs.artifacts.input-parameters}}"
+                - name: runner-context
+                  from: "{{inputs.artifacts.runner-context}}"
+                - name: kubeconfig
+                  from: "{{inputs.artifacts.kubeconfig}}"
+
+        # resolve `value` against the helm release storage backend based on `backend.context`
+        - - name: resolve-helm-rel-value 
+            template: resolve-ti-art-value
+            capact-outputTypeInstances: # register "full" artifact with both `value` and `backend.context` as an output
+              - name: helm-release
+                from: ti-artifact
+                backend: helm-release-storage
+            arguments:
+              artifacts:
+                - name: ti-artifact
+                  from: "{{steps.helm-install.outputs.artifacts.helm-release}}"
+                - name: backend
+                  from: "{{workflow.outputs.artifacts.helm-release-storage}}"
+
+    # TypeInstance Value Fetcher template
+    - name: resolve-ti-art-value
+      inputs:
+        artifacts:
+          - name: ti-artifact
+            path: /tmp/input-ti.yaml
+          - name: backend
+            path: /tmp/storage-backend.yaml
+      outputs:
+        artifacts:
+          - name: ti-artifact
+            path: /tmp/output.yaml
+      container:
+        image: ghcr.io/capactio/ti-value-fetcher:2ada6f8
+        env:
+          - name: APP_LOGGER_DEV_MODE
+            value: "true"
+          - name: APP_INPUT_TI_FILE_PATH
+            value: "{{inputs.artifacts.ti-artifact.path}}"
+          - name: APP_INPUT_BACKEND_TI_FILE_PATH
+            value: "{{inputs.artifacts.backend.path}}"
+          - name: APP_OUTPUT_FILE_PATH
+            value: "{{outputs.artifacts.ti-artifact.path}}"
+    ```
+    </details>  
+
+  In a result, after such step, the artifact will contain not only the `backend.context`, but also resolved `value`.
+
+  ```yaml
+  value: # resolved data from backend; will be ignored during TypeInstance upload
+    resolved: true
+    bar: baz
+  backend:
+    context:
+      foo: bar
+  ```
+
+  The `value` property can be used further in workflow, and it will be ignored during the TypeInstance upload/update step.
+
+  To read more about the TypeInstance Value Fetcher, see the [Readme](https://github.com/capactio/capact/blob/main/cmd/ti-value-fetcher/README.md) document.
 
 - If a given storage backend accept both static value and additional context, then you can specify both `value` and `backend.context` properties:
 

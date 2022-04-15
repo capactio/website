@@ -23,6 +23,7 @@ The diagrams below show possible scenarios:
 * [Capact CLI](../cli/getting-started.mdx) installed.
 * [`kubectl`](https://kubernetes.io/docs/tasks/tools/install-kubectl/) installed.
 * Cluster with Capact installation. See the [installation tutorial](../installation/local.mdx).
+* Helm Storage installed and configured. See the [installation and usage](../feature/storage-backends/helm.mdx) instructions.
 * For the scenario with Cloud SQL, access to Google Cloud Platform.
 
 ### Install all Mattermost components in a Kubernetes cluster
@@ -179,12 +180,25 @@ To change the Mattermost installation, we need to adjust our Global policy to pr
     ```bash
     export TI_ID={GCP Service Account TypeInstance ID}
     ```
+1. Export Helm storage TypeInstances, which were created as a part of prerequisite instructions:
+
+    ```bash
+    export HELM_TEMPLATE_STORAGE_ID={id}
+    export HELM_RELEASE_STORAGE_ID={id}
+    ```
 
 1. Update the Global Policy:
 
     ```bash
     cat > /tmp/policy.yaml << ENDOFFILE
     interface:
+      default:
+        inject:
+          requiredTypeInstances:
+          - description: Helm template
+            id: ${HELM_TEMPLATE_STORAGE_ID}
+          - description: Helm release
+            id: ${HELM_RELEASE_STORAGE_ID}
       rules:
         - interface:
             path: cap.interface.database.postgresql.install
@@ -257,12 +271,26 @@ To change the Mattermost installation, we need to adjust our Global policy to pr
     ```bash
     export TI_ID={AWS credentials TypeInstance ID}
     ```
+    
+1. Export Helm storage TypeInstances, which were created as a part of prerequisite instructions:
+
+    ```bash
+    export HELM_TEMPLATE_STORAGE_ID={id}
+    export HELM_RELEASE_STORAGE_ID={id}
+    ```
 
 1. Update the Global Policy:
 
     ```bash
     cat > /tmp/policy.yaml << ENDOFFILE
     interface:
+      default:
+        inject:
+          requiredTypeInstances:
+          - description: Helm template
+            id: ${HELM_TEMPLATE_STORAGE_ID}
+          - description: Helm release
+            id: ${HELM_RELEASE_STORAGE_ID} 
       rules:
         - interface:
             path: cap.interface.database.postgresql.install
