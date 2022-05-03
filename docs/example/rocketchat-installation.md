@@ -24,6 +24,7 @@ The following tools are required:
 * [`kubectl`](https://kubernetes.io/docs/tasks/tools/install-kubectl/) installed.
 * [`helm`](https://helm.sh/docs/intro/install/) installed.
 * [`jq`](https://stedolan.github.io/jq/) installed.
+* Helm Storage installed and configured. See the [installation and usage](../feature/storage-backends/helm.mdx) instructions.
 
 ### Install all Rocket.Chat components in a Kubernetes cluster
 

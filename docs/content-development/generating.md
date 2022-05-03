@@ -296,7 +296,7 @@ Now you need to adjust manifests to use input values from the Interface. Modify 
                                - AWS_SECRET_ACCESS_KEY=<@ providercredentials.secretAccessKey @>
 +                              - AWS_DEFAULT_REGION=<@ additionalinput.region | default('eu-west-1') @>
                              output:
-                               goTemplate:
+                               goTemplate: |
                                  elasticache_auth_token: "{{ .elasticache_auth_token }}"
 @@ -123,15 +124,15 @@ spec:
                                  security_group_owner_id: "{{ .security_group_owner_id }}"
