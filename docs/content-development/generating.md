@@ -411,11 +411,11 @@ To test generated manifests you need to:
   capact act get redis
   ```
 
-  In the STATUS column you can see the current status of the Action. When the Action workflow is being rendered by the Engine, you will see the BEING_RENDERED status. After the Action finished rendering and the status is READY_TO_RUN, you can go to the next step.
+  In the STATUS column you can see the current status of the Action. When the Action workflow is being rendered by the Engine, you will see the BEING_RENDERED status. After the Action finished rendering and the status is `READY_TO_RUN`, you can go to the next step.
 
 1. Run the rendered Action
 
-   After the Action is in READY_TO_RUN status, you can run it. To do this, execute the following command:
+   After the Action is in `READY_TO_RUN` status, you can run it. To do this, execute the following command:
 
   ```bash
   capact act run redis
