@@ -840,6 +840,7 @@ Use the Capact CLI to run your Action.
    ```
 
    Wait until the Action is in `READY_TO_RUN` state. It means that the Action was processed by the Engine, and the Interface was resolved to a specific Implementation. As a user, you can verify that the rendered Action is what you expected. If the rendering is taking more time, you will see the `BEING_RENDERED` phase.
+
    :::note
    To automatically wait for `READY_TO_RUN`, run:
    ```bash
