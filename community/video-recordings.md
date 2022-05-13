@@ -1,5 +1,5 @@
 ---
-sidebar_position: 8
+sidebar_position: 9
 ---
 
 # Video recording guidelines
@@ -9,6 +9,7 @@ This document describes the guidelines and configuration needed for video record
 
 ## Guidelines
 
+- For slide decks, use the official [slide deck template](./slide-deck-template.md).
 - Record the video with [OBS Studio](https://obsproject.com) using our [recommended configuration](#obs-studio).
 - If needed, edit the video with [DaVinci Resolve](https://www.blackmagicdesign.com/products/davinciresolve/studio) or similar tool.
 - In a separate text file, write title, description and tags for the recording. The metadata will be used for video publish on social media.
