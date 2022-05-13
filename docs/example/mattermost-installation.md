@@ -122,12 +122,12 @@ As a result, all external solutions, such as Cloud SQL, have a lower priority, a
 
     In the `STATUS` column you can see the current status of the Action. When the Action workflow is being rendered by the Engine, you will see the `BEING_RENDERED` status. After the Action finished rendering and the status is `READY_TO_RUN`, you can go to the next step.
 
-	 :::note
-	 To automatically wait for `READY_TO_RUN`, run:
-	 ```bash
-	 capact act wait --for=phase=READY_TO_RUN mattermost-install
-	 ```
-	 :::
+    :::note
+    To automatically wait for `READY_TO_RUN`, run:
+    ```bash
+    capact act wait --for=phase=READY_TO_RUN -n $NAMESPACE mattermost-install
+    ```
+    :::
 
 1. Run the rendered Action:
 
