@@ -99,7 +99,7 @@ Create AWS security credentials with `SecretsManagerReadWrite` policy.
 1. Wait for the Action to have the `READY_TO_RUN` status:
 
    ```bash
-   capact act get aws-storage -n capact-system
+   capact act wait --for=phase=READY_TO_RUN aws-storage -n capact-system
    ```
 
 1. Run Action:

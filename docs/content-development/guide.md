@@ -498,10 +498,10 @@ spec:
                               helmRelease:
                                 useHelmReleaseStorage: true
                               additional:
-                                useHelmTemplateStorage: true  
+                                useHelmTemplateStorage: true
                                 goTemplate: |
                                   host: "{{ index .Values.ingress.hosts 0 }}"
-                                  version: "{{ .Values.image.tag }}                          
+                                  version: "{{ .Values.image.tag }}
                       - name: input-parameters
                         from: "{{steps.prepare-parameters.outputs.artifacts.merged}}"
                       - name: configuration
@@ -721,7 +721,7 @@ The shape of the artifact depends on used storage backend:
                   from: "{{inputs.artifacts.kubeconfig}}"
 
         # resolve `value` against the helm release storage backend based on `backend.context`
-        - - name: resolve-helm-rel-value 
+        - - name: resolve-helm-rel-value
             template: resolve-ti-art-value
             capact-outputTypeInstances: # register "full" artifact with both `value` and `backend.context` as an output
               - name: helm-release
@@ -758,7 +758,7 @@ The shape of the artifact depends on used storage backend:
           - name: APP_OUTPUT_FILE_PATH
             value: "{{outputs.artifacts.ti-artifact.path}}"
     ```
-    </details>  
+    </details>
 
   In a result, after such step, the artifact will contain not only the `backend.context`, but also resolved `value`.
 
@@ -784,7 +784,7 @@ The shape of the artifact depends on used storage backend:
         key: bar
         value: baz
     ```
-  
+
 You can read more about the storage backends feature [here](../feature/storage-backends/introduction.md).
 
 ## Validate the manifests using Capact CLI
@@ -840,6 +840,13 @@ Use the Capact CLI to run your Action.
    ```
 
    Wait until the Action is in `READY_TO_RUN` state. It means that the Action was processed by the Engine, and the Interface was resolved to a specific Implementation. As a user, you can verify that the rendered Action is what you expected. If the rendering is taking more time, you will see the `BEING_RENDERED` phase.
+
+   :::note
+   To automatically wait for `READY_TO_RUN`, run:
+   ```bash
+   capact act wait --for=phase=READY_TO_RUN mattermost-install
+   ```
+   :::
 
 1. Run the Action.
 
@@ -1122,7 +1129,7 @@ spec:
               - - name: change-password
                   template: change-password
                   capact-updateTypeInstances: # here you define that artifact from template `change-password` will be used to update TypeInstance
-                    - name: user 
+                    - name: user
                       from: user
                   arguments:
                     artifacts:

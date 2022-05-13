@@ -122,6 +122,13 @@ As a result, all external solutions, such as Cloud SQL, have a lower priority, a
 
     In the `STATUS` column you can see the current status of the Action. When the Action workflow is being rendered by the Engine, you will see the `BEING_RENDERED` status. After the Action finished rendering and the status is `READY_TO_RUN`, you can go to the next step.
 
+	 :::note
+	 To automatically wait for `READY_TO_RUN`, run:
+	 ```bash
+	 capact act wait --for=phase=READY_TO_RUN mattermost-install
+	 ```
+	 :::
+
 1. Run the rendered Action:
 
     After the Action is in `READY_TO_RUN` status, you can run it. To do this, execute the following command:
@@ -271,7 +278,7 @@ To change the Mattermost installation, we need to adjust our Global policy to pr
     ```bash
     export TI_ID={AWS credentials TypeInstance ID}
     ```
-    
+
 1. Export Helm storage TypeInstances, which were created as a part of prerequisite instructions:
 
     ```bash
@@ -290,7 +297,7 @@ To change the Mattermost installation, we need to adjust our Global policy to pr
           - description: Helm template
             id: ${HELM_TEMPLATE_STORAGE_ID}
           - description: Helm release
-            id: ${HELM_RELEASE_STORAGE_ID} 
+            id: ${HELM_RELEASE_STORAGE_ID}
       rules:
         - interface:
             path: cap.interface.database.postgresql.install

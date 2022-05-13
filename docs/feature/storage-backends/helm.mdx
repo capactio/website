@@ -180,7 +180,7 @@ capact act create cap.interface.helm.storage.install --name helm-storage -n capa
 1. Wait for the Action to have the `READY_TO_RUN` status:
 
 	 ```bash
-	 capact act get helm-storage -n capact-system
+	 capact act wait --for=phase=READY_TO_RUN  helm-storage -n capact-system
 	 ```
 
 1. Run Action:
