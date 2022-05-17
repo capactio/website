@@ -430,7 +430,7 @@ To test generated manifests you need to:
 1. Get the ID of the `cap.type.database.redis.config` TypeInstance:
 
    ```bash
-   capact action get redis -ojson | jq -r '.Actions[].output.typeInstances | map(select(.typeRef.path == "cap.type.database.redis.config"))'
+   capact action get redis -ojsonpath -t '{.Actions[*].output.typeInstances[?(@.typeRef.path == "cap.type.database.redis.config")].id}'
    ```
 
 1. Get the TypeInstance value:
@@ -438,7 +438,7 @@ To test generated manifests you need to:
    Use the ID from the previous step and fetch the TypeInstance value:
 
    ```bash
-   capact typeinstance get {type-instance-id} -ojson | jq -r '.[0].latestResourceVersion.spec.value'
+   capact typeinstance get {type-instance-id} -ojsonpath -t '{[0].latestResourceVersion.spec.value}'
    ```
 
 1. Use the information from the TypeInstance to connect to the Redis.

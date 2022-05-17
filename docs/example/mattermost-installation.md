@@ -146,17 +146,17 @@ As a result, all external solutions, such as Cloud SQL, have a lower priority, a
 1. Get the ID of the `cap.type.productivity.mattermost.config` TypeInstance:
 
     ```bash
-    capact action get -n $NAMESPACE mattermost-install -ojson | jq -r '.Actions[].output.typeInstances | map(select(.typeRef.path == "cap.type.productivity.mattermost.config"))'
+    capact action get -n $NAMESPACE mattermost-install -ojsonpath -t '{.Actions[*].output.typeInstances[?(@.typeRef.path == "cap.type.productivity.mattermost.config")].id}'
     ```
 
-1. Get the TypeInstance value:
+2. Get the TypeInstance value:
 
     Use the ID from the previous step and fetch the TypeInstance value:
     ```bash
-    capact typeinstance get {type-instance-id} -ojson | jq -r '.[0].latestResourceVersion.spec.value'
+    capact typeinstance get {type-instance-id} -ojsonpath -t '{[0].latestResourceVersion.spec.value}'
     ```
 
-1. Open the Mattermost console using the **host** from the TypeInstance value, you got in the previous step.
+3. Open the Mattermost console using the **host** from the TypeInstance value, you got in the previous step.
 
     ![mattermost-website](./assets/mattermost-website.png)
 
