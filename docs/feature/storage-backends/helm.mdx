@@ -198,20 +198,26 @@ capact act create cap.interface.helm.storage.install --name helm-storage -n capa
 1. Get output TypeInstances:
 
     ```bash
-    capact act get helm-storage -n capact-system -ojson | jq '.Actions[0].output.typeInstances'
+    capact act get helm-storage -n capact-system -ojsonpath -t '{.Actions[0].output.typeInstances}'
     ```
 
    See the details of the installed:
-     - Helm Release backend:
-       ```bash
-       HELM_RELEASE_STORAGE_ID=$(capact act get helm-storage -n capact-system -ojson | jq '.Actions[0].output.typeInstances | map(select(.typeRef.path == "cap.type.helm.release.storage"))[0].id' -r)
-       capact ti get $HELM_RELEASE_STORAGE_ID -oyaml
-       ```
-     - Helm Template backend:
-       ```bash
-       HELM_TEMPLATE_STORAGE_ID=$(capact act get helm-storage -n capact-system -ojson | jq '.Actions[0].output.typeInstances | map(select(.typeRef.path == "cap.type.helm.template.storage"))[0].id' -r)
-       capact ti get $HELM_TEMPLATE_STORAGE_ID -oyaml
-       ```
+    - Copy ID of the Helm Release backend:
+      ```bash
+      capact act get helm-storage -n capact-system -ojsonpath -t '{.Actions[0].output.typeInstances[?(@.typeRef.path == "cap.type.helm.release.storage")].id}'
+      ```
+    - Display Helm Release backend details:
+      ```bash
+      capact ti get {Helm Release backend ID} -oyaml
+      ```
+    - Copy ID of the Helm Template backend:
+      ```bash
+      capact act get helm-storage -n capact-system -ojsonpath -t '{.Actions[0].output.typeInstances[?(@.typeRef.path == "cap.type.helm.template.storage")].id}'
+      ```
+    - Display Helm Template backend details:
+      ```bash
+      capact ti get {Helm Template backend ID} -oyaml
+      ```
 
 ## Use Helm backends
 

@@ -117,14 +117,19 @@ Create AWS security credentials with `SecretsManagerReadWrite` policy.
 1. Get output TypeInstances:
 
     ```bash
-    capact act get aws-storage -n capact-system -ojson | jq '.Actions[0].output.typeInstances'
+    capact act get aws-storage -n capact-system -ojsonpath -t '{.Actions[0].output.typeInstances}'
+    ```
+
+    Copy ID of the installed AWS storage backend:
+
+    ```bash
+    capact act get aws-storage -n capact-system -ojsonpath -t '{.Actions[0].output.typeInstances[?(@ typeRef.path == "cap.type.aws.secrets-manager.storage")].id}'
     ```
 
     See the details of the installed AWS storage backend:
 
      ```bash
-     AWS_SM_STORAGE_ID=$(capact act get aws-storage -n capact-system -ojson | jq '.Actions[0].output.typeInstances | map(select(.typeRef.path == "cap.type.aws.secrets-manager.storage"))[0].id' -r)
-     capact ti get $AWS_SM_STORAGE_ID -oyaml
+     capact ti get {AWS storage backend ID} -oyaml
      ```
 
 ## Use the storage backend
@@ -164,7 +169,7 @@ Now, you can run any Capact manifest and utilize the newly installed AWS Secrets
   - verify the `backend.id` for output TypeInstances of a given Action:
 
       ```bash
-      capact act get {action Name} -ojson | jq '.Actions[0].output.typeInstances'`
+      capact act get {action Name} -ojsonpath -t '{.Actions[0].output.typeInstances}'
       ```
 
   - see the AWS Secrets Manager UI to verify the TypeInstance value is stored externally.
