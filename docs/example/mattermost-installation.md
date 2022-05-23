@@ -54,9 +54,9 @@ As a result, all external solutions, such as Cloud SQL, have a lower priority, a
     kubectl create namespace $NAMESPACE
     ```
 
-2. [Setup Capact CLI](../cli/getting-started.mdx#first-use)
+1. [Setup Capact CLI](../cli/getting-started.mdx#first-use)
 
-3. List all Interfaces:
+1. List all Interfaces:
 
     ```bash
     capact hub interfaces get
@@ -87,7 +87,7 @@ As a result, all external solutions, such as Cloud SQL, have a lower priority, a
     - an AWS RDS instance,
     - a GCP Cloud SQL instance.
 
-4. Create an Action with the `cap.interface.productivity.mattermost.install` Interface:
+1. Create an Action with the `cap.interface.productivity.mattermost.install` Interface:
 
     Create input parameters for the Action, where you provide the ingress host for the Mattermost.
     ```bash
@@ -108,7 +108,7 @@ As a result, all external solutions, such as Cloud SQL, have a lower priority, a
     capact action create -n $NAMESPACE --name mattermost-install cap.interface.productivity.mattermost.install --parameters-from-file /tmp/mattermost-install.yaml
     ```
 
-5. Get the status of the Action from the previous step:
+1. Get the status of the Action from the previous step:
 
     ```bash
     capact action get -n $NAMESPACE mattermost-install
@@ -129,7 +129,7 @@ As a result, all external solutions, such as Cloud SQL, have a lower priority, a
     ```
     :::
 
-6. Run the rendered Action:
+1. Run the rendered Action:
 
     After the Action is in `READY_TO_RUN` status, you can run it. To do this, execute the following command:
 
@@ -137,26 +137,26 @@ As a result, all external solutions, such as Cloud SQL, have a lower priority, a
     capact action run -n $NAMESPACE mattermost-install
     ```
 
-7. Check the Action execution and wait till it is finished:
+1. Check the Action execution and wait till it is finished:
 
     ```bash
     capact action watch -n $NAMESPACE mattermost-install
     ```
 
-8. Get the ID of the `cap.type.productivity.mattermost.config` TypeInstance:
+1. Get the ID of the `cap.type.productivity.mattermost.config` TypeInstance:
 
     ```bash
     capact action get -n $NAMESPACE mattermost-install -ojsonpath -t '{.Actions[*].output.typeInstances[?(@.typeRef.path == "cap.type.productivity.mattermost.config")].id}'
     ```
 
-9. Get the TypeInstance value:
+1. Get the TypeInstance value:
 
     Use the ID from the previous step and fetch the TypeInstance value:
     ```bash
     capact typeinstance get {type-instance-id} -ojsonpath -t '{[0].latestResourceVersion.spec.value}'
     ```
 
-10. Open the Mattermost console using the **host** from the TypeInstance value, you got in the previous step.
+1. Open the Mattermost console using the **host** from the TypeInstance value, you got in the previous step.
 
     ![mattermost-website](./assets/mattermost-website.png)
 
@@ -182,19 +182,19 @@ To change the Mattermost installation, we need to adjust our Global policy to pr
 1. Create a TypeInstance with GCP Service Account.
 
    1. Follow the [GCP Service Account TypeInstance creation](./typeinstances.md#gcp-service-account) guide to create and obtain ID of the newly created TypeInstance.
-   2. Export the TypeInstance ID as environment variable:
+   1. Export the TypeInstance ID as environment variable:
 
     ```bash
     export TI_ID={GCP Service Account TypeInstance ID}
     ```
-2. Export Helm storage TypeInstances, which were created as a part of prerequisite instructions:
+1. Export Helm storage TypeInstances, which were created as a part of prerequisite instructions:
 
     ```bash
     export HELM_TEMPLATE_STORAGE_ID={id}
     export HELM_RELEASE_STORAGE_ID={id}
     ```
 
-3. Update the Global Policy:
+1. Update the Global Policy:
 
     ```bash
     cat > /tmp/policy.yaml << ENDOFFILE
@@ -235,14 +235,14 @@ To change the Mattermost installation, we need to adjust our Global policy to pr
 
     >**NOTE**: If you are not familiar with the policy syntax above, check the [policy overview document](../feature/policies/overview.md).
 
-4. Create a Kubernetes Namespace:
+1. Create a Kubernetes Namespace:
 
     ```bash
     export NAMESPACE=gcp-scenario
     kubectl create namespace $NAMESPACE
     ```
 
-5. Install Mattermost with the new Global Policy:
+1. Install Mattermost with the new Global Policy:
 
    The Global Policy was updated to prefer GCP solutions for the PostgreSQL Interface. As a result, during the render process, the Capact Engine will select a Cloud SQL Implementation which is available in our Hub server.
 
@@ -273,20 +273,20 @@ To change the Mattermost installation, we need to adjust our Global policy to pr
 1. Create AWS Credentials TypeInstance.
 
    1. Follow the [AWS Credentials TypeInstance creation](./typeinstances.md#aws-credentials) guide to create and obtain ID of the newly created TypeInstance.
-   2. Export the TypeInstance ID as environment variable:
+   1. Export the TypeInstance ID as environment variable:
 
     ```bash
     export TI_ID={AWS credentials TypeInstance ID}
     ```
 
-2. Export Helm storage TypeInstances, which were created as a part of prerequisite instructions:
+1. Export Helm storage TypeInstances, which were created as a part of prerequisite instructions:
 
     ```bash
     export HELM_TEMPLATE_STORAGE_ID={id}
     export HELM_RELEASE_STORAGE_ID={id}
     ```
 
-3. Update the Global Policy:
+1. Update the Global Policy:
 
     ```bash
     cat > /tmp/policy.yaml << ENDOFFILE
@@ -325,14 +325,14 @@ To change the Mattermost installation, we need to adjust our Global policy to pr
 
     >**NOTE**: If you are not familiar with the policy syntax above, check the [policy overview document](../feature/policies/overview.md).
 
-4. Create a Kubernetes Namespace:
+1. Create a Kubernetes Namespace:
 
     ```bash
     export NAMESPACE=aws-scenario
     kubectl create namespace $NAMESPACE
     ```
 
-5. Install Mattermost with the new Global Policy:
+1. Install Mattermost with the new Global Policy:
 
    The Global Policy was updated to prefer AWS solutions for the PostgreSQL Interface. As a result, during the render process, the Capact Engine will select a Cloud SQL Implementation which is available in our Hub server.
 

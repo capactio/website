@@ -349,10 +349,10 @@ Now your Terraform manifests are ready to use! See how can you [test it](#testin
 To test generated manifests you need to:
 
 1. Clone repository with [Hub Manifests](https://github.com/capactio/hub-manifests).
-2. Copy content of the `generated` directory into `manifests` directory.
-3. [Populate the manifests to Public Hub](../example/public-hub-content.mdx#populate-the-manifests-into-hub).
-4. (For AWS only) Create a [Type Instance](../example/typeinstances.md#aws-credentials) with credentials.
-5. Prepare input file `input.yaml`
+1. Copy content of the `generated` directory into `manifests` directory.
+1. [Populate the manifests to Public Hub](../example/public-hub-content.mdx#populate-the-manifests-into-hub).
+1. (For AWS only) Create a [Type Instance](../example/typeinstances.md#aws-credentials) with credentials.
+1. Prepare input file `input.yaml`
 
    ```yaml
     cat > /tmp/install-input.yaml << ENDOFFILE
@@ -362,7 +362,7 @@ To test generated manifests you need to:
     ENDOFFILE
    ```
 
-6. Create an action
+1. Create an action
 
    * For Helm Implementation
 
@@ -405,7 +405,7 @@ To test generated manifests you need to:
      capact act create cap.interface.database.redis.install --name redis --parameters-from-file /tmp/install-input.yaml --action-policy-from-file /tmp/aws-policy.yaml
      ```
 
-7. Get the status of the Action from the previous step:
+1. Get the status of the Action from the previous step:
 
   ```bash
   capact act get redis
@@ -413,7 +413,7 @@ To test generated manifests you need to:
 
   In the STATUS column you can see the current status of the Action. When the Action workflow is being rendered by the Engine, you will see the BEING_RENDERED status. After the Action finished rendering and the status is `READY_TO_RUN`, you can go to the next step.
 
-8. Run the rendered Action
+1. Run the rendered Action
 
    After the Action is in `READY_TO_RUN` status, you can run it. To do this, execute the following command:
 
@@ -421,19 +421,19 @@ To test generated manifests you need to:
   capact act run redis
   ```
 
-9. Check the Action execution and wait till it is finished:
+1. Check the Action execution and wait till it is finished:
 
    ```bash
    capact action watch redis
    ```
 
-10. Get the ID of the `cap.type.database.redis.config` TypeInstance:
+1. Get the ID of the `cap.type.database.redis.config` TypeInstance:
 
    ```bash
    capact action get redis -ojsonpath -t '{.Actions[*].output.typeInstances[?(@.typeRef.path == "cap.type.database.redis.config")].id}'
    ```
 
-11. Get the TypeInstance value:
+1. Get the TypeInstance value:
 
    Use the ID from the previous step and fetch the TypeInstance value:
 
@@ -441,7 +441,7 @@ To test generated manifests you need to:
    capact typeinstance get {type-instance-id} -ojsonpath -t '{[0].latestResourceVersion.spec.value}'
    ```
 
-12. Use the information from the TypeInstance to connect to the Redis.
+1. Use the information from the TypeInstance to connect to the Redis.
 
 ## Summary
 
