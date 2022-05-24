@@ -47,11 +47,11 @@ Create AWS security credentials with `SecretsManagerReadWrite` policy.
 
 1. Follow the [AWS Credentials TypeInstance creation](../../example/typeinstances.md#aws-credentials) guide to create and obtain ID of the newly created TypeInstance.
 
-  Export it as `TI_ID` environment variable:
+   Export it as `TI_ID` environment variable:
 
-  ```bash
-  export TI_ID="{id}"
-  ```
+   ```bash
+   export TI_ID="{id}"
+   ```
 
 1. Update the [Global policy](../policies/global-policy.md) to inject the AWS credentials for the storage backend installation:
 

@@ -46,136 +46,136 @@ In the default mode, both Helm storage backends are installed. To change it, cop
 
 1. Create parameters:
 
-import Tabs from '@theme/Tabs';
-import TabItem from '@theme/TabItem';
+   import Tabs from '@theme/Tabs';
+   import TabItem from '@theme/TabItem';
 
-<div className="tab-container-nested">
-<Tabs
-	groupId="ref"
-	defaultValue="default"
-	values={[
-		{label: 'Default', value: 'default'},
-		{label: 'Customized', value: 'customized'},
-	]}>
-<TabItem value="default">
+   <div className="tab-container-nested">
+   <Tabs
+     groupId="ref"
+     defaultValue="default"
+     values={[
+       {label: 'Default', value: 'default'},
+       {label: 'Customized', value: 'customized'},
+     ]}>
+   <TabItem value="default">
 
-```bash
-cat > /tmp/helm-storage-input-params.yaml << ENDOFFILE
-input-parameters: {}
- # Optional input parameters, e.g.:
- # version: 0.6.0-bf8d006
-ENDOFFILE
-```
+   ```bash
+   cat > /tmp/helm-storage-input-params.yaml << ENDOFFILE
+   input-parameters: {}
+   # Optional input parameters, e.g.:
+   # version: 0.6.0-bf8d006
+   ENDOFFILE
+   ```
 
-</TabItem>
-<TabItem value="customized">
+   </TabItem>
+   <TabItem value="customized">
 
-```bash
-cat > /tmp/helm-storage-input-params.yaml << ENDOFFILE
-input-parameters: {}
- # Optional input parameters, e.g.:
- # version: 0.6.0-bf8d006
-ENDOFFILE
+   ```bash
+   cat > /tmp/helm-storage-input-params.yaml << ENDOFFILE
+   input-parameters: {}
+   # Optional input parameters, e.g.:
+   # version: 0.6.0-bf8d006
+   ENDOFFILE
 
-cat > /tmp/helm-storage-install-policy.yaml << ENDOFFILE
-interface:
-  rules:
-    - interface:
-        path: cap.interface.helm.storage.install
-      oneOf:
-        - implementationConstraints:
-            path: cap.implementation.helm.storage.install
-          inject:
-            additionalParameters:
-              - name: additional-parameters
-                value: # Change values which you need.
-                  # The source of true for below values, can be found here:
-                  #   https://github.com/capactio/capact/blob/main/deploy/kubernetes/charts/helm-storage-backend/values.yaml
-                  global:
-                    containerRegistry:
-                      path: ghcr.io/capactio
-                      overrideTag: bf8d006
-                  image:
-                    name: helm-storage-backend
-                    pullPolicy: IfNotPresent
-                  helmReleaseBackend:
-                    enabled: true
-                    service:
-                      port: 50051
-                      type: ClusterIP
-                    resources:
-                      limits:
-                        cpu: 100m
-                        memory: 32Mi
-                      requests:
-                        cpu: 30m
-                        memory: 16Mi
-                  helmTemplateBackend:
-                    enabled: true
-                    service:
-                      port: 50052
-                      type: ClusterIP
-                    resources:
-                      limits:
-                        cpu: 1
-                        memory: 512Mi
-                      requests:
-                        cpu: 30m
-                        memory: 16Mi
-                  replicaCount: 1
-                  imagePullSecrets: []
-                  podAnnotations: {}
-                  podSecurityContext: {}
-                  # fsGroup: 2000
-                  securityContext: {}
-                  autoscaling:
-                    enabled: false
-                    minReplicas: 1
-                    maxReplicas: 100
-                    targetCPUUtilizationPercentage: 80
-                  nodeSelector: {}
-                  tolerations: []
-                  affinity: {}
-    - interface:
-        path: cap.*
-      oneOf:
-        - implementationConstraints:
-            requires:
-              - path: cap.core.type.platform.kubernetes
-ENDOFFILE
-```
+   cat > /tmp/helm-storage-install-policy.yaml << ENDOFFILE
+   interface:
+     rules:
+       - interface:
+           path: cap.interface.helm.storage.install
+         oneOf:
+           - implementationConstraints:
+               path: cap.implementation.helm.storage.install
+             inject:
+               additionalParameters:
+                 - name: additional-parameters
+                   value: # Change values which you need.
+                     # The source of true for below values, can be found here:
+                     #   https://github.com/capactio/capact/blob/main/deploy/kubernetes/charts/helm-storage-backend/values.yaml
+                     global:
+                       containerRegistry:
+                         path: ghcr.io/capactio
+                         overrideTag: bf8d006
+                     image:
+                       name: helm-storage-backend
+                       pullPolicy: IfNotPresent
+                     helmReleaseBackend:
+                       enabled: true
+                       service:
+                         port: 50051
+                         type: ClusterIP
+                       resources:
+                         limits:
+                           cpu: 100m
+                           memory: 32Mi
+                         requests:
+                           cpu: 30m
+                           memory: 16Mi
+                     helmTemplateBackend:
+                       enabled: true
+                       service:
+                         port: 50052
+                         type: ClusterIP
+                       resources:
+                         limits:
+                           cpu: 1
+                           memory: 512Mi
+                         requests:
+                           cpu: 30m
+                           memory: 16Mi
+                     replicaCount: 1
+                     imagePullSecrets: []
+                     podAnnotations: {}
+                     podSecurityContext: {}
+                     # fsGroup: 2000
+                     securityContext: {}
+                     autoscaling:
+                       enabled: false
+                       minReplicas: 1
+                       maxReplicas: 100
+                       targetCPUUtilizationPercentage: 80
+                     nodeSelector: {}
+                     tolerations: []
+                     affinity: {}
+       - interface:
+           path: cap.*
+         oneOf:
+           - implementationConstraints:
+               requires:
+                 - path: cap.core.type.platform.kubernetes
+   ENDOFFILE
+   ```
 
-</TabItem>
-</Tabs>
-</div>
+   </TabItem>
+   </Tabs>
+   </div>
 
 
 1. Create Action:
 
-<div className="tab-container-nested">
-<Tabs
-	groupId="ref"
-	defaultValue="default"
-	values={[
-		{label: 'Default', value: 'default'},
-		{label: 'Customized', value: 'customized'},
-	]}>
-<TabItem value="default">
+   <div className="tab-container-nested">
+   <Tabs
+     groupId="ref"
+     defaultValue="default"
+     values={[
+       {label: 'Default', value: 'default'},
+       {label: 'Customized', value: 'customized'},
+     ]}>
+   <TabItem value="default">
 
-```bash
-capact act create cap.interface.helm.storage.install --name helm-storage -n capact-system --parameters-from-file /tmp/helm-storage-input-params.yaml
-```
+   ```bash
+   capact act create cap.interface.helm.storage.install --name helm-storage -n capact-system --parameters-from-file /tmp/helm-storage-input-params.yaml
+   ```
 
-</TabItem>
-<TabItem value="customized">
+   </TabItem>
+   <TabItem value="customized">
 
-```bash
-capact act create cap.interface.helm.storage.install --name helm-storage -n capact-system --parameters-from-file /tmp/helm-storage-input-params.yaml --action-policy-from-file /tmp/helm-storage-install-policy.yaml
-```
+   ```bash
+   capact act create cap.interface.helm.storage.install --name helm-storage -n capact-system --parameters-from-file /tmp/helm-storage-input-params.yaml --action-policy-from-file /tmp/helm-storage-install-policy.yaml
+   ```
 
-</TabItem>
-</Tabs>
-</div>
+   </TabItem>
+   </Tabs>
+   </div>
 
 1. Wait for the Action to have the `READY_TO_RUN` status:
 
