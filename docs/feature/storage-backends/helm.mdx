@@ -1,6 +1,3 @@
-import Tabs from '@theme/Tabs';
-import TabItem from '@theme/TabItem';
-
 # Helm
 
 The Helm backend storage gives you an option to map the TypeInstance's value to a given Helm release installed in a cluster. This solves problems with outdated static data about Helm release that is stored in the built-in database. The functionality in a form of a dedicated storage backend is installed using Capact Action. This guide describes how to install and configure the Helm storage backends for Capact Local Hub.
@@ -48,6 +45,9 @@ Helm Template backend doesn't store any data. Thus, it works only on the Helm re
 In the default mode, both Helm storage backends are installed. To change it, copy the snippets from the “Customized” tab and change either **helmReleaseBackend.enabled** or **helmTemplateBackend.enabled** to `false` before creating input files.
 
 1. Create parameters:
+
+   import Tabs from '@theme/Tabs';
+   import TabItem from '@theme/TabItem';
 
    <div className="tab-container-nested">
    <Tabs
