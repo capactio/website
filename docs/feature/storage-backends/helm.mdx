@@ -1,3 +1,6 @@
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
 # Helm
 
 The Helm backend storage gives you an option to map the TypeInstance's value to a given Helm release installed in a cluster. This solves problems with outdated static data about Helm release that is stored in the built-in database. The functionality in a form of a dedicated storage backend is installed using Capact Action. This guide describes how to install and configure the Helm storage backends for Capact Local Hub.
@@ -46,9 +49,6 @@ In the default mode, both Helm storage backends are installed. To change it, cop
 
 1. Create parameters:
 
-   import Tabs from '@theme/Tabs';
-   import TabItem from '@theme/TabItem';
-
    <div className="tab-container-nested">
    <Tabs
      groupId="ref"
@@ -58,7 +58,7 @@ In the default mode, both Helm storage backends are installed. To change it, cop
        {label: 'Customized', value: 'customized'},
      ]}>
    <TabItem value="default">
-
+  
    ```bash
    cat > /tmp/helm-storage-input-params.yaml << ENDOFFILE
    input-parameters: {}
@@ -66,17 +66,17 @@ In the default mode, both Helm storage backends are installed. To change it, cop
    # version: 0.6.0-bf8d006
    ENDOFFILE
    ```
-
+  
    </TabItem>
    <TabItem value="customized">
-
+  
    ```bash
    cat > /tmp/helm-storage-input-params.yaml << ENDOFFILE
    input-parameters: {}
    # Optional input parameters, e.g.:
    # version: 0.6.0-bf8d006
    ENDOFFILE
-
+  
    cat > /tmp/helm-storage-install-policy.yaml << ENDOFFILE
    interface:
      rules:
@@ -144,11 +144,10 @@ In the default mode, both Helm storage backends are installed. To change it, cop
                  - path: cap.core.type.platform.kubernetes
    ENDOFFILE
    ```
-
+  
    </TabItem>
    </Tabs>
    </div>
-
 
 1. Create Action:
 
@@ -161,18 +160,18 @@ In the default mode, both Helm storage backends are installed. To change it, cop
        {label: 'Customized', value: 'customized'},
      ]}>
    <TabItem value="default">
-
+  
    ```bash
    capact act create cap.interface.helm.storage.install --name helm-storage -n capact-system --parameters-from-file /tmp/helm-storage-input-params.yaml
    ```
-
+  
    </TabItem>
    <TabItem value="customized">
-
+  
    ```bash
    capact act create cap.interface.helm.storage.install --name helm-storage -n capact-system --parameters-from-file /tmp/helm-storage-input-params.yaml --action-policy-from-file /tmp/helm-storage-install-policy.yaml
    ```
-
+  
    </TabItem>
    </Tabs>
    </div>
