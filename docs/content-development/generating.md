@@ -407,19 +407,19 @@ To test generated manifests you need to:
 
 1. Get the status of the Action from the previous step:
 
-  ```bash
-  capact act get redis
-  ```
+   ```bash
+   capact act get redis
+   ```
 
-  In the STATUS column you can see the current status of the Action. When the Action workflow is being rendered by the Engine, you will see the BEING_RENDERED status. After the Action finished rendering and the status is `READY_TO_RUN`, you can go to the next step.
+   In the STATUS column you can see the current status of the Action. When the Action workflow is being rendered by the Engine, you will see the BEING_RENDERED status. After the Action finished rendering and the status is `READY_TO_RUN`, you can go to the next step.
 
 1. Run the rendered Action
 
    After the Action is in `READY_TO_RUN` status, you can run it. To do this, execute the following command:
 
-  ```bash
-  capact act run redis
-  ```
+   ```bash
+   capact act run redis
+   ```
 
 1. Check the Action execution and wait till it is finished:
 
@@ -430,7 +430,7 @@ To test generated manifests you need to:
 1. Get the ID of the `cap.type.database.redis.config` TypeInstance:
 
    ```bash
-   capact action get redis -ojson | jq -r '.Actions[].output.typeInstances | map(select(.typeRef.path == "cap.type.database.redis.config"))'
+   capact action get redis -ojsonpath -t '{.Actions[*].output.typeInstances[?(@.typeRef.path == "cap.type.database.redis.config")].id}'
    ```
 
 1. Get the TypeInstance value:
@@ -438,7 +438,7 @@ To test generated manifests you need to:
    Use the ID from the previous step and fetch the TypeInstance value:
 
    ```bash
-   capact typeinstance get {type-instance-id} -ojson | jq -r '.[0].latestResourceVersion.spec.value'
+   capact typeinstance get {type-instance-id} -ojsonpath -t '{[0].latestResourceVersion.spec.value}'
    ```
 
 1. Use the information from the TypeInstance to connect to the Redis.
