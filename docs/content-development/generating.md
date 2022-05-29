@@ -7,23 +7,34 @@ This document describes how to generate Manifests from existing Helm Charts and 
 - Read [Content development guide](./guide.md) before.
 - [git](https://git-scm.com/) installed.
 - [Helm v3](https://helm.sh/docs/intro/install/) installed.
-- [Capact CLI](../cli/getting-started.mdx#install) at least v0.5.0 installed.
+- [Capact CLI](../cli/getting-started.mdx#install) at least v0.7.0 installed.
     > **NOTE:** Install the latest Capact CLI version from the `main` branch.
 - Capact cluster. For example, [local instance](../installation/local.mdx).
 
     > **NOTE:** Use `--capact-overrides=hub-public.populator.enabled=false` flag, as you will manually upload your OCF manifests into Hub.
 
-## Generating Interface
+## Generating InterfaceGroup
 
-To create an Interface for the Redis database, first you need to choose a path for it. We already have a path `cap.interface.database` with PostgreSQL and MongoDB there, so let's use `cap.interface.database.redis.install`:
+To create an [InterfaceGroup](https://github.com/capactio/capact/blob/main/ocf-spec/0.0.1/README.md#interfacegroup) for the Redis database, first you need to choose a path for it. We already have a path `cap.interface.database` with PostgreSQL and MongoDB there, so let's use `cap.interface.database.redis`:
 
 ```bash
-capact alpha manifest-gen interface cap.interface.database.redis.install
+capact manifest generate interfacegroup cap.interface.database.redis
 ```
 
-It generates four files:
+It generates one file:
 
-* `generated/interface/database/redis.yaml` with an [InterfaceGroup](https://github.com/capactio/capact/blob/main/ocf-spec/0.0.1/README.md#interfacegroup) definition. As the name suggests, it's grouping interfaces for Redis domain. For example, `install`, `update` etc.
+* `generated/interface/database/redis.yaml` with an InterfaceGroup definition. As the name suggests, it's grouping interfaces for Redis domain. For example, `install`, `update` etc.
+
+## Generating Interface
+
+As the next step, let's generate the Interface for the Redis database. As we want to have the `install` action, we will use the `cap.interface.database.redis.install` path:
+
+```bash
+capact manifest generate interface cap.interface.database.redis.install
+```
+
+It generates three files:
+
 * `generated/interface/database/redis/install.yaml` with an Interface definition. It defines the Interface signature.
 * `generated/type/database/redis/install-input.yaml` with an input [Type](https://github.com/capactio/capact/blob/main/ocf-spec/0.0.1/README.md#type) definition.
 * `generated/type/database/redis/config.yaml` with an output Type definition.
@@ -47,8 +58,8 @@ metadata:
 
 ### Adjusting schema
 
-By default, Type `install-input` is empty. To be able to pass an input, you need to adjust schema to accept a cluster name.
-Edit file `generated/type/database/redis/install-input.yaml` and replace empty schema with:
+By default, Type `install-input` contains only an example field. To be able to pass an input, you need to adjust schema to accept a cluster name.
+Edit file `generated/type/database/redis/install-input.yaml` and replace a sample schema with:
 
 ```yaml
     value: |-
@@ -81,7 +92,7 @@ Edit file `generated/type/database/redis/install-input.yaml` and replace empty s
       }
 ```
 
-Edit file `generated/type/database/redis/config.yaml` and replace empty schema with:
+Edit file `generated/type/database/redis/config.yaml` and replace a sample schema with:
 
 ```yaml
     value: |-
@@ -141,12 +152,12 @@ helm pull bitnami/redis --untar --untardir charts/bitnami
 Now you can generate a new Implementation manifest. Set a path to the downloaded chart and specify which Interface is implemented:
 
 ```bash
-capact alpha manifest-gen implementation helm cap.implementation.bitnami.redis.install charts/bitnami/redis --repo "https://charts.bitnami.com/bitnami" -i cap.interface.database.redis.install
+capact manifest generate implementation helm cap.implementation.bitnami.redis.install charts/bitnami/redis --repo "https://charts.bitnami.com/bitnami" -i cap.interface.database.redis.install
 ```
 
 It generates two files:
 
-* `generated/type/bitnami/redis/install-input.yaml` with the Type for Implementation specific additional input.
+* `generated/type/bitnami/redis/install-input-parameters.yaml` with the Type for Implementation specific additional input.
 * `generated/implementation/bitnami/redis/install.yaml` with the Implementation definition for the Redis chart.
 
 Similarly to the Interface, you can update **metadata** in both files. Now you need to adjust manifests to use input values from the Interface.
@@ -188,8 +199,8 @@ Modify files according to the following diffs:
 ```
 
 ```diff
---- a/generated/type/bitnami/redis/install-input.yaml
-+++ b/generated/type/bitnami/redis/install-input.yaml
+--- a/generated/type/bitnami/redis/install-input-parameters.yaml
++++ b/generated/type/bitnami/redis/install-input-parameters.yaml
 @@ -36,16 +36,6 @@ spec:
                  "type": "boolean",
                  "form": true,
@@ -222,12 +233,12 @@ git clone --depth 1 https://github.com/umotif-public/terraform-aws-elasticache-r
 Now you can generate a new Implementation manifest. You need to set a path to the module and set which Interface is implemented:
 
 ```bash
-capact alpha manifest-gen implementation terraform cap.implementation.aws.redis.install terraform-aws-elasticache-redis -i cap.interface.database.redis.install -s git::https://github.com/umotif-public/terraform-aws-elasticache-redis -p aws
+capact manifest generate implementation terraform cap.implementation.aws.redis.install terraform-aws-elasticache-redis -i cap.interface.database.redis.install -s git::https://github.com/umotif-public/terraform-aws-elasticache-redis -p aws
 ```
 
 It generates two new files:
 
-* `generated/type/aws/redis/install-input.yaml` with the Type for Implementation-specific additional input.
+* `generated/type/aws/redis/install-input-parameters.yaml` with the Type for Implementation-specific additional input.
 * `generated/implementation/aws/redis/install.yaml` with the Implementation definition for AWS ElastiCache Terraform module.
 
 Similarly to the Interface, you can update **metadata** in both files.
@@ -235,8 +246,8 @@ Similarly to the Interface, you can update **metadata** in both files.
 Now you need to adjust manifests to use input values from the Interface. Modify files according to the following diffs:
 
 ```diff
---- a/generated/type/aws/redis/install-input.yaml
-+++ b/generated/type/aws/redis/install-input.yaml
+--- a/generated/type/aws/redis/install-input-parameters.yaml
++++ b/generated/type/aws/redis/install-input-parameters.yaml
 @@ -14,10 +14,13 @@ metadata:
        url: https://example.com
  spec:
@@ -447,3 +458,8 @@ To test generated manifests you need to:
 
 That's all. Now you can share you generated manifests.
 Create a pull request in our [Hub Manifests](https://github.com/capactio/hub-manifests) repository. We are happy to review it :)
+
+> **NOTE:** When you already have learned how to generate manifests using a non-interactive mode, we strongly recommend trying an interactive mode. You can access it using:
+```bash
+capact manifest generate
+```
