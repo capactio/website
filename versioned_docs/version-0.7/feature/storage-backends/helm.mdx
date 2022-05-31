@@ -1,0 +1,257 @@
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+# Helm
+
+The Helm backend storage gives you an option to map the TypeInstance's value to a given Helm release installed in a cluster. This solves problems with outdated static data about Helm release that is stored in the built-in database. The functionality in a form of a dedicated storage backend is installed using Capact Action. This guide describes how to install and configure the Helm storage backends for Capact Local Hub.
+
+To learn more about Capact Local Hub storage backends, see the [Introduction](./introduction.md) document.
+
+## Features
+
+There are different options of using the Helm storage backend. In each option Helm backend works locally, which means that it can resolve only a given Helm release if it's installed on the same Kubernetes cluster.
+
+### Helm Release
+
+Provides the metadata for a given Helm release installed on the Kubernetes cluster. Returned **value** contains:
+
+```yaml
+# Name specifies installed Helm release name.
+name: rel-name
+# Namespace specifies in which Kubernetes Namespace Helm release was installed.
+namespace: rel-namespace
+# Chart holds Helm Chart details.
+chart:
+  # Name specifies Helm Chart name.
+  name: chart-name
+  # Version specifies the exact chart version.
+  version: installed-chart-version
+  # Repo specifies URL where to locate the requested chart.
+  repo: repo-url
+```
+
+Helm Release backend doesn't store any data. Thus, it works only on the Helm release fetched from the cluster. The **create** and **update** methods check only if a given Helm release is accessible. The **delete revision**, **delete the whole object**, **lock**, and **unlock** methods don't execute any operation.
+
+### Helm Template
+
+Renders a given Go template against an installed Helm release. The output depends on the given **goTemplate** context property.
+
+Helm Template backend doesn't store any data. Thus, it works only on the Helm release fetched from the cluster. The **create** and **update** methods check only if a given Helm release is accessible and if provided Go template can be rendered. The **delete revision**, **delete the whole object**, **lock**, and **unlock** methods don't execute any operation.
+
+## Prerequisites
+
+* [Capact CLI](../../cli/getting-started.mdx) installed.
+* Cluster with Capact installation. See the [installation tutorial](../../installation/local.mdx).
+
+## Installation
+
+In the default mode, both Helm storage backends are installed. To change it, copy the snippets from the “Customized” tab and change either **helmReleaseBackend.enabled** or **helmTemplateBackend.enabled** to `false` before creating input files.
+
+1. Create parameters:
+
+   <div className="tab-container-nested">
+   <Tabs
+     groupId="ref"
+     defaultValue="default"
+     values={[
+       {label: 'Default', value: 'default'},
+       {label: 'Customized', value: 'customized'},
+     ]}>
+   <TabItem value="default">
+  
+   ```bash
+   cat > /tmp/helm-storage-input-params.yaml << ENDOFFILE
+   input-parameters: {}
+   # Optional input parameters, e.g.:
+   # version: 0.6.0-bf8d006
+   ENDOFFILE
+   ```
+  
+   </TabItem>
+   <TabItem value="customized">
+  
+   ```bash
+   cat > /tmp/helm-storage-input-params.yaml << ENDOFFILE
+   input-parameters: {}
+   # Optional input parameters, e.g.:
+   # version: 0.6.0-bf8d006
+   ENDOFFILE
+  
+   cat > /tmp/helm-storage-install-policy.yaml << ENDOFFILE
+   interface:
+     rules:
+       - interface:
+           path: cap.interface.helm.storage.install
+         oneOf:
+           - implementationConstraints:
+               path: cap.implementation.helm.storage.install
+             inject:
+               additionalParameters:
+                 - name: additional-parameters
+                   value: # Change values which you need.
+                     # The source of true for below values, can be found here:
+                     #   https://github.com/capactio/capact/blob/main/deploy/kubernetes/charts/helm-storage-backend/values.yaml
+                     global:
+                       containerRegistry:
+                         path: ghcr.io/capactio
+                         overrideTag: bf8d006
+                     image:
+                       name: helm-storage-backend
+                       pullPolicy: IfNotPresent
+                     helmReleaseBackend:
+                       enabled: true
+                       service:
+                         port: 50051
+                         type: ClusterIP
+                       resources:
+                         limits:
+                           cpu: 100m
+                           memory: 32Mi
+                         requests:
+                           cpu: 30m
+                           memory: 16Mi
+                     helmTemplateBackend:
+                       enabled: true
+                       service:
+                         port: 50052
+                         type: ClusterIP
+                       resources:
+                         limits:
+                           cpu: 1
+                           memory: 512Mi
+                         requests:
+                           cpu: 30m
+                           memory: 16Mi
+                     replicaCount: 1
+                     imagePullSecrets: []
+                     podAnnotations: {}
+                     podSecurityContext: {}
+                     # fsGroup: 2000
+                     securityContext: {}
+                     autoscaling:
+                       enabled: false
+                       minReplicas: 1
+                       maxReplicas: 100
+                       targetCPUUtilizationPercentage: 80
+                     nodeSelector: {}
+                     tolerations: []
+                     affinity: {}
+       - interface:
+           path: cap.*
+         oneOf:
+           - implementationConstraints:
+               requires:
+                 - path: cap.core.type.platform.kubernetes
+   ENDOFFILE
+   ```
+  
+   </TabItem>
+   </Tabs>
+   </div>
+
+1. Create Action:
+
+   <div className="tab-container-nested">
+   <Tabs
+     groupId="ref"
+     defaultValue="default"
+     values={[
+       {label: 'Default', value: 'default'},
+       {label: 'Customized', value: 'customized'},
+     ]}>
+   <TabItem value="default">
+  
+   ```bash
+   capact act create cap.interface.helm.storage.install --name helm-storage -n capact-system --parameters-from-file /tmp/helm-storage-input-params.yaml
+   ```
+  
+   </TabItem>
+   <TabItem value="customized">
+  
+   ```bash
+   capact act create cap.interface.helm.storage.install --name helm-storage -n capact-system --parameters-from-file /tmp/helm-storage-input-params.yaml --action-policy-from-file /tmp/helm-storage-install-policy.yaml
+   ```
+  
+   </TabItem>
+   </Tabs>
+   </div>
+
+1. Wait for the Action to have the `READY_TO_RUN` status:
+
+	 ```bash
+	 capact act wait --for=phase=READY_TO_RUN  helm-storage -n capact-system
+	 ```
+
+1. Run Action:
+
+	 ```bash
+	 capact act run helm-storage -n capact-system
+	 ```
+
+1. Watch the Action for completion:
+
+    ```bash
+    capact act watch helm-storage -n capact-system
+    ```
+
+1. Get output TypeInstances:
+
+    ```bash
+    capact act get helm-storage -n capact-system -ojsonpath -t '{.Actions[0].output.typeInstances}'
+    ```
+
+   See the details of the created TypeInstances:
+    - Copy ID of the Helm Release backend:
+      ```bash
+      capact act get helm-storage -n capact-system -ojsonpath -t '{.Actions[0].output.typeInstances[?(@.typeRef.path == "cap.type.helm.release.storage")].id}'
+      ```
+    - Assign Helm Release backend ID to the variable
+      ```bash
+      HELM_RELEASE_STORAGE_ID={Helm Release backend ID}
+      ```
+    - Display Helm Release backend details:
+      ```bash
+      capact ti get $HELM_RELEASE_STORAGE_ID -oyaml
+      ```
+    - Copy ID of the Helm Template backend:
+      ```bash
+      capact act get helm-storage -n capact-system -ojsonpath -t '{.Actions[0].output.typeInstances[?(@.typeRef.path == "cap.type.helm.template.storage")].id}'
+      ```
+    - Assign Helm Template backend ID to the variable
+      ```bash
+      HELM_TEMPLATE_STORAGE_ID={Helm Template backend ID}
+      ```
+    - Display Helm Template backend details:
+      ```bash
+      capact ti get $HELM_TEMPLATE_STORAGE_ID -oyaml
+      ```
+
+## Use Helm backends
+
+Once the Helm backends are installed, you can configure it for Helm related TypeInstances.
+
+For example, you can set a Global Policy to inject Helm backends to all Implementations that require them:
+
+```bash
+cat > /tmp/helm-storage-policy.yaml << ENDOFFILE
+interface:
+  default: # properties applied to all rules above
+     inject:
+       requiredTypeInstances:
+          - id: ${HELM_TEMPLATE_STORAGE_ID}
+            description: "Helm template"
+          - id: ${HELM_RELEASE_STORAGE_ID}
+            description: "Helm release"
+  rules:
+      - interface:
+          path: cap.*
+        oneOf:
+        - implementationConstraints:
+            requires:
+            - path: cap.core.type.platform.kubernetes
+        - implementationConstraints: {}
+ENDOFFILE
+capact policy apply -f /tmp/helm-storage-policy.yaml
+```
+
+To read more about TypeInstance backend configuration, see the [Definition of rules for TypeInstance](../policies/overview.md#definition-of-rules-for-typeinstance) section.
