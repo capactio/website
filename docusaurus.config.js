@@ -16,8 +16,8 @@ module.exports = {
   projectName: "website",
   themeConfig: {
     announcementBar: {
-      id: "capact_60_release",
-      content: `🚀  Say hello to Capact 0.6.0! <a href="https://github.com/capactio/capact" target="_blank">Check out our repository and give us a star on GitHub!</a>`,
+      id: "capact_70_release",
+      content: `🚀  Say hello to Capact 0.7.0! <a href="https://github.com/capactio/capact" target="_blank">Check out our repository and give us a star on GitHub!</a>`,
       backgroundColor: "var(--announcement-bar-background)",
       textColor: "var(--announcement-bar-text)",
       isCloseable: true,
